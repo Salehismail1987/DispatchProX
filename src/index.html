@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DispatchProX</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
+
+  <link href="assets/css/fonts.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="assets/css/jquery-ui.css" />
+  <link rel="stylesheet" href="assets/css/calendar.css">
+  <link rel="stylesheet" href="assets/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+  <!-- <script src="assets/js/filter-multi-select-bundle.min.js"></script>
+  <link rel="stylesheet" href="assets/css/filter_multi_select.css"> -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="assets/calendar/jquery.calendar.css" type="text/css" />
+  <link rel="stylesheet" href="assets/calendar/jquery.calendar-declined.css" type="text/css" />
+
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <style>
+
+        .header-logo img{
+            width: 147px;
+        }
+        .calenderweek2 > .ui-datepicker-calendar tr:has(.ui-state-active) {
+    background: #FDD7E4 !important;
+    border-radius: 4px;
+}
+    </style>
+ <link rel="stylesheet" type="text/css" href="assets/css/daterangepicker.css" />
+
+</head>
+<body class="mat-typography">
+
+  <app-root></app-root>
+</body>
+</html>
+<script src="assets/calendar/jquery.calendar.js"></script>
+<script src="assets/calendar/jquery.calendar-mobile.js"></script>
+<script src="assets/calendar/jquery.calendar-highlighted.js"></script>
+<script src="assets/calendar/jquery.calendar-declined.js"></script>
+<script src="assets/js/script.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script>
+ $(window).on('popstate', function() {
+        $('.modal').modal('hide');
+        $( ".modal-backdrop" ).remove();
+        $( ".in" ).remove();
+    });
+  $('.dashbord-fademe').hide();
+  var cart = {};
+  var checkoutButtonElement =null;
+  var scrolled=0;
+
+
+$(document).on('click','.downClick',function(){
+    scrolled=scrolled+170;
+    $(".time-hours").animate({
+            scrollTop:  scrolled
+        });
+
+});
+
+$(document).on('click','.upClick2',function(){
+    let currentScrolll = $(".time-hours").scrollTop();
+
+    currentScrolll=currentScrolll-275;
+
+    $(".time-hours").animate({
+            scrollTop:  currentScrolll
+        });
+
+});
+
+$(document).on('click','.downClick2',function(){
+    let currentScrolll = $(".time-hours").scrollTop();
+
+    currentScrolll=currentScrolll+275;
+    $(".time-hours").animate({
+            scrollTop:  currentScrolll
+        });
+
+});
+
+$(document).on('click','.upClick',function(){
+scrolled=scrolled-170;
+
+    $(".time-hours").animate({
+            scrollTop:  scrolled
+        });
+
+});
+
+
+    $(document).ready(function() {
+
+
+//   $(document).on('click','#sidebarCollapse', function() {
+//             $('#sidebar').toggleClass('active');
+//         });
+
+
+
+        $('.alldivs').show();
+        $('.signin-div').show();
+        $('.dashboard-setups').hide();
+        $('.dashboard-setup-1').show();
+        $('.dashbord-fademe').hide();
+        // $('.truck-back').height($(window).height() - 1);
+        $('.login-form-div ').height($(window).height() - ($('.header-logo').height() + 75));
+        if ($(window).width() > 770) {
+            $('.sidebar').height($(window).height() - 1);
+        }
+
+
+    });
+
+
+
+    $(document).on('click','#dropdownMenuButton', function() {
+
+            $('.dropdown-menu-right').toggleClass('show');
+        });
+
+    $(document).on("click", ".btnhshowhidepass", function() {
+        var inputclass = $(this).hasClass('fa-eye-slash');
+        let password = $(this).prev('.field__input');
+        if (inputclass) {
+            $(this).removeClass('fa-eye-slash');
+            $(this).addClass('fa-eye');
+            password.attr('type','text')
+        } else {
+            $(this).addClass('fa-eye');
+            $(this).addClass('fa-eye-slash');
+            password.attr('type','password')
+
+        }
+    });
+
+    $(document).on('click','.list-unstyled > li',function(){
+
+        if($(this).children('.submenu').hasClass('in')){
+            $(this).children('.submenu').removeClass('in');
+            $(this).children('.submenu').removeClass('show');
+        }else{
+
+            $(this).children('.submenu').addClass('in');
+            $(this).children('.submenu').addClass('show');
+        }
+    });
+    $(document).on("click", ".remove-backdrop", function() {
+        $(".modal-backdrop").hide();
+        $('.modal-backdrop').removeClass('show');
+
+        $('body').removeClass('modal-open');
+        $("body").css({"paddingRight":'0px'})
+
+        $('.modal-backdrop').addClass('hide');
+
+    });
+    $(document).on("click", ".modal-btn", function() {
+
+        $(".modal-backdrop").hide();
+        $('.modal-backdrop').removeClass('show');
+
+        $('body').removeClass('modal-open');
+
+        $('.modal-backdrop').addClass('hide');
+
+        $('.come-from-modal').hide('');
+        $('.come-from-modal').modal('hide');
+    });
+$(document).on("click", ".gotologin", function() {
+        getdivshow('.signin-div');
+    });
+    $(document).on("click", ".gotosignup", function() {
+        // getdivshow('.signup-div');/
+        $('.signup-div').fadeIn('3000');
+    });
+    $(document).on("click", ".gotostep2", function() {
+        // getdivshow('.signup-step-2');
+        $('.signup-step-2').fadeIn('3000');
+    });
+    $(document).on("click", ".gotostep3", function() {
+        // getdivshow('.signup-step-3');
+
+        $('.signup-step-3').fadeIn('3000');
+    });
+    $(document).on("click", ".gotostep4", function() {
+        // getdivshow('.signup-step-4');
+
+        $('.signup-step-4').fadeIn('3000');
+    });
+
+    $(document).on("click", ".gotostep5", function() {
+        $('.signup-step-5').fadeIn('3000');
+
+        // getdivshow('.signup-step-5');
+    });
+
+    $(document).on("click", ".gotostep6", function() {
+        // getdivshow('.signup-step-6');
+        $('.signup-step-6').fadeIn('3000');
+    });
+
+    $(document).on("click", ".gotodashboardsetup1", function() {
+        getdivshow('.dashboard-setups-div');
+    });
+
+    $(document).on("click", ".goto-dashboard-setup-1", function() {
+        $('.dashbord-fademe').fadeOut('3000');
+        getdashbordshow('.dashboard-setup-1');
+    });
+
+    $(document).on("click", ".goto-invitetruking", function() {
+        $('.dashbord-fademe').fadeIn('3000');
+        getdashbordshow('.dashboard-setup-invitetruking', true);
+    });
+
+    $(document).on("click", ".goto-drivers", function() {
+        $('.dashbord-fademe').fadeIn('3000');
+        getdashbordshow('.dashboard-setup-drivers', true);
+    });
+
+    $(document).on("click", ".goto-truck-listing", function() {
+        $('.dashbord-fademe').fadeIn('3000');
+        getdashbordshow('.dashboard-setup-truck-listing', true);
+    });
+
+    $(document).on("click", ".goto-trailer-listing", function() {
+        $('.dashbord-fademe').fadeIn('3000');
+        getdashbordshow('.dashboard-setup-trailer-listing', true);
+    });
+
+    $(document).on("click", ".goto-user-details", function() {
+        $('.dashbord-fademe').fadeIn('3000');
+        getdashbordshow('.dashboard-setup-user-detail', true);
+    });
+
+    $(document).on("click", ".btnedit-hours", function() {
+        $('btnedit-hours').hide();
+        $('.edit-hours-div').show();
+    });
+
+    function getdivshow(showdiv) {
+        $('.alldivs').fadeOut('3000');
+        $(showdiv).fadeIn('3000');
+    }
+
+        function getdashbordshow(showdiv, nextstatus = false) {
+            $('.dashboard-setups').fadeOut('3000');
+            if (nextstatus) {
+                $(showdiv).css('position', 'absolute');
+                $(showdiv).css('right', '0');
+            }
+            $(showdiv).fadeIn('3000');
+        }
+
+
+
+        $(document).ready(function() {
+        $('.dashbord-fademe').hide();
+        $('.setup-details').show();
+        $('.btneditqty').on('click', function() {
+            $(this).hide();
+            $('.edit-qty-div').show();
+        });
+        // $('#sidebarCollapse').on('click', function() {
+        //     $('#sidebar').toggleClass('active');
+        // });
+        $(".goto-modify-truck-quanity").click(function() {
+            $('.dashbord-fademe').fadeOut('3000');
+            getdashbordshow('.modify-truck-quanity', true);
+        });
+        $(".goto-details").click(function() {
+            $('.dashbord-fademe').fadeOut('3000');
+            getdashbordshow('.setup-details', true);
+        });
+
+        function getdashbordshow(showdiv, nextstatus = false) {
+            $('.dashboard-setups').fadeOut('3000');
+            if (nextstatus) {
+                $(showdiv).css('position', 'absolute');
+                $(showdiv).css('right', '0');
+            }
+            $(showdiv).fadeIn('3000');
+            $(showdiv).css('position', 'unset');
+            $(showdiv).css('right', 'unset');
+        }
+    });
+    $(".assgin-driver-btn").click(function(){
+        $('.nav-tabs a[href="#round-detail"]').tab('show');
+    })
+
+    $(document).on("click", ".detail-btn", function() {
+
+        let round_no = $(this).children('.round_no').val();
+
+        $(".round_detail_"+round_no).hide();
+        $(".round_mini_"+round_no).show();
+
+    });
+
+
+
+
+    $(document).on("click", ".mini-btn", function() {
+        let round_no = $(this).children('.round_no').val();
+
+        $(".round_mini_"+round_no).hide();
+        $(".round_detail_"+round_no).show();
+
+    });
+    $(document).on("load", "#hour-active", function() {
+        var elmnt = document.getElementById("hour-active"); // let if use typescript
+        if(elmnt.length>0){
+        elmnt.scrollIntoView(); // this will scroll elem to the top
+        window.scrollTo(0, 0);
+
+        }else{
+
+        }
+    });
+
+    $('.dashbord-fademe').hide();
+    $('.setup-truck-listing').show();
+
+    $(document).on("click", ".show-detail", function() {
+        $(this).closest('tr').next('tr').find('.detail-info').toggle('slow');
+    });
+
+
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="assets/js/moment.min.js"></script>
+<script type="text/javascript" src="assets/js/daterangepicker.min.js"></script>
+<script src="assets/js/jquery.weekpicker.js"></script>
+<script src="assets/js/jquery.weekpicker.js"></script>
+<script type="text/javascript ">
+    var selecttype = '';
+    var selectmonth = '';
+    var selectsemimonth = '';
+    var selectweek = '';
+    var date = new Date();
+    var year = date.getFullYear();
+    $(document).ready(function() {
+
+        $('.selmonthtype').on('click', function() {
+            $('.selectcontroldiv').hide();
+            $('.selecttype').show();
+        });
+        $('.selecttype ul li').on('click', function() {
+            selecttype = $(this).html();
+            $('.selmonthtype').html($(this).html());
+            $('.selectcontroldiv').hide();
+            if (selecttype == 'Monthly' || selecttype == 'Semi-monthly') {
+                $('.selectmonth').show();
+            } else if (selecttype == 'Weekly') {
+                $('.calenderweek').show();
+            } else {
+                $('.calenderrange').show();
+                $('.daterange').trigger('click');
+            }
+        });
+        $('.selectmonth ul li').on('click', function() {
+            selectmonth = $(this).html();
+            var month = $(this).data('month');
+
+            $('.selectcontroldiv').hide();
+            if (selecttype == 'Semi-monthly') {
+                $('.selectsemimonth').show();
+                var date = new Date(year, month - 1);
+                var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                $('.nexthalf').html('15th to ' + lastDay.getDate() + 'th');
+            } else {
+                $('.selmonthtype').val(selectmonth);
+            }
+        });
+        $('.selectsemimonth ul li').on('click', function() {
+            selectsemimonth = $(this).html();
+            $('.selectcontroldiv').hide();
+            $('.selected_month').html(selectmonth);
+            $('.selmonthtype').val(selectmonth + ' ' + selectsemimonth);
+        });
+    });
+
+
+</script>
+<script>
+     $(document).ready(function() {
+        $('.week-picker').weekpicker();
+        $('.daterange').daterangepicker({
+            autoApply: true,
+        });
+        $('.daterange').on('apply.daterangepicker', function(ev, picker) {
+            $('.selectcontroldiv').hide();
+            $('.selmonthtype').val(selectmonth + ' ' + picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+            $('.daterange2').html(selectmonth + ' ' + picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+            $('.daterange2').trigger('click');
+        });
+        $('.drp-calendar.right').hide();
+        $('.drp-calendar.left').addClass('single');
+
+        $('.calendar-table').on('DOMSubtreeModified', function() {
+            var el = $(".prev.available").parent().children().last();
+            if (el.hasClass('next available')) {
+                return;
+            }
+            el.addClass('next available');
+            el.append('<span></span>');
+        });
+        $(document).click(function(e) {
+            var container = $(".selectcontroldiv");
+            var input = $(".selmonthtype");
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                if (!input.is(e.target) && input.has(e.target).length === 0) {
+                    container.hide();
+                }
+            }
+        });
+
+
+
+    });
+</script>

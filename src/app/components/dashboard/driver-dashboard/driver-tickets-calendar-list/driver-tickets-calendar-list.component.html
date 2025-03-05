@@ -1,0 +1,110 @@
+<app-dashboard-top-header-driver [is_dashboard]="false" [header_text]="this.tickets_list[0]?.ticket?.status? (this.tickets_list[0]?.ticket?.status == 'Accepted' ? 'Accepted Job' : this.tickets_list[0]?.ticket?.status)  : this.tickets_list[0]?.status?this.tickets_list[0]?.status :''"></app-dashboard-top-header-driver>
+<div class="ticket-div" *ngIf="!loading && (!this.tickets_list || !this.tickets_list[0])">
+    <div class="d-flex justify-content-center mb-23">
+        Tickets details not found
+    </div>
+</div>
+
+<div class="ticket-div" *ngIf="loading && (!this.tickets_list || !this.tickets_list[0])">
+    <div class="d-flex justify-content-center mb-23">
+       <h4>
+        Fetching details...
+       </h4>
+    </div>
+</div>
+
+<ng-container *ngIf="this.tickets_list && this.tickets_list?.length>0">
+    <ng-container *ngFor="let item of this.tickets_list">
+       
+        <!--freelance driver tickets-->
+        <ng-container *ngIf="item?.status && item?.status!='' && item?.status=='Accepted'">
+            
+            <app-freelance-accepted-job-detail [dt_id]="item?.id" [from_list]="true"></app-freelance-accepted-job-detail>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="item?.status && item?.status!='' && item?.status=='Approved'">
+       
+            <app-freelance-approved-job-detail [dt_id]="item?.id" [from_list]="true"></app-freelance-approved-job-detail>
+            <br>
+        </ng-container>       
+        <ng-container *ngIf="item?.status && item?.status!='' && item?.status=='Pending'">
+            
+            <app-freelance-request-job-detail [dt_id]="item?.id" [from_list]="true"></app-freelance-request-job-detail>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="!item?.tc_ticket && item?.status=='Driving'">
+            
+            <app-freelance-inprogress-job-detail [dt_id]="item?.id" [from_list]="true"></app-freelance-inprogress-job-detail>
+            <br>
+        </ng-container>
+        
+        <!-- normal tickets-->
+        
+        <ng-container *ngIf="!item?.ticket?.tc_ticket && item?.ticket?.status=='Cancelled'">
+            
+            <app-cancelled-ticket-detail [dt_id]="item?.id" [from_list]="true"></app-cancelled-ticket-detail>
+            <br>
+        </ng-container>
+    
+        <ng-container *ngIf="!item?.ticket?.tc_ticket && item?.ticket?.status=='Approved'">
+           
+            <app-approved-job-detail [dt_id]="item?.id" [from_list]="true"></app-approved-job-detail>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="!item?.ticket?.tc_ticket && item?.ticket?.status=='Completed'">
+            
+            <app-completed-job-detail [dt_id]="item?.id" [from_list]="true"></app-completed-job-detail>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="!item?.ticket?.tc_ticket && item?.ticket?.status=='Pending'">
+            
+            <app-request-job-detail [dt_id]="item?.id" [from_list]="true"></app-request-job-detail>
+            <br>
+        </ng-container>
+     
+        <ng-container *ngIf="!item?.ticket?.tc_ticket && item?.ticket?.status=='Driving'">
+            
+            <app-inprogress-job-detail [dt_id]="item?.id" [from_list]="true"></app-inprogress-job-detail>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="!item?.ticket?.tc_ticket && item?.ticket?.status=='Accepted'">
+            
+            <app-accepted-job-detail [dt_id]="item?.id" [from_list]="true"></app-accepted-job-detail>
+            <br>
+        </ng-container>
+
+        <!-- TC Tickets-->        
+        <ng-container *ngIf="item?.ticket?.tc_ticket=='YES' && item?.ticket?.status=='Cancelled'">
+            
+            <app-tc-cancelled-ticket-detail [dt_id]="item?.id" [from_list]="true"></app-tc-cancelled-ticket-detail>
+            <br>
+        </ng-container>
+      
+        <ng-container *ngIf="item?.ticket?.tc_ticket=='YES' && item?.ticket?.status=='Approved'">
+           
+            <app-tc-approved-job-detail [dt_id]="item?.id" [from_list]="true"></app-tc-approved-job-detail>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="item?.ticket?.tc_ticket=='YES' && item?.ticket?.status=='Completed'">
+            
+            <app-tc-completed-job-detail [dt_id]="item?.id" [from_list]="true"></app-tc-completed-job-detail>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="item?.ticket?.tc_ticket=='YES' && item?.ticket?.status=='Pending'">
+            
+            <app-tc-request-job-detail [dt_id]="item?.id" [from_list]="true"></app-tc-request-job-detail>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="item?.ticket?.tc_ticket=='YES' && item?.ticket?.status=='Accepted'">
+            
+            <app-tc-accepted-job-detail [dt_id]="item?.id" [from_list]="true"></app-tc-accepted-job-detail>
+            <br>
+        </ng-container>
+        <ng-container *ngIf="item?.ticket?.tc_ticket=='YES' && item?.ticket?.status=='Driving'">
+            
+            <app-tc-inprogress-job-detail [dt_id]="item?.id" [from_list]="true"></app-tc-inprogress-job-detail>
+            <br>
+        </ng-container>
+
+    </ng-container>
+</ng-container>

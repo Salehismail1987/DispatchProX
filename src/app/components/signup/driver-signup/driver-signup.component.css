@@ -1,0 +1,61 @@
+@import url("../../../../assets/css/style.css");
+@import url("../../../../assets/css/margins.css");
+.cursor-pointer
+{
+    cursor: pointer;
+}
+.mybtn-border-pink{
+    color: #000000;
+    padding: 9px 20px;
+    font-family: 'Gilroy-SemiBold';
+    font-size: 16px;
+    line-height: 19px;
+    border-radius: 10px;
+    border: 1px solid #FDD7E4;
+    background:white;
+    
+}
+
+.title-term-1{
+    font-family: 'Gilroy-Bold';
+    font-size: 20px;
+    line-height: 23px;
+    
+    color: #000000;
+}
+
+.title-term-2{
+    font-family: 'Gilroy';
+    font-size: 17px;
+    line-height: 23px;
+    font-weight: 600;
+    color: #000000
+}
+
+.agreement-div{
+   
+    padding-left: 1rem;
+    padding-right: 1rem;
+    
+}
+
+.agreement-content{
+    height: 300px;
+    overflow-y: scroll;
+    padding-right: 1rem;
+    margin-top: 1rem;
+}
+
+.terms{
+    color:#17A1FA;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.btn-success{
+    display: inline-block;
+    background: pink;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 0px;
+}

@@ -1,0 +1,71 @@
+<div class="main-content">
+    <br>
+    <div class="row">
+        <div class="col-3">
+            <div class="back-div" (click)="backTo('dashboard')">
+                <img src="assets/images/arrow-back.svg" class="">
+
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="heading-11 text-center pt-3">My profile</div>
+        </div>
+    </div>
+    <br>
+    <div class="white-div text-center ">
+
+        <img src="assets/images/driver-profile.png" class="w-50px pb-2" *ngIf="!this.loggedinUser.profile_image || this.loggedinUser.profile_image  == ''">
+        <img  class="w-50px pb-2" [src]="backendAPIURL+this.loggedinUser.profile_image" *ngIf="this.loggedinUser.profile_image  && this.loggedinUser.profile_image  !== null && this.loggedinUser.profile_image  != ''">
+
+        <div class="heading-5 color-blackshade-4 pb-1">{{this.loggedinUser?.full_name}}</div>
+        <div class="heading-6 color-blackshade-5 pb-1">{{this.loggedinUser?.email}}</div>
+        <div class="heading-6 color-blackshade-5 pb-1">{{this.loggedinUser?.contact_number}}</div>
+    </div>
+    <br>
+    <div class="p-4">
+        <div class="d-flex justify-content-between pb-2" [routerLink]="'/driver-notifications-list'">
+            <div class="d-flex" >
+                <img src="assets/driver-images-mobile/notification.svg" class="">
+                <div class="heading-5 color-blackshade-4 pl-4">Notifications</div>
+            </div>
+            <div class="">
+                <img *ngIf="this.notifications && this.notifications.length>0" src='assets/driver-images-mobile/red-circle.svg' style='margin-right: 15px;'/>
+                <img src="assets/images/arrow-right.svg" class="">
+            </div>
+
+        </div>
+        <br>
+        <div class="d-flex justify-content-between pb-2" [routerLink]="'/driver-edit-profile'">
+            <div class="d-flex" >
+                <img src="assets/driver-images-mobile/edit-profile.svg" class="">
+                <div class="heading-5 color-blackshade-4 pl-4">Edit profile</div>
+            </div>
+            <img src="assets/images/arrow-right.svg" class="">
+        </div>
+        <br>
+        <div class="d-flex justify-content-between pb-2"  [routerLink]="'/driver-change-password'">
+            <div class="d-flex">
+                <img src="assets/driver-images-mobile/change-password-driver.svg" class="">
+                <div class="heading-5 color-blackshade-4 pl-4">Change password</div>
+            </div>
+            <img src="assets/images/arrow-right.svg" class="">
+        </div>
+        <br>
+        <div class="d-flex justify-content-between pb-2"  [routerLink]="'/driver-contact-us'">
+            <div class="d-flex">
+                <img src="assets/driver-images-mobile/email-tragget.svg" class="">
+                <div class="heading-5 color-blackshade-4 pl-4">Email DispatchProX</div>
+            </div>
+            <img src="assets/images/arrow-right.svg" class="">
+        </div>
+    </div>
+
+    <div class="pl-4 pr-4 pt-0">
+        <button class="mybtn bg-pink" style="font-style: normal !important;
+        font-weight: 400 !important;
+        font-size: 18px !important;
+        line-height: 29px !important;color:#0B1E26 !important;padding: 10px;border:0px !important;" (click)="logout()">Logout</button>
+    </div>
+
+    <br>
+</div>

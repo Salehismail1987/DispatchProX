@@ -1,0 +1,73 @@
+@import url('../../../../assets/css/style.css');
+@import url('https://db.onlinewebfonts.com/c/040a78b437acd0433612f92e61d04a1b?family=Gilroy-Medium');
+@font-face {
+    font-family: 'Gilroy';
+    src: url('./../../../../assets/fonts/Gilroy-Regular/Gilroy-Regular.woff') format('woff2'), url('./../../../../assets/fonts/Gilroy-Regular/Gilroy-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy-Bold';
+    src: url('./../../../../assets/fonts/Gilroy-Bold/Gilroy-Bold.woff') format('woff2'), url('./../../../../assets/fonts/Gilroy-Bold/Gilroy-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy-SemiBold';
+    src: url('./../../../../assets/fonts/Gilroy-SemiBold/Gilroy-SemiBold.woff') format('woff2'), url('./../../../../assets/fonts/Gilroy-SemiBold/Gilroy-SemiBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AvertaStd-Bold';
+    src: url('./../../../../assets/fonts/AvertaStd-Bold/AvertaStd-Bold.woff') format('woff2'), url('./../../../../assets/fonts/AvertaStd-Bold/AvertaStd-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.driver-text-title{
+    font-family: 'Gilroy-Bold';
+    font-size: 20px;
+    line-height: 36px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #0B1E26;
+}
+
+.driver-text-subtitle{
+    font-family: 'Gilroy';
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: center;
+    
+}
+
+.field__input{
+    background: #FFFFFF;
+    border-radius: 10px;
+    /* border: none; */
+}
+.myinput{
+    border : 1px solid rgba(0, 0, 0, .25) ;
+
+}
+/* :host ::ng-deep .myinput {
+    border: 1px solid  rgba(0, 0, 0, .25); 
+  } */
+.required_field::after{
+    content:'*';
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+    right: 10px;
+    top: 10px;
+}
+.cursor-pointer
+{
+    cursor: pointer;
+}

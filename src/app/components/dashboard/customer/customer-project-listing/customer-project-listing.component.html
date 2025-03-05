@@ -1,0 +1,229 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="main-inner-body-container mt-15px">
+        <div class="main-project-setting-container inner_main_shadow">
+          <div class="main-project-setting-header ">
+            <div
+              class="main-project-setting-header-left d-flex align-items-center"
+            >
+              <img
+                src="../../../../../assets/images/project-title-img.svg"
+                alt="project-title-img"
+              />
+              <div class="heading-1-400 text-color-111727">Project</div>
+            </div>
+            <div class="main-project-setting-header-right">
+              <button
+                type="button"
+                class="btn add-new-project-btn"
+                (click)="this.showModal('new-project')"
+              >
+                <img src="./assets/images/add-icon.svg" alt="add-icon" />
+                <div class="heading-5-400 text-color-black">Add project</div>
+              </button>
+            </div>
+          </div>
+          <div class="project-setting-table-header-options">
+            <div class="project-setting-table-header-options-left">
+              <div class="heading-1-400 text-color-111727">
+                Project listings
+              </div>
+              <div class="heading-5-400-semi text-color-111727-opacity">
+                {{
+                  this.project_list && this.project_list.length > 0
+                    ? this.project_list.length
+                    : 0
+                }}
+                active projects available in the list
+              </div>
+            </div>
+            <div class="project-setting-table-header-options-right">
+              <div class="input-group">
+                <div class="form-floating project-setting-select-box">
+                  <select
+                    class="form-select"
+                    id="floatingSelectGrid"
+                    [(ngModel)]="this.sort_by"
+                    (ngModelChange)="handleChange($event)"
+                  >
+                    <option value="recently created">
+                      <div class="heading-5-400-semi text-color-black">
+                        Recently added
+                      </div>
+                    </option>
+                    <option value="job_number">
+                      <div class="heading-5-400-semi text-color-black">
+                        Job number
+                      </div>
+                    </option>
+
+                    <option value="closed_tickets_counts">
+                      <div class="heading-5-400-semi text-color-black">
+                        Most closed tickets
+                      </div>
+                    </option>
+                  </select>
+                  <label for="floatingSelectGrid">
+                    <div class="heading-8-400 text-color-grey">Sort by</div>
+                  </label>
+                </div>
+                <div class="project-setting-search-container">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="floatingInputGroup1"
+                    placeholder="Search project"
+                    [(ngModel)]="this.search_by"
+                    #searchby
+                  />
+                  <div
+                    class="search-icon-container"
+                    (click)="searchBy(searchby.value)"
+                  >
+                    <img
+                      src="./assets/images/search-icon.svg"
+                      alt="search-icon"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-setting-page-table table-responsive">
+            <table class="table">
+              <thead class="table-light project-setting-table-header">
+                <tr>
+                  <th scope="col" class="project-settings-table-header">
+                    <div class="heading-8-400 text-color-grey">
+                      Job <br />
+                      number
+                    </div>
+                  </th>
+                  <th scope="col" class="project-settings-table-header">
+                    <div class="heading-8-400 text-color-grey">
+                      Project name
+                    </div>
+                  </th>
+                  <th scope="col" class="project-settings-table-header">
+                    <div class="heading-8-400 text-color-grey">
+                      Project address
+                    </div>
+                  </th>
+                  <th scope="col" class="project-settings-table-header">
+                    <div class="heading-8-400 text-color-grey">Dump site</div>
+                  </th>
+                  <th scope="col" class="project-settings-table-header">
+                    <div class="heading-8-400 text-color-grey">Approvers</div>
+                  </th>
+                  <th scope="col" class="project-settings-table-header">
+                    <div class="heading-8-400 text-color-grey">
+                      Superintendent
+                    </div>
+                  </th>
+                  <th scope="col" class="project-settings-table-header">
+                    <div class="heading-8-400 text-color-grey">
+                      # of closed <br />
+                      tickets
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="project_list && project_list.length > 0">
+                  <tr
+                    class="cursor-pointer"
+                    *ngFor="let project of project_list"
+                    [routerLink]="['/project-profile', project.id]"
+                    title="Click to see Project Profile"
+                  >
+                    <td class="project-setting-table-body-data">
+                      <div class="heading-14-700-normal text-color-grey">
+                        {{ project.job_number }}
+                      </div>
+                    </td>
+                    <td class="project-setting-table-body-data">
+                      <div class="heading-14-700-normal text-color-grey">
+                        {{ project.project_name }}
+                      </div>
+                    </td>
+                    <td
+                      class="project-setting-table-body-data project-setting-address-data-field"
+                    >
+                      <div
+                        class="heading-14-700-normal text-color-grey"
+                        style="line-break: anywhere"
+                      >
+                        {{ project.project_location }}
+                      </div>
+                    </td>
+                    <td class="project-setting-table-body-data">
+                      <div class="heading-14-700-normal text-color-grey">
+                        <span
+                          *ngFor="
+                            let dump_site of project.dump_sites;
+                            index as index
+                          "
+                          ><span *ngIf="index > 0">, </span>
+                          {{ dump_site.dump_site }}</span
+                        >
+                      </div>
+                    </td>
+                    <td class="project-setting-table-body-data">
+                      <div class="heading-14-700-normal text-color-grey">
+                        {{ project.approver && project.approver.full_name }}
+                      </div>
+                    </td>
+                    <td class="project-setting-table-body-data">
+                      <div class="heading-14-700-normal text-color-grey">
+                        {{
+                          this.project.project_supridentent &&
+                          this.project?.project_supridentent?.length > 0 &&
+                          this.project?.project_supridentent[0]
+                            ? this.project?.project_supridentent[0]?.user
+                              ? this.project?.project_supridentent[0]?.user
+                                  ?.full_name
+                              : ""
+                            : "N/A"
+                        }}
+                      </div>
+                    </td>
+                    <td class="project-setting-table-body-data">
+                      <div class="heading-14-700-normal text-color-grey">
+                        {{ project?.closed_tickets_count }}
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="loading_project">
+                  <tr>
+                    <td colspan="7" class="text-center">
+                      <div class="heading-14-700-normal text-color-grey">   Fetching projects..</div>
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!loading_project && project_list?.length<1">
+                  <tr>
+                    <td colspan="7" class="text-center">
+                      <div class="heading-14-700-normal text-color-grey">      No projects found.</div>
+
+                    </td>
+                  </tr>
+                </ng-container>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-new-project-form
+  *ngIf="this.current_modal == 'new-project'"
+  [current_modal]="this.current_modal"
+  (showModl)="showModal($event)"
+  (setAct)="setActive($event)"
+></app-new-project-form>

@@ -1,0 +1,1038 @@
+@import url("../../../../../assets/css/trucking-dispatch-style.css");
+@import url("../../../../../assets/css/margins.css");
+@import url("https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css");
+
+.body-content {
+  padding: 15px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.line-height-19 {
+  line-height: 19px;
+}
+.line-height-17 {
+  line-height: 17px;
+}
+.line-height-14 {
+  line-height: 14px;
+}
+
+.fs-20-400-bold {
+  font-family: "Gilroy-Bold";
+  font-size: 20px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-16-400-bold {
+  font-family: "Gilroy-Bold";
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-16-400-semi {
+  font-family: "Gilroy-SemiBold";
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-15-400-semi {
+  font-family: "Gilroy-SemiBold";
+  font-size: 15px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-14-400-bold {
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-14-400-semi {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-14-400 {
+  font-family: "Gilroy-Regular";
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-14-400 {
+  font-family: "Gilroy";
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-13-400 {
+  font-family: "Gilroy";
+  font-size: 13px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-13-400-semi {
+  font-family: "Gilroy-SemiBold";
+  font-size: 13px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.fs-12-400 {
+  font-family: "Gilroy";
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: normal;
+}
+
+.text-color-000 {
+  color: #000000;
+}
+.text-color-gray {
+  color: #68696d;
+}
+.text-color-88898B {
+  color: #88898b;
+}
+
+.default-btn,
+.secondary-btn.selected {
+  box-shadow: 0px 4px 4px 0px #00000040 inset !important;
+  background: #17a1fa;
+  border: 1px solid #ffffff;
+  padding: 3px 10px;
+  border-radius: 5px;
+  min-height: 40px;
+  min-width: 150px;
+  color: #fff;
+}
+
+.secondary-btn {
+  border: 1px solid #17a1fa;
+  background: #ffffff;
+  padding: 3px 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  gap: 10px;
+  min-height: 40px;
+  min-width: 150px;
+  color: #17a1fa;
+}
+
+.secondary-btn > div {
+  min-width: 100px;
+}
+
+.project-profile-header-container {
+  border: 1px solid #e1e1e1;
+  background-color: #fff;
+  padding: 15px 15px;
+  border-radius: 10px;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.bar-header {
+  min-width: 397px;
+}
+
+.header-btn-container,
+.header-name-container {
+  gap: 10px;
+}
+
+.main-dispatch-container {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.contruction-main-container {
+  background: #fff8b8;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+.construction-main-heading {
+  gap: 15px;
+  margin-bottom: 10px;
+}
+.construction-main-heading div:first {
+  min-width: 300px;
+}
+
+.construction-project-details-container {
+  gap: 15px;
+}
+
+.project-name-container {
+  padding: 2px 10px 2px 10px;
+  gap: 4px;
+}
+
+.required_field11:after {
+  content: "*";
+  position: absolute;
+  top: 3px;
+  right: 12px;
+  color: #f73333;
+  font-family: "Gilroy-SemiBold";
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 29px;
+}
+
+.hide {
+  display: none !important;
+}
+
+.field {
+  display: inline-flex;
+  position: relative;
+  width: 100%;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin-bottom: 0px;
+}
+
+.required_field22:after {
+  content: "*";
+  position: absolute;
+  top: -20px;
+  right: 5px;
+  color: #f73333;
+  font-family: "Gilroy-SemiBold";
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 29px;
+}
+
+.required_field:after {
+  content: "*";
+  position: absolute;
+  top: 0;
+  right: -15px;
+  color: #f73333;
+}
+
+.field__input {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  border: none !important;
+  padding: 30px 5px 10px 5px;
+  color: #000000;
+  height: 59px;
+}
+
+.description_field__input {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  border: none !important;
+  padding: 10px 5px 10px 5px;
+  color: #000000;
+  height: 59px;
+  width: 100%;
+  background-color: transparent;
+}
+
+.field__input::placeholder,
+.field__input:-moz-placeholder {
+  color: #88898b;
+}
+
+.field__label {
+  font-family: "Gilroy";
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.6px;
+  color: #68696d;
+  top: 2px !important;
+  left: 5px !important;
+}
+.field__input[readonly] {
+  border: 1px solid #ccc; /* Greyish border */
+  background-color: #f5f5f5; /* Change background color to indicate disabled */
+  color: #999; /* Change text color to indicate disabled */
+  pointer-events: none; /* Disable pointer events */
+  pointer-events: none; /* Disable pointer events */
+}
+
+.mycheckbox-label {
+  pointer-events: none; /* Disable pointer events to prevent interaction */
+  opacity: 0.5; /* Reduce opacity to visually indicate disabled state */
+}
+.field__input2 {
+  border-radius: 5px;
+  border: 1px solid #e1e1e1;
+  padding: 2px 8px 1px 8px;
+}
+.input-icon-right {
+  position: absolute;
+  right: 10px;
+  bottom: 20%;
+  font-size: 20px;
+}
+
+.project-profile-input-paperticket {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  background: #fff;
+  height: 14px;
+  width: 14px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.project-profile-input-paperticket:checked {
+  background: #17a1fa;
+}
+
+input[type="checkbox"]:after {
+  content: " ";
+  position: relative;
+  left: 35%;
+  top: 17%;
+  width: 30%;
+  height: 60%;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(50deg);
+  display: none;
+}
+
+input[type="checkbox"]:checked:after {
+  display: block;
+}
+
+.input-popup-div {
+  background: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 5px 10px;
+  gap: 5px;
+  width: 100%;
+  position: absolute;
+  top: 47px;
+  left: 14px;
+  z-index: 2;
+  display: none;
+  min-width: 170px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.truck-type-popup {
+  position: absolute;
+  top: 47px;
+  left: 14px;
+  z-index: 2;
+  display: none;
+  min-width: 170px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border: 1px solid #e1e1e1;
+  border-radius: 0px 0px 5px 5px;
+  padding: 5px 10px;
+  background-color: #fff;
+}
+
+.myinput-new {
+  border: none;
+  padding: 0;
+  width: 100%;
+  font-family: "Gilroy-Bold" !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 17.33px !important;
+  color: #000;
+  background: transparent;
+  padding: 5px 0;
+  min-height: 34px;
+}
+
+.myinput-new2 {
+  width: 100%;
+  font-family: "Gilroy-SemiBold" !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 17.33px;
+  background: transparent;
+  border: 1px solid #e1e1e1;
+  padding: 4px 5px;
+  border-radius: 5px;
+  min-height: 25px;
+  margin-top: 4.5px;
+  margin-bottom: 4.5px;
+}
+
+.icon-center-right-2 {
+  position: absolute;
+  right: 10px;
+  bottom: 7px;
+  width: 18px;
+}
+
+.icon-center-right {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+}
+
+.icon-center-right {
+  position: absolute;
+  right: 10px;
+  bottom: 7px;
+  width: 18px;
+}
+
+.approvers-list-container {
+  gap: 5px;
+}
+
+.approvers-container {
+  background: #caeaff;
+  padding: 2px 5px;
+  border-radius: 5px;
+  gap: 10px;
+}
+
+.job-approvals-not-on-list {
+  border: 1px solid #e1e1e1;
+  padding: 2px 5px;
+  border-radius: 5px;
+  gap: 10px;
+}
+
+.approvers-list-footer {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.job-approvers-update-btn {
+  background: #17a1fa;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  padding: 6.5px 10px 6.5px 10px;
+  border-radius: 4px;
+  color: #fff;
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 17.33px;
+}
+
+.construction-description-field {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 6px 14px;
+}
+.construction-description-field > label {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 16.41px;
+}
+.customer-main-container {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+.bordered-field {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 10px 5px 10px 5px;
+  color: #000000;
+  width: 50px;
+  height: 25px;
+  text-align: center;
+  /* height: 59px; */
+}
+.bordered-field::placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-header {
+  height: 19px;
+}
+
+.input-label {
+  font-family: "Gilroy";
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.6px;
+  color: #68696d;
+}
+
+.required-field {
+  color: #f73333;
+  font-family: "Gilroy-SemiBold";
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 29px;
+}
+
+.input-container {
+  border: 1px solid rgba(225, 225, 225, 1);
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+
+.input-box-container {
+  padding: 1px 0px 5px;
+  gap: 5px;
+}
+
+.time-input-field {
+  width: 100px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+.customer-truck-type-container {
+  margin-top: 10px;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.customer-round-table {
+  padding: 0px 10px;
+}
+
+.tab_row_2 {
+  height: 38px !important;
+  border-bottom: 1px solid #e1e1e1 !important;
+}
+.tab_row_2 td {
+  padding: 2px 10px 2px 10px !important;
+  border-bottom: 1px solid #e1e1e1 !important;
+  cursor: pointer;
+}
+.tab_head_2 th {
+  padding: 5px 10px;
+}
+
+.projects-list-table2 {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.bg-blue-final {
+  background: #caeaff;
+}
+
+.bg-light-yellow {
+  background: #fdf9d9;
+}
+
+.tab_head_2 {
+  height: 26px;
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+}
+.tab_head_2 td,
+.tab_body_2 td {
+  padding: 5px 10px;
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+}
+.tab_body_2 {
+  height: 34px;
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+}
+.tab_body_22 td {
+  padding: 2px 10px;
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+}
+.tab_body_22 {
+  height: 55px;
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.input-label-grey {
+  font-family: "Gilroy";
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.6px;
+  text-align: left;
+  color: #68696d;
+}
+
+.bold-input-label {
+  font-family: "Gilroy";
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 15.6px;
+  text-align: left;
+  color: #68696d;
+}
+
+.input-value {
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17.33px;
+  text-align: left;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  color: #68696d;
+}
+
+.custom-button-radio {
+  height: 14px;
+  width: 14px;
+  border-radius: 4px;
+  background: #d9d9d9 !important;
+  border: 1px solid #e1e1e1;
+  color: #000;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+}
+
+.bg-light-grey {
+  background: #fafafa !important;
+}
+
+.width-4 {
+  width: 4%;
+}
+
+.width-6 {
+  width: 6%;
+}
+
+.width-16 {
+  width: 16%;
+}
+
+.table-field {
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 4px 5px 4px 5px;
+  color: #000000;
+  max-width: 240px;
+  height: 25px;
+  /* height: 59px; */
+}
+.table-field::placeholder {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  color: #88898b;
+}
+
+.input-box-container2 {
+  padding: 4px 0px;
+}
+
+.copy-next-round-btn {
+  background: #d9d9d9;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border-radius: 5px;
+  padding: 3px 5px;
+  min-height: 38px;
+  max-width: 80px;
+}
+
+.add-next-round-container {
+  padding: 8px 12px;
+}
+
+.vendor-main-container {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.vendor-detail-input-container,
+.select-vendor-details-container {
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.vendor-dropdown-field {
+  display: inline-flex;
+  position: relative;
+  width: 100%;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 2px 10px;
+  margin-bottom: 0px;
+}
+
+.vendor-icon-center-right {
+  position: absolute;
+  right: 10px;
+  bottom: 6px;
+  width: 18px;
+  height: 15px;
+}
+
+.dropdown-value-container {
+  height: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vendor-no-trucks-input-box {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.vendor-bordered-field {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  padding: 10px 5px 10px 5px;
+  color: #000000;
+  width: 50px;
+  height: 25px;
+  text-align: center;
+  /* height: 59px; */
+}
+.vendor-bordered-field::placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vendor-pay-input-field:focus {
+  border: 1px solid #caeaff;
+  border-radius: 5px;
+  height: 30px;
+  color: #68696d;
+  font-size: 16px;
+}
+
+.vendor-pay-input-field:focus-visible {
+  outline: none !important;
+}
+
+.vendor-pay-input-field:focus ~ .fs-14-400-semi {
+  font-size: 16px;
+  color: #000;
+}
+
+.vendor-pay-input-field-before {
+  font-size: 16px;
+  color: #68696d;
+}
+
+.width-60 {
+  width: 60px;
+}
+
+.vendor-pay-input-gray-container {
+  background-color: #d9d9d9;
+}
+
+.vendor-pay-input-gray-container input {
+  background-color: transparent;
+}
+
+.vendor-dirver-numb-container {
+  border: 1px solid #88898b;
+  border-radius: 5px;
+  padding: 10px;
+  gap: 10px;
+  width: 80px;
+}
+
+.vendor-dirver-numb-container > svg {
+  fill: #88898b;
+}
+
+.vendor-selected-dirver-numb-container {
+  background: #17a1fa;
+  border: 1px solid #68696d;
+  border-radius: 5px;
+  padding: 10px;
+  gap: 10px;
+  width: 80px;
+}
+
+.vendor-selected-dirver-numb-container > svg {
+  fill: #fff;
+}
+
+.vendor-selected-dirver-numb-container div {
+  color: #fff !important;
+}
+
+.driver-popup-highlight-container {
+  background: #caeaff;
+  padding: 2px 5px;
+  border-radius: 5px;
+  gap: 10px;
+}
+
+.driver-popup-highlight-container.selected {
+  background-color: #d9d9d9 !important;
+}
+
+.vendor-driver-pay-bordered-field {
+  border: none;
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
+  /* border-radius: 5px; */
+  font-family: "Gilroy-SemiBold";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  /* padding: 10px 5px 10px 5px; */
+  color: #000000;
+  width: 50px;
+  /* height: 25px; */
+  /* text-align: center; */
+  /* height: 59px; */
+}
+.vendor-driver-pay-bordered-field::placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #88898b;
+}
+.vendor-driver-pay-bordered-field:focus {
+  outline: none;
+}
+.vendor-driver-input-inner-box {
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  padding: 3px 5px;
+}
+.padding-buttom-2 {
+  padding-bottom: 2px;
+}
+
+.dispatch-main-container {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.dispatch-main-heading {
+  width: 300px;
+}
+
+.dispatch-tickets-confirmation-container {
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.dispatch-paper-tickets-container {
+  border-right: 1px solid #e1e1e1;
+  padding: 2px 25px 2px 25px;
+  gap: 4px;
+}
+
+.dispatch-tickets-checkbox {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  background: #fff;
+  height: 24px;
+  width: 24px;
+  border: 2px solid #17a1fa;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.dispatch-tickets-checkbox:checked {
+  background: #17a1fa;
+}
+
+.dispatch-tickets-checkbox::after {
+  content: " ";
+  position: relative;
+  left: 32% !important;
+  top: 3% !important;
+  width: 43% !important;
+  height: 80% !important;
+  border: solid #fff;
+  border-width: 0px 4px 4px 0 !important;
+  transform: rotate(50deg);
+}
+
+.dispatch-paper-tickets-header {
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.require-tickets-help-txt {
+  width: 210px;
+}
+
+.dispatch-repeat-container {
+  gap: 5px;
+  padding: 2px 10px;
+}
+
+.dispatch-schedule-input {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  border: none !important;
+  padding: 30px 5px 10px 5px;
+  color: #000000;
+  height: 50px;
+  width: 100%;
+}
+
+.dispatch-schedule-field {
+  display: inline-flex;
+  position: relative;
+  width: 100%;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 2px 0px;
+  margin-bottom: 0px;
+}
+
+.dispatch-footer-container {
+  padding: 12px 0px;
+}
+
+.dispatch-footer-btn-container {
+  gap: 15px;
+}
+
+.dispatch-footer-back-btn {
+  border: 1px solid #17a1fa;
+  background: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  gap: 10px;
+  min-height: 50px;
+  min-width: 170px;
+  color: #17a1fa;
+}
+
+.dispatch-footer-submit-btn {
+  box-shadow: 0px 4px 4px 0px #00000040 !important;
+  background: #17a1fa;
+  border: 1px solid #17a1fa;
+  padding: 3px 10px;
+  border-radius: 5px;
+  min-height: 50px;
+  min-width: 170px;
+  color: #fff;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  background: url("../../../../../assets/icons/grey-calendar-icon.svg")
+    no-repeat;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
+}
+
+.dispatch-schedule-input-icon {
+  position: absolute;
+  top: 15px;
+  right: 12px;
+  height: 18px;
+  width: 14px;
+}
+
+::ng-deep .bs-datepicker-head {
+  background-color: #17a1fa !important;
+}
+
+::ng-deep .theme-green .bs-datepicker-body table td span.selected {
+  background-color: #17a1fa !important;
+}
+
+@media (min-width: 768px) {
+  /* .short-col {
+    max-width: 11.666667% !important;
+  }
+  .short-col-2 {
+    max-width: 12.66667% !important;
+  } */
+}
+.table-responsive.mytable{
+  overflow-x: visible !important;
+}
+
+@media (max-width: 768px) {
+  .table-responsive.mytable{
+    overflow-x: auto !important;
+  }
+
+}
+
+.inner_main_shadow{
+  box-shadow: 0px 4px 4px 0px #00000040 inset;
+
+}

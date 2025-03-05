@@ -1,0 +1,133 @@
+<ng-container *ngIf="this.loggedinUser.account_type=='Driver'">
+
+    <div class="header-content" *ngIf="screen =='tablet' || screen =='desktop'" >
+        <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="d-flex plr-5px right border-top-icon {{unreadMessages >0 ? 'bg-pink box-shadow':''}}">
+            <div style="align-self:center" *ngIf="unreadMessages > 0">
+                <a [routerLink]="'/driver-profile-settings'">
+                    <img src="assets/images/un_read.svg" class="" style="width: 35px;">
+                  </a>
+            </div>
+            <div style="align-self:center" *ngIf="unreadMessages === 0">
+                <a [routerLink]="'/driver-profile-settings'">
+                    <img src="assets/images/read_icon.svg" style="width: 35px;">
+                  </a>
+            </div>
+
+
+
+            <div class="userinfo">
+                <div class="header-username" *ngIf="this.loggedinUser.account_type=='Trucking Company'; else OtherUser">{{this.loggedinUser.full_name}}</div>
+               <ng-template #OtherUser >
+                <div class="header-username" >{{this.loggedinUser.full_name}}
+                    <div class="userinfo-2">
+                        {{this.loggedinUser.company_name?this.loggedinUser.company_name:''}}
+                        {{this.loggedinUser?.company_name && this.loggedinUser?.role?.role_name?
+                            ' - ':''}}
+                        Driver
+                    </div>
+                </div>
+
+               </ng-template>
+
+            </div>
+            <div class="dropdown nav-link dropdown-div pt-0" >
+                <button class="dropdown-toggle mydropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <img src="assets/images/driver-profile.png" style="width: 50px;
+    border-radius: 10px;" class="mydropdown-img" *ngIf="!this.loggedinUser.profile_image || this.loggedinUser.profile_image  == ''">
+                    <img  class="user-profile-pic mydropdown-img" style="width: 50px;
+                    border-radius: 10px;"  [src]="backendAPIURL+this.loggedinUser.profile_image" *ngIf="this.loggedinUser.profile_image  && this.loggedinUser.profile_image  !== null && this.loggedinUser.profile_image  != ''">
+                </button>
+                <div class="dropdown-menu mydropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a *ngIf="this.loggedinUser.account_type == 'Customer'" class="dropdown-item" [routerLink]="['/customer_setting']">Settings</a>
+                    <a *ngIf="this.loggedinUser.account_type == 'Trucking Company'" class="dropdown-item" [routerLink]="['/tc-profile-settings']">Settings</a>
+                    <a *ngIf="this.loggedinUser.account_type == 'Driver'" class="dropdown-item" [routerLink]="['/driver-profile-settings']">Settings</a>
+                    <a class="dropdown-item cursor-pointer" (click)="logoutUser()">Logout</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="this.screen == 'mobile'">
+        <div class="header-div">
+            <div>
+                <div class="heading-6 color-blackshade-5 ">Welcome {{this.loggedinUser.full_name}} 👋🏽</div>
+                <div class="heading-7 color-blackshade-4 ">{{this.current_page}}</div>
+            </div>
+            <img src="assets/images/driver-profile.png" class="w-50px" *ngIf="!this.loggedinUser.profile_image || this.loggedinUser.profile_image  == ''" [routerLink]="'/driver-profile'">
+            <img  class="w-50px" [src]="backendAPIURL+this.loggedinUser.profile_image" *ngIf="this.loggedinUser.profile_image  && this.loggedinUser.profile_image  !== null && this.loggedinUser.profile_image  != ''" [routerLink]="'/driver-profile'">
+
+        </div>
+    </div>
+</ng-container>
+
+<div class="header-content pb-0"  *ngIf="this.loggedinUser?.role?.role_name=='Admin' || this.loggedinUser?.role?.role_name=='Dispatcher' || this.loggedinUser?.role?.role_name=='Superintendent' || this.loggedinUser?.role?.role_name=='Approver' || this.loggedinUser?.role?.role_name=='Bookkeeper' || this.loggedinUser.account_type=='User' || this.loggedinUser.account_type=='Trucking Company' || this.loggedinUser.account_type=='Customer'" style="justify-content: space-between;max-height:60px; ">
+    <button type="button" id="sidebarCollapse" class="btn btn-info">
+        <i class="fa fa-bars"></i>
+    </button>
+    <div class="d-flex right">
+
+        <div class="d-flex right">
+            <!-- For Trucking Company -->
+            <div style="align-self:center" *ngIf="this.loggedinUser.account_type == 'Trucking Company' && unreadMessages > 0">
+                <a [routerLink]="'/tc-user-profile'">
+                    <img src="assets/images/un_read.svg" style="width: 35px;">
+                </a>
+            </div>
+            <div style="align-self:center" *ngIf="this.loggedinUser.account_type == 'Trucking Company' && unreadMessages === 0">
+                <a [routerLink]="'/tc-user-profile'">
+                    <img src="assets/images/read_icon.svg" style="width: 35px;">
+                </a>
+            </div>
+
+            <!-- For Customer -->
+            <div style="align-self:center" *ngIf="this.loggedinUser.account_type == 'Customer' && unreadMessages > 0">
+                <a [routerLink]="'/cust-user-profile'">
+                    <img src="assets/images/un_read.svg" style="width: 35px;">
+                </a>
+            </div>
+            <div style="align-self:center" *ngIf="this.loggedinUser.account_type == 'Customer' && unreadMessages === 0">
+                <a [routerLink]="'/cust-user-profile'">
+                    <img src="assets/images/read_icon.svg" style="width: 35px;">
+                </a>
+            </div>
+        </div>
+
+        <div class="userinfo">
+            <div class="header-username" *ngIf="this.loggedinUser.account_type=='Trucking Company'; else OtherUser">
+                {{this.loggedinUser.full_name}}
+                <div class="userinfo-2">
+                    {{this.loggedinUser?.company_name? this.loggedinUser?.company_name:''}}
+                    {{this.loggedinUser?.company_name && this.loggedinUser?.role?.role_name?
+                    ' - ':''}}
+                    {{this.loggedinUser?.role?.role_name? this.loggedinUser?.role?.role_name: 'Admin'
+                    }}
+                </div>
+            </div>
+           <ng-template #OtherUser >
+            <div class="header-username" >{{this.loggedinUser.full_name}} </div>
+            <div class="userinfo-2">
+                {{this.loggedinUser?.company_name? this.loggedinUser?.company_name:''}}
+            </div>
+           </ng-template>
+
+        </div>
+        <div class="dropdown nav-link dropdown-div pt-0" >
+            <button class="dropdown-toggle mydropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                <img src="assets/icons/user.svg" class="mydropdown-img" *ngIf="!this.loggedinUser.profile_image || this.loggedinUser.profile_image  == ''">
+                <img  class="user-profile-pic mydropdown-img" [src]="backendAPIURL+this.loggedinUser.profile_image" *ngIf="this.loggedinUser.profile_image  && this.loggedinUser.profile_image  !== null && this.loggedinUser.profile_image  != ''">
+            </button>
+            <div class="dropdown-menu mydropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a *ngIf="this.loggedinUser.account_type == 'Customer' || (this.loggedinUser?.role?.role_name == 'Approver' &&  this.loggedinUser?.parent_user?.account_type=='Customer')  || (this.loggedinUser?.role?.role_name == 'Dispatcher' &&  this.loggedinUser?.parent_user?.account_type=='Customer') || (this.loggedinUser?.role?.role_name == 'Admin' &&  this.loggedinUser?.parent_user?.account_type=='Customer')" class="dropdown-item" [routerLink]="['/cust-user-profile']">Settings</a>
+                <a *ngIf="this.loggedinUser.account_type == 'Trucking Company' || (this.loggedinUser?.role?.role_name == 'Bookkeeper' &&  this.loggedinUser?.parent_user?.account_type=='Trucking Company') || (this.loggedinUser?.account_type == 'User' &&  this.loggedinUser?.parent_user?.account_type=='Trucking Company') || (this.loggedinUser?.role?.role_name == 'Admin' &&  this.loggedinUser?.parent_user?.account_type=='Trucking Company')" class="dropdown-item" [routerLink]="['/tc-user-profile']">Settings</a>
+
+                <a class="dropdown-item" (click)="logoutUser()">Logout</a>
+            </div>
+        </div>
+
+    </div>
+</div>

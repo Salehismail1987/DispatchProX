@@ -1,0 +1,127 @@
+.ui-widget-header {
+    border: none;
+    background: none;
+    font-family: 'Gilroy-Bold';
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.ui-datepicker th {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.ui-datepicker th {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.calenderweek2 > .ui-datepicker td {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.ui-datepicker td a,
+.ui-datepicker th a {
+    text-align: center;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+    border: none;
+    background: none;
+    padding: 5px;
+}
+
+.ui-datepicker-today a {
+    font-weight: 600 !important;
+    font-size: 22px !important;
+}
+
+
+.calenderweek > .ui-datepicker-today a {
+    font-weight: 600 !important;
+    font-family: 'Gilroy-Bold';
+    font-size: 14px !important;
+    line-height: 16px;
+    color: #88898B;
+}
+
+
+.calenderweek2 > .ui-datepicker-today a {
+    font-weight: 600 !important;
+    font-family: 'Gilroy-Bold';
+    font-size: 14px !important;
+    line-height: 16px;
+    color: #88898B;
+}
+
+
+.calenderweek .ui-datepicker td {
+    font-weight: 400 !important;
+    font-size: 14px !important;
+}
+
+
+.calenderweek2 .ui-datepicker td {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+.ui-datepicker-calendar tr:has(.ui-state-active) {
+    background: #CAEAFF;
+    border-radius: 4px;
+}
+
+tr:has(.ui-state-active) td:first-child a,
+tr:has(.ui-state-active) td:last-child a {
+    font-weight: 600 !important;
+    font-size: 22px !important;
+}
+
+
+.calenderweek tr:has(.ui-state-active) td:first-child a,
+.calenderweek tr:has(.ui-state-active) td:last-child a {
+    font-weight: 300 !important;
+    font-size: 14px !important;
+}
+.calenderweek2 tr:has(.ui-state-active) td:first-child a,
+.calenderweek2 tr:has(.ui-state-active) td:last-child a {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    color: #88898B;
+}
+
+
+
+
+.calenderweek2 tr:has(.ui-state-default) td a,
+.calenderweek2 tr:has(.ui-state-default) td a {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    color: #88898B;
+}
+
+.calenderweek2  .ui-datepicker-title > .ui-datepicker-year
+{
+    background: #FDD7E4 !important;
+    padding: 2px !important;
+    padding-left: 4px !important;
+    margin-left: -4px !important;
+    border-radius: 0px 4px 4px 0px !important;
+}
+.calenderweek2  .ui-datepicker-title > .ui-datepicker-month
+{
+    background: #FDD7E4 !important;
+    padding: 2px !important;
+    border-radius: 4px 0px 0px 4px !important;
+}

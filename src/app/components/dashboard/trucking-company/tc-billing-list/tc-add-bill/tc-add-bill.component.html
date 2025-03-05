@@ -1,0 +1,762 @@
+<div
+  class="modal fade come-from-modal right"
+  id="modal-addbill"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-bg-white">
+      <div class="modal-body">
+        <div class="title-7 text-center mb-15px">Add Invoice</div>
+        <form
+          [formGroup]="addInvoiceForm"
+          (ngSubmit)="handleAddBill()"
+          enctype="multipart/form-data"
+        >
+          <div class="row">
+            <div class="col-md-4">
+              <div
+                class="text-danger"
+                *ngIf="
+                  isFormClicked &&
+                  this.addInvoiceForm.get('invoice_number')?.invalid
+                "
+              >
+                Invoice number is required
+              </div>
+              <!-- <label class="field text-field required_field mb-0 ">
+                                <input type="text" class="field__input height-43px"  placeholder="Type here" formControlName="invoice_number" >
+                                <span class="field__label-wrap">
+                                    <span class="field__label field__label2">Invoice Number</span>
+                                </span>
+                            </label> -->
+              <div class="title-52 text-grey-shade2">
+                Invoice Number <span class="float-right text-danger">*</span>
+              </div>
+              <div class="position-relative">
+                <img
+                  src="../../assets/icons/pencil2.svg"
+                  alt=""
+                  width="17px"
+                  class="top-right-icon2"
+                />
+                <input
+                  type="text"
+                  class="field__input height-43px"
+                  placeholder="Type here"
+                  formControlName="invoice_number"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div
+                class="text-danger"
+                *ngIf="
+                  isFormClicked &&
+                  this.addInvoiceForm.get('invoice_date')?.invalid
+                "
+              >
+                Invoice date is required
+              </div>
+
+              <div class="title-52 text-grey-shade2">
+                Invoice date <span class="float-right text-danger">*</span>
+              </div>
+              <div class="position-relative">
+                <input
+                  type="date"
+                  (change)="handleInvoiceDate($event)"
+                  class="field__input field__input-date height-43px dates"
+                  formControlName="invoice_date"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="title-52 text-grey-shade2">Due date</div>
+              <div class="position-relative">
+                <input
+                  type="date"
+                  class="field__input field__input-date height-43px dates"
+                  formControlName="due_date"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="ticket-detail-div">
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-6">
+                  <div class="title-52 text-grey-shade2">
+                    Vendor name <span class="float-right text-danger">*</span>
+                  </div>
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                      isFormClicked &&
+                      this.addInvoiceForm.get('invoice_by_id')?.invalid
+                    "
+                  >
+                    Vendor is required
+                  </div>
+
+                  <div class="selectlist">
+                    <div class="selectlist-input height-43px">
+                      <div
+                        class="selectlist-input-val {{
+                          set_company?.company_name ? 'active' : ''
+                        }}"
+                      >
+                        {{
+                          set_company?.company_name
+                            ? set_company?.company_name
+                            : "Select"
+                        }}
+                      </div>
+                      <img
+                        src="../../assets/icons/pencil2.svg"
+                        alt=""
+                        width="17px"
+                        class="top-right-icon2"
+                      />
+                    </div>
+                    <div class="selectlist-options selectlist-options-tc">
+                      <div class="title-5-new2 mb-18">Vendor</div>
+                      <div
+                        class="title-7 text-color-black-shade3 mb-9 selectlist-option"
+                        *ngFor="let comp of this.all_companies"
+                        (click)="setCompany(comp)"
+                      >
+                        {{ comp?.company_name }}
+                      </div>
+
+                      <div class="title-7 not-in-list position-relative">
+                        <span
+                          class="text-color-black-shade3"
+                          data-toggle="modal"
+                          data-target="#newInvTC"
+                          style="cursor: pointer"
+                        >
+                          Not in the list?
+                        </span>
+                        <img
+                          src="../../assets/icons/pencil2.svg"
+                          data-toggle="modal"
+                          data-target="#newInvTC"
+                          style="cursor: pointer"
+                          alt=""
+                          width="17px"
+                          class="top-right-icon3"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6" align="right">
+                  <div
+                    class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                  >
+                    Email address
+                  </div>
+                  <input
+                    type="text"
+                    class="field-input2 text-right height-43px"
+                    value="{{ this.set_company?.email }}"
+                    formControlName="invoice_by_email"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-12">
+                  <div class="title-52 text-grey-shade2">
+                    Address <span class="float-right text-danger">*</span>
+                  </div>
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="field-input2 height-43px"
+                      value="{{ this.set_company?.address }}"
+                      formControlName="invoice_by_address"
+                    />
+                    <img
+                      src="../../assets/icons/pencil2.svg"
+                      alt=""
+                      class="top-right-icon2"
+                      width="17px"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-6">
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                      isFormClicked &&
+                      this.addInvoiceForm.get('invoice_by_bussiness_no')
+                        ?.invalid
+                    "
+                  >
+                    Business number is required
+                  </div>
+                  <div class="title-52 text-grey-shade2">
+                    Business number
+                    <span class="float-right text-danger">*</span>
+                  </div>
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="field-input2 height-43px"
+                      value="{{ this.set_company?.customer?.business_no }}"
+                      placeholder="Type here.."
+                      formControlName="invoice_by_bussiness_no"
+                    />
+                    <img
+                      src="../../assets/icons/pencil2.svg"
+                      alt=""
+                      class="top-right-icon2"
+                      width="17px"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                      isFormClicked &&
+                      this.addInvoiceForm.get('invoice_by_wsno')?.invalid
+                    "
+                  >
+                    Work safety number is required
+                  </div>
+                  <div class="title-52 text-grey-shade2 text-right">
+                    Work safety number
+                    <span class="float-left text-danger">*</span>
+                  </div>
+                  <div class="position-relative">
+                    <img
+                      src="../../assets/icons/pencil2.svg"
+                      alt=""
+                      class="top-left-icon2"
+                      width="17px"
+                    />
+                    <input
+                      type="text"
+                      class="field-input2 text-right height-43px"
+                      value="{{ this.set_company?.customer?.wsbc_no }}"
+                      placeholder="Type here.."
+                      formControlName="invoice_by_wsno"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ticket-detail-div mb-22">
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-12">
+                  <div class="title-52 text-grey-shade2">Trucking company</div>
+                  <div class="title-5-new">
+                    {{ this.loggedinUser?.company_name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-6">
+                  <div class="title-52 text-grey-shade2">Contact person</div>
+                  <div class="title-5-new">
+                    {{ this.loggedinUser?.full_name }}
+                  </div>
+                </div>
+                <div class="col-6" align="right">
+                  <div
+                    class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                  >
+                    Email address
+                  </div>
+                  <div class="title-5-new text-right">
+                    {{ this.loggedinUser?.email }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-12">
+                  <div class="title-52 text-grey-shade2">Address</div>
+                  <div class="title-5-new">
+                    {{
+                      this.loggedinUser?.address &&
+                      this.loggedinUser?.address != "null"
+                        ? this.loggedinUser?.address
+                        : ""
+                    }}
+                    {{
+                      this.loggedinUser?.city
+                        ? ", " + this.loggedinUser?.city
+                        : ""
+                    }}
+                    {{
+                      this.loggedinUser?.province
+                        ? ", " + this.loggedinUser?.province
+                        : ""
+                    }}
+                    {{
+                      this.loggedinUser?.post_code
+                        ? ", " + this.loggedinUser?.post_code
+                        : ""
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px">
+            <div class="row mb-20px">
+              <div class="col-6">
+                <div class="title-52 text-grey-shade2">Invoicing period</div>
+                <div class="input-div required_field getinputfield height-43px">
+                  <div class="myinput-new selected">
+                    {{
+                      this.select_duration_type
+                        ? this.select_duration_type
+                        : "All time"
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/images/dropdown.svg"
+                    class="top-right-icon2"
+                  />
+                  <div
+                    class="input-popup-div duration_list"
+                    style="display: none"
+                  >
+                    <div class="d-flex justify-content-space-between mb-1">
+                      <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                        Invoicing period
+                      </div>
+                      <div
+                        class="title-5-new2 text-color-black-shade5 text-right mb-4px"
+                      >
+                        Set default
+                      </div>
+                    </div>
+
+                    <div
+                      class="d-flex justify-content-between mb-5px list-item2"
+                      (click)="handleFilterByDuration('Monthly')"
+                    >
+                      <div
+                        [ngClass]="
+                          this.select_duration_type == 'Monthly'
+                            ? 'title-5-new'
+                            : 'title-5-new text-color-black-shade7'
+                        "
+                      >
+                        Monthly
+                      </div>
+                      <input
+                        type="checkbox"
+                        [checked]="
+                          this.default_duration_type == 'Monthly' ? true : false
+                        "
+                        (change)="this.markDefaultDuration($event, 'Monthly')"
+                        class="mycheckbox2"
+                      />
+                    </div>
+
+                    <div
+                      class="d-flex justify-content-between mb-5px list-item2"
+                      (click)="handleFilterByDuration('Semi-monthly')"
+                    >
+                      <div
+                        [ngClass]="
+                          this.select_duration_type == 'Semi-monthly'
+                            ? 'title-5-new'
+                            : 'title-5-new text-color-black-shade7'
+                        "
+                      >
+                        Semi-monthly
+                      </div>
+                      <input
+                        type="checkbox"
+                        [checked]="
+                          this.default_duration_type == 'Semi-monthly'
+                            ? true
+                            : false
+                        "
+                        (change)="
+                          this.markDefaultDuration($event, 'Semi-monthly')
+                        "
+                        class="mycheckbox2"
+                      />
+                    </div>
+
+                    <div
+                      class="d-flex justify-content-between mb-5px list-item2"
+                      (click)="handleFilterByDuration('Weekly')"
+                    >
+                      <div
+                        [ngClass]="
+                          this.select_duration_type == 'Weekly'
+                            ? 'title-5-new'
+                            : 'title-5-new text-color-black-shade7'
+                        "
+                      >
+                        Weekly
+                      </div>
+                      <input
+                        type="checkbox"
+                        [checked]="
+                          this.default_duration_type == 'Weekly' ? true : false
+                        "
+                        (change)="this.markDefaultDuration($event, 'Weekly')"
+                        class="mycheckbox2"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Dates
+                </div>
+                <div class="title-5-new text-right">
+                  <input
+                    class="field__input height-43px"
+                    placeholder=""
+                    name="scheduled_date"
+                    type="text"
+                    readonly
+                    name="daterange"
+                    autocomplete="off"
+                    value="{{
+                      this.addInvoiceForm.get('invoice_start_date')?.value
+                        | date : 'MMMM dd, Y'
+                    }} - {{
+                      this.addInvoiceForm.get('invoice_end_date')?.value
+                        | date : 'MMMM dd, Y'
+                    }}"
+                  />
+                </div>
+
+                <input type="hidden" formControlName="invoice_start_date" />
+                <input type="hidden" formControlName="invoice_end_date" />
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px mt-2">
+            <div class="row">
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Hours :
+                </div>
+              </div>
+              <div class="col-6 display-table">
+                <div class="vertical-middle">
+                  <input
+                    type="number"
+                    min="0"
+                    class="field-input2 mini-field"
+                    placeholder="Enter"
+                    formControlName="hours"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px mt-2">
+            <div class="row">
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Rounds :
+                </div>
+              </div>
+              <div class="col-6 display-table">
+                <div class="vertical-middle">
+                  <input
+                    type="number"
+                    min="0"
+                    class="field-input2 mini-field"
+                    placeholder="Enter"
+                    formControlName="rounds"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px">
+            <div class="row">
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Subtotal :
+                </div>
+              </div>
+              <div class="col-6 display-table">
+                <div class="vertical-middle">
+                  <input
+                    type="number"
+                    min="0"
+                    (input)="changeSubtotal($event)"
+                    class="field-input2 mini-field"
+                    placeholder="$____.__"
+                    formControlName="subtotal"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px">
+            <div class="row">
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  ({{ this.gst?.type }}): {{ this.gst?.tax }}% :
+                </div>
+              </div>
+              <div class="col-6 display-table">
+                <div class="vertical-middle">
+                  <input
+                    type="number"
+                    min="0"
+                    (input)="reCalculate($event)"
+                    class="field-input2 mini-field"
+                    placeholder="$____.__"
+                    formControlName="tax"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-15px">
+            <div class="row">
+              <div class="col-2"></div>
+              <div class="col-4 border-top-bottom" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Total :
+                </div>
+              </div>
+              <div class="col-4 border-top-bottom display-table">
+                <div class="vertical-middle">
+                  <div class="required_field_left">
+                    <input
+                      type="number"
+                      min="0"
+                      value="{{ this.addInvoiceForm.get('total')?.value }}"
+                      class="field-input2 mini-field"
+                      placeholder="$____.__"
+                      formControlName="total"
+                    />
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      isFormClicked && this.addInvoiceForm.get('total')?.invalid
+                    "
+                  >
+                    Total is required
+                  </span>
+                </div>
+              </div>
+              <div class="col-2"></div>
+            </div>
+          </div>
+          <div class="plr-20px mb-15px">
+            <div class="row">
+              <div class="col-12" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Due date
+                </div>
+                <div class="title-5-new">
+                  {{
+                    this.addInvoiceForm.get("due_date")?.value
+                      | date : "MMMM dd, Y"
+                  }}
+                </div>
+                <input
+                  type="hidden"
+                  formControlName="due_date"
+                  value="{{ this.addInvoiceForm.get('due_date')?.value }}"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="plr-20px mb-21">
+            <div class="position-relative notes-div">
+              <div class="title-5-new2 text-color-black-shade2 mb-6">
+                Your notes
+              </div>
+              <textarea
+                class="myinput5 myinput5-textarea"
+                placeholder="Type here"
+                rows="1"
+                formControlName="notes"
+              ></textarea>
+              <img
+                src="../../assets/icons/pencile.svg"
+                alt=""
+                class="top-right-icon"
+                width="17px"
+              />
+            </div>
+          </div>
+          <div align="center">
+            <button
+              class="mybtn3 bg-blue2 text-white mb-10 cp-1 btn-nav"
+              type="submit"
+              *ngIf="this.loading != 'add'"
+            >
+              Add
+            </button>
+            <button
+              class="mybtn3 bg-blue2 text-white mb-10 cp-1 btn-nav"
+              disabled
+              type="button"
+              *ngIf="this.loading == 'add'"
+            >
+              Processing...
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade come-from-modal right show"
+  id="newInvTC"
+  tabindex="-1 "
+  role="dialog "
+  aria-labelledby="myModalLabel "
+>
+  <div class="modal-dialog max-width-50px" role="document ">
+    <div class="modal-content border-15px plr-50px">
+      <div class="modal-body" style="padding: 0px">
+        <br />
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <div class="invute-trucking-img">
+              <img src="../../assets/icons/envalop.svg " class="img mb-23" />
+              <div class="text-center">
+                <img
+                  src="../../assets/images/logo.png"
+                  style="width: 147px; height: 59px"
+                  class="logo-shadow"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="d-flex justify-content-between">
+          <div>
+            <div class="title-0">Invite trucking company/broker</div>
+          </div>
+        </div>
+
+        <form
+          [formGroup]="inviteTCForm"
+          (ngSubmit)="onInviteTC()"
+          enctype="multipart/form-data"
+          class="tc-form"
+        >
+          <br />
+          <div class="row">
+            <div class="col-md-12">
+              <span *ngIf="inviteTCfull_nameError != ''" class="text-danger">{{
+                inviteTCfull_nameError
+              }}</span>
+              <label class="field text-field required_field">
+                <input
+                  class="field__input"
+                  placeholder="Danyal "
+                  value=" "
+                  formControlName="full_name"
+                  type="text "
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label">Full name</span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <span *ngIf="inviteTCEmailError != ''" class="text-danger">{{
+                inviteTCEmailError
+              }}</span>
+              <label class="field text-field required_field">
+                <input
+                  class="field__input"
+                  placeholder="example@mail.com "
+                  value=" "
+                  formControlName="email"
+                  type="text "
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label">Email</span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <br />
+
+          <div class="d-flex m-0 btn-div" align="center">
+            <div class="padding-left-0">
+              <button
+                class="btn-back goto-dashboard-setup-1"
+                data-dismiss="modal"
+              >
+                Back
+              </button>
+            </div>
+            <div class="padding-right-0">
+              <button
+                class="mybtn bg-medium-blue text-white"
+                w4
+                type="submit"
+                *ngIf="!is_tc_loading"
+              >
+                Send invite
+              </button>
+              <button
+                class="mybtn bg-medium-blue text-white"
+                type="button"
+                *ngIf="is_tc_loading"
+                disabled
+              >
+                Processing..
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

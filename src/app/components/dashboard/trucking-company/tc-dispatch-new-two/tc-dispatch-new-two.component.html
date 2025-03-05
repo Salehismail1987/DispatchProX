@@ -1,0 +1,1742 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div
+        class="project-profile-header-container d-flex align-items-center justify-content-between flex-wrap"
+      >
+        <div class="header-name-container d-flex align-items-center">
+          <img
+            src="./assets/icons/tc-dispatch-two.svg"
+            alt="project-profile-file-icon"
+          />
+
+          <div class="fs-20-400-bold text-color-black bar-header">
+            {{ " Dispatch" }}
+          </div>
+        </div>
+        <div class="header-btn-container d-flex align-items-center flex-wrap">
+          <button
+            [routerLink]="[
+              '/tc-project-profile',
+              this.project_id +
+                '-' +
+                (this.is_tc_project == 'YES' ? 'YES' : 'NO')
+            ]"
+            class="btn secondary-btn d-flex align-items-center justify-content-center"
+          >
+            <img src="./assets/icons/tc-project-icon-blue.svg" />
+            <div class="fs-14-400-bold">Project profile</div>
+          </button>
+          <button
+            class="btn secondary-btn selected d-flex align-items-center justify-content-center"
+          >
+            <img src="./assets/icons/tc-dispatch-icon-white.svg" />
+            <div class="fs-14-400-bold">
+              Create<br />
+              Dispatch
+            </div>
+          </button>
+          <!-- <button
+            class="btn secondary-btn d-flex align-items-center justify-content-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M14.4854 1.01273H5.9314C3.25666 1.00401 1.06544 2.80848 1.00114 5.07359V16.7661C0.943277 19.0552 3.08821 20.9501 5.78994 20.9991C5.83752 20.9991 5.8851 21.0002 5.9314 20.9991H16.2034C18.891 20.9185 21.0153 19.0432 20.9999 16.7661V6.75827L14.4854 1.01273Z"
+                stroke="#17A1FA"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M14.1488 1V4.16789C14.1488 5.71426 15.6263 6.9677 17.4524 6.97206H20.9938"
+                stroke="#17A1FA"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <mask
+                id="mask0_17726_528"
+                style="mask-type: alpha"
+                maskUnits="userSpaceOnUse"
+                x="2"
+                y="3"
+                width="18"
+                height="18"
+              >
+                <rect x="2" y="3" width="18" height="18" fill="#D9D9D9" />
+              </mask>
+              <g mask="url(#mask0_17726_528)">
+                <path
+                  d="M10.2498 18.7125C8.73726 18.525 7.48426 17.8655 6.49076 16.734C5.49676 15.603 4.99976 14.275 4.99976 12.75C4.99976 11.925 5.16226 11.1342 5.48726 10.3777C5.81226 9.62175 6.27476 8.9625 6.87476 8.4L7.94351 9.46875C7.46851 9.89375 7.10926 10.3875 6.86576 10.95C6.62176 11.5125 6.49976 12.1125 6.49976 12.75C6.49976 13.85 6.84976 14.8217 7.54976 15.6652C8.24976 16.5092 9.14976 17.025 10.2498 17.2125V18.7125ZM11.7498 18.7125V17.2125C12.8373 17.0125 13.734 16.4937 14.44 15.6562C15.1465 14.8187 15.4998 13.85 15.4998 12.75C15.4998 11.5 15.0623 10.4375 14.1873 9.5625C13.3123 8.6875 12.2498 8.25 10.9998 8.25H10.9435L11.7685 9.075L10.7185 10.125L8.09351 7.5L10.7185 4.875L11.7685 5.925L10.9435 6.75H10.9998C12.6748 6.75 14.0935 7.33125 15.256 8.49375C16.4185 9.65625 16.9998 11.075 16.9998 12.75C16.9998 14.2625 16.503 15.5845 15.5095 16.716C14.5155 17.847 13.2623 18.5125 11.7498 18.7125Z"
+                  fill="#17A1FA"
+                />
+              </g>
+            </svg>
+            <div class="fs-14-400-bold">Past dispatches</div>
+          </button> -->
+          <!-- <button
+            class="btn secondary-btn d-flex align-items-center justify-content-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="21"
+              height="21"
+              viewBox="0 0 21 21"
+              fill="none"
+            >
+              <path
+                d="M7.87441 17.8598C7.87441 12.8749 10.9995 8.49995 15.9998 8.49995V4.43418C15.9515 2.52464 14.308 1.00342 12.3019 1.01077H5.88613L1.00003 5.85441V14.2913C0.98846 16.211 2.58179 17.7918 4.59758 17.8598H7.87441ZM7.87441 17.8598C5.94787 17.8598 5.94787 17.8598 7.87441 17.8598Z"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6.13855 1V3.67061C6.13855 4.97425 5.03035 6.03092 3.66078 6.0346H1.00458"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M7.87329 13.5H3.49932"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10.3745 8.5H4.74988"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M15.9998 16L17.2498 17.25"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M15.3748 13.5L15.9998 16"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M15.9998 11.625V10.375"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M18.4998 12.25L19.7499 10.375"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12.2502 4.75H8.50008"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M20.3499 16C20.3499 18.4024 18.4023 20.35 15.9997 20.35C13.5971 20.35 11.6495 18.4024 11.6495 16C11.6495 13.5976 13.5971 11.65 15.9997 11.65C18.4023 11.65 20.3499 13.5976 20.3499 16Z"
+                stroke="#17A1FA"
+                stroke-width="1.3"
+              />
+            </svg>
+            <div class="fs-14-400-bold">Tracker</div>
+          </button> -->
+        </div>
+      </div>
+      <form [formGroup]="ticketForm" enctype="multipart/form-data">
+        <div class="main-dispatch-container inner_main_shadow">
+          <div class="contruction-main-container">
+            <div
+              class="construction-main-heading d-flex align-items-center flex-wrap"
+            >
+              <div class="fs-20-400-bold text-color-000">
+                {{ this.selected_cc?.company_name }}
+              </div>
+              <div class="fs-12-400 text-color-gray">
+                Needs trucks - project, starting when and doing exactly what
+              </div>
+            </div>
+            <div class="construction-project-details-container d-flex row">
+              <div class="col-md-3 col-12 pr-0">
+                <div class="project-name-container d-flex flex-column">
+                  <div class="fs-13-400 text-color-gray">Project name</div>
+                  <div class="fs-14-400-bold text-color-000">
+                    {{ this.selected_project?.project_name }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-12 px-md-0">
+                <span *ngIf="this.ticketDateError != ''" class="text-danger">{{
+                  this.ticketDateError
+                }}</span>
+                <label class="field text-field required_field11">
+                  <input
+                    class="field__input"
+                    placeholder=""
+                    formControlName="ticket_date"
+                    type="date"
+                    (change)="dateChange($event)"
+                    [min]="this.todayDate"
+                  />
+                  <span class="field__label-wrap">
+                    <span class="field__label">When</span>
+                  </span>
+                </label>
+              </div>
+              <div class="col-md-3 col-12 px-md-0">
+                <input type="hidden" formControlName="approver_id" />
+                <div
+                  class="field text-field required_field11 d-flex flex-column"
+                >
+                  <div class="desc-5 text-color-grey text-left mb-5px">
+                    Job approver(s)
+                  </div>
+                  <div
+                    class="position-relative"
+                    (click)="showJobApprovers()"
+                    formControlName="approver_id"
+                    *ngIf="
+                      this.approvers_list !== null ||
+                      this.selected_approver?.id == this.loggedinUser?.id
+                    "
+                  >
+                    <div class="myinput-new cursor-pointer">
+                      {{
+                        getSelectedUserNames()
+                          ? getSelectedUserNames()
+                          : "Select"
+                      }}
+                    </div>
+                    <img
+                      src="../../assets/icons/arrow-down-gray.svg"
+                      class="icon-center-right"
+                    />
+                  </div>
+                  <div class="input-popup-div add-comp" id="jobApproversPopup">
+                    <div class="approvers-list-container d-flex flex-column">
+                      <div class="fs-13-400 text-color-gray">
+                        Job approver(s)
+                      </div>
+                      <div
+                        class="approvers-container d-flex align-items-center justify-content-between"
+                      >
+                        <div
+                          class="line-height-17 fs-14-400-bold text-color-gray"
+                        >
+                          {{ this.loggedinUser.full_name }}
+                        </div>
+                        <input
+                          type="checkbox"
+                          id="floatingInputValue1"
+                          class="project-profile-input-paperticket"
+                          [checked]="
+                            this.selected_approver?.id == this.loggedinUser?.id
+                          "
+                          [attr.data-value]="this.loggedinUser?.id"
+                          (change)="handleCheckboxChange($event)"
+                        />
+                      </div>
+                      <div
+                        *ngFor="let item of this.approvers_list"
+                        class="approvers-container d-flex align-items-center justify-content-between"
+                      >
+                        <div
+                          [ngClass]="
+                            item.is_default == 'YES' ||
+                            item.id == this.selected_approver.id
+                              ? 'line-height-17 fs-14-400-bold text-color-000'
+                              : 'line-height-17 fs-14-400-bold text-color-gray'
+                          "
+                        >
+                          {{
+                            item.full_name
+                              ? item.full_name
+                              : item.user.full_name
+                          }}
+                        </div>
+                        <input
+                          type="checkbox"
+                          id="floatingInputValue1"
+                          class="project-profile-input-paperticket"
+                          [checked]="
+                            item.is_default == 'YES' ||
+                            item.id == this.selected_approver.id
+                          "
+                          [attr.data-value]="item.id"
+                          (change)="handleCheckboxChange($event)"
+                        />
+                      </div>
+                      <div
+                        class="job-approvals-not-on-list text-center"
+                        [routerLink]="'/tc-manage-users'"
+                      >
+                        <div class="fs-14-400 text-color-88898B">
+                          Not on the list?
+                        </div>
+                      </div>
+                    </div>
+                    <div class="approvers-list-footer">
+                      <button
+                        class="btn job-approvers-update-btn"
+                        (click)="saveSelectedApprovers()"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-12 px-md-0 align-content-center">
+                <div class="line-height-14 fs-12-400 text-color-000">
+                  Set the name of the job approver if you know who it is. Driver
+                  can fill that later. Please, make sure “paper ticket ID
+                  needed” is selected when you need that ID included on the
+                  approved ticket.
+                </div>
+              </div>
+              <div class="col-md-12">
+                <span *ngIf="this.descriptionError != ''" class="text-danger">{{
+                  this.descriptionError
+                }}</span>
+                <div class="construction-description-field">
+                  <label class="fs-13-400 text-color-gray">
+                    Description / instructions
+                  </label>
+
+                  <label class="field text-field required_field22 m-0 border-0">
+                    <textarea
+                      class="description_field__input"
+                      formControlName="description"
+                      placeholder=""
+                      rows="4"
+                    ></textarea>
+                    <!-- <span class="field__label-wrap">
+                      <span class="field__label">Type here</span>
+                    </span> -->
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="customer-main-container">
+            <div
+              class="construction-main-heading d-flex align-items-center flex-wrap"
+            >
+              <div class="fs-20-400-bold text-color-000">Customer</div>
+              <div class="fs-12-400 text-color-gray">
+                Who is asking trucks from you! How many and how much your
+                customer pays to you
+              </div>
+            </div>
+            <div class="construction-project-details-container d-flex row">
+              <div class="col-md-3 col-6 pr-md-0">
+                <div class="project-name-container d-flex flex-column">
+                  <div class="fs-13-400 text-color-gray">Customer name</div>
+                  <div class="line-height-19 fs-16-400-bold text-color-000">
+                    {{ this.selected_cc?.company_name }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-6 px-md-0 short-col">
+                <div class="input-container">
+                  <span
+                    *ngIf="
+                      ticketForm.get('number_of_trucks')?.invalid &&
+                      form_clicked
+                    "
+                    class="text-danger"
+                  >
+                    Number of trucks is invalid or missing.
+                  </span>
+                  <div class="input-header d-flex justify-content-between">
+                    <div class="input-label">Number of trucks</div>
+                    <div class="required-field">*</div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-center input-box-container"
+                  >
+                    <div class="fs-14-400-semi text-color-gray">#</div>
+                    <input
+                      class="bordered-field"
+                      type="text"
+                      formControlName="number_of_trucks"
+                      (change)="changeNumber($event)"
+                      placeholder="__"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-6 px-md-0 short-col">
+                <div class="input-container">
+                  <span
+                    *ngIf="
+                      ticketForm.get('first_truck_start_at')?.invalid &&
+                      form_clicked
+                    "
+                    class="text-danger"
+                  >
+                    Time is invalid or missing.
+                  </span>
+                  <div class="input-header d-flex justify-content-between">
+                    <div class="input-label">First truck to start at</div>
+                    <div class="required-field">*</div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-center input-box-container"
+                  >
+                    <div class="fs-14-400-semi text-color-gray mr-1">
+                      <img src="assets/images/clock-icon.svg" />
+                    </div>
+                    <input
+                      class="bordered-field time-input-field"
+                      type="time"
+                      formControlName="first_truck_start_at"
+                      placeholder="__"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-6 px-md-0 short-col">
+                <div class="input-container">
+                  <span
+                    *ngIf="
+                      ticketForm.get('interval_between_truck')?.invalid &&
+                      form_clicked
+                    "
+                    class="text-danger"
+                  >
+                    Interval is invalid or missing.
+                  </span>
+                  <div class="input-header d-flex justify-content-between">
+                    <div class="input-label">Truck interval</div>
+                    <div class="required-field">*</div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-center input-box-container"
+                  >
+                    <input
+                      class="bordered-field"
+                      type="text"
+                      formControlName="interval_between_truck"
+                      placeholder="__"
+                    />
+                    <div class="fs-14-400-semi text-color-gray ml-1">min</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="customer-truck-type-container d-flex row">
+              <div class="col-md-4 col-sm-12 pr-0 align-content-center">
+                <div class="line-height-14 fs-12-400 text-color-000">
+                  Set the name of the job approver if you know who it is. Driver
+                  can fill that later. Please, make sure “paper ticket ID
+                  needed” is selected when you need that ID included on the
+                  approved ticket.
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-6 px-md-0 short-col">
+                <span
+                  *ngIf="
+                    ticketForm.get('ticket_truck_type')?.invalid && form_clicked
+                  "
+                  class="text-danger"
+                >
+                  Truck type is missing.
+                </span>
+                <input type="hidden" formControlName="ticket_truck_type" />
+                <div
+                  class="field text-field required_field11 d-flex flex-column"
+                >
+                  <div class="fs-13-400 text-color-gray">Set truck type</div>
+                  <div class="position-relative" (click)="showTruckType()">
+                    <div
+                      class="text-color-000 myinput-new2 cursor-pointer"
+                      *ngIf="this.selected_truck_type"
+                    >
+                      {{ this.selected_truck_type?.name }}
+                    </div>
+                    <div
+                      class="myinput-new2 cursor-pointer text-color-88898B"
+                      *ngIf="!this.selected_truck_type"
+                    >
+                      Select
+                    </div>
+                    <img
+                      src="../../assets/icons/arrow-down-gray.svg"
+                      class="icon-center-right-2"
+                    />
+                  </div>
+                  <div class="truck-type-popup add-comp" id="truckTypePopup">
+                    <div class="approvers-list-container d-flex flex-column">
+                      <div class="fs-13-400 text-color-gray">Truck type</div>
+                      <div
+                        class="job-approvals-not-on-list"
+                        *ngFor="let item of this.truck_types"
+                        (click)="setTruckType(item)"
+                      >
+                        <div class="fs-14-400-semi text-color-gray">
+                          {{ item.name }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-6 px-md-0 short-col">
+                <input type="hidden" formControlName="ticket_trailer_type" />
+                <div
+                  class="field text-field required_field11 d-flex flex-column"
+                >
+                  <div class="fs-13-400 text-color-gray">Set trailer type</div>
+                  <div class="position-relative" (click)="showTrailerType()">
+                    <div
+                      class="myinput-new2 cursor-pointer text-color-000"
+                      *ngIf="this.selected_trailer_type"
+                    >
+                      {{ this.selected_trailer_type?.name }}
+                    </div>
+                    <div
+                      class="myinput-new2 cursor-pointer text-color-88898B"
+                      *ngIf="!this.selected_trailer_type"
+                    >
+                      {{
+                        this.selected_trailer_type == "" &&
+                        !this.selected_trailer_type
+                          ? "Select"
+                          : "None"
+                      }}
+                    </div>
+                    <img
+                      src="../../assets/icons/arrow-down-gray.svg"
+                      class="icon-center-right-2"
+                    />
+                  </div>
+                  <div class="truck-type-popup add-comp" id="trailerTypePopup">
+                    <div class="approvers-list-container d-flex flex-column">
+                      <div class="fs-13-400 text-color-gray">Trailer type</div>
+                      <div
+                        class="job-approvals-not-on-list"
+                        *ngFor="let item of this.trailer_types"
+                        (click)="setTrailerType(item)"
+                      >
+                        <div class="fs-14-400-semi text-color-gray">
+                          {{ item.name }}
+                        </div>
+                      </div>
+                      <div
+                        class="job-approvals-not-on-list text-center"
+                        (click)="setTrailerType('')"
+                      >
+                        <div class="fs-14-400 text-color-gray">None</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-6 px-md-0 short-col">
+                <div class="input-container">
+                  <span
+                    *ngIf="
+                      ticketForm.get('rate_per_hour_to_tc')?.invalid &&
+                      form_clicked
+                    "
+                    class="text-danger"
+                  >
+                    Hour rate to you is invalid or missing.
+                  </span>
+                  <div class="input-header d-flex justify-content-between">
+                    <div class="input-label">Your hour rate</div>
+                    <div class="required-field">*</div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-center input-box-container"
+                  >
+                    <div class="fs-14-400-semi text-color-gray mr-1">$</div>
+                    <input
+                      class="bordered-field"
+                      type="text"
+                      (change)="setRate($event)"
+                      formControlName="rate_per_hour_to_tc"
+                      placeholder="__"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="customer-round-table row">
+              <div class="col-md-12">
+                <div class="table-responsive mytable">
+                  <table class="projects-list-table2">
+                    <thead class="pp2-table">
+                      <tr class="tab_head_2 bg-blue-final">
+                        <td class="width-4">
+                          <div class="input-label-grey"></div>
+                        </td>
+                        <td class="width-6">
+                          <div class="bold-input-label">Round</div>
+                        </td>
+                        <td class="width-16">
+                          <div class="input-label-grey">Material out</div>
+                        </td>
+                        <td class="width-16">
+                          <div class="input-label-grey">Dump site</div>
+                        </td>
+                        <td>
+                          <div class="input-label-grey">Action</div>
+                        </td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container
+                        formArrayName="rounds"
+                        *ngFor="
+                          let fields of rounds().controls;
+                          let roundIdx = index
+                        "
+                      >
+                        <ng-container [formGroupName]="roundIdx">
+                          <tr class="tab_body_22 bg-light-grey">
+                            <td>
+                              <div class="input-value">
+                                <input
+                                  type="checkbox"
+                                  class="custom-button-radio"
+                                />
+                              </div>
+                            </td>
+                            <td>
+                              <div class="input-value">{{ roundIdx + 1 }}</div>
+                            </td>
+                            <td>
+                              <div class="">
+                                <span
+                                  *ngIf="
+                                    fields.get('material_taken_out')?.invalid &&
+                                    form_clicked
+                                  "
+                                  class="text-danger"
+                                >
+                                  Material taken out is required.
+                                </span>
+                                <div
+                                  class="input-header d-flex justify-content-between"
+                                >
+                                  <div class="fs-13-400">Material out</div>
+                                </div>
+                                <div class="input-box-container2">
+                                  <input
+                                    class="table-field"
+                                    type="text"
+                                    formControlName="material_taken_out"
+                                    placeholder="Type here"
+                                  />
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <span
+                                *ngIf="
+                                  fields.get('dump_site')?.invalid &&
+                                  form_clicked
+                                "
+                                class="text-danger"
+                              >
+                                Dump site is required.
+                              </span>
+                              <input
+                                type="hidden"
+                                formControlName="dump_site"
+                              />
+                              <div
+                                class="text-field d-flex flex-column position-relative"
+                              >
+                                <div class="fs-13-400 text-color-gray">
+                                  Dump site
+                                </div>
+                                <div
+                                  class="position-relative"
+                                  (click)="showDumpSite(roundIdx)"
+                                >
+                                  <div
+                                    class="text-color-000 myinput-new2 cursor-pointer"
+                                    *ngIf="
+                                      fields.get('dump_site')?.value != null &&
+                                      fields.get('dump_site')?.value != ''
+                                    "
+                                  >
+                                    {{ fields.get("dump_site")?.value }}
+                                  </div>
+                                  <div
+                                    class="myinput-new2 cursor-pointer text-color-88898B"
+                                    *ngIf="
+                                      !(
+                                        fields.get('dump_site')?.value !=
+                                          'null' &&
+                                        fields.get('dump_site')?.value != ''
+                                      )
+                                    "
+                                  >
+                                    Select
+                                  </div>
+                                  <img
+                                    src="../../assets/icons/arrow-down-gray.svg"
+                                    class="icon-center-right-2"
+                                  />
+                                </div>
+                                <div
+                                  class="truck-type-popup add-comp"
+                                  id="dumpSitePopup{{ roundIdx }}"
+                                >
+                                  <div
+                                    class="approvers-list-container d-flex flex-column"
+                                  >
+                                    <div class="fs-13-400 text-color-gray">
+                                      Dump site
+                                    </div>
+                                    <div
+                                      class="job-approvals-not-on-list"
+                                      *ngFor="let item of this.dump_sites"
+                                      (click)="setDumpSite(item, roundIdx)"
+                                    >
+                                      <div
+                                        class="fs-14-400-semi text-color-gray"
+                                      >
+                                        {{ item.dump_site }}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="copy-next-round-btn-container">
+                                <button
+                                  class="btn copy-next-round-btn"
+                                  (click)="
+                                    copyRound(
+                                      rounds().length > 0
+                                        ? rounds().length - 1
+                                        : 0
+                                    )
+                                  "
+                                >
+                                  <div class="fs-13-400-semi text-color-000">
+                                    Copy to next round
+                                  </div>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                  <div class="add-next-round-container">
+                    <button
+                      class="btn copy-next-round-btn"
+                      (click)="newRound()"
+                    >
+                      <div class="fs-13-400-semi text-color-000">
+                        Add next round
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="vendor-main-container">
+            <div
+              class="construction-main-heading d-flex align-items-center flex-wrap"
+            >
+              <div class="fs-20-400-bold text-color-000">Vendor(s)</div>
+              <div class="fs-12-400 text-color-gray">
+                To who you want to dispatch the tickets, your own trucks and or
+                your vendors
+              </div>
+            </div>
+            <ng-container formArrayName="dispatches">
+              <ng-container
+                *ngFor="
+                  let fields of dispatches().controls;
+                  let roundIdx = index
+                "
+              >
+                <ng-container [formGroupName]="roundIdx">
+                  <div class="vendor-detail-container">
+                    <div class="row vendor-detail-input-container d-flex">
+                      <div class="col-md-3 col-12 pr-md-0">
+                        <input
+                          type="hidden"
+                          formControlName="trucking_company_id"
+                        />
+                        <div
+                          class="vendor-dropdown-field text-field required_field11 d-flex flex-column"
+                        >
+                          <div class="fs-13-400 text-color-gray">
+                            Vendor name
+                          </div>
+                          <div
+                            class="position-relative dropdown-value-container"
+                            (click)="showVendorName(roundIdx)"
+                          >
+                            <div
+                              class="fs-16-400-bold cursor-pointer text-color-000"
+                              *ngIf="fields.get('trucking_company_id')?.value"
+                            >
+                              {{
+                                getVendorName(
+                                  fields.get("trucking_company_id")?.value
+                                )
+                              }}
+                            </div>
+                            <div
+                              class="fs-16-400-bold cursor-pointer text-color-88898B"
+                              *ngIf="!fields.get('trucking_company_id')?.value"
+                            >
+                              Select
+                            </div>
+                            <img
+                              src="../../assets/icons/arrow-down-gray.svg"
+                              class="vendor-icon-center-right"
+                            />
+                          </div>
+                          <div
+                            class="input-popup-div add-comp"
+                            id="vendorNamePopup{{ roundIdx }}"
+                          >
+                            <div
+                              class="approvers-list-container d-flex flex-column"
+                            >
+                              <div class="fs-13-400 text-color-gray">
+                                Vendor
+                              </div>
+                              <div
+                                class="approvers-container cursor-pointer"
+                                (click)="setVendor(this.loggedinUser, roundIdx)"
+                              >
+                                <div
+                                  class="line-height-17 fs-14-400-bold text-color-gray"
+                                >
+                                  {{ this.loggedinUser?.company_name }}
+                                </div>
+                              </div>
+                              <div
+                                class="approvers-container cursor-pointer"
+                                *ngFor="let item of this.vendors_list"
+                                (click)="setVendor(item, roundIdx)"
+                              >
+                                <div
+                                  class="line-height-17 fs-14-400-bold text-color-gray"
+                                >
+                                  {{ item.company_name }}
+                                </div>
+                              </div>
+                              <div
+                                class="job-approvals-not-on-list text-center"
+                                [routerLink]="'/contact-vendors-cc'"
+                              >
+                                <div class="fs-14-400 text-color-88898B">
+                                  Not on the list?
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-12 short-col px-md-0">
+                        <span
+                          *ngIf="
+                            fields.get('number_of_trucks')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Number of trucks is invalid or missing.
+                        </span>
+                        <div class="input-container">
+                          <div
+                            class="input-header d-flex justify-content-between"
+                          >
+                            <div class="input-label">Number of trucks</div>
+                            <div class="required-field">*</div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center input-box-container vendor-no-trucks-input-box"
+                          >
+                            <div class="fs-14-400-semi text-color-gray">#</div>
+                            <input
+                              class="vendor-bordered-field"
+                              type="text"
+                              formControlName="number_of_trucks"
+                              value="{{
+                                fields.get('number_of_trucks')?.value
+                              }}"
+                              (change)="setTruckNo($event, roundIdx)"
+                              placeholder="__"
+                            />
+                            <div class="fs-14-400-semi text-color-gray">/</div>
+                            <div class="fs-14-400-semi text-color-gray">
+                              {{
+                                roundIdx == 0
+                                  ? numberOfTrucks
+                                    ? numberOfTrucks
+                                    : 0
+                                  : getRemainingTrucks(roundIdx)
+                              }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-12 short-col-2 px-md-0">
+                        <span
+                          *ngIf="
+                            fields.get('rate_per_hour')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Hour rate is invalid or missing.
+                        </span>
+                        <span
+                          *ngIf="
+                            parseInt(fields.get('rate_per_hour')?.value) >
+                              parseInt(
+                                ticketForm.get('rate_per_hour_to_tc')?.value
+                              ) && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Hour rate cannot be more than Customer given rate
+                          {{ ticketForm.get("rate_per_hour_to_tc")?.value }}.
+                        </span>
+                        <div
+                          class="input-container {{
+                            fields.get('trucking_company_id')?.value ==
+                            this.loggedinUser?.id
+                              ? 'vendor-pay-input-gray-container'
+                              : ''
+                          }}"
+                        >
+                          <div
+                            class="input-header d-flex justify-content-between"
+                          >
+                            <div class="input-label">Rate you pay</div>
+                            <div class="required-field">*</div>
+                          </div>
+                          <div
+                            class="d-flex align-items-center input-box-container vendor-no-trucks-input-box vendor-pay-input-box"
+                          >
+                            <div class="fs-14-400-semi text-color-gray">$</div>
+                            <input
+                              class="vendor-bordered-field width-60 vendor-pay-input-field"
+                              type="text"
+                              formControlName="rate_per_hour"
+                              [readOnly]="
+                                fields.get('trucking_company_id')?.value ==
+                                this.loggedinUser?.id
+                              "
+                              placeholder="__.__"
+                            />
+                            <div class="fs-14-400-semi text-color-gray">/</div>
+                            <div class="fs-14-400-semi text-color-gray">
+                              {{ perHourRate ? perHourRate : 0.0 }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="">
+                      <span
+                        *ngIf="
+                          this.dispatchDriverForm.invalid &&
+                          fields.get('trucking_company_id')?.value ==
+                            this.loggedinUser?.id
+                        "
+                        class="text-danger"
+                      >
+                        Drivers are required for self assign tickets
+                      </span>
+                    </div>
+                    <span
+                      *ngIf="
+                        fields.get('trucking_company_id')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Vendor is required.
+                    </span>
+                    <div
+                      *ngIf="
+                        fields.get('trucking_company_id')?.value ==
+                        this.loggedinUser?.id
+                      "
+                    >
+                      <span
+                        class="text-danger"
+                        *ngIf="this.driver_message != ''"
+                        >{{ this.driver_message }}</span
+                      >
+                      <form
+                        [formGroup]="this.dispatchDriverForm"
+                        enctype="multipart/form-data"
+                      >
+                        <input
+                          type="hidden"
+                          formControlName="trucking_company_id"
+                          [(ngModel)]="this.user_id"
+                        />
+                        <input
+                          type="hidden"
+                          formControlName="user_id"
+                          [(ngModel)]="this.user_id"
+                        />
+                        <ng-container formArrayName="driver_tickets">
+                          <ng-container
+                            *ngFor="
+                              let formItem of driver_tickets.controls;
+                              let idx = index
+                            "
+                          >
+                            <ng-container [formGroupName]="idx">
+                              <div
+                                class="select-vendor-details-container row d-flex"
+                              >
+                                <div
+                                  class="col-md-1 col-6 align-content-center pr-md-0"
+                                >
+                                  <div
+                                    [class]="
+                                      formItem.get('rates')?.value != '' &&
+                                      formItem.get('driver_id')?.value != '' &&
+                                      formItem.get('truck_id')?.value != '' &&
+                                      formItem.get('trailer_id')?.value != ''
+                                        ? 'vendor-selected-dirver-numb-container d-flex align-items-center'
+                                        : ' vendor-dirver-numb-container d-flex align-items-center'
+                                    "
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="20"
+                                      height="17"
+                                      viewBox="0 0 20 17"
+                                      fill="none"
+                                    >
+                                      <path
+                                        d="M19.9581 7.37893L18.9849 5.01748C18.5374 3.93165 17.4697 3.23001 16.2648 3.23001H16.0938C16.0938 3.54409 16.4173 3.23001 16.0938 3.23001C16.0938 2.91593 15.9486 2.32007 15.625 2.32007H10.625C10.4291 2.32007 10.2657 2.32962 10.1571 2.48788C9.74217 3.09236 8.74049 2.71545 7.99046 2.54755C6.93851 1.65636 6.65149 0.5 5 0.5C3.34852 0.5 2.81798 1.10681 2.19298 2.32007C1.00717 2.56767 0 2.62107 0 3.79872V7.21101C0 7.32327 0.0342188 7.43303 0.0983984 7.52645L0 9.59951L0.585938 10.0546C0.262344 10.0546 0 10.3092 0 10.6233V14.4147C0 14.7288 0.262344 14.9834 0.585938 14.9834H2.0875C2.41 15.866 3.2784 16.5 4.29688 16.5C5.31535 16.5 6.18371 15.866 6.50625 14.9834H13.4938C13.8163 15.866 14.6847 16.5 15.7031 16.5C16.7216 16.5 17.59 15.866 17.9125 14.9834H19.4141C19.7377 14.9834 20 14.7288 20 14.4147V7.59015C20 7.51781 19.9858 7.44611 19.9581 7.37893ZM16.0938 4.36744H16.2648C16.9877 4.36744 17.6284 4.78844 17.8969 5.43996L18.5486 7.02144H16.0938V4.36744ZM1.99496 3.25057C2.31855 3.25057 3.18726 3.24059 3.18726 2.92651C3.71386 1.94093 3.67759 1.7136 4.86224 1.7136C6.04689 1.7136 6.03875 2.09278 6.60746 3.0352C6.60746 3.34929 7.80141 3.44106 8.125 3.44106C8.6693 3.44106 9.15516 3.91952 9.375 4.36744H1.17188C1.25 3.53332 1.45066 3.25057 1.99496 3.25057ZM1.17188 7.0388V5.43996L9.375 5.35321C9.56723 5.35321 10.3378 4.27534 10.4484 4.11417L11.0359 3.23001L12.9293 3.25057L14.9219 3.23001H13.0859C12.7623 3.23001 12.5 3.48464 12.5 3.79872V10.8128H1.17188V7.0388ZM4.29688 15.3626C3.6507 15.3626 3.125 14.8523 3.125 14.2251C3.125 13.598 3.6507 13.0877 4.29688 13.0877C4.94305 13.0877 5.46875 13.598 5.46875 14.2251C5.46875 14.8523 4.94305 15.3626 4.29688 15.3626ZM15.7031 15.3626C15.057 15.3626 14.5313 14.8523 14.5313 14.2251C14.5313 13.598 15.057 13.0877 15.7031 13.0877C16.3493 13.0877 16.875 13.598 16.875 14.2251C16.875 14.8523 16.3493 15.3626 15.7031 15.3626ZM18.8281 13.846H18.0137C17.8271 12.7716 16.8623 11.9503 15.7031 11.9503C14.5439 11.9503 13.5791 12.7716 13.3925 13.846H6.60746C6.42086 12.7716 5.45609 11.9503 4.29688 11.9503C3.13766 11.9503 2.17289 12.7716 1.98629 13.846H1.17188V11.9503L18.7919 12.026L18.8281 13.846ZM18.7919 10.8128H13.6719V4.36744H14.9219V7.59015C14.9219 7.90423 15.1842 8.15886 15.5078 8.15886H18.8281L18.7919 10.8128Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                    <div
+                                      class="fs-16-400-bold text-color-88898B"
+                                    >
+                                      {{ "[" + (idx + 1) + "]" }}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-3 col-12 px-md-0">
+                                  <span
+                                    class="text-danger"
+                                    *ngIf="
+                                      form_clicked_driver &&
+                                      this.is_driver_form_error &&
+                                      formItem.get('driver_id')?.value == ''
+                                    "
+                                    >Driver is required</span
+                                  >
+                                  <input
+                                    type="hidden"
+                                    formControlName="driver_id"
+                                  />
+                                  <div
+                                    class="vendor-dropdown-field text-field required_field11 d-flex flex-column"
+                                  >
+                                    <div class="fs-13-400 text-color-gray">
+                                      Driver name
+                                    </div>
+                                    <div
+                                      class="position-relative dropdown-value-container"
+                                      (click)="showDriverName(idx)"
+                                    >
+                                      <div
+                                        class="fs-16-400-bold cursor-pointer text-color-000"
+                                        *ngIf="formItem.get('driver')?.value"
+                                      >
+                                        {{
+                                          formItem.get("driver")?.value
+                                            ?.full_name
+                                        }}
+                                      </div>
+                                      <div
+                                        class="fs-16-400-semi cursor-pointer text-color-88898B"
+                                        *ngIf="!formItem.get('driver')?.value"
+                                      >
+                                        Select
+                                      </div>
+                                      <img
+                                        src="../../assets/icons/arrow-down-gray.svg"
+                                        class="vendor-icon-center-right"
+                                      />
+                                    </div>
+                                    <div
+                                      class="input-popup-div add-comp"
+                                      id="driverNamePopup{{ idx }}"
+                                    >
+                                      <div
+                                        class="approvers-list-container d-flex flex-column"
+                                      >
+                                        <div class="fs-13-400 text-color-gray">
+                                          Select driver
+                                        </div>
+                                        <ng-container
+                                          *ngFor="
+                                            let driver of this.drivers_list
+                                          "
+                                        >
+                                          <div
+                                            class="driver-popup-highlight-container cursor-pointer"
+                                            *ngIf="
+                                              getDriverAvailable(
+                                                formItem.get('ticket_no')
+                                                  ?.value,
+                                                driver
+                                              ) &&
+                                                (checkAvailable(
+                                                  'driver',
+                                                  driver,
+                                                  idx
+                                                ) ||
+                                                  formItem.get('driver_id')
+                                                    ?.value == driver.id);
+                                              else elseDriver
+                                            "
+                                            (click)="
+                                              setDriver(
+                                                idx,
+                                                driver,
+                                                formItem.get('ticket_id')?.value
+                                              )
+                                            "
+                                          >
+                                            <div
+                                              class="line-height-17 fs-14-400-semi text-color-gray"
+                                            >
+                                              {{ driver.full_name }}
+                                            </div>
+                                          </div>
+                                          <ng-template #elseDriver>
+                                            <div
+                                              class="driver-popup-highlight-container selected cursor-pointer"
+                                            >
+                                              <div
+                                                class="line-height-17 fs-14-400-semi text-color-gray"
+                                              >
+                                                {{ driver.full_name }}-
+                                                <span class="fs-14-400">
+                                                  <ng-container
+                                                    *ngFor="
+                                                      let ava of this
+                                                        .driver_availability
+                                                    "
+                                                  >
+                                                    <ng-container
+                                                      *ngIf="
+                                                        ava.driver_id ==
+                                                          driver?.id &&
+                                                        ava.ticket_id ==
+                                                          formItem.get(
+                                                            'ticket_no'
+                                                          )?.value &&
+                                                        ava.is_available ==
+                                                          false
+                                                      "
+                                                    >
+                                                      {{
+                                                        ava?.current_job
+                                                          ? ava?.current_job
+                                                              ?.ticket
+                                                              ?.ticket_no
+                                                          : ""
+                                                      }}
+                                                    </ng-container>
+                                                  </ng-container>
+                                                </span>
+                                              </div>
+                                            </div>
+                                          </ng-template>
+                                        </ng-container>
+                                        <div
+                                          class="job-approvals-not-on-list text-center"
+                                          [routerLink]="'/tc-drivers'"
+                                        >
+                                          <div
+                                            class="fs-14-400 text-color-88898B"
+                                          >
+                                            Not on the list?
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2 col-12 px-md-0">
+                                  <span
+                                    class="text-danger"
+                                    *ngIf="
+                                      form_clicked_driver &&
+                                      this.is_driver_form_error &&
+                                      formItem.get('truck_id')?.value == ''
+                                    "
+                                    >Truck is required</span
+                                  >
+                                  <input
+                                    type="hidden"
+                                    formControlName="truck_id"
+                                  />
+                                  <div
+                                    class="vendor-dropdown-field text-field required_field11 d-flex flex-column"
+                                  >
+                                    <div class="fs-13-400 text-color-gray">
+                                      Truck name
+                                    </div>
+                                    <div
+                                      class="position-relative dropdown-value-container"
+                                      (click)="showVendorTruckName(idx)"
+                                    >
+                                      <div
+                                        class="fs-16-400-bold cursor-pointer text-color-000"
+                                        *ngIf="formItem.get('truck')?.value"
+                                      >
+                                        {{
+                                          formItem.get("truck")?.value
+                                            ?.truck_nickname
+                                        }}
+                                      </div>
+                                      <div
+                                        class="fs-16-400-semi cursor-pointer text-color-88898B"
+                                        *ngIf="!formItem.get('truck')?.value"
+                                      >
+                                        Select
+                                      </div>
+                                      <img
+                                        src="../../assets/icons/arrow-down-gray.svg"
+                                        class="vendor-icon-center-right"
+                                      />
+                                    </div>
+                                    <div
+                                      class="input-popup-div add-comp"
+                                      id="vendorTruckName{{ idx }}"
+                                    >
+                                      <div
+                                        class="approvers-list-container d-flex flex-column"
+                                      >
+                                        <div class="fs-13-400 text-color-gray">
+                                          Select truck
+                                        </div>
+                                        <ng-container
+                                          *ngFor="let truck of this.trucks_list"
+                                        >
+                                          <ng-container
+                                            *ngIf="
+                                              truck?.truck_type ==
+                                              this.ticketForm.get(
+                                                'ticket_truck_type'
+                                              )?.value
+                                            "
+                                          >
+                                            <div
+                                              class="driver-popup-highlight-container"
+                                              *ngIf="
+                                                truck.is_available == 'YES' &&
+                                                (checkAvailable(
+                                                  'truck',
+                                                  truck,
+                                                  idx
+                                                ) ||
+                                                  formItem.get('truck_id')
+                                                    ?.value == truck.id)
+                                              "
+                                              (click)="
+                                                setTruck(
+                                                  idx,
+                                                  truck,
+                                                  formItem.get('ticket_id')
+                                                    ?.value
+                                                )
+                                              "
+                                            >
+                                              <div
+                                                class="line-height-17 fs-14-400-semi text-color-gray"
+                                              >
+                                                {{ truck.truck_nickname }}
+                                              </div>
+                                            </div>
+                                          </ng-container>
+                                        </ng-container>
+                                        <ng-container
+                                          *ngFor="let truck of this.trucks_list"
+                                        >
+                                          <ng-container
+                                            *ngIf="
+                                              truck?.truck_type ==
+                                              this.ticketForm.get(
+                                                'ticket_truck_type'
+                                              )?.value
+                                            "
+                                          >
+                                            <div
+                                              class="driver-popup-highlight-container selected"
+                                              *ngIf="truck.is_available == 'NO'"
+                                            >
+                                              <div
+                                                class="line-height-17 fs-14-400-bold text-color-gray"
+                                              >
+                                                {{ truck.full_name }}-
+                                                <span class="fs-14-400"
+                                                  >{{
+                                                    truck?.current_job
+                                                      ? truck?.current_job
+                                                          ?.ticket?.ticket_no
+                                                      : ""
+                                                  }}
+                                                </span>
+                                              </div>
+                                            </div>
+                                          </ng-container>
+                                        </ng-container>
+                                        <div
+                                          class="job-approvals-not-on-list text-center"
+                                          [routerLink]="'/tc-manage-trucks'"
+                                        >
+                                          <div
+                                            class="fs-14-400 text-color-88898B"
+                                          >
+                                            Not on the list?
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2 col-12 px-md-0">
+                                  <ng-container
+                                    *ngIf="this.selected_trailer_type"
+                                  >
+                                    <div
+                                      class="vendor-dropdown-field text-field d-flex flex-column"
+                                    >
+                                      <input
+                                        type="hidden"
+                                        formControlName="trailer_id"
+                                      />
+                                      <div class="fs-13-400 text-color-gray">
+                                        Trailer name
+                                      </div>
+                                      <div
+                                        class="position-relative dropdown-value-container"
+                                        (click)="showVendorTrailerName(idx)"
+                                      >
+                                        <div
+                                          class="fs-16-400-bold cursor-pointer text-color-000"
+                                          *ngIf="formItem.get('trailer')?.value"
+                                        >
+                                          {{
+                                            formItem.get("trailer")?.value
+                                              ?.trailer_nickname
+                                          }}
+                                        </div>
+                                        <div
+                                          class="fs-16-400-semi cursor-pointer text-color-88898B"
+                                          *ngIf="
+                                            !formItem.get('trailer')?.value
+                                          "
+                                        >
+                                          Select
+                                        </div>
+                                        <img
+                                          src="../../assets/icons/arrow-down-gray.svg"
+                                          class="vendor-icon-center-right"
+                                        />
+                                      </div>
+                                      <div
+                                        class="input-popup-div add-comp"
+                                        id="vendorTrailerPopup{{ idx }}"
+                                      >
+                                        <div
+                                          class="approvers-list-container d-flex flex-column"
+                                        >
+                                          <div
+                                            class="fs-13-400 text-color-gray"
+                                          >
+                                            Select trailer
+                                          </div>
+                                          <ng-container
+                                            *ngFor="
+                                              let trailer of this.trailers_list
+                                            "
+                                          >
+                                            <ng-container
+                                              *ngIf="
+                                                trailer?.trailer_type ==
+                                                this.ticketForm.get(
+                                                  'ticket_trailer_type'
+                                                )?.value
+                                              "
+                                            >
+                                              <div
+                                                class="driver-popup-highlight-container"
+                                                *ngIf="
+                                                  trailer.is_available ==
+                                                    'YES' &&
+                                                  (checkAvailable(
+                                                    'trailer',
+                                                    trailer,
+                                                    idx
+                                                  ) ||
+                                                    formItem.get('trailer_id')
+                                                      ?.value == trailer.id)
+                                                "
+                                                (click)="
+                                                  setTrailer(
+                                                    idx,
+                                                    trailer,
+                                                    formItem.get('ticket_id')
+                                                      ?.value
+                                                  )
+                                                "
+                                              >
+                                                <div
+                                                  class="line-height-17 fs-14-400-semi text-color-gray"
+                                                >
+                                                  {{ trailer.trailer_nickname }}
+                                                </div>
+                                              </div>
+                                            </ng-container>
+                                          </ng-container>
+                                          <ng-container
+                                            *ngFor="
+                                              let trailer of this.trailers_list
+                                            "
+                                          >
+                                            <ng-container
+                                              *ngIf="
+                                                trailer?.trailer_type ==
+                                                this.ticketForm.get(
+                                                  'ticket_trailer_type'
+                                                )?.value
+                                              "
+                                            >
+                                              <div
+                                                class="driver-popup-highlight-container selected"
+                                                *ngIf="
+                                                  trailer.is_available == 'NO'
+                                                "
+                                              >
+                                                <div
+                                                  class="line-height-17 fs-14-400-bold text-color-gray"
+                                                >
+                                                  {{ trailer.trailer_nickname
+                                                  }}<span class="fs-14-400"
+                                                    >-{{
+                                                      trailer?.current_job
+                                                        ? trailer?.current_job
+                                                            ?.ticket?.ticket_no
+                                                        : ""
+                                                    }}</span
+                                                  >
+                                                </div>
+                                              </div>
+                                            </ng-container>
+                                          </ng-container>
+                                          <div
+                                            class="job-approvals-not-on-list text-center cursor-pointer"
+                                            [routerLink]="'/tc-manage-trucks'"
+                                          >
+                                            <div
+                                              class="fs-14-400 text-color-88898B"
+                                            >
+                                              Not on the list?
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                  <div
+                                    class="vendor-dropdown-field text-field d-flex flex-column"
+                                    *ngIf="!this.selected_trailer_type"
+                                  >
+                                    <div class="fs-13-400 text-color-gray">
+                                      Trailer name
+                                    </div>
+                                    <div
+                                      class="position-relative dropdown-value-container"
+                                    >
+                                      <div
+                                        class="fs-16-400-semi cursor-pointer text-color-88898B"
+                                        *ngIf="!formItem.get('trailer')?.value"
+                                      >
+                                        No trailer
+                                      </div>
+                                      <img
+                                        src="../../assets/icons/arrow-down-gray.svg"
+                                        class="vendor-icon-center-right"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-2 col-12 px-md-0">
+                                  <span
+                                    class="text-danger"
+                                    *ngIf="
+                                      form_clicked_driver &&
+                                      (formItem.get('rates')?.value == '' ||
+                                        formItem.get('rates')?.value == null)
+                                    "
+                                    >Rate is required</span
+                                  >
+                                  <span
+                                    class="text-danger"
+                                    *ngIf="
+                                      form_clicked_driver &&
+                                      formItem.get('rates')?.invalid &&
+                                      formItem.get('rates')?.hasError('pattern')
+                                    "
+                                    >Rate is invalid</span
+                                  >
+                                  <span
+                                    class="text-danger"
+                                    *ngIf="
+                                      form_clicked_driver &&
+                                      formItem.get('rates')?.value != '' &&
+                                      formItem.get('rates')?.value != null &&
+                                      formItem.get('rates')?.errors &&
+                                      formItem.get('rates')?.hasError('max')
+                                    "
+                                    >Driver rate cannot be more than
+                                    {{
+                                      formItem.get("ticket_rate")?.value
+                                        ? formItem.get("ticket_rate")?.value
+                                        : " ticket rate"
+                                    }}</span
+                                  >
+                                  <div class="input-container">
+                                    <div
+                                      class="input-header d-flex justify-content-between"
+                                    >
+                                      <div class="input-label">
+                                        $/hr rate for driver
+                                      </div>
+                                      <div class="required-field">*</div>
+                                    </div>
+                                    <div
+                                      class="d-flex align-items-center input-box-container vendor-no-trucks-input-box padding-buttom-2"
+                                    >
+                                      <div
+                                        class="vendor-driver-input-inner-box d-flex align-items-center"
+                                      >
+                                        <div
+                                          class="fs-16-400-semi text-color-88898B"
+                                        >
+                                          $
+                                        </div>
+                                        <input
+                                          class="vendor-driver-pay-bordered-field"
+                                          type="text"
+                                          formControlName="rates"
+                                          (input)="changeRate($event, idx)"
+                                          [readonly]="
+                                            formItem.get('driver')?.value &&
+                                            (formItem.get('driver')?.value
+                                              ?.role_id == 6 ||
+                                              formItem.get('driver')?.value
+                                                ?.role_id == '6')
+                                              ? true
+                                              : false
+                                          "
+                                          placeholder="__.__"
+                                        />
+                                      </div>
+                                      <div
+                                        class="fs-16-400-semi text-color-88898B"
+                                      >
+                                        {{ formItem.get("perc")?.value }}%
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                      </form>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="dispatch-main-container">
+            <div
+              class="construction-main-heading d-flex align-items-center flex-wrap"
+            >
+              <div class="fs-20-400-bold text-color-000 dispatch-main-heading">
+                Dispatch
+              </div>
+              <div class="fs-12-400 text-color-gray">
+                Require drivers to add picture of the paper ticket and/or repeat
+                the same dispatch to multiple days
+              </div>
+            </div>
+            <div class="dispatch-details-container">
+              <div
+                class="dispatch-tickets-confirmation-container d-flex align-items-center justify-content-center flex-wrap row"
+              >
+                <div class="col-md-3 pr-md-0">
+                  <div class="dispatch-paper-tickets-container">
+                    <div
+                      class="dispatch-paper-tickets-header d-flex align-items-center justify-content-between"
+                    >
+                      <div class="fs-16-400-semi text-color-000">
+                        Require paper tickets
+                      </div>
+                      <input
+                        type="checkbox"
+                        formControlName="required_paper_ticket_id"
+                        id="floatingInputValue1"
+                        class="dispatch-tickets-checkbox"
+                      />
+                    </div>
+                    <div
+                      class="fs-15-400-semi text-color-88898B require-tickets-help-txt"
+                    >
+                      If selected, drivers are required to fill the paper ticket
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 px-md-0 align-self-start">
+                  <div class="dispatch-repeat-container d-flex flex-column">
+                    <div class="fs-16-400-semi text-color-000">
+                      Repeat this dispatch
+                    </div>
+                    <div class="fs-15-400-semi text-color-88898B">
+                      Select dates from calendar
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 px-md-0 align-self-start">
+                  <label class="dispatch-schedule-field text-field">
+                    <!-- <input
+                      class="dispatch-schedule-input"
+                      placeholder="mm/dd/yyyy"
+                      formControlName="ticket_date"
+                      type="date"
+                    /> -->
+                    <input
+                      class="dispatch-schedule-input"
+                      placeholder="dd/mm/yyyy"
+                      name="scheduled_date"
+                      type="text"
+                      name="daterange"
+                      autocomplete="off"
+                      bsDaterangepicker
+                      [bsConfig]="{
+                        minDate: this.minDateDispatch,
+                        rangeInputFormat: 'MMMM Do YYYY',
+                        dateInputFormat: 'MMMM Do YYYY',
+                        showWeekNumbers: false
+                      }"
+                      (bsValueChange)="dateRangeCreated($event)"
+                    />
+                    <img
+                      src="./assets/icons/grey-calendar-icon.svg"
+                      alt="calendaricon"
+                      class="dispatch-schedule-input-icon"
+                    />
+                    <span class="field__label-wrap">
+                      <span class="field__label">Schedule the dispatch</span>
+                    </span>
+                  </label>
+                  <input
+                    type="hidden"
+                    formControlName="range_start"
+                    [(ngModel)]="this.schedule_date_from"
+                  />
+                  <input
+                    type="hidden"
+                    formControlName="range_end"
+                    [(ngModel)]="this.schedule_date_to"
+                  />
+                </div>
+              </div>
+              <div
+                class="dispatch-footer-container d-flex justify-content-center"
+              >
+                <div class="dispatch-footer-btn-container d-flex flex-wrap">
+                  <button
+                    class="btn dispatch-footer-back-btn"
+                    [routerLink]="'/tc-project-lists'"
+                  >
+                    <div class="fs-16-400-bold">Back</div>
+                  </button>
+                  <button
+                    class="btn dispatch-footer-submit-btn"
+                    (click)="onSaveTicket()"
+                    *ngIf="
+                      is_loading_add == '' || is_loading_add != 'tc_ticket'
+                    "
+                  >
+                    <div class="fs-16-400-bold">
+                      Dispatch
+                      {{
+                        this.to_dispatch_total &&
+                        to_dispatch_total !== null &&
+                        to_dispatch_total !== undefined
+                          ? "[" + to_dispatch_total + "]"
+                          : ""
+                      }}
+                    </div>
+                  </button>
+                  <button
+                    disabled
+                    class="btn dispatch-footer-submit-btn"
+                    type="button"
+                    *ngIf="
+                      is_loading_add != '' && is_loading_add == 'tc_ticket'
+                    "
+                  >
+                    <div class="fs-16-400-bold">Processing...</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

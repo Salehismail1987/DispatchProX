@@ -1,0 +1,118 @@
+<div class="alldivs signin-div" *ngIf="this.screen == 'desktop' || this.screen == 'tablet'">
+  <div class="row m-0 ">
+      <div class="col-md-6 ">
+          <div class="header-logo">
+            <a href="https://tragget.com">
+                <img class="logo-shadow" src="assets/images/logo.png" width="147px">
+            </a>
+            </div>
+          <div class="login-form-div display-table">
+              <div class="form-div vertical-middle">
+                  <div class="welcome-back-text mb-15">Welcome back</div>
+                  <div class="login-title mb-35 ">Login your account.</div>
+                  <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+                      <span *ngIf="emailError != ''" class="text-danger">{{
+                          emailError
+                        }}</span>
+                      <label class="field text-field">
+                          <input class="field__input" placeholder="example@mail.com" formControlName ="email">
+                          <span class="field__label-wrap">
+                          <span class="field__label">Email</span>
+                          </span>
+                      </label>
+                      <br>
+                      <span *ngIf="passwordError != ''" class="text-danger">{{
+                          passwordError
+                        }}</span>
+                      <label class="field text-field">
+                          <input class="field__input" type="password"  placeholder="example" value="" formControlName="password">
+                          <i class="fa fa-eye-slash input-icon-right btnhshowhidepass" aria-hidden="true"></i>
+                          <span class="field__label-wrap">
+                          <span class="field__label">Password</span>
+                          </span>
+                      </label>
+                      <div class="form-check  mb-21">
+                          <input class="form-check-input checkbox-size" type="checkbox" value="" id="flexCheckDefault">
+                          <label class="form-check-label keepmelogin" for="flexCheckDefault">
+                              Keep me logged in.
+                          </label>
+                          <span class="float-right "> <a [routerLink]="'/reset-password'" class="heading-4 color-blackshade">Forgot password?</a></span>
+                      </div>
+                      <div class="row m-0">
+                        <div class="col-md-6 padding-left-0">
+                            <button  class="mybtn primary_button" type="submit">Log In</button>
+                        </div>
+                        <div class="col-md-6 padding-right-0">
+                            <a   [routerLink]="['/company-type']">
+                                <button class="mybtn  gotosignup">
+                                    Create account
+                                </button>
+                            </a>
+                        </div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+        
+
+      <div class="col-md-6 truck-back">
+          <div class="">
+              <div class="welcome-div-content">
+                  <div class="welcome-div">
+                      <div class="welcome-title">
+                          Welcome to DispatchProX, the place for truck jobs
+                      </div>
+                      <div class="welcome-desc">DispatchProX empowers Trucking companies and simplifies their utilization for their customers by providing accurate data flow between the entities. </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div *ngIf="this.screen =='mobile'">
+  <div class="main-content">
+      <div class="heading-1 color-blackshade header-logo">
+        <a href="https://tragget.com">
+            <img class="logo-shadow" src="assets/images/logo.png">
+        </a></div>
+      <div class="heading-2 color-blackshade">Let’s sign you in!</div>
+      <div class="heading-3 color-blackshade-2">Welcome back on board, enter your email and password to log in.</div>
+      <br>
+      <form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+          <span *ngIf="emailError != ''" class="text-danger">{{
+              emailError
+            }}</span>
+          <div class="my-input-group">
+              <input type="text" class="myinput" placeholder="Email" formControlName ="email">
+              <img src="assets/images/user.svg" class="input-icon">
+          </div>
+          <span *ngIf="passwordError != ''" class="text-danger">{{
+              passwordError
+            }}</span>
+          <div class="my-input-group">
+              <input type="password" class="myinput" placeholder="Password" formControlName="password">
+              <img src="assets/images/unlock.svg" class="input-icon">
+          </div>
+          <div class="forogt-pass-div">
+              <div class="heading-4 color-blackshade">
+                  <span> <a [routerLink]="'/reset-password'">Forgot password?</a></span></div>
+              <div class="remember-div">
+                  <div class="heading-4 color-blackshade">Remember me</div>
+                  <label class="switch">
+                      <input type="checkbox" checked>
+                      <span class="slider round"></span>
+                  </label>
+              </div>
+          </div>
+          <br>
+          <button class="mybtn bg-pink"  type="submit">Login</button>
+          <br>
+          <br>
+          <div class="heading-4 text-center color-blackshade-3">Don’t have an account?</div>
+          <br>
+          <button class="mybtn bg-transparent btn-border" [routerLink]="['/company-type']">Join now</button>
+          <br>
+      </form>
+  </div>
+</div>

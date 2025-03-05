@@ -1,0 +1,160 @@
+<!-- 
+<div class="sub-menu dashboard-body-stats inner_main_shadow" style="display: none;">
+    <div class="dashboard-div mb-14 custom-padding11 ">
+        <div class="d-flex align-items-center">
+            <div class="">
+                <img src="../../assets/icons/setting.svg" alt="" width="23px">
+
+            </div>
+            <div class="ml-22">
+                <div class="title-8-2 text-color-black-shade ">My driving</div>
+                <div class="title-7 text-color-black-shade5">{{this.loggedinUser?.full_name}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="myhr4 mb-17"></div>
+    <ul class="sub-menu-ul">
+        <li>
+            <a [routerLink]="'/freelance-driver-tc-settings'">
+                <div class="sub-menu-link {{active_link == 'trucking_company' ? 'active':''}}">
+                    <div class="icon-div icon-truck"></div>
+                    <span>Trucking companies</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/freelance-driver-cc-settings'">
+                <div class="sub-menu-link {{active_link == 'construction_company' ? 'active':''}}">
+                    <div class="icon-div icon-construction"></div>
+                    <span>Construction sites</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/freelance-manage-trucks'">
+                <div class="sub-menu-link  {{active_link == 'freelance-manage-trucks' ? 'active':''}}">
+                    <div class="icon-div icon-truck"></div>
+                    <span>Truck(s) you drive</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/freelance-create-ticket'">
+                <div class="sub-menu-link {{active_link == 'freelance-create-ticket' ? 'active':''}}">
+                    <div class="icon-div icon-plus-one"></div>
+                    <span>Create ticket</span>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div> -->
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs my-nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item"  role="presentation">
+        <button 
+        class="nav-link" 
+        routerLink="/freelance-driver-tc-settings"
+        routerLinkActive="active">
+        <div class="d-flex align-items-center w-135">
+          <img src="./assets/images/cc-icon.svg" width="20px" alt="project-profile-file-icon">
+          <div class="heading-5-400 text-color-black ml-20px">
+            Trucking <br> Companies
+          </div>
+        </div>
+      </button>
+      
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" [class.active]="isActive('construction_company')" (click)="setActiveTab('construction_company')"  routerLink="/freelance-driver-cc-settings" routerLinkActive="active">
+            <div class="d-flex align-items-cente" [ngClass]="{'w-117': isActive('construction_company'), 'w-116': !isActive('construction_company')}">
+                <img
+                src="./assets/icons/construction-piller.svg" width="20px"
+                alt="project-profile-tracker-icon"
+                />
+                <div class="heading-5-400 text-color-black ml-8px col text-center">Construction<br>sites</div>
+            </div>
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" [class.active]="isActive('freelance-manage-trucks')" (click)="setActiveTab('freelance-manage-trucks')" routerLink="/freelance-manage-trucks" routerLinkActive="active">
+                        <div class="d-flex align-items-cente" [ngClass]="{'w-117': isActive('freelance-manage-trucks'), 'w-116': !isActive('freelance-manage-trucks')}">
+                <img
+                src="./assets/icons/truck-Setting.svg" width="20px"
+                alt="project-profile-tracker-icon"
+                />
+                <div class="heading-5-400 text-color-black ml-8px col text-center">Truck(s) you<br>drive</div>
+            </div>
+        </button>
+    </li>
+
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" [class.active]="isActive('freelance-create-ticket')" (click)="setActiveTab('freelance-create-ticket')"routerLink="/freelance-create-ticket" routerLinkActive="active">
+            <div class="d-flex align-items-cente" [ngClass]="{'w-117': isActive('freelance-create-ticket'), 'w-116': !isActive('freelance-create-ticket')}">
+                <img
+                src="./assets/images/cust-tragget-tickets-icon.svg" width="20px"
+                alt="project-profile-tracker-icon"
+                />
+                <div class="heading-5-400 text-color-black ml-8px col text-center">Create ticket</div>
+            </div>
+        </button>
+    </li>
+</ul>
+
+<div class="sub-menu border-div d-none">
+    <div class="sub-menu-profile-div">
+        <div class="sub-menu-icon-div">
+            <img  class="user-profile-pic" style="width: 55px"  src="../../assets/icons/setting.svg" alt="" width="23px">
+          
+        </div>
+        
+        <div class="sub-menu-content">
+            {{this.loggedinUser?.full_name}}
+        </div>
+    </div>
+    <div class="myhr mt-20 mb-19"></div>
+    <ul class="sub-menu-ul" >
+        <!-- <li>
+            <a [routerLink]="'/cust-notification-settings'">
+                <div [ngClass]="current_nav == 'notifications' ? 'sub-menu-link active': 'sub-menu-link'">
+                    
+                    <img src="../../assets/icons/dark-icon-bell.svg">
+                    <span>Notifications</span>
+                </div>
+            </a>
+        </li> -->
+        <li >
+            <a [routerLink]="'/customer-company-profile'">
+                <div [ngClass]="current_nav == 'customer-company-profile' ? 'sub-menu-link active': 'sub-menu-link'">
+                    <img src="../../assets/icons/dark-profile-icon.svg">
+                    <span>Company profile</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/cust-manage-users'">
+                <div [ngClass]="current_nav == 'add-users' ? 'sub-menu-link active': 'sub-menu-link'">
+                    <img src="../../assets/icons/cust-setting-add-users.svg">
+                    <span>Add/Manage users</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/cust-profile-tragget-tickets'">
+                <div [ngClass]="current_nav == 'freelance-manage-trucks' ? 'sub-menu-link active': 'sub-menu-link'" >
+                    <img src="../assets/icons/tragget-tickets-icon.svg"> 
+
+                    <span>DispatchProX tickets</span>
+                </div>
+            </a>
+        </li> 
+        <li>
+            <a [routerLink]="'/customer-setup'">
+                <div [ngClass]="current_nav == 'setup' ? 'sub-menu-link active': 'sub-menu-link'">
+                    <img src="../../assets/icons/setting-icon-menu-dark.svg">
+                    <span>Setup</span>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>

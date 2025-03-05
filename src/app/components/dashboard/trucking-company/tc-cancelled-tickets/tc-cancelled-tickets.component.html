@@ -1,0 +1,283 @@
+<div class="wrapper">
+    <app-dashboard-header  [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header ></app-dashboard-top-header>
+        <div class="body-content"  style=" padding: 0px !important; ">
+            <!-- <div class="title-11 text-black-shade text-center mb-12">
+                Closed tickets
+            </div> -->
+            <div class="marginn-LR">
+                <div class="row setting-content-page border-div mt_10 mb_10"  style=" padding-bottom: 15px !important; margin-left: 0px; margin-right: 0px; margin-top: 15px;" >
+                    <div class="col-md-4" style=" display: flex; align-content: center; flex-wrap: wrap; ">
+                        <img _ngcontent-fbu-c48="" src="assets/icons/a_dec_tickets.svg">
+                        <div class="heading-1-400 text-black-shade mt-1 ml-2 " >
+                            Cancelled tickets
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="d-flex justify-content-between float-right">
+                            <div class="ml-3">
+                                <nav>
+                                    <div class="nav nav-pills nav-fill ticket-tabs" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link  changeCalendar  justify-content-center align-content-center " id="nav-close-tickets-tab" data-type="close-tickets-detail" data-toggle="tab" [routerLink]="'/tc-closed-tickets'" role="tab" aria-controls="nav-home" aria-selected="true">Closed tickets</a>
+                                        <a class="nav-item nav-link  changeCalendar  justify-content-center align-content-center " id="nav-declined-tickets-tab" data-type="declined-tickets-detail" data-toggle="tab" [routerLink]="'/tc-declined-tickets'" role="tab" aria-controls="nav-profile" aria-selected="false">Declined tickets</a>
+                                        <a class="nav-item nav-link active changeCalendar  justify-content-center align-content-center mr-0" id="nav-cancelled-tickets-tab" data-type="cancelled-tickets-detail" data-toggle="tab" [routerLink]="'/tc-cancelled-tickets'" role="tab" aria-controls="nav-profile" aria-selected="false">Cancelled tickets</a>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row setting-content-page border-div custom-padding12 inner_main_shadow "style="  margin-left: 0px;  margin-right: 0px; ">
+                    <div class="col-md-12">
+                        <div class=" " style="height: 55px !important;" >
+
+                        </div>
+                        <div class="row mb-15">
+                            <div class="col-lg-3 col-md-4">
+                                <div class="setting-content-page custom-padding3  py-0 mb-0 " style="padding-top: 0px !important; padding-bottom: 0px !important; ">
+                                    <div class="title-11 text-black-shade mb-1">
+                                        Cancelled tickets
+                                    </div>
+                                    <div class="title-14 text-black-shade mb-1">
+                                        by companies
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-4  mb-10 px-1">
+                                <div class="input-div  getinputfield2 {{!this.selected_company ? 'border-blue':''}} cur_p">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left"> Filter by Company</div>
+                                    <div class="myinput-new selected sa_select" *ngIf="!this.selected_company">
+                                        Select
+                                    </div>
+                                    <div class="myinput-new selected sa_selected_filter" *ngIf="this.selected_company !=null">
+                                        {{this.selected_company.company_name}}
+                                    </div>
+                                    <img src="../../assets/images/dropdown.svg" class="icon-center-right">
+                                    <div class="  input-popup-div2 cust_drop companies_list" style="display: none;">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                                            Company
+                                        </div>
+                                        <div class="title-18 text-right mb-2px d-none">Default</div>
+                                        <div (click)="handleFilterByCompany('')"  class="d-flex justify-content-between mb-5px list-item" >
+                                            <div [ngClass]="!this.selected_company ? 'title-5-new33':'title-5-new33 text-color-black-shade7'" >
+                                                All
+                                            </div>
+                                        </div>
+                                        <ng-container *ngFor="let company of this.companies_list">
+
+                                            <div (click)="handleFilterByCompany(company?.id+ company.full_name )" class="d-flex justify-content-between  mb-5px list-item" *ngIf="company?.id && company?.account_type=='Trucking Company'" >
+                                                <div *ngIf="company?.id && company?.account_type=='Trucking Company'" [ngClass]="this.selected_company.id == company.id ? 'title-5-new33  title-5-new33_active':'title-5-new33 text-color-black-shade7'" >
+                                                    {{company.company_name}}
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-4  mb-10 px-1">
+                                <div class="input-div  getinputfield {{!this.selected_project ? 'border-blue':''}} cur_p">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left"> Filter by project</div>
+                                    <div class="myinput-new selected sa_select" *ngIf="!this.selected_project">
+                                        Select
+                                    </div>
+                                    <div class="myinput-new selected sa_selected_filter" *ngIf="this.selected_project !=null">
+                                        {{this.selected_project_comp}}
+                                    </div>
+                                    <img src="../../assets/images/dropdown.svg" class="icon-center-right">
+                                    <div class="  input-popup-div cust_drop companies_list" style="display: none;">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                                            Project
+                                        </div>
+                                        <div class="title-18 text-right mb-2px d-none">Default</div>
+                                        <div (click)="handleFilterByProject('', '')"  class="d-flex justify-content-between mb-5px list-item" >
+                                            <div [ngClass]="!this.selected_project ? 'title-5-new33':'title-5-new33 text-color-black-shade7'" >
+                                                All
+                                            </div>
+                                        </div>
+                                        <ng-container *ngFor="let company of this.Projects_list">
+
+                                            <div (click)="handleFilterByProject(company?.id+','+ company.trucking_company_id, company.project_name )" class="d-flex justify-content-between  mb-5px list-item" *ngIf="company?.id" >
+                                                <div *ngIf="company?.id" [ngClass]="this.selected_project == company.id ? 'title-5-new33 title-5-new33_active':'title-5-new33 text-color-black-shade7'" >
+                                                    {{company.project_name}}
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-4  mb-10 px-1">
+                                <div class="d-flex align-items-center percent_div" *ngIf="ratio!=null">
+                                    <div class="title-5-new7 text-color-black-shade3">From accepted tickets</div>
+                                    <div class=" div-3 text-red title-18 ml-3" >{{ratio}} %</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div id="pnlEventCalendar" class="sa_tc_dec_calender"  style="width:100%;" (click)="getVal()"></div>
+                        <div id="jobsData" style="display:none">{{this.calendar_data|json}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade show " id="myModalDeclined" tabindex="-1 " role="dialog " aria-labelledby="myModalLabel ">
+    <div class="modal-dialog max-width-50px " role="document ">
+        <div class="modal-content br-15">
+            <div class="modal-body ">
+                <div style="height: 55px;" ></div>
+
+                <button type="button" class="close" data-dismiss="modal"><img src="../../assets/icons/cross-box.png" alt=""></button>
+                <div class="row mb-15">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="setting-content-page custom-padding3  py-0 mb-0 " style="padding-top: 0px !important; padding-bottom: 0px !important; ">
+                            <div class="title-11 text-black-shade mb-1">
+                                Cancelled tickets
+                            </div>
+                            <div class="title-14 text-black-shade mb-1">
+                                Vendors or drivers
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 pr-1 pl-1">
+                        <label class="field text-field">
+                            <input class="field__input height-43px filter_btns" (change)="changeDate($event)"  placeholder="All" value="" type="date" style=" padding-right: 0 !important;  ">
+                            <span class="field__label-wrap">
+                               <span class="field__label field__label2" style="font-size: 13px !important; color: rgba(104, 105, 109, 1);  margin-top: -2px !important; margin-left: -2px !important;" >Filter by date</span>
+                            </span>
+                        </label>
+                    </div>
+
+
+
+                    <div class="col-lg-3 col-md-4  mb-10 px-1">
+                        <div class="input-div  getinputfield3 {{!this.selected_company ? 'border-blue':''}}  cur_p">
+                            <div class="title-5-new2 text-color-black-shade5 text-left"> Filter by Company</div>
+                            <div class="myinput-new selected sa_select" *ngIf="!this.selected_list_company">
+                                Select
+                            </div>
+                            <div class="myinput-new selected sa_selected_filter" *ngIf="this.selected_list_company !=null">
+                                {{this.selected_list_company_comp.company_name}}
+                            </div>
+                            <img src="../../assets/images/dropdown.svg" class="icon-center-right">
+                            <div class="  input-popup-div3 cust_drop companies_list" style="display: none;">
+                                <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                                    Company
+                                </div>
+                                <div class="title-18 text-right mb-2px d-none">Default</div>
+                                <div (click)="onCompanyChange('')"  class="d-flex justify-content-between mb-5px list-item" >
+                                    <div [ngClass]="!this.selected_list_company ? 'title-5-new33':'title-5-new33 text-color-black-shade7'" >
+                                        All
+                                    </div>
+                                </div>
+                                <ng-container *ngFor="let company of this.companies_list">
+
+                                    <div (click)="onCompanyChange(company?.id+','+ company.company_name)" class="d-flex justify-content-between  mb-5px list-item" *ngIf="company?.id && company?.account_type=='Trucking Company'" >
+                                        <div *ngIf="company?.id && company?.account_type=='Trucking Company'" [ngClass]="this.selected_list_company.id == company.id ? 'title-5-new33 title-5-new33_active':'title-5-new33 text-color-black-shade7'" >
+                                            {{company.company_name}}
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3 col-md-4  mb-10 px-1">
+                        <div class="input-div  getinputfield4 {{!this.selected_list_project ? 'border-blue':''}}  cur_p">
+                            <div class="title-5-new2 text-color-black-shade5 text-left"> Filter by project</div>
+                            <div class="myinput-new selected sa_select " *ngIf="!this.selected_list_project">
+                                Select
+                            </div>
+                            <div class="myinput-new selected sa_selected_filter" *ngIf="this.selected_list_project ">
+                                {{this.selected_list_project_comp}}
+                            </div>
+                            <img src="../../assets/images/dropdown.svg" class="icon-center-right">
+                            <div class="  input-popup-div4 cust_drop companies_list" style="display: none;">
+                                <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                                    Project
+                                </div>
+                                <div class="title-18 text-right mb-2px d-none">Default</div>
+                                <div (click)="onprojectChange('', '')"  class="d-flex justify-content-between mb-5px list-item" >
+                                    <div [ngClass]="!this.selected_list_project ? 'title-5-new33':'title-5-new33 text-color-black-shade7'" >
+                                        All
+                                    </div>
+                                </div>
+                                <ng-container *ngFor="let project of this.Projects_list">
+
+                                    <div (click)="onprojectChange(project?.id+','+ project.trucking_company_id, project.project_name )" class="d-flex justify-content-between  mb-5px list-item" *ngIf="project?.id" >
+                                        <div *ngIf="project?.id" [ngClass]="this.selected_list_project == project.id ? 'title-5-new33 title-5-new33_active':'title-5-new33 text-color-black-shade7'" >
+                                            {{project.project_name}}
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table mytable">
+                                <thead>
+                                    <tr style=" background: rgba(202, 234, 255, 1); ">
+                                        <th class="text-center" style=" width: 16%; ">Ticket ID</th>
+                                        <th class="text-center" style=" width: 6%; ">Qty</th>
+                                        <th class="text-center" style=" width: 10%; ">Dispatch date</th>
+                                        <th class="text-center" style=" width: 14%; ">Company</th>
+                                        <th class="text-left" style=" width: 14%; ">Project</th>
+                                        <th class="text-left" style=" width: 40%; ">Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="this.cancelled_tickets_list?.length>0">
+                                        <ng-container *ngFor="let ticket of this.cancelled_tickets_list">
+                                            <tr (click)="setDetail(ticket)" data-toggle="modal" data-target="#myModal">
+                                                <td><div class="btn_red" > {{this.getTicket(ticket?.tickets_cancelled)}}</div></td>
+                                                <td>{{ticket?.tickets_cancelled?.length}}</td>
+                                                <td>{{ticket?.ticket?.ticket_date}}</td>
+                                                <td>{{ getDispatchToCompanyName(ticket) }}</td>
+                                                <td class="text-left">{{ticket?.tc_ticket=='YES'? (
+                                                        ticket?.tc_project? ticket?.tc_project?.project_name:ticket?.project?.project_name
+                                                    ):(
+                                                        ticket?.ticket?.project?.project_name
+                                                    )}}</td>
+                                                <td class="text-left">{{ticket?.ticket?.cancel_reason}}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="!this.cancelled_tickets_list">
+                                        <tr>
+                                            <td colspan="6">
+                                                <b class="title-5 text-center">
+                                                    No tickets found.
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-tc-cancelled-tickets-detail-popup [requestDetail]="this.requestDetail"></app-tc-cancelled-tickets-detail-popup>

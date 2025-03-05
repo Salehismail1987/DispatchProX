@@ -1,0 +1,771 @@
+<div class="wrapper">
+    <app-dashboard-header></app-dashboard-header>
+    <div id="content" >
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content">
+
+            <div [ngClass]="screen=='desktop'? 'main-content bg-white border-div' :'bg-white border-div p-20px'">
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="main-heading mb-15">Set everything ready</div>
+                        <div class="welcome-desc mb-19">Welcome to tragget. DispatchProX makes accepting and creating dispatches super easy. Now all your truck jobs can be found in one place and after jobs are done, you can invoice instantly and GET PAID FASTER.</div>
+                    </div>
+                    <div class="col-md-3" align="right">
+                        <button class="mybtn2 text-white width-fit-content mb-4" [routerLink]="'/dashboard'">Skip</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="title-3 mb-15 text-center">Complete 4 steps to start.</div>
+                        <div class="progress mb-38 ml-2 mb-8">
+
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" [style]="'width:'+this.score+'%'">
+                            </div>
+                        </div>
+                        <div class="title-3 text-grey-shade text-center mb-36">Step {{this.score ? this.score/25 : 0}} of 4 is completed.</div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-1 hidden-md">
+                    </div>
+                    <div class="col-lg-5 col-md-6">
+                        <div class="d-flex align-items-center position-sticky mb-22">
+                            <div class="">
+                                <div class="dasborad-guid-content-div">
+                                    <div class="d-flex">
+                                        <img src="../../assets/icons/guide-truck.svg" width="10px">
+                                        <div class="ml-2">Trucking companies/<br>brokers</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dasborad-guid-div">
+                                <div class="desc-1 text-color-grey ">
+                                    The Trucking companies tab allows you to invite other Trucking companies and brokers you use to dispatch tickets.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center position-sticky mb-22">
+                            <div class="">
+                                <div class="dasborad-guid-content-div">
+                                    <div class="d-flex justify-content-between mb-10">
+                                        <div class="dasborad-guid-title">Company name</div>
+                                        <img src="../../assets/icons/arrow-up-black.svg" width="">
+                                    </div>
+                                    <div class="d-flex mb-10">
+                                        <img src="../../assets/icons/setting.svg" width="10px">
+                                        <div class="ml-2">Company settings</div>
+                                    </div>
+                                    <div class="d-flex mb-10">
+                                        <img src="../../assets/icons/guide-truck.svg" width="10px">
+                                        <div class="ml-2">Trucking companies/<br>brokers</div>
+                                    </div>
+                                    <div class="d-flex mb-10">
+                                        <img src="../../assets/icons/icon-driver.svg" width="10px">
+                                        <div class="ml-2">Drivers</div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <img src="../../assets/icons/project.svg" width="10px">
+                                        <div class="ml-2">Projects</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dasborad-guid-div">
+                                <div class="desc-1 text-color-grey ">
+                                    Drivers tab on the left, you have listed all your drivers to who you can assign jobs to drive.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center position-sticky mb-22">
+                            <div class="">
+                                <div class="dasborad-guid-content-div">
+                                    <div class="d-flex justify-content-between mb-10">
+                                        <div class="dasborad-guid-title">Company name</div>
+                                        <img src="../../assets/icons/arrow-up-black.svg" width="">
+                                    </div>
+                                    <div class="d-flex">
+                                        <img src="../../assets/icons/setting.svg" width="10px">
+                                        <div class="ml-2">Company settings</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dasborad-guid-div">
+                                <div class="desc-1 text-color-grey ">
+                                    Under the Company settings, you can manage trucks. You can enter all the truck and trailer info from license plate to box capacities.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center position-sticky mb-22">
+                            <div class="">
+                                <div class="dasborad-guid-content-div">
+                                    <div class="d-flex justify-content-between mb-10">
+                                        <div class="dasborad-guid-title">Company name</div>
+                                        <img src="../../assets/icons/arrow-up-black.svg" width="">
+                                    </div>
+                                    <div class="d-flex">
+                                        <img src="../../assets/icons/setting.svg" width="10px">
+                                        <div class="ml-2">Company settings</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dasborad-guid-div">
+                                <div class="desc-1 text-color-grey ">
+                                    DispatchProX users, who you want to have an access to company account, and roles they have, you can always add and edit from the Company settings.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 hidden-md">
+                    </div>
+                    <div class=" col-lg-5 col-md-6">
+                        <div class="position-relative hover-tip">
+                            <div  [ngClass]="is_tc_done ? 'dashbord-guide active': ' dashbord-guide'"  (click)="goToStep('invitetruking','tc')">
+                                <div class="dashbord-guide-icon">
+                                    <img src="../../assets/icons/mail.svg" width="28px">
+                                </div>
+                                <div class="dashbord-guide-content">
+                                    <div class="title-3">Invite Trucking companies</div>
+                                </div>
+                            </div>
+                            <div class="mytip">
+                                Tip: create your projects. You can track all your truck use per project. You can set what kind of trucks you use and define what kind of jobs you need them.
+                            </div>
+                        </div>
+                        <div class="position-relative hover-tip">
+                            <div [ngClass]="is_driver_done ? 'dashbord-guide active': ' dashbord-guide'" (click)="goToStep('drivers','driver')">
+                                <div class=" dashbord-guide-icon ">
+                                    <img src="../../assets/icons//person.svg" width="28px">
+                                </div>
+                                <div class="dashbord-guide-content ">
+                                    <div class="title-3">Add drivers</div>
+                                </div>
+                            </div>
+                            <div class="mytip ">
+                                Tip: create your projects. You can track all your truck use per project. You can set what kind of trucks you use and define what kind of jobs you need them.
+                            </div>
+                        </div>
+                        <div class="position-relative hover-tip ">
+                            <div [ngClass]="is_truck_done ? 'dashbord-guide active': ' dashbord-guide'" (click)="goToStep('truck-listing','truck')">
+                                <div class="dashbord-guide-icon ">
+                                    <img src="../../assets/icons/truck-white.svg" width="28px">
+                                </div>
+                                <div class="dashbord-guide-content ">
+                                    <div class="title-3">Add your trucks</div>
+                                </div>
+                            </div>
+                            <div class="mytip ">
+                                Tip: create your projects. You can track all your truck use per project. You can set what kind of trucks you use and define what kind of jobs you need them.
+                            </div>
+                        </div>
+                        <div class="position-relative hover-tip ">
+                            <div [ngClass]="is_user_done ? 'dashbord-guide active': ' dashbord-guide'" (click)="goToStep('newusers','user')">
+                                <div class="dashbord-guide-icon ">
+                                    <img src="../../assets/icons/2-user.svg" width="28px">
+                                </div>
+                                <div class="dashbord-guide-content ">
+                                    <div class="title-3">DispatchProX users</div>
+                                </div>
+                            </div>
+                            <div class="mytip ">
+                                Tip: create your projects. You can track all your truck use per project. You can set what kind of trucks you use and define what kind of jobs you need them.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="current_step !=''"></div>
+<div class="modal fade come-from-modal right show " id="newTruck" tabindex="-1 " role="dialog " aria-labelledby="myModalLabel "  style="display: block;"  *ngIf="current_step == 'invitetruking'">
+    <div class="modal-dialog max-width-50px " role="document ">
+        <div class="modal-content border-15px  modal-bg-white">
+            <div class="modal-body " style="padding:0px">
+
+                <div align="center" class="mt-15px">
+                    <div class="invute-trucking-img popup-inv-div">
+                        <img src="../../assets/icons/envalop.svg " class="  mb-23 img-top-popup ">
+                        <div class=" text-center "><img class="logo-shadow" src="../../assets/images/logo.png" class="img-logo" ></div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between ml-4 mt-50px">
+                    <div>
+                        <div class="title-0 mt-0  mb-0" >Invite trucking company/broker</div>
+                    </div>
+                </div>
+
+                <form [formGroup]="inviteTCForm" (ngSubmit)="onInviteTC()" enctype="multipart/form-data" class="tc-form m-25px">
+
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <span *ngIf="inviteTCcompany_nameError != ''" class="text-danger">{{
+                                inviteTCcompany_nameError
+                            }}</span>
+                            <label class="field text-field required_field">
+                                <input class="field__input " placeholder="Enter " value=" "  formControlName="company_name" type="text ">
+                                <span class="field__label-wrap ">
+                                <span class="field__label ">Company name</span>
+                                </span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <span *ngIf="inviteTCfull_nameError != ''" class="text-danger">{{
+                                inviteTCfull_nameError
+                            }}</span>
+                            <label class="field text-field required_field">
+                                <input class="field__input " placeholder="Enter " value=" "  formControlName="full_name" type="text ">
+                                <span class="field__label-wrap ">
+                                <span class="field__label ">Contact person: Full name</span>
+                                </span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <span *ngIf="inviteTCEmailError != ''" class="text-danger">{{
+                                inviteTCEmailError
+                            }}</span>
+                            <label class="field text-field required_field">
+                                <input class="field__input " placeholder="example@mail.com " value=" " formControlName="email" type="text">
+                                <span class="field__label-wrap ">
+                                <span class="field__label ">Email</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex m-0 btn-div mt-25px row" align="center" >
+                        <div class="  col-md-4 px-0 ml-5">
+                            <button class=" btn-back goto-dashboard-setup-1 " (click)="goToStep('','tc')">Back</button>
+                        </div>
+                        <div class="  col-md-4 px-0 mr-5">
+                            <button class="col-md-5 mybtn bg-medium-blue text-white "w4 type="submit" *ngIf="!is_tc_loading">Send invite</button>
+                            <button class="mybtn bg-medium-blue text-white" type="button" *ngIf="is_tc_loading" disabled >Processing..</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade come-from-modal right show " id="adddriver" tabindex="-1 " role="dialog " aria-labelledby="myModalLabel "  style="display: block;"  *ngIf="current_step == 'drivers'">
+    <div class="modal-dialog max-width-50px " role="document ">
+        <div class="modal-content border-15px modal-bg-white">
+            <div class="modal-body " style="padding:0px">
+               <div class=" mt-25px" align="center">
+                    <div class="invute-trucking-img popup-inv-div" >
+                        <img src="../../assets/images/driver-profile.png" class="img  mb-23 " style="height: 95px;
+                        width: 100px;">
+                        <div class=" text-center "><img class="logo-shadow" src="../../assets/images/logo.png" style="width: 147px;height: 59px;"></div>
+                    </div>
+               </div>
+
+
+                <div class="d-flex justify-content-between ml-4 mt-25px ">
+                    <div>
+                        <div class="title-0 " >Invite driver</div>
+                    </div>
+                </div>
+
+                <form [formGroup]="inviteDriverForm" (ngSubmit)="onInviteDriver()" enctype="multipart/form-data" class="m-25px tc-form">
+
+                    <div class="uplodfile-div d-flex" style="display:none !important">
+                        <div class="uplodfile-icon-div" (click)="logoFileInput.click()">
+                            <img src="assets/icons/truck-ico.svg" >
+                        </div>
+                        <div class="uplodfile-content">
+                            <div>Upload<br>your photo</div>
+
+                            <input id="logo-file-input" hidden type="file" [multiple]="false" [accept]="'image/jpeg, image/png'" (change)="uploadimage($event)" #logoFileInput formControlName="profile_image">
+                        </div>
+                        <div class="uplodfile-content">
+                            <span>{{driverImage?.name}}</span>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <span *ngIf="driverfull_nameError != ''" class="text-danger">{{
+                                driverfull_nameError
+                            }}</span>
+                            <label class="field text-field required_field ">
+                                <input class="field__input " placeholder="Danyal " formControlName="full_name" value=" " type="text ">
+                                <span class="field__label-wrap ">
+                                <span class="field__label ">Full name</span>
+                                </span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-7 ">
+                            <span *ngIf="driverEmailError != ''" class="text-danger">{{
+                                driverEmailError
+                            }}</span>
+                            <label class="field text-field required_field ">
+                                <input class="field__input " placeholder="example@mail.com " formControlName="email" value=" " type="email">
+                                <span class="field__label-wrap ">
+                                <span class="field__label ">Email</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-5 ">
+                            <span *ngIf="driverContactNumberError != ''" class="text-danger">{{
+                                driverContactNumberError
+                            }}</span>
+                            <label class="field text-field ">
+                        <input class="field__input " placeholder="(---) --- ----" (input)="changeNumber($event)" formControlName="contact_number" type="text ">
+                        <span class="field__label-wrap ">
+                        <span class="field__label ">Phone number</span>
+                        </span>
+                    </label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex m-0 btn-div mt-25px" align="center">
+
+                        <div class="padding-left-0">
+                            <button class="btn-back goto-dashboard-setup-1" (click)="goToStep('','driver')">Back</button>
+                        </div>
+                        <div class="padding-right-0">
+                            <button class="mybtn  bg-medium-blue text-white" type="submit" *ngIf="!is_driver_loading" >Send Invite</button>
+
+                            <button class="mybtn  bg-medium-blue text-white" type="button" *ngIf="is_driver_loading" disabled >Processing..</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade come-from-modal right show " id="newTruck" tabindex="-1 " role="dialog " aria-labelledby="myModalLabel "  style="display: block;"  *ngIf="current_step == 'truck-listing' || current_step == 'trailer-listing'">
+    <div class="modal-dialog max-width-50px " role="document ">
+        <div class="modal-content border-15px modal-bg-white ">
+            <div class="modal-body p-25px"  >
+                <div class="row ">
+                    <div class="col-lg-12 dashbord-fademe setup-truck-listing" *ngIf="current_step =='truck-listing'">
+                        <div class="heading-new-project pb-2 mb-38">Truck / trailer information</div>
+
+
+                        <div class="row" style="margin-left: 2.0rem!important;margin-right: 2.0rem!important;">
+                            <div class="col-md-5 p-0 p-0-sm">
+                                <div class="your-adding bg-blue2 goto-truck-listing active text-white" (click)="goToStep('truck-listing','truck')">
+                                    Truck
+                                </div>
+                                <div class="myhr3px mb-14"></div>
+                            </div>
+                            <div class="col-md-2 p-0 p-0-sm"></div>
+                            <div class="col-md-5 p-0 p-0-sm">
+                                <div class="your-adding  goto-truck-listing tc-text-color" (click)="goToStep('trailer-listing','trailer')">
+                                    Trailer
+                                </div>
+                            </div>
+                        </div>
+
+                        <form [formGroup]="truckForm" (ngSubmit)="onSaveTruck()" class="trailer-form tc-form">
+                            <div class="row m-0">
+
+                                <div class="col-md-6 padding-left-0 p-0-sm">
+
+                                    <span *ngIf="truckNicknameError != ''" class="text-danger">{{
+                                        truckNicknameError
+                                    }}</span>
+                                    <label class="field text-field required_field">
+                                        <input class="field__input" placeholder="Type here" value="" formControlName="truck_nickname">
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Truck name</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 padding-right-0 p-0-sm">
+                                    <span *ngIf="truckLicensePlateError != ''" class="text-danger">{{
+                                        truckLicensePlateError
+                                    }}</span>
+                                    <label class="field text-field required_field">
+                                        <input class="field__input" placeholder="xxx-xxx" value="" formControlName="truck_license_plate">
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">License plate</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row m-0">
+                                <div class="col-md-6 padding-left-0 p-0-sm">
+                                    <span *ngIf="truckTypeError != ''" class="text-danger">{{
+                                        truckTypeError
+                                    }}</span>
+                                    <label class="field text-field required_field">
+                                        <select class="field__input" formControlName="truck_type" [(ngModel)]="this.truck_type">
+                                            <option value="Single" >Single</option>
+                                            <option value="Tandem">Tandem</option>
+                                            <option value="Tridem">Tridem</option>
+                                            <option value="Quad-Axle">Quad-Axle</option>
+                                        </select>
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Truck type</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 padding-right-0 p-0-sm">
+                                    <span *ngIf="truckColorError != ''" class="text-danger">{{
+                                        truckColorError
+                                    }}</span>
+                                    <label class="field text-field ">
+                                        <input class="field__input" placeholder="Type here" value="" formControlName="truck_color">
+
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Truck color</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12 p-0 p-0-sm">
+                                    <span *ngIf="truckWeightCapacityError != ''" class="text-danger">{{
+                                        truckWeightCapacityError
+                                    }}</span>
+                                    <span *ngIf="truckWeightCapacityUnitError != ''" class="text-danger">{{
+                                        truckWeightCapacityUnitError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" placeholder="Enter" value="" formControlName="weight_capacity">
+                                        <select class="selectlist-addon" formControlName="weight_capacity_unit" [(ngModel)]="this.truck_weight">
+                                            <option value="ton" >ton</option>
+                                            <option value="lb">lb</option>
+                                            <option value="lb2">lb2</option>
+                                        </select>
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Truck capacity in weight</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12  p-0 p-0-sm">
+                                    <span *ngIf="truckVolumeCapacityError != ''" class="text-danger">{{
+                                        truckVolumeCapacityError
+                                    }}</span>
+                                    <span *ngIf="truckVolumeCapacityUnitError != ''" class="text-danger">{{
+                                        truckVolumeCapacityUnitError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" placeholder="Enter" value="" formControlName="volume_capacity">
+                                        <select class="selectlist-addon" formControlName="volume_capacity_unit" [(ngModel)]="this.truck_volumn">
+                                            <option value="m2" >m2</option>
+                                        </select>
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Truck capacity in volume</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="d-flex m-0 btn-div" align="center">
+                                <div class=" padding-left-0 p-0-sm">
+                                    <button class="btn-back goto-dashboard-setup-1" (click)="goToStep('','truck')">Back</button>
+                                </div>
+                                <div class=" padding-right-0 p-0-sm">
+                                    <button class="mybtn bg-medium-blue text-white" type="submit" *ngIf="!is_truck_loading" >Add truck</button>
+                                    <button class="mybtn bg-medium-blue text-white" type="submit" *ngIf="is_truck_loading" disabled >Processing..</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-12 dashbord-fademe setup-trailer-listing" *ngIf="current_step =='trailer-listing'">
+
+                        <div class="heading-new-project pb-2 mb-38 ">Truck / trailer information</div>
+
+                        <div class="row" style="margin-left: 2.0rem!important;margin-right: 2.0rem!important;">
+                            <div class="col-md-5 p-0 p-0-sm">
+                                <div class="your-adding  goto-truck-listing tc-text-color" (click)="goToStep('truck-listing','truck')">
+                                    Truck
+                                </div>
+                            </div>
+                            <div class="col-md-2 p-0 p-0-sm"></div>
+                            <div class="col-md-5 p-0 p-0-sm">
+                                <div class="your-adding bg-blue2 goto-truck-listing active text-white" (click)="goToStep('trailer-listing','trailer')">
+                                    Trailer
+                                </div>
+                                <div class="myhr3px mb-14"></div>
+                            </div>
+                        </div>
+
+                        <form [formGroup]="trailerForm" (ngSubmit)="onSaveTrailer()" class="trailer-form tc-form">
+                            <div class="row m-0">
+
+                                <div class="col-md-6 padding-left-0 p-0-sm">
+
+                                    <span *ngIf="trailerNicknameError != ''" class="text-danger">{{
+                                        trailerNicknameError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" placeholder="Type here" value="" formControlName="trailer_nickname">
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Trailer name</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 padding-right-0  p-0-sm">
+                                    <span *ngIf="trailerLicensePlateError != ''" class="text-danger">{{
+                                        trailerLicensePlateError
+                                    }}</span>
+                                    <label class="field text-field required_field">
+                                        <input class="field__input" placeholder="xxx-xxx" value="" formControlName="trailer_license_plate">
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">License plate</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12 p-0  p-0-sm">
+                                    <span *ngIf="trailerTypeError != ''" class="text-danger">{{
+                                        trailerTypeError
+                                    }}</span>
+                                    <label class="field text-field required_field">
+                                        <select class="field__input" formControlName="trailer_type" [(ngModel)]="this.trailer_type">
+                                            <option value="Pony">Pony</option>
+                                            <option value="Tri Pony">Tri Pony</option>
+                                            <option value="Quad (wagon)">Quad (wagon)</option>
+                                            <option value="Transfer">Transfer</option>
+                                        </select>
+                                       <span class="field__label-wrap">
+                                        <span class="field__label">Trailer type</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12 p-0  p-0-sm">
+                                    <span *ngIf="trailerWeightCapacityError != ''" class="text-danger">{{
+                                        trailerWeightCapacityError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" placeholder="10" value="Enter" formControlName="weight_capacity">
+                                        <select class="selectlist-addon" formControlName="weight_capacity_unit" [(ngModel)]="this.trailer_weight">
+                                            <option value="ton" selected>ton</option>
+                                            <option value="lb">lb</option>
+                                            <option value="lb2">lb2</option>
+                                        </select>
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Trailer capacity in weight</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12 p-0  p-0-sm">
+                                    <span *ngIf="trailerVolumeCapacityError != ''" class="text-danger">{{
+                                        trailerVolumeCapacityError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" placeholder="Enter" formControlName="volume_capacity">
+                                        <select class="selectlist-addon" formControlName="volume_capacity_unit" [(ngModel)]="this.trailer_volumn">
+                                            <option value="m2">m2</option>
+                                        </select>
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Trailer capacity in volume</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <br>
+                            <br>
+                            <div class="d-flex m-0 btn-div" align="center">
+                                <div class="padding-left-0">
+                                    <button class="btn-back goto-dashboard-setup-1" (click)="goToStep('','truck')">Back</button>
+                                </div>
+                                <div class="padding-right-0">
+                                    <button class="mybtn bg-medium-blue text-white " type="submit" *ngIf="!is_trailer_loading" >Add trailer</button>
+                                    <button class="mybtn bg-medium-blue text-white " type="submit" *ngIf="is_trailer_loading" disabled >Processing..</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade  come-from-modal right show" id="newusers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;"  *ngIf="current_step == 'newusers'">
+    <div class="modal-dialog max-width-50px" role="document">
+        <div class="modal-content border-15px modal-bg-white">
+            <div class="modal-body p-25px">
+
+                <div class="row mt-4">
+                    <div class="col-md-2 ">
+                    </div>
+                    <div class="col-md-8 ">
+                        <div align="center">
+
+                            <div class=" text-center "><img class="logo-shadow" src="../../assets/images/logo.png" style="width: 147px;height: 59px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between ml-4 mt-25px">
+                    <div>
+                        <div class="title-0 " >Invite employee/user</div>
+                    </div>
+                </div>
+
+                <form [formGroup]="addUserForm" (ngSubmit)="onSaveUser()" class="tc-form  mt-25px">
+
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <span *ngIf="userfull_nameError != ''" class="text-danger">{{
+                                userfull_nameError
+                            }}</span>
+                          <label class="field text-field required_field">
+                            <input class="field__input " placeholder="Type here " formControlName="full_name"  type="text ">
+                            <span class="field__label-wrap ">
+                            <span class="field__label ">Full name</span>
+                            </span>
+                        </label>
+                        </div>
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-7 ">
+                            <span *ngIf="userEmailError != ''" class="text-danger">{{
+                                userEmailError
+                            }}</span>
+                           <label class="field text-field required_field">
+                            <input class="field__input " placeholder="example@mail.com " value=" " type="email"  formControlName="email">
+                            <span class="field__label-wrap ">
+                            <span class="field__label ">Email</span>
+                            </span>
+                        </label>
+                        </div>
+                        <div class="col-md-5 ">
+                            <span *ngIf="userContactNumberError != ''" class="text-danger">{{
+                                userContactNumberError
+                            }}</span>
+                            <label class="field text-field ">
+
+                                <input class="field__input " placeholder="(---) --- ----"  (input)="changeNumber2($event)" formControlName="contact_number" type="text ">
+                                <span class="field__label-wrap ">
+                                <span class="field__label ">Phone number</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <span *ngIf="userRoleIDError != ''" class="text-danger">{{
+                                userRoleIDError
+                            }}</span>
+                          <label class="field text-field required_field">
+                                <select class="field__input " formControlName="role_id">
+                                    <option value="">Select</option>
+                                    <option value="3">Admin</option>
+                                    <option value="1">Bookkeeper</option>
+                                </select>
+                                <span class="field__label-wrap ">
+                                    <span class="field__label ">User role</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex m-0 btn-div" align="center">
+                        <div class=" ">
+                            <button class="btn-back gotosignup " (click)="goToStep('','user')">Back</button>
+                        </div>
+                        <div class=" ">
+                            <button type="submit" class="mybtn bg-medium-blue text-white " *ngIf="!is_user_loading" >Send Invite</button>
+                            <button type="button" *ngIf="is_user_loading" disabled  class="mybtn bg-medium-blue text-white " >Processing...</button>
+                        </div>
+                    </div>
+                    <br>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+
+<div class="col-md-7 display-table setup-show-content dashboard-setups dashboard-setup-user-detail" *ngIf="current_step == 'user-details'">
+    <div class="vertical-middle  padding-50px">
+        <div class="row">
+            <div class="col-lg-2">
+            </div>
+            <div class="col-lg-8">
+                <div class="welcome-back-text">Add new User</div>
+                <div class="setup-title">User details</div>
+
+                <form [formGroup]="addUserForm" (ngSubmit)="onSaveUser()">
+                    <div class="row m-0">
+                        <div class="col-md-6 padding-left-0">
+                            <span *ngIf="userFirstNameError != ''" class="text-danger">{{
+                                userFirstNameError
+                            }}</span>
+                            <label class="field text-field">
+                        <input class="field__input" placeholder="Danyal" value="" formControlName="full_name">
+                        <i class="fa fa-refresh input-icon-right" aria-hidden="true"></i>
+                        <span class="field__label-wrap">
+                        <span class="field__label">First name</span>
+                        </span>
+                    </label>
+                        </div>
+                        <div class="col-md-6 padding-right-0">
+                            <span *ngIf="userLastNameError != ''" class="text-danger">{{
+                                userLastNameError
+                            }}</span>
+                            <label class="field text-field">
+                        <input class="field__input" placeholder="Saif" value="" formControlName="last_name">
+                        <span class="field__label-wrap">
+                        <span class="field__label">Last name</span>
+                        </span>
+                    </label>
+                        </div>
+                    </div>
+                    <span *ngIf="userEmailError != ''" class="text-danger">{{
+                        userEmailError
+                    }}</span>
+                    <label class="field text-field">
+                        <input class="field__input" placeholder="example@mail.com" type="email" formControlName="email">
+                        <span class="field__label-wrap">
+                        <span class="field__label">Email</span>
+                        </span>
+                    </label>
+                    <span *ngIf="userContactNumberError != ''" class="text-danger">{{
+                        userContactNumberError
+                    }}</span>
+                    <label class="field text-field">
+                        <input class="field__input" placeholder="+1123456789" value="" formControlName="contact_number">
+                        <span class="field__label-wrap">
+                        <span class="field__label">Comtact number</span>
+                        </span>
+                    </label>
+                    <span *ngIf="userRoleIDError != ''" class="text-danger">{{
+                        userRoleIDError
+                    }}</span>
+                    <label class="field text-field">
+                        <select class="field__input" formControlName="role_id">
+                            <option value="1">Bookkeeper</option>
+                        </select>
+                        <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                        <span class="field__label-wrap">
+                        <span class="field__label">User role</span>
+                        </span>
+                    </label>
+                    <br>
+                    <br>
+                    <div class="row m-0">
+                        <div class="col-md-5 padding-left-0">
+                            <button class="btn-back goto-dashboard-setup-1" (click)="goToStep('')">Back</button>
+                        </div>
+                        <div class="col-md-7 padding-right-0">
+                            <button class="mybtn mybtn-back-pink " type="submit"  *ngIf="!is_user_loading">Add User</button>
+                            <button class="mybtn mybtn-back-pink " type="submit" *ngIf="is_user_loading" disabled >Processing..</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>  -->

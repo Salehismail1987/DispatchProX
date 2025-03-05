@@ -1,0 +1,107 @@
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content" >
+            <div class="main-content main-content-margins p-0">
+                <div class="welcome-text">Projects</div>
+                <div *ngIf="project && project.project_name; else elseBlock">
+                
+                    <div class="dashboard-title">{{this.project.project_name}}</div>
+                    <div class="row">
+                        <div class="col-md-5 col-lg-4">
+                            <div class="sub-menu border-div">
+                                <div class="sub-menu-profile-div">
+                                    <div class="sub-menu-icon-div">
+                                        <img src="../../assets/icons/user-icon.svg">
+                                    </div>
+                                    <div class="display-table">
+                                        <div class="vertical-middle">
+                                            <div class="sub-menu-content">
+                                                {{this.project.project_name}}
+                                            </div>
+                                            <div class="submenu-subheading">{{this.project.project_location}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="myhr"></div>
+                                <br>
+                            <app-project-profile-nav [project_id]="this.project_id" [current_nav]="'inv-users'"></app-project-profile-nav>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-lg-8">
+                            <div class="setting-content-page border-div">
+                                <div class="dashboard-title">Invite Users</div>
+                                <form [formGroup]="invUserForm" (ngSubmit)="onInvUserForm()" enctype="multipart/form-data"> 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span *ngIf="nameError!= ''" class="text-danger">{{
+                                                nameError
+                                                }}</span>
+                                            <div class="form-group">
+                                                <label class="title-8-2 mb-17">Name</label>
+                                                <input type="text" class="form-control mb-33 myinput2" formControlName="name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <span *ngIf="emailError!= ''" class="text-danger">{{
+                                                emailError
+                                                }}</span>
+                                            <div class="form-group">
+                                                <label class="title-8-2 mb-17">Email</label>
+                                                <input type="text" class="form-control mb-33 myinput2" formControlName="email">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="dashboard-title mb-29">Send invite for the role:</div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <span *ngIf="roleError!= ''" class="text-danger">{{
+                                                roleError
+                                                }}</span>
+                                            <div class="form-group position-relative">
+                                                <label class="title-8-2 mb-17">Select role </label>
+                                                <select class="form-control icon-none mb-33 myinput2 select-no-icon" formControlName="role">
+                                                    <option value="1">Admin</option>
+                                                    <option value="2">Approver</option>
+                                                    <option value="4">Dispatcher</option>
+                                                    <option value="5">Superintendent</option>
+                                                </select>
+                                                <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div align="center">
+                                        <button class="mybtn mybtn-back-yellow width-fit-content mybtn-padding" *ngIf="!this.is_progress" type="submit">Send Invite</button>
+                                        <button class="mybtn mybtn-back-yellow width-fit-content mybtn-padding" *ngIf="this.is_progress" type="button" disabled>Processing...</button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <ng-template #elseBlock>
+                    <div class="row">
+                        <div class="col-md-10 col-lg-8">
+                            <div class="setting-content-page" >
+                                <h3 *ngIf="!is_loading; else elseLoading">
+                                    Project not found.<br/> 
+                                    <a style="color:rgb(69, 69, 190) !important;font-size:13px" routerLink="/project-listing">Back to Projects</a>
+                                </h3>
+                            
+                                <ng-template #elseLoading>
+                                    <h3>
+                                        Getting Project Details...
+                                    </h3>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

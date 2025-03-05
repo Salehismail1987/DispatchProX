@@ -1,0 +1,1935 @@
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content">
+            <div class="bg-white border-div br-15 mb-15 p-15px ">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center justify-content-center">
+                      <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.2085 1.4585H4.79183C3.77517 1.4585 2.80014 1.86236 2.08125 2.58125C1.36236 3.30014 0.958496 4.27517 0.958496 5.29183V12.0002C0.958496 12.2543 1.05946 12.4981 1.23919 12.6778C1.41891 12.8575 1.66266 12.9585 1.91683 12.9585H6.7085V21.5835C6.70804 21.7668 6.76017 21.9464 6.85868 22.1009C6.9572 22.2555 7.09798 22.3786 7.26433 22.4556C7.43107 22.5323 7.61634 22.5596 7.79812 22.5341C7.9799 22.5086 8.15054 22.4315 8.28975 22.3118L11.021 19.9735L13.7522 22.3118C13.9258 22.4603 14.1467 22.5419 14.3752 22.5419C14.6036 22.5419 14.8245 22.4603 14.9981 22.3118L17.7293 19.9735L20.4606 22.3118C20.6342 22.4603 20.8551 22.5418 21.0835 22.5418C21.2221 22.5408 21.3591 22.5115 21.486 22.4556C21.6523 22.3786 21.7931 22.2555 21.8916 22.1009C21.9902 21.9464 22.0423 21.7668 22.0418 21.5835V5.29183C22.0418 4.27517 21.638 3.30014 20.9191 2.58125C20.2002 1.86236 19.2252 1.4585 18.2085 1.4585ZM2.87516 11.0418V5.29183C2.87516 4.7835 3.0771 4.29599 3.43654 3.93654C3.79599 3.5771 4.2835 3.37516 4.79183 3.37516C5.30016 3.37516 5.78767 3.5771 6.14712 3.93654C6.50656 4.29599 6.7085 4.7835 6.7085 5.29183V11.0418H2.87516ZM20.1252 19.5039L18.3522 17.9802C18.1787 17.8317 17.9578 17.7501 17.7293 17.7501C17.5009 17.7501 17.28 17.8317 17.1064 17.9802L14.3752 20.3185L11.6439 17.9802C11.4703 17.8317 11.2494 17.7501 11.021 17.7501C10.7926 17.7501 10.5717 17.8317 10.3981 17.9802L8.62516 19.5039V5.29183C8.62397 4.61858 8.44548 3.95752 8.10766 3.37516H18.2085C18.7168 3.37516 19.2043 3.5771 19.5638 3.93654C19.9232 4.29599 20.1252 4.7835 20.1252 5.29183V19.5039ZM18.2085 6.25016C18.2085 6.50433 18.1075 6.74808 17.9278 6.92781C17.7481 7.10753 17.5043 7.2085 17.2502 7.2085H11.5002C11.246 7.2085 11.0022 7.10753 10.8225 6.92781C10.6428 6.74808 10.5418 6.50433 10.5418 6.25016C10.5418 5.996 10.6428 5.75224 10.8225 5.57252C11.0022 5.3928 11.246 5.29183 11.5002 5.29183H17.2502C17.5043 5.29183 17.7481 5.3928 17.9278 5.57252C18.1075 5.75224 18.2085 5.996 18.2085 6.25016ZM18.2085 10.0835C18.2085 10.3377 18.1075 10.5814 17.9278 10.7611C17.7481 10.9409 17.5043 11.0418 17.2502 11.0418H11.5002C11.246 11.0418 11.0022 10.9409 10.8225 10.7611C10.6428 10.5814 10.5418 10.3377 10.5418 10.0835C10.5418 9.82933 10.6428 9.58557 10.8225 9.40585C11.0022 9.22613 11.246 9.12516 11.5002 9.12516H17.2502C17.5043 9.12516 17.7481 9.22613 17.9278 9.40585C18.1075 9.58557 18.2085 9.82933 18.2085 10.0835ZM18.2085 13.9168C18.2085 14.171 18.1075 14.4148 17.9278 14.5945C17.7481 14.7742 17.5043 14.8752 17.2502 14.8752H11.5002C11.246 14.8752 11.0022 14.7742 10.8225 14.5945C10.6428 14.4148 10.5418 14.171 10.5418 13.9168C10.5418 13.6627 10.6428 13.4189 10.8225 13.2392C11.0022 13.0595 11.246 12.9585 11.5002 12.9585H17.2502C17.5043 12.9585 17.7481 13.0595 17.9278 13.2392C18.1075 13.4189 18.2085 13.6627 18.2085 13.9168Z" fill="black"/>
+                        </svg>
+                        <div class="title-12 ml-8px text-color-black-shade">Invoicing status</div>
+                    </div>
+                    <div>
+                        <nav>
+                            <div class="nav nav-pills equal-tabs nav-fill ticket-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link {{current_tab=='draft'? 'active':''}}" id="nav-home-tab" (click)="setTab('draft')" role="tab" aria-controls="nav-home" aria-selected="true">Draft</a>
+                                <a class="nav-item nav-link {{current_tab=='invoiced'? 'active':''}}" id="nav-profile-tab" (click)="setTab('invoiced')" role="tab" aria-controls="nav-profile" aria-selected="true">Invoiced</a>
+                            </div>
+                        </nav>
+
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="tab-content" id="nav-tabContent">
+                    <!-- Draft listing -->
+                    <div class="tab-pane fade  {{current_tab=='draft'? 'show active':''}}"  *ngIf="current_tab=='draft'" id="draft-detail" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="bg-white border-grey br-15  p-15px inner_main_shadow">
+                            <div class="title-12 text-left text-color-black-shade mb-20">Closed tickets (waiting to be invoiced) </div>
+                            <div class="h-65px"></div>
+                            <div class="row mb-20 ">
+                              <div class="col-md-4 ">
+                                <div class="d-flex align-items-center justify-content-start">
+
+                                  <div  class="title-top"  *ngIf="this.selected_company == ''">First select the company<br> you want to invoice.</div>
+                                  <div class="vertical-middle" *ngIf="this.selected_company != '' || this.select_duration_type !=''" (click)="startOver()">
+                                      <div class="title-5-new3 b-2-pink br-7 custom-padding15 width-fit-content">Start over</div>
+                                  </div>
+
+                                  <div class="input-div required_field getinputfield  ml-15px  br-5px w-164px">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Trucking company</div>
+                                    <div class="myinput-new" *ngIf="this.selected_company ==null">
+                                        All
+                                    </div>
+                                    <div class="myinput-new" *ngIf="this.selected_company  && this.loggedinUser?.driver_invoice_company_id !=null">
+                                        <ng-container *ngFor="let company of this.trucking_companies">
+
+                                            <ng-container *ngIf="this.select_company_code == company.id+'_'+(company?.freelance_driver_id != null ? 'self':'user')">
+                                                {{company?.company_name ? company?.company_name:''}}
+                                            </ng-container>
+                                        </ng-container>
+
+                                    </div>
+                                    <img src="../../assets/icons/arrow-down-grey.svg" class="icon-center-right">
+                                    <div class="input-popup-div companies_list" style="display: none;">
+                                      <div class=" mb-4px title-5-new2 text-color-black-shade5 d-flex align-items-center justify-content-between">
+                                        <div class=" ">
+                                            Trucking company
+                                        </div>
+                                        <div class="text-right ">Set default</div>
+                                      </div>
+                                        <ng-container *ngFor="let company of this.trucking_companies">
+
+                                            <div class="d-flex justify-content-between mb-2px list-item" >
+                                                <div (click)="handleFilterByCompany(company)" [ngClass]="this.select_company_code == company.id+'_'+(company?.freelance_driver_id != null ? 'self':'user') ? 'title-5-new':'title-5-new text-color-black-shade7'" >
+                                                    {{company?.company_name}}
+                                                </div>
+
+                                                <input type="checkbox" id="" (change)="markDefault($event,(company.freelance_driver_id !=null? 'freelance_trucking_company':'user'),company.id,company)"
+                                                [checked]="this.default_company_code == company.id+'_'+(company?.freelance_driver_id != null ? 'self':'user')" class="mycheckbox2">
+
+                                            </div>
+                                        </ng-container>
+
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                              <div class="col-md-4 ">
+                                <div class="d-flex align-items-center justify-content-start">
+
+                                  <div class="title-top" >Second, set the <br>  invoicing period</div>
+
+                                  <div class="input-div required_field getinputfield ml-15px br-5px w-164px">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Invoicing period</div>
+                                    <div class="myinput-new">{{this.select_duration_type ? this.select_duration_type :'All time'}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div" style="display: none;">
+                                        <div class=" mb-4px d-flex align-items-center justify-content-between mb-4px title-5-new2 text-color-black-shade5 d-flex align-items-center justify-content-between">
+                                          <div class="">Invoicing period</div>
+                                          <div class="text-right">Set default</div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-2px list-item bg-white border-grey" (click)="handleFilterByDuration('Weekly')">
+                                            <div [ngClass]="this.select_duration_type== 'Weekly'  ? 'title-5-new':'title-5-new text-color-black-shade7'" >
+                                                Weekly
+                                            </div>
+                                            <input type="checkbox" [checked]="this.default_duration_type=='Weekly' ? true :false" (change)="this.markDefaultDuration($event,'Weekly')" class="mycheckbox2">
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-2px list-item  bg-white border-grey" (click)="handleFilterByDuration('Monthly')">
+                                            <div [ngClass]="this.select_duration_type == 'Monthly'  ? 'title-5-new':'title-5-new text-color-black-shade7'" >
+                                                Monthly
+                                            </div>
+                                            <input type="checkbox" [checked]="this.default_duration_type=='Monthly' ? true :false" (change)="this.markDefaultDuration($event,'Monthly')" class="mycheckbox2">
+                                        </div>
+
+                                        <div class="d-flex justify-content-between mb-2px list-item  bg-white border-grey" (click)="handleFilterByDuration('Semi-monthly')">
+                                            <div [ngClass]="this.select_duration_type == 'Semi-monthly'  ? 'title-5-new':'title-5-new text-color-black-shade7'" >
+                                                Semi-monthly
+                                            </div>
+                                            <input type="checkbox" [checked]="this.default_duration_type=='Semi-monthly' ? true :false" (change)="this.markDefaultDuration($event,'Semi-monthly')" class="mycheckbox2">
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4 ">
+                                <ng-container *ngIf="this.select_duration_type != '' && this.selected_company !='' && this.selected_company !=null  && invoices?.length>0 ;else BlockNoInvoice">
+                                  <div class="float-right invoices fs-bold-14px text-black" >
+                                    [{{this.invoices?.length}}] Invoices
+                                  </div>
+                                </ng-container>
+                                <ng-template #BlockNoInvoice>
+
+                                  <div class="float-right no-invoices fs-bold-14px text-light-grey" >
+                                    Invoice
+                                    </div>
+                                </ng-template>
+                              </div>
+
+                            </div>
+                            <ng-container *ngIf="this.select_duration_type == '' || this.select_duration_type=='' || this.selected_company==null || this.selected_company==''">
+                              <div class="table-responsive">
+                                <table class="rounds-table my-tables rounds-table2">
+                                  <thead>
+                                    <tr class="">
+                                        <th class="text-center">Ticket ID</th>
+                                        <th class="text-center">Date</th>
+                                        <th class="text-center">Paper ticket ID</th>
+                                        <th class="text-left">Trucking company</th>
+                                        <th class="text-center">
+                                          Description (Project- license plate- round  qty)
+                                        </th>
+                                        <th class="text-center">Hours</th>
+                                        <th class="text-center">Rate</th>
+                                        <th class="text-center">Subtotal</th>
+                                        <th class="text-left">Tax</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+
+
+                                    <ng-container *ngIf="this.invoices?.length>0 &&  this.is_loading==''">
+                                      <ng-container *ngFor="let invoice of this.invoices">
+                                          <tr (click)="setDetail(invoice?.id,false,(invoice?.ticket?.tc_ticket && invoice?.ticket?.tc_ticket=='YES'?'YES':'NO'))" *ngIf="invoice?.ticket?.ticket_no && invoice?.ticket?.ticket_no !='';else elseBlock;">
+
+                                              <ng-container *ngIf="invoice?.ticket?.tc_ticket && invoice?.ticket?.tc_ticket=='YES'">
+
+                                                  <td class="text-center">
+                                                    <div class="ticket-status-div ">
+                                                    {{invoice?.ticket?.ticket_no}}
+                                                    </div>
+                                                  </td>
+                                                  <td class="text-center">{{invoice?.ticket?.ticket_date}}</td>
+                                                  <td class="text-center"></td>
+                                                  <td class="text-left">{{invoice?.trucking_company?.company_name}}</td>
+                                                  <td class="text-center">
+                                                    {{invoice?.ticket?.project? invoice?.ticket?.project?.project_name: invoice?.ticket?.tc_project?.project_name}}
+                                                    - {{invoice?.truck?.truck_license_plate}} - {{invoice?.ticket?.ticket_truck_type_rounds?.length ? invoice?.ticket?.ticket_truck_type_rounds?.length :0}} rounds</td>
+                                                  <td class="text-center">
+                                                      <span *ngIf="invoice?.ticket?.status == 'Approved' && invoice?.approver_time !=''">
+                                                          {{invoice?.approver_time ? parseHour(invoice?.approver_time): ''}}
+                                                      </span>
+
+                                                      <span *ngIf="invoice?.ticket?.status == 'Approved' && (invoice?.approver_time =='' || invoice?.approver_time =='null' || invoice?.approver_time ==null)">
+                                                          {{parseDriverTime( invoice?.driver_hours, invoice?.driver_minutes)}}
+                                                      </span>
+                                                 </td>
+                                                 <td class="text-center">${{invoice?.rate_per_hour}}</td>
+                                                 <td class="text-center">${{ getSubTotal(parseDriverTime( invoice?.driver_hours, invoice?.driver_minutes) ,invoice?.rate_per_hour) }}</td>
+                                                 <td class="text-left">{{this.gst?.tax}}%</td>
+                                              </ng-container>
+
+                                              <ng-container *ngIf="!invoice?.ticket?.tc_ticket">
+
+                                                  <td class="text-center">
+                                                    <div class="ticket-status-div ">
+                                                    {{invoice?.ticket?.ticket_no}}
+                                                    </div>
+                                                  </td>
+                                                  <td class="text-center">{{invoice?.ticket?.ticket_date}}</td>
+                                                  <td class="text-center"></td>
+                                                  <td class="text-left">{{invoice?.trucking_company?.company_name}}</td>
+                                                  <td class="text-center"> {{invoice?.ticket?.project?.project_name}} - {{invoice?.truck?.truck_license_plate}} - {{invoice?.ticket?.ticket_truck_type_rounds?.length ? invoice?.ticket?.ticket_truck_type_rounds?.length :0}} rounds</td>
+                                                  <td class="text-center">
+                                                      <span *ngIf="invoice?.ticket?.status == 'Approved' && invoice?.approver_time !=''">
+                                                          {{invoice?.approver_time ? parseHour(invoice?.approver_time): ''}}
+                                                      </span>
+
+                                                      <span *ngIf="invoice?.ticket?.status == 'Approved' && (invoice?.approver_time =='' || invoice?.approver_time =='null' || invoice?.approver_time ==null)">
+                                                          {{parseDriverTime( invoice?.driver_hours, invoice?.driver_minutes)}}
+                                                      </span>
+                                                 </td>
+                                                 <td class="text-center">${{invoice?.rate_per_hour}}</td>
+                                                 <td class="text-center">${{ getSubTotal(parseDriverTime( invoice?.driver_hours, invoice?.driver_minutes) ,invoice?.rate_per_hour) }}</td>
+                                                 <td class="text-left">{{this.gst?.tax}}%</td>
+                                              </ng-container>
+
+                                          </tr>
+                                          <ng-template #elseBlock>
+                                              <tr (click)="setDetail(invoice?.id,true)" >
+                                                  <td class="text-center">
+                                                    <div class="ticket-status-div ">
+                                                      {{invoice?.ticket_no}}
+                                                    </div>
+                                                  </td>
+                                                  <td class="text-center">{{invoice?.ticket_date}}</td>
+                                                  <td class="text-center">{{invoice?.paper_ticket_id}}</td>
+                                                  <td class="text-left">{{invoice?.trucking_company?.company_name}}</td>
+                                                  <td class="text-center">
+                                                    {{invoice?.project?.project_name}} - {{invoice?.truck?.license_plate}} - {{(invoice?.number_of_rounds)}} rounds</td>
+                                                  <td class="text-center">
+                                                      <span *ngIf="invoice?.status == 'Approved' && invoice?.approver_time !=''">
+                                                          {{invoice?.approver_time ? parseHour(invoice?.approver_time): ''}}
+                                                      </span>
+
+                                                      <span *ngIf="invoice?.status == 'Approved' && (invoice?.approver_time =='' || invoice?.approver_time =='null' || invoice?.approver_time ==null)">
+                                                          {{parseDriverTime( invoice?.driver_hours, invoice?.driver_minutes)}}
+                                                      </span>
+                                                 </td>
+                                                 <td class="text-center">${{invoice?.trucking_company?.hour_rate}}</td>
+                                                 <td class="text-center">${{ getSubTotal(parseDriverTime( invoice?.driver_hours, invoice?.driver_minutes) ,invoice?.trucking_company?.hour_rate) }}</td>
+                                                 <td class="text-left">{{this.gst?.tax}}%</td>
+                                              </tr>
+                                          </ng-template>
+                                      </ng-container>
+
+                                    </ng-container>
+                                    <ng-container *ngIf="this.is_loading!='' || this.invoices?.length<1">
+                                        <tr *ngIf="this.is_loading!=''">
+                                            <td colspan="9">
+                                                Loading draft tickets
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="this.is_loading==''">
+                                          <td colspan="9">
+                                              No tickets found
+                                          </td>
+                                      </tr>
+                                    </ng-container>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="row mt-5" *ngIf="this.invoices?.length>0">
+                                  <div class="col-md-2">
+
+                                  </div>
+                                  <div class="col-md-10">
+                                      <div class="mypagination-div " *ngIf="drafs_pagination?.total>0">
+                                          <a  style="cursor: pointer" (click)="changePage(drafs_pagination.current_page -1 )" [ngClass]="drafs_pagination.first_page == this.page ? 'mypagination ':'mypagination disable'" class="">Previous</a>
+                                          <ng-container *ngFor="let item of drafs_pagination?.links" >
+                                              <a  style="cursor: pointer" *ngIf="notSkip(item.label)" [ngClass]="item.active ? 'mypagination active' : 'mypagination'" (click)="changePage(parsePage(item.label.toString()))">{{item.label}}</a>
+
+                                          </ng-container>
+
+                                          <a  style="cursor: pointer" (click)="changePage(drafs_pagination.current_page +1 )" [ngClass]="this.page == drafs_pagination.last_page ? 'mypagination ':'mypagination next'">Next</a>
+                                      </div>
+                                  </div>
+                              </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="this.select_duration_type != '' && this.selected_company !='' && this.selected_company !=null ">
+                              <div class="table-responsive">
+                                <table class="rounds-table my-tables rounds-table2 ml-minus-1">
+                                  <thead>
+                                      <tr>
+
+                                        <th class="text-center">Ticket ID</th>
+                                        <th class="text-center">Date</th>
+                                        <th class="text-center">Paper ticket ID</th>
+                                        <th class="text-left">Trucking company</th>
+                                        <th class="text-center">
+                                          Description (Project- license plate- round  qty)
+                                        </th>
+                                        <th class="text-center">Hours</th>
+                                        <th class="text-center">Rate</th>
+                                        <th class="text-center">Subtotal</th>
+                                        <th class="text-left">Tax</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <ng-container *ngIf=" invoices?.length>0">
+                                      <ng-container *ngFor="let invoice of this.invoices;let weekindex=index">
+                                        <ng-container *ngIf="invoice?.data && invoice?.invoices?.length>0" >
+                                          <ng-container *ngIf="invoice?.data && invoice?.invoices?.length>0">
+                                              <tr *ngIf="invoice?.invoices[0]?.ticket_no && invoice?.invoices[0]?.is_self_dispatched == true;else elseBlock3">
+
+                                                  <td class="text-center d-flex justify-content-center align-items-center">
+                                                    <div class="ticket-status-div ">
+                                                      {{invoice?.invoices[0] && invoice?.invoices[0]?.ticket_no}}
+                                                    </div>
+                                                      <input type="hidden" id="start-{{weekindex}}" value="{{invoice?.data?.start_date2}}">
+                                                      <input type="hidden" id="end-{{weekindex}}" value="{{invoice?.data?.end_date2}}">
+                                                  </td>
+                                                  <td class="text-center">{{invoice?.invoices[0] && invoice?.invoices[0]?.ticket_date}}</td>
+                                                  <td class="text-center">{{invoice?.invoices[0] && invoice?.invoices[0]?.paper_ticket_id}}</td>
+                                                  <td class="text-left">{{invoice?.trucking_company?.company_name}}</td>
+                                                  <td class="text-center">
+                                                    {{invoice?.invoices[0] && invoice?.invoices[0]?.project?.project_name}}
+                                                    - {{invoice?.invoices[0] && invoice?.invoices[0]?.truck?.license_plate}} - {{invoice?.invoices[0] && invoice?.invoices[0]?.number_of_rounds}} rounds</td>
+                                                  <td class="text-center">
+                                                      <span *ngIf="invoice?.invoices[0] && invoice?.invoices[0].status == 'Approved' && invoice?.invoices[0].approver_time !=''">
+                                                          {{invoice?.invoices[0].approver_time ? parseHour(invoice?.invoices[0].approver_time): ''}}
+                                                      </span>
+
+                                                      <span *ngIf="invoice?.invoices[0] && invoice?.invoices[0]?.status == 'Approved' && (invoice?.invoices[0]?.approver_time =='' || invoice?.invoices[0]?.approver_time =='null' || invoice?.invoices[0]?.approver_time ==null)">
+                                                          {{parseDriverTime( invoice?.invoices[0]?.driver_hours, invoice?.invoices[0]?.driver_minutes)}}
+                                                      </span>
+                                                  </td>
+                                                  <td class="text-center">
+                                                      ${{invoice?.invoices[0] && invoice?.invoices[0]?.trucking_company?.hour_rate ? invoice?.invoices[0]?.trucking_company?.hour_rate :'0'}}
+
+                                                  </td>
+                                                  <td class="text-center">
+                                                      ${{invoice?.invoices[0] && invoice?.invoices[0]?.subtotal.toFixed(2)}}
+                                                  </td>
+                                                  <td class="text-left">{{invoice?.invoices[0] && invoice?.invoices[0]?.tax}}%</td>
+                                              </tr>
+                                              <ng-template #elseBlock3>
+                                                  <tr >
+
+                                                      <td class="text-center d-flex justify-content-center align-items-center">
+
+                                                        <div class="ticket-status-div ">
+                                                          {{invoice?.invoices[0] && invoice?.invoices[0]?.ticket?.ticket_no}}
+                                                        </div>
+                                                          <input type="hidden" id="start-{{weekindex}}" value="{{invoice?.data?.start_date2}}">
+                                                          <input type="hidden" id="end-{{weekindex}}" value="{{invoice?.data?.end_date2}}">
+                                                      </td>
+                                                      <td class="text-center">{{invoice?.invoices[0] && invoice?.invoices[0]?.ticket?.ticket_date}}</td>
+                                                      <td class="text-center">{{invoice?.invoices[0] && invoice?.invoices[0]?.ticket?.paper_ticket_id}}</td>
+                                                      <td class="text-left">{{invoice?.invoices[0]?.trucking_company?.company_name}}</td>
+                                                      <td class="text-center">
+                                                          <ng-container *ngIf="invoice?.invoices[0]?.ticket?.tc_ticket && invoice?.invoices[0]?.ticket?.tc_ticket=='YES'">
+
+                                                              {{invoice?.invoices[0]?.ticket?.project? invoice?.invoices[0]?.ticket?.project?.project_name: invoice?.invoices[0]?.ticket?.tc_project?.project_name}}
+                                                          </ng-container>
+                                                          <ng-container *ngIf="!invoice?.invoices[0]?.ticket?.tc_ticket">
+
+                                                              {{invoice?.invoices[0]?.ticket?.project?.project_name}}
+                                                          </ng-container>
+                                                          - {{invoice?.invoices[0] && invoice?.invoices[0]?.truck?.truck_license_plate}} - {{invoice?.invoices[0] && invoice?.invoices[0]?.ticket?.ticket_truck_type_rounds? invoice?.invoices[0]?.ticket?.ticket_truck_type_rounds.length: 0}} rounds</td>
+                                                      <td class="text-center">
+                                                          <span *ngIf="invoice?.invoices[0] && invoice?.invoices[0].ticket?.status == 'Approved' && invoice?.invoices[0].approver_time !=''">
+                                                              {{invoice?.invoices[0].approver_time ? parseHour(invoice?.invoices[0].approver_time): ''}}
+                                                          </span>
+
+                                                          <span *ngIf="invoice?.invoices[0] && invoice?.invoices[0]?.ticket?.status == 'Approved' && (invoice?.invoices[0]?.approver_time =='' || invoice?.invoices[0]?.approver_time =='null' || invoice?.invoices[0]?.approver_time ==null)">
+                                                              {{parseDriverTime( invoice?.invoices[0]?.driver_hours, invoice?.invoices[0]?.driver_minutes)}}
+                                                          </span>
+                                                      </td>
+                                                      <td class="text-center">
+                                                          ${{invoice?.invoices[0] && invoice?.invoices[0]?.hour_rate ? invoice?.invoices[0]?.hour_rate  :'0'}}
+
+                                                      </td>
+                                                      <td class="text-center">
+                                                          ${{invoice?.invoices[0] && invoice?.invoices[0]?.subtotal.toFixed(2)}}
+                                                      </td>
+                                                      <td class="text-left">{{invoice?.invoices[0] && invoice?.invoices[0]?.tax}}%</td>
+                                                  </tr>
+                                              </ng-template>
+                                              <ng-container *ngFor="let inv of invoice?.invoices;let ii=index">
+                                                  <tr *ngIf="ii>0 && (inv?.ticket?.ticket_no !='' && inv?.is_self_dispatched == false)">
+
+                                                      <td class="text-center d-flex justify-content-center align-items-center">
+                                                        <div class="ticket-status-div">
+                                                          {{inv?.ticket?.ticket_no}}
+                                                        </div>
+                                                      </td>
+                                                      <td class="text-center">{{inv?.ticket?.ticket_date}}</td>
+                                                      <td class="text-center">{{inv?.ticket?.paper_ticket_id}}</td>
+                                                      <td class="text-left">{{inv?.trucking_company?.company_name}}</td>
+                                                      <td class="text-center">
+                                                          <ng-container *ngIf="inv?.tc_ticket && inv?.tc_ticket=='YES'">
+                                                              {{inv?.ticket?.project? inv?.ticket?.project?.project_name: inv?.ticket?.tc_project?.project_name}}
+                                                          </ng-container>
+                                                          <ng-container  *ngIf="!inv?.tc_ticket">
+                                                              {{inv?.ticket?.project?.project_name}}
+                                                          </ng-container>
+                                                          - {{inv?.truck?.truck_license_plate}} - {{(inv?.ticket?.ticket_truck_type_rounds?.length)}} rounds
+                                                      </td>
+                                                      <td class="text-center">
+                                                          <span *ngIf="inv?.ticket?.status == 'Approved' && inv?.approver_time !=''">
+                                                              {{inv?.approver_time ? parseHour(inv?.approver_time): ''}}
+                                                          </span>
+
+                                                          <span *ngIf="inv?.ticket?.status == 'Approved' && (inv?.approver_time =='' || inv?.approver_time =='null' || inv?.approver_time ==null)">
+                                                              {{parseDriverTime( inv?.driver_hours, inv?.driver_minutes)}}
+                                                          </span>
+                                                      </td>
+                                                      <td class="text-center">${{inv && inv?.hour_rate ? inv?.hour_rate :'0'}}</td>
+                                                      <td class="text-center">  ${{ inv?.subtotal.toFixed(2)}}</td>
+                                                      <td class="text-left">{{inv?.tax}}%</td>
+                                                      <!-- <td>${{inv?.total.toFixed(2)}}</td> -->
+                                                  </tr>
+                                                  <tr *ngIf="ii>0 && (inv?.is_self_dispatched == true)">
+                                                      <!-- <td class="bg-grey"></td> -->
+                                                      <td class="text-center d-flex justify-content-center align-items-center">
+                                                        <div class="ticket-status-div">
+                                                          {{inv?.ticket_no}}
+                                                        </div>
+                                                      </td>
+                                                      <td class="text-center"> {{inv?.ticket_date}}</td>
+                                                      <td class="text-center">{{inv?.paper_ticket_id}}</td>
+
+                                                      <td class="text-left">{{invoice?.trucking_company?.company_name}}</td>
+                                                      <td class="text-center">
+                                                        {{inv && inv?.project?.project_name}}
+                                                        - {{inv?.truck?.license_plate}} - {{(inv?.number_of_rounds)}} rounds
+                                                      </td>
+                                                      <td class="text-center">
+                                                          <span *ngIf="inv?.status == 'Approved' && inv?.approver_time !=''">
+                                                              {{inv?.approver_time ? parseHour(inv?.approver_time): ''}}
+                                                          </span>
+
+                                                          <span *ngIf="inv?.status == 'Approved' && (inv?.approver_time =='' || inv?.approver_time =='null' || inv?.approver_time ==null)">
+                                                              {{parseDriverTime( inv?.driver_hours, inv?.driver_minutes)}}
+                                                          </span>
+                                                      </td>
+                                                      <td class="text-center">${{inv && inv?.hour_rate ? inv?.hour_rate :'0'}}</td>
+                                                      <td class="text-center">  ${{ inv?.subtotal.toFixed(2)}}</td>
+                                                      <td class="text-left">{{ inv?.tax}}%</td>
+                                                      <!-- <td>${{inv?.total.toFixed(2)}}</td> -->
+                                                  </tr>
+                                              </ng-container>
+
+                                              <tr class="bg-grey border-2px">
+                                                  <td class="text-center"></td>
+                                                  <td class="text-center">
+                                                    <div class="d-flex flex-column justify-content-center align-items-center">
+
+                                                      <div class="fs-gilroy-13 text-center">Ticket Qty</div>
+                                                      <div class="qty-div">
+                                                          {{invoice?.invoices?.length}}
+                                                      </div>
+                                                    </div>
+                                                  </td>
+                                                  <td colspan="2">
+
+                                                  </td>
+                                                  <td >
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                      <div class="fs-semibold-14 text-right">Summary:</div>
+                                                      <div class="openCalendar cal-open">
+                                                        <span id="cal-{{weekindex}} " (click)="showCalendar($event.currentTarget, invoice,weekindex)">
+                                                          <div class="status-data text-center bg-white ml-5px">
+                                                            <div class="fs-gilroy-13">Invoicing period</div>
+                                                            <div class="fs-bold-14">{{invoice?.data?.start_date}}</div>
+                                                            <div class="fs-bold-14">{{invoice?.data?.end_date}}</div>
+                                                          </div>
+                                                        </span>
+                                                        <div class="popupCalendar" id="cal-{{weekindex}}">
+                                                            <div class="calendarHighLighted " id="cal-{{weekindex}}"></div>
+                                                        </div>
+                                                      </div>
+
+                                                      <div class="status-data text-center bg-white center-content ml-20px">
+                                                        <div class="fs-gilroy-13">Total hours</div>
+                                                        <div class="fs-bold-14">{{invoice?.data?.hour}}</div>
+                                                      </div>
+                                                    </div>
+
+                                                  </td>
+                                                  <td>
+                                                    <div class="status-data text-center bg-white center-content " >
+                                                      <div class="fs-gilroy-13">Subtotal</div>
+                                                      <div class="fs-bold-14">{{invoice?.data?.subtotal.toFixed(2)}}</div>
+                                                    </div>
+                                                  </td>
+                                                  <td>
+                                                    <div class="status-data text-center bg-white center-content " >
+                                                      <div class="fs-gilroy-13">Tax</div>
+                                                      <div class="fs-bold-14">{{invoice?.data?.tax_amount.toFixed(2)}}</div>
+                                                    </div>
+                                                  </td>
+                                                  <td>
+                                                    <div class="status-data text-center bg-white center-content " >
+                                                      <div class="fs-gilroy-13">Total</div>
+                                                      <div class="fs-bold-14">{{invoice?.data?.total.toFixed(2)}}</div>
+                                                    </div>
+                                                  </td>
+
+                                                  <td><button class="mybtn2 mybtn-back-pink no-wrap" data-toggle="modal" data-target="#myModalDetail" (click)="this.setSendData(invoice)">Send invoice</button></td>
+                                              </tr>
+                                          </ng-container>
+
+                                        </ng-container>
+                                      </ng-container>
+                                    </ng-container>
+                                    <ng-container  *ngIf=" invoices?.length<1">
+                                      <tr>
+                                        <td colspan="9" class="text-center">
+                                          <div *ngIf="this.is_loading!=''">
+                                            Loading draft tickets..
+                                          </div>
+                                          <div *ngIf="this.is_loading==''">
+                                            No tickets found
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </ng-container>
+
+                                  </tbody>
+                                </table>
+
+                              </div>
+                            </ng-container>
+
+                        </div>
+                    </div>
+
+                    <!-- Invoiced listing -->
+                    <div class="tab-pane fade {{current_tab=='invoiced'? 'show active':''}}" id="invoiced" *ngIf="current_tab=='invoiced'" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="bg-white border-div br-15  custom-padding13 inner_main_shadow">
+                            <div class="row mb-20">
+                                <div class="col-lg-2 col-md-3 mb-10">
+
+                                    <div class="input-div invoiced-filter required_field getinputfield">
+                                        <div class="title-5-new2 text-color-black-shade5 text-left">Select customer</div>
+                                        <div class="myinput-new" *ngIf="!this.selected_company || this.selected_company==null">
+                                            All
+                                        </div>
+                                        <div class="myinput-new" *ngIf="this.selected_company && this.loggedinUser?.driver_invoice_company_id !=null">
+                                            <ng-container *ngFor="let company of this.trucking_companies">
+
+                                                <ng-container *ngIf="this.select_company_code == company.id+'_'+(company?.freelance_driver_id != null ? 'self':'user')">
+                                                    {{company?.company_name ? company?.company_name:''}}
+                                                </ng-container>
+                                            </ng-container>
+
+                                        </div>
+                                        <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                        <div class="input-popup-div companies_list" style="display: none;">
+                                            <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                                                Trucking company
+                                            </div>
+                                            <div class="title-18 text-right mb-2px">Default</div>
+                                            <ng-container *ngFor="let company of this.trucking_companies">
+
+                                                <div class="d-flex justify-content-between mb-2px  cursor-pointer"  >
+                                                    <div  (click)="handleFilterByCompany(company)" [ngClass]="this.select_company_code == company.id+'_'+(company?.freelance_driver_id != null ? 'self':'user') ? 'title-5-new':'title-5-new text-color-black-shade7'" >
+                                                        {{company?.company_name}}
+                                                    </div>
+
+                                                    <input type="checkbox" id="" (change)="markDefault($event,(company.freelance_driver_id !=null? 'freelance_trucking_company':'user'),company.id,company)"
+                                                    [checked]="this.default_company_code == company.id+'_'+(company?.freelance_driver_id != null ? 'self':'user')" class="mycheckbox2">
+
+                                                </div>
+                                            </ng-container>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" col-lg-2 col-md-3 mb-10">
+
+                                    <div class="input-div invoiced-filter required_field getinputfield ">
+                                        <div class="title-5-new2 text-color-black-shade5 text-left">Select month</div>
+                                        <input type="month" style="border:none" value="{{this.selected_month}}" class="myinput" (change)="setInvMonth($event)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive br-7 mb-35">
+                                <table class="rounds-table rounds-table2  invoiced-table" style="text-align:center">
+                                    <thead>
+                                        <tr>
+                                            <th>Invoice number</th>
+                                            <th>Invoice date</th>
+                                            <th>Trucking company</th>
+                                            <th>Contact person</th>
+                                            <th>Total hours</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngIf="this.invoiced_invoices?.length>0">
+                                            <ng-container *ngFor="let invoice of this.invoiced_invoices">
+                                                <tr data-toggle="modal" data-target="#myModalDetail2" (click)="setInvoice(invoice)">
+                                                    <td>{{invoice?.invoice_no}}</td>
+                                                    <td>{{invoice?.invoice_date}}</td>
+                                                    <td>
+                                                        <div *ngIf="invoice?.trucking_company?.company_name">
+                                                            {{invoice?.trucking_company?.company_name}}
+                                                        </div>
+                                                        <div *ngIf="invoice?.freelance_trucking_company?.company_name">
+                                                            {{invoice?.freelance_trucking_company?.company_name}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div *ngIf="invoice?.freelance_trucking_company?.company_name">
+                                                        {{invoice?.freelance_trucking_company?.default_contact?.name}}
+                                                        </div>
+                                                        <div *ngIf="invoice?.trucking_company?.company_name">
+                                                            {{invoice?.trucking_company?.full_name}}
+                                                            </div>
+                                                    </td>
+                                                    <td>{{invoice?.hours}}</td>
+                                                    <td>${{getTotal(invoice?.total)}} </td>
+                                                    <td>
+                                                        <img src="../../assets/icons/pencile.svg" data-toggle="modal" data-target="#myModalDetail2" (click)="setInvoice(invoice)" alt="" class="" width="17px"></td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="this.invoiced_invoices?.length<1 &&  this.is_loading==''">
+                                            <tr >
+                                                <td colspan="7">
+                                                    No invoices found
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade  come-from-modal right" id="myModalAapproved" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ">
+
+            <div class="modal-body modal-body-padding p-15px"  *ngIf="this.ticket_detail?.ticket?.ticket_no && this.ticket_detail?.ticket?.ticket_no !=''; else elseBlock2;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="welcome-text">Ticket IDs</div>
+                        <div class="dashboard-title">{{this.ticket_detail?.ticket?.ticket_no}}</div>
+                    </div>
+                    <div>
+                        <img src="../assets/icons/driver-paperticket-icon.svg" height="20" class="mr-1" />
+                        <button class="mybtn bg-blue text-white width-fit-content btn-text-very-small">Approved</button>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <nav>
+                            <div class="nav nav-pills nav-fill ticket-tabs mb-20" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#ticket-detail-approved" role="tab" aria-controls="nav-home" aria-selected="true">Ticket details</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#round-detail-approved" role="tab" aria-controls="nav-profile" aria-selected="false">Job details</a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-md-3">
+                        <div align="right">
+                            <div class="title-5-new2">Date</div>
+                            <div class="title-5-new">{{this.ticket_detail?.ticket?.ticket_date}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="nav-tabContent" *ngIf="this.ticket_detail?.tc_ticket && this.ticket_detail?.tc_ticket=='YES'">
+                    <div class="tab-pane fade show active" id="ticket-detail-approved" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="ticket-detail-div bg-light-yellow2">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-2"></div>
+                                        <div class="title-17 text-color-black-shade6">{{this.ticket_detail?.ticket?.customer ? this.ticket_detail?.ticket?.customer?.company_name:this.ticket_detail?.ticket?.tc_customer?.company_name }}</div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2 text-right">Project</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.ticket?.project? this.ticket_detail?.ticket?.project?.project_name: this.ticket_detail?.ticket?.tc_project?.project_name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Job number</div>
+                                        <div class="title-5-new">
+                                            {{this.ticket_detail?.ticket?.project? this.ticket_detail?.ticket?.project?.job_number: this.ticket_detail?.ticket?.tc_project?.job_number}}
+                                        </div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2 text-right">Project address</div>
+                                        <div class="title-5-new">
+                                            {{this.ticket_detail?.ticket?.project? this.ticket_detail?.ticket?.project?.project_location: this.ticket_detail?.ticket?.tc_project?.project_location}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Job Approver</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.ticket?.approver? this.ticket_detail?.ticket?.approver?.full_name:this.ticket_detail?.ticket?.tc_approver?.full_name}} </div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Approved: Date / Time</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.approved_at | date:'shortDate'}} / {{this.ticket_detail?.approved_at | date:'shortTime'}} </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="title-5-new2">Description</div>
+                                        <div class="title-11 text-color-black-shade">{{this.ticket_detail?.ticket?.description}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ticket-detail-div">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Trucking Company</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.trucking_company?.company_name}}</div>
+                                    </div>
+
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Hour rate</div>
+                                        <div class="title-5-new">
+                                            <div class="border-pink" style="border-radius: 5px;
+                                            text-align: right;
+                                            width: 90px;">
+                                                ${{this.ticket_detail?.rate_per_hour}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Dispatcher</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.trucking_company?.full_name}} </div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Contact #</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.trucking_company?.contact_number}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- <div class="title-5 ">Truck details</div> -->
+                        <div class="ticket-detail-div mybtn-back-pink mb-29">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Job started</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.started_at | date:'shortTime'}}</div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Job total</div>
+                                        <div class="title-5-new">{{parseJobTotal( this.ticket_detail?.total_time)}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Driver</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.driver?.full_name}} </div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Driver total</div>
+                                        <div class="title-5-new">{{parseDriverTime( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="round-detail-approved" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <br>
+                        <div class="ticket-detail-div">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="title-5-new2">Truck name</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.truck?.truck_nickname}}</div>
+                                    </div>
+                                    <div class="col-4" align="center">
+                                        <div class="title-5-new2">Truck type</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.truck?.truck_type}}</div>
+                                    </div>
+                                    <div class="col-4" align="right">
+                                        <div class="title-5-new2">License plate</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.truck?.truck_license_plate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="this.ticket_detail?.trailer && this.ticket_detail?.trailer?.name">
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="title-5-new2">Trailer Name</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.trailer?.trailer_nickname}}</div>
+                                        </div>
+                                        <div class="col-4" align="center">
+                                            <div class="title-5-new2">Trailer type</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.trailer?.trailer_type}}</div>
+                                        </div>
+                                        <div class="col-4" align="right">
+                                            <div class="title-5-new2">License plate</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.trailer?.trailer_license_plate}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="title-5-new2">Job started</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.started_at | date:'shortTime'}}</div>
+                                    </div>
+                                    <div class="col-4" align="center">
+                                        <div class="title-5-new2">Rounds</div>
+                                        <div class="title-5-new"><img src="../../assets/icons/restart.svg" class="mt-minus-3px">{{this.total_rounds}}</div>
+                                    </div>
+                                    <div class="col-4" align="right">
+                                        <div class="title-5-new2">Job total</div>
+                                        <div class="title-5-new">{{this.parseJobTotal2( this.ticket_detail?.total_time)}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <ng-container *ngFor="let round of (this.ticket_detail?.ticket?.ticket_truck_type_rounds.length>0 ? this.ticket_detail?.ticket?.ticket_truck_type_rounds:[] )">
+                            <ng-container *ngIf="(
+                                this.ticket_detail?.ticket?.status != 'Completed' &&
+                                this.ticket_detail?.ticket?.status != 'Approved'
+                            ) || (
+                                (this.ticket_detail?.ticket?.status == 'Completed' ||
+                                this.ticket_detail?.ticket?.status == 'Approved') &&
+                                round.driver_start_time  &&
+                                round.round_time
+                            )">
+                                <div class="title-5">Round {{round.round_no}}</div>
+                                <div class="ticket-detail-div">
+                                    <div class="p-10px">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="title-5">Material out</div>
+                                                <div class="title-5-new">{{round.material_taken_out}}</div>
+                                            </div>
+                                            <div class="col-md-6" align="right">
+                                                <div class="title-5 text-right">Dump site</div>
+                                                <div class="title-5-new">{{round.dump_site}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="myhr"></div>
+                                    <div class="p-10px">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="title-5">Round started</div>
+                                                <div class="title-5-new">{{round.driver_start_time| date:'shortTime'}}</div>
+                                            </div>
+                                            <div class="col-6" align="right">
+                                                <div class="title-5 text-right">Round total</div>
+                                                <div class="title-5-new text-right">{{round.round_time && round.round_time !==null ? round.round_time+'m':''}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="myhr"></div>
+                                    <div class="p-10px">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="title-5">Notes :</div>
+                                                <div class="title-5-new">{{round?.driver_notes}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                        </ng-container>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <br>
+                                <div class="title-5">Driver total</div>
+                                <div class="title-5-new"> {{parseDriverTime( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}}</div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="p-2 ticket-detail-div min-height-50" >
+                                    <div class="title-5">Driver notes:</div>
+                                    <div class="title-5-new"> {{this.ticket_detail?.notes_for_approver}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="myhr"></div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="title-5">Approved hours</div>
+                                <div class="title-5-new">
+                                    <b *ngIf="this.ticket_detail?.ticket?.status == 'Completed'">
+                                        Waiting for {{this.ticket_detail?.ticket?.approver? this.ticket_detail?.ticket?.approver?.full_name:this.ticket_detail?.ticket?.tc_approver?.full_name}}
+                                    </b>
+                                    <b *ngIf="this.ticket_detail?.ticket?.status == 'Approved'">
+                                        <span *ngIf="this.ticket_detail?.ticket?.status == 'Approved' && this.ticket_detail?.approver_time !=''">
+                                            {{this.ticket_detail?.approver_time ? parseHour(this.ticket_detail?.approver_time): ''}}
+                                        </span>
+
+                                        <span *ngIf="this.ticket_detail?.ticket?.status == 'Approved' && (this.ticket_detail?.approver_time =='' || this.ticket_detail?.approver_time =='null' || this.ticket_detail?.approver_time ==null)">
+                                            {{parseDriverTime( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}}
+                                        </span>
+                                    </b>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="p-2 ticket-detail-div min-height-50" >
+                                    <div class="title-5">Notes From Approver:</div>
+                                    <div class="title-5-new"> {{this.ticket_detail?.approver_notes}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="nav-tabContent" *ngIf="!this.ticket_detail?.tc_ticket">
+                    <div class="tab-pane fade show active" id="ticket-detail-approved" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="ticket-detail-div bg-light-yellow2">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-2"></div>
+                                        <div class="title-17 text-color-black-shade6">{{this.ticket_detail?.ticket?.user?.company_name}}</div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2 text-right">Project</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.ticket?.project?.project_name}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Job number</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.ticket?.project?.job_number}}</div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2 text-right">Project address</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.ticket?.project?.project_location}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Job Approver</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.ticket?.approver?.full_name}} </div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Approved: Date / Time</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.approved_at | date:'shortDate'}} / {{this.ticket_detail?.approved_at | date:'shortTime'}} </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="title-5-new2">Description</div>
+                                        <div class="title-11 text-color-black-shade">{{this.ticket_detail?.ticket?.description}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ticket-detail-div">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Trucking Company</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.trucking_company?.company_name}}</div>
+                                    </div>
+
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Hour rate</div>
+                                        <div class="title-5-new">
+                                            <div class="border-pink" style="border-radius: 5px;
+                                            text-align: right;
+                                            width: 90px;">
+                                                ${{this.ticket_detail?.rate_per_hour}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Dispatcher</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.trucking_company?.full_name}} </div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Contact #</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.trucking_company?.contact_number}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- <div class="title-5 ">Truck details</div> -->
+                        <div class="ticket-detail-div mybtn-back-pink mb-29">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Job started</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.started_at | date:'shortTime'}}</div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Job total</div>
+                                        <div class="title-5-new">{{parseJobTotal( this.ticket_detail?.total_time)}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="title-5-new2">Driver</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.driver?.full_name}} </div>
+                                    </div>
+                                    <div class="col-6" align="right">
+                                        <div class="title-5-new2">Driver total</div>
+                                        <div class="title-5-new">{{parseDriverTime( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="round-detail-approved" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <br>
+                        <div class="ticket-detail-div">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="title-5-new2">Truck name</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.truck?.truck_nickname}}</div>
+                                    </div>
+                                    <div class="col-4" align="center">
+                                        <div class="title-5-new2">Truck type</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.truck?.truck_type}}</div>
+                                    </div>
+                                    <div class="col-4" align="right">
+                                        <div class="title-5-new2">License plate</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.truck?.truck_license_plate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="this.ticket_detail?.trailer && this.ticket_detail?.trailer?.name">
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="title-5-new2">Trailer Name</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.trailer?.trailer_nickname}}</div>
+                                        </div>
+                                        <div class="col-4" align="center">
+                                            <div class="title-5-new2">Trailer type</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.trailer?.trailer_type}}</div>
+                                        </div>
+                                        <div class="col-4" align="right">
+                                            <div class="title-5-new2">License plate</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.trailer?.trailer_license_plate}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div class="myhr"></div>
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="title-5-new2">Job started</div>
+                                        <div class="title-5-new">{{this.ticket_detail?.started_at | date:'shortTime'}}</div>
+                                    </div>
+                                    <div class="col-4" align="center">
+                                        <div class="title-5-new2">Rounds</div>
+                                        <div class="title-5-new"><img src="../../assets/icons/restart.svg" class="mt-minus-3px">{{this.total_rounds}}</div>
+                                    </div>
+                                    <div class="col-4" align="right">
+                                        <div class="title-5-new2">Job total</div>
+                                        <div class="title-5-new">{{this.parseJobTotal2( this.ticket_detail?.total_time)}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <ng-container *ngFor="let round of (this.ticket_detail?.ticket?.ticket_truck_type_rounds.length>0 ? this.ticket_detail?.ticket?.ticket_truck_type_rounds:[] )">
+                            <ng-container *ngIf="(
+                                this.ticket_detail?.ticket?.status != 'Completed' &&
+                                this.ticket_detail?.ticket?.status != 'Approved'
+                            ) || (
+                                (this.ticket_detail?.ticket?.status == 'Completed' ||
+                                this.ticket_detail?.ticket?.status == 'Approved') &&
+                                round.driver_start_time  &&
+                                round.round_time
+                            )">
+                                <div class="title-5">Round {{round.round_no}}</div>
+                                <div class="ticket-detail-div">
+                                    <div class="p-10px">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="title-5">Material out</div>
+                                                <div class="title-5-new">{{round.material_taken_out}}</div>
+                                            </div>
+                                            <div class="col-md-6" align="right">
+                                                <div class="title-5 text-right">Dump site</div>
+                                                <div class="title-5-new">{{round.dump_site}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="myhr"></div>
+                                    <div class="p-10px">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="title-5">Round started</div>
+                                                <div class="title-5-new">{{round.driver_start_time| date:'shortTime'}}</div>
+                                            </div>
+                                            <div class="col-6" align="right">
+                                                <div class="title-5 text-right">Round total</div>
+                                                <div class="title-5-new text-right">{{round.round_time && round.round_time !==null ? round.round_time+'m':''}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="myhr"></div>
+                                    <div class="p-10px">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="title-5">Notes :</div>
+                                                <div class="title-5-new">{{round?.driver_notes}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                        </ng-container>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <br>
+                                <div class="title-5">Driver total</div>
+                                <div class="title-5-new"> {{parseDriverTime( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}}</div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="p-2 ticket-detail-div min-height-50" >
+                                    <div class="title-5">Driver notes:</div>
+                                    <div class="title-5-new"> {{this.ticket_detail?.notes_for_approver}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="myhr"></div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="title-5">Approved hours</div>
+                                <div class="title-5-new">
+                                    <b *ngIf="this.ticket_detail?.ticket?.status == 'Completed'">
+                                        Waiting for {{this.ticket_detail?.approver?.name}}
+                                    </b>
+                                    <b *ngIf="this.ticket_detail?.ticket?.status == 'Approved'">
+                                        <span *ngIf="this.ticket_detail?.ticket?.status == 'Approved' && this.ticket_detail?.approver_time !=''">
+                                            {{this.ticket_detail?.approver_time ? parseHour(this.ticket_detail?.approver_time): ''}}
+                                        </span>
+
+                                        <span *ngIf="this.ticket_detail?.ticket?.status == 'Approved' && (this.ticket_detail?.approver_time =='' || this.ticket_detail?.approver_time =='null' || this.ticket_detail?.approver_time ==null)">
+                                            {{parseDriverTime( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}}
+                                        </span>
+                                    </b>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="p-2 ticket-detail-div min-height-50" >
+                                    <div class="title-5">Notes From Approver:</div>
+                                    <div class="title-5-new"> {{this.ticket_detail?.approver_notes}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #elseBlock2>
+                <div class="modal-body modal-body-padding"  >
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="welcome-text">Ticket IDs</div>
+                            <div class="dashboard-title">{{this.ticket_detail?.ticket_no}}</div>
+                        </div>
+                        <div>
+                            <img *ngIf="this.ticket_detail?.required_paper_ticket_id=='YES'" src="../assets/icons/driver-paperticket-icon.svg" height="20" class="mr-1" />
+                            <button class="mybtn bg-blue text-white width-fit-content btn-text-very-small">Approved</button>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            <nav>
+                                <div class="nav nav-pills nav-fill ticket-tabs mb-20" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#ticket-detail-approved" role="tab" aria-controls="nav-home" aria-selected="true">Ticket details</a>
+                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#round-detail-approved" role="tab" aria-controls="nav-profile" aria-selected="false">Job details</a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-md-3">
+                            <div align="right">
+                                <div class="title-5-new2">Date</div>
+                                <div class="title-5-new">{{this.ticket_detail?.ticket_date}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="ticket-detail-approved" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="ticket-detail-div bg-light-yellow2">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="mb-2"></div>
+                                            <div class="title-17 text-color-black-shade6">{{this.ticket_detail?.construction_company?.company_name}}</div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5-new2 text-right">Project</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.project?.project_name}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="title-5-new2">Job number</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.project?.job_number}}</div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5-new2 text-right">Project address</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.project?.street}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="title-5-new2">Job Approver</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.approver?.name}} </div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5-new2">Approved: Date / Time</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.approved_at | date:'shortDate'}} / {{this.ticket_detail?.approved_at | date:'shortTime'}} </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="title-5-new2">Description</div>
+                                            <div class="title-11 text-color-black-shade">{{this.ticket_detail?.description}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ticket-detail-div">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="title-5-new2">Trucking Company</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.trucking_company?.company_name}}</div>
+                                        </div>
+                                        <div class="col-4" align="center">
+                                            <div class="title-5-new2">Hour rate</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.trucking_company?.hour_rate}}</div>
+                                        </div>
+                                        <div class="col-4" align="right">
+                                            <div class="title-5-new2">Paper ticket ID</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.paper_ticket_id}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="title-5-new2">Dispatcher</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.dispatcher?.name}}</div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5-new2">Contact #</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.dispatcher?.contact_number}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <!-- <div class="title-5 ">Truck details</div> -->
+                            <div class="ticket-detail-div mybtn-back-pink mb-29">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="title-5-new2">Job started</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.started_at | date:'shortTime'}}</div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5-new2">Job total</div>
+                                            <div class="title-5-new">{{parseJobTotal( this.ticket_detail?.total_time)}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="title-5-new2">Driver</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.driver?.full_name}} </div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5-new2">Driver total</div>
+                                            <div class="title-5-new">{{parseDriverTime( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="round-detail-approved" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <br>
+                            <div class="ticket-detail-div">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="title-5-new2">Truck name</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.truck?.name}}</div>
+                                        </div>
+                                        <div class="col-4" align="center">
+                                            <div class="title-5-new2">Truck type</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.truck?.type}}</div>
+                                        </div>
+                                        <div class="col-4" align="right">
+                                            <div class="title-5-new2">License plate</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.truck?.license_plate}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="this.ticket_detail?.trailer && this.ticket_detail?.trailer?.name">
+                                    <div class="myhr"></div>
+                                    <div class="p-10px">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="title-5-new2">Trailer Name</div>
+                                                <div class="title-5-new">{{this.ticket_detail?.trailer?.name}}</div>
+                                            </div>
+                                            <div class="col-4" align="center">
+                                                <div class="title-5-new2">Trailer type</div>
+                                                <div class="title-5-new">{{this.ticket_detail?.trailer?.type}}</div>
+                                            </div>
+                                            <div class="col-4" align="right">
+                                                <div class="title-5-new2">License plate</div>
+                                                <div class="title-5-new">{{this.ticket_detail?.trailer?.license_plate}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="title-5-new2">Job started</div>
+                                            <div class="title-5-new">{{this.ticket_detail?.started_at | date:'shortTime'}}</div>
+                                        </div>
+                                        <div class="col-4" align="center">
+                                            <div class="title-5-new2">Rounds</div>
+                                            <div class="title-5-new"><img src="../../assets/icons/restart.svg" class="mt-minus-3px">{{this.total_rounds}}</div>
+                                        </div>
+                                        <div class="col-4" align="right">
+                                            <div class="title-5-new2">Job total</div>
+                                            <div class="title-5-new">{{this.parseJobTotal2( this.ticket_detail?.total_time)}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <ng-container *ngFor="let round of (this.ticket_detail?.rounds.length>0 ? this.ticket_detail?.rounds:[] )">
+                                <ng-container *ngIf="(
+                                    this.ticket_detail?.status != 'Completed' &&
+                                    this.ticket_detail?.status != 'Approved'
+                                ) || (
+                                    (this.ticket_detail?.status == 'Completed' ||
+                                    this.ticket_detail?.status == 'Approved') &&
+                                    round.driver_start_time  &&
+                                    round.round_time
+                                )">
+                                    <div class="title-5">Round {{round.round_no}}</div>
+                                    <div class="ticket-detail-div">
+                                        <div class="p-10px">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="title-5">Material out</div>
+                                                    <div class="title-5-new">{{round.material_taken_out}}</div>
+                                                </div>
+                                                <div class="col-md-6" align="right">
+                                                    <div class="title-5 text-right">Dump site</div>
+                                                    <div class="title-5-new">{{round.dump_site_name}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="myhr"></div>
+                                        <div class="p-10px">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="title-5">Round started</div>
+                                                    <div class="title-5-new">{{round.driver_start_time| date:'shortTime'}}</div>
+                                                </div>
+                                                <div class="col-6" align="right">
+                                                    <div class="title-5 text-right">Round total</div>
+                                                    <div class="title-5-new text-right">{{round.round_time && round.round_time !==null ? round.round_time+'m':''}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="myhr"></div>
+                                        <div class="p-10px">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="title-5">Notes :</div>
+                                                    <div class="title-5-new">{{round?.driver_notes}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                            </ng-container>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <br>
+                                    <div class="title-5">Driver total</div>
+                                    <div class="title-5-new"> {{parseDriverTime( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}}</div>
+                                </div>
+
+                                <div class="col-8">
+                                    <div class="p-2 ticket-detail-div min-height-50" >
+                                        <div class="title-5">Driver notes:</div>
+                                        <div class="title-5-new"> {{this.ticket_detail?.notes_for_approver}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="myhr"></div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="title-5">Approved hours</div>
+                                    <div class="title-5-new">
+                                        <b *ngIf="this.ticket_detail?.status == 'Completed'">
+                                            Waiting for {{this.ticket_detail?.approver?.name}}
+                                        </b>
+                                        <b *ngIf="this.ticket_detail?.status == 'Approved'">
+                                            <span *ngIf="this.ticket_detail?.status == 'Approved' && this.ticket_detail?.approver_time !=''">
+                                                {{this.ticket_detail?.approver_time ? parseHour(this.ticket_detail?.approver_time): ''}}
+                                            </span>
+
+                                            <span *ngIf="this.ticket_detail?.status == 'Approved' && (this.ticket_detail?.approver_time =='' || this.ticket_detail?.approver_time =='null' || this.ticket_detail?.approver_time ==null)">
+                                                {{parseDriverTime( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}}
+                                            </span>
+                                        </b>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="p-2 ticket-detail-div min-height-50" >
+                                        <div class="title-5">Notes From Approver:</div>
+                                        <div class="title-5-new"> {{this.ticket_detail?.approver_notes}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade  come-from-modal right" *ngIf="to_send_invoice_data" id="myModalDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content border-radius-top-bottom bg-modal ">
+            <div class="modal-body modal-body-padding p-15px">
+                <div class="d-flex justify-content-between align-items-center mb-42">
+                    <div class="width-75px">
+                        <div class="text-68696D fs-semibold fs-size-14 mb-3px">Invoice #</div>
+                        <div class="title-12 text-color-black-shade">{{invoice_no}}</div>
+                    </div>
+                    <div class="border-div  width-143px text-center getinputfield invoice-date">
+                        <div class="title-5-new2 text-color-black-shade5 mb-2px">Invoice date</div>
+                        <div class="title-7 text-color-black-shade6 no-shadow no-padding" (click)="showCalendarDate()">{{this.invoice_date}}</div>
+                        <div class="input-popup-div calendar-2 calendar-width-300" style="display:none;width: 300px;padding: 0;margin:15px;" align="center">
+                            <div id="pnlEventCalendar2" style="width:100%;" class="" (click)="getVal2()"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="title-6-2 m-0  text-black invoicing-status">Invoicing</div>
+                    </div>
+                </div>
+                <div class="border-div2 mb-22">
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Business name</div>
+                            <div class="title-7">{{this.to_send_invoice_data?.invoices[0] && this.to_send_invoice_data?.invoices[0]?.driver?.company_name ? this.to_send_invoice_data?.invoices[0]?.driver?.company_name :(
+                                this.to_send_invoice_data?.invoices[0]?.driver?.full_name)}}</div>
+                        </div>
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Email address</div>
+                            <div class="title-7 text-right">{{this.to_send_invoice_data?.invoices[0]?.driver?.email}}</div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Address</div>
+                            <div class="title-7">{{this.to_send_invoice_data?.invoices[0]?.driver?.address ? this.to_send_invoice_data?.invoices[0]?.driver?.address:''}} {{this.to_send_invoice_data?.invoices[0]?.driver?.city? ', '+this.to_send_invoice_data?.invoices[0]?.driver?.city:''}} {{this.to_send_invoice_data?.invoices[0]?.driver?.province? ', '+this.to_send_invoice_data?.invoices[0]?.driver?.province:''}} {{this.to_send_invoice_data?.invoices[0]?.driver?.post_code? ', '+this.to_send_invoice_data?.invoices[0]?.driver?.post_code:''}}</div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Business number</div>
+                            <div class="title-7">{{this.to_send_invoice_data?.invoices[0]?.driver?.business_number? this.to_send_invoice_data?.invoices[0]?.driver?.business_number:''}}</div>
+                        </div>
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Work safety number</div>
+                            <div class="title-7">{{this.to_send_invoice_data?.invoices[0]?.driver?.work_safety_number? this.to_send_invoice_data?.invoices[0]?.driver?.work_safety_number:''}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-div2 mb-22" >
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Trucking company</div>
+                            <div class="title-7">
+
+                                {{this.to_send_invoice_data?.invoices[0]?.trucking_company?.company_name? this.to_send_invoice_data?.invoices[0]?.trucking_company.company_name:''}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="d-flex justify-content-between custom-padding17" *ngIf="this.to_send_invoice_data?.trucking_company?.default_contact?.name && this.to_send_invoice_data?.trucking_company?.default_contact?.name !='';else Block11">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Contact person</div>
+                            <div class="title-7">{{this.to_send_invoice_data?.trucking_company?.default_contact?.name ? this.to_send_invoice_data?.trucking_company?.default_contact?.name:''}}</div>
+                        </div>
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Email address</div>
+                            <div class="title-7 text-right">{{this.to_send_invoice_data?.trucking_company?.default_contact?.email? this.to_send_invoice_data?.trucking_company?.default_contact?.email:''}}</div>
+                        </div>
+                    </div>
+                    <ng-template #Block11>
+                        <div class="d-flex justify-content-between custom-padding17" >
+                            <div>
+                                <div class="title-5-new2 text-color-black-shade2 mb-7">Contact person</div>
+                                <div class="title-7">{{this.to_send_invoice_data?.invoices[0]?.trucking_company?.full_name? this.to_send_invoice_data?.invoices[0]?.trucking_company?.full_name:''}}</div>
+                            </div>
+                            <div>
+                                <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Email address</div>
+                                <div class="title-7 text-right">{{this.to_send_invoice_data?.invoices[0]?.trucking_company?.email? this.to_send_invoice_data?.invoices[0]?.trucking_company?.email:''}}</div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <div class="myhr2"></div>
+
+
+                    <div class="d-flex justify-content-between custom-padding17" *ngIf="this.to_send_invoice_data?.trucking_company?.default_contact?.name && this.to_send_invoice_data?.trucking_company?.default_contact?.name !='';else Block21">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Address</div>
+                            <div class="title-7">
+                                {{this.to_send_invoice_data?.invoices[0]?.trucking_company?.street ? this.to_send_invoice_data?.invoices[0]?.trucking_company?.street:''}}
+                                {{this.to_send_invoice_data?.invoices[0]?.trucking_company?.city? ', '+this.to_send_invoice_data?.invoices[0]?.trucking_company?.city:''}}
+                                {{this.to_send_invoice_data?.invoices[0]?.trucking_company?.province? ', '+this.to_send_invoice_data?.invoices[0]?.trucking_company?.province:''}}
+                                {{this.to_send_invoice_data?.invoices[0]?.trucking_company?.postal_code? ', '+this.to_send_invoice_data?.invoices[0]?.trucking_company?.postal_code:''}}
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #Block21>
+                        <div class="d-flex justify-content-between custom-padding17" >
+                            <div>
+                                <div class="title-5-new2 text-color-black-shade2 mb-7">Address</div>
+                                <div class="title-7">
+                                    {{this.to_send_invoice_data?.invoices[0]?.trucking_company?.street ? this.to_send_invoice_data?.invoices[0]?.trucking_company?.address:''}}
+                                    {{this.to_send_invoice_data?.invoices[0]?.trucking_company?.city? ', '+this.to_send_invoice_data?.invoices[0]?.trucking_company?.city:''}}
+                                    {{this.to_send_invoice_data?.invoices[0]?.trucking_company?.province? ', '+this.to_send_invoice_data?.invoices[0]?.trucking_company?.province:''}}
+                                    {{this.to_send_invoice_data?.invoices[0]?.trucking_company?.postal_code? ', '+this.to_send_invoice_data?.invoices[0]?.trucking_company?.post_code:''}}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                </div>
+                <div class="d-flex justify-content-between custom-padding18 mb-20px">
+                    <div>
+                        <div class="title-5-new2 text-color-black-shade2 mb-7">Invoicing period</div>
+                        <div class="title-7">{{this.default_duration_type}}</div>
+                    </div>
+                    <div>
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Dates</div>
+                        <div class="title-7 text-right">{{this.to_send_invoice_data?.data?.start_date  |  date:"MMMM d"}} - {{this.to_send_invoice_data?.data?.end_date  |  date:"MMMM d"}}, {{this.to_send_invoice_data?.data?.end_date  |  date:"Y"}} </div>
+                    </div>
+                </div>
+                <div class="row mb-4px">
+                    <div class="col-md-6">
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Hours :</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="title-7">{{this.to_send_invoice_data?.data?.hour}} at (${{this.to_send_invoice_data?.data?.hour_rate}})</div>
+                    </div>
+                </div>
+                <div class="row mb-4px">
+                    <div class="col-md-6">
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Subtotal :</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="title-7">${{this.to_send_invoice_data?.data?.subtotal?.toFixed(2)}}</div>
+                    </div>
+                </div>
+                <div class="row mb-4px">
+                    <div class="col-md-6">
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Tax ({{this.gst?.type}}): {{this.gst?.tax}}% :</div>
+                    </div>
+                    <div class="col-md-6 d-flex" style="flex-wrap: nowrap;justify-content: space-between; ">
+                        <div class="title-7">${{this.to_send_invoice_data?.data?.tax_amount?.toFixed(2)}}</div>
+                    </div>
+                </div>
+                <div class="row mb-4px">
+                  <div class="col-md-12">
+                    <div class="d-flex align-items-center justify-content-center">
+                      <div class="myhr3 width-320px"></div>
+                    </div>
+                  </div>
+                    <div class="col-md-6">
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 mt-1 text-right">Total :</div>
+                        <div class="myhr3 width-132px mb-3px float-right"></div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="d-flex mb-7 mt-1 "  style="flex-wrap: nowrap;justify-content: space-between; ">
+                          <div class="title-7">${{this.to_send_invoice_data?.data?.total?.toFixed(2)}}</div>
+                        </div>
+                        <div class="myhr3 width-132px mb-3px float-left"></div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="d-flex align-items-center justify-content-center">
+                        <div class="myhr4 width-320px"></div>
+                      </div>
+                    </div>
+                </div>
+
+
+                <div class="mb-22 mt-2">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="min-width-300px">
+                      <div class="d-flex ">
+                      </div>
+                      <div class=" border-field">
+                          <div class="title-5-new2 text-color-black-shade2  pl-5px pt-5px mb-6">Your notes </div>
+                          <div class="position-relative">
+                            <textarea class="myinput5 pr-20px h-35px" placeholder="Type here" rows="4"  (input)="setNotes($event)"></textarea>
+                            <img src="../../assets/icons/pencile-grey.png" alt="" class="top-right-icon" width="17px">
+                          </div>
+
+                      </div>
+                    </div>
+                    <div class="text-right">
+
+                      <div class="title-5-new2 text-color-black-shade2  text-right">Due date </div>
+                      <div class="title-7 text-right">{{this.due_date | date:"MMMM dd"}}</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-6" align="center">
+                        <div class="position-relative modal-div">
+                            <button class="mybtn2 mybtn-default no-wrap openOptionModal border-pink common-btn" *ngIf="this.is_loading!='download'">Download</button>
+                            <button class="mybtn2 mybtn-default no-wrap common-btn  border-pink " *ngIf="this.is_loading=='download'">Processing..</button>
+                            <div class="option-modal">
+                                <div class="title-3 mb-12 text-center mb-12">Mark as sent?</div>
+                                <div class="title-5-new2 mb-17 text-center mb-16">Change as invoiced</div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="mybtn5 mybtn-back-pink title-17 w-auto btnaction" (click)="downloadInvoice()">Yes</button>
+                                    <button class="mybtn5 mybtn-default title-17 w-auto btnaction ml-18" (click)="downloadInvoice(true)">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6" align="center">
+                        <button class="mybtn2 mybtn-back-pink no-wrap common-btn"  (click)="hanldeSendInvoice()" *ngIf="this.is_loading!='save_invoice'">Send invoice</button>
+                        <button class="mybtn2 mybtn-back-pink no-wrap common-btn" *ngIf="this.is_loading=='save_invoice'">Processing..</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade  come-from-modal right" id="myModalDetail2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content border-radius-top-bottom bg-modal">
+            <div class="modal-body modal-body-padding p-15px">
+                <div class="d-flex justify-content-between align-items-center mb-42">
+                    <div class="width-75px">
+                        <div class="text-68696D fs-semibold fs-size-14  mb-3px">Invoice #</div>
+                        <div class="title-12 text-color-black-shade">{{edited_invoice?.invoice_no}}</div>
+                    </div>
+
+                    <div class="border-div width-143px text-center invoice-date">
+                        <div class="title-5-new2 text-color-black-shade5 mb-2px">Invoice date</div>
+                        <div class="title-7 text-color-black-shade6 no-shadow no-padding">{{edited_invoice?.invoice_date}}</div>
+
+                    </div>
+                    <div>
+                        <div class="title-6-2 m-0 invoicing-status">Invoicing</div>
+                    </div>
+                </div>
+                <div class="border-div2 mb-22">
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Business name</div>
+                            <div class="title-7">{{this.edited_invoice?.freelance_driver.edited_invoice?.freelance_driver?.company_name ? this.edited_invoice?.freelance_driver?.company_name :(
+                                this.edited_invoice?.freelance_driver?.full_name)}}</div>
+                        </div>
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Email address</div>
+                            <div class="title-7 text-right">{{edited_invoice?.freelance_driver?.email}}</div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Address</div>
+                            <div class="title-7">
+                                {{this.edited_invoice?.freelance_driver?.address ? this.edited_invoice?.freelance_driver?.address:''}} {{this.edited_invoice?.freelance_driver?.city? ', '+this.edited_invoice?.freelance_driver?.city:''}} {{this.edited_invoice?.freelance_driver?.province? ', '+this.edited_invoice?.freelance_driver?.province:''}} {{this.edited_invoice?.freelance_driver?.post_code? ', '+this.edited_invoice?.freelance_driver?.post_code:''}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Business number</div>
+                            <div class="title-7">{{this.edited_invoice?.freelance_driver?.business_number}}</div>
+                        </div>
+                        <div align="right">
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Work safety number</div>
+                            <div class="title-7">{{this.edited_invoice?.freelance_driver?.work_safety_number}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-div2 mb-22">
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Trucking company</div>
+                            <div class="title-7">
+
+                                <div *ngIf="edited_invoice?.trucking_company?.company_name">
+                                    {{edited_invoice?.trucking_company?.company_name}}
+                                </div>
+                                <div *ngIf="edited_invoice?.freelance_trucking_company?.company_name">
+                                    {{edited_invoice?.freelance_trucking_company?.company_name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Contact person</div>
+                            <div class="title-7">{{getContact(this.edited_invoice?.trucking_company?.contacts,'name')}}
+                                <div *ngIf="edited_invoice?.trucking_company?.company_name">
+                                    {{edited_invoice?.trucking_company?.full_name}}
+                                </div>
+                                <div *ngIf="edited_invoice?.freelance_trucking_company?.company_name">
+                                    {{edited_invoice?.freelance_trucking_company?.default_contact?.name}}
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Email address</div>
+                            <div class="title-7 text-right">
+                                <div *ngIf="edited_invoice?.trucking_company?.company_name">
+                                    {{edited_invoice?.trucking_company?.email}}
+                                </div>
+                                <div *ngIf="edited_invoice?.freelance_trucking_company?.company_name">
+                                    {{edited_invoice?.freelance_trucking_company?.default_contact?.email}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="d-flex justify-content-between custom-padding17">
+                        <div>
+                            <div class="title-5-new2 text-color-black-shade2 mb-7">Address</div>
+                            <div class="title-7">
+
+                                <div *ngIf="edited_invoice?.trucking_company?.company_name">
+                                    {{this.edited_invoice?.trucking_company?.address ? this.edited_invoice?.trucking_company?.address:''}}
+                                    {{this.edited_invoice?.trucking_company?.city? ', '+this.edited_invoice?.trucking_company?.city:''}}
+                                    {{this.edited_invoice?.trucking_company?.province? ', '+this.edited_invoice?.trucking_company?.province:''}}
+                                    {{this.edited_invoice?.trucking_company?.post_code? ', '+this.edited_invoice?.trucking_company?.post_code:''}}
+                                </div>
+                                <div *ngIf="edited_invoice?.freelance_trucking_company?.company_name">
+                                    {{this.edited_invoice?.freelance_trucking_company?.street ? this.edited_invoice?.freelance_trucking_company?.street:''}}
+                                    {{this.edited_invoice?.freelance_trucking_company?.city? ', '+this.edited_invoice?.freelance_trucking_company?.city:''}}
+                                    {{this.edited_invoice?.freelance_trucking_company?.province? ', '+this.edited_invoice?.freelance_trucking_company?.province:''}}
+                                    {{this.edited_invoice?.freelance_trucking_company?.postal_code? ', '+this.edited_invoice?.freelance_trucking_company?.postal_code:''}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between custom-padding18 mb-16">
+                    <div>
+                        <div class="title-5-new2 text-color-black-shade2 mb-7">Invoicing period</div>
+                        <div class="title-7">{{this.edited_invoice?.invoice_period_type}}</div>
+                    </div>
+                    <div>
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Dates</div>
+                        <div class="title-7 text-right">{{this.edited_invoice?.invoice_period_start | date:"MMMM d"}} - {{this.edited_invoice?.invoice_period_end |  date:"MMMM d"}}, {{this.edited_invoice?.invoice_period_end |  date:"Y"}}</div>
+                    </div>
+                </div>
+                <div class="row mb-4px">
+                    <div class="col-md-6">
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Hours :</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="title-7">{{this.edited_invoice?.hours}} at (${{this.edited_invoice?.hours_rate}})</div>
+                    </div>
+                </div>
+                <div class="row mb-4px">
+                    <div class="col-md-6">
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Subtotal :</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="title-7">${{this.edited_invoice?.subtotal}}</div>
+                    </div>
+                </div>
+
+
+
+                <div class="row mb-4px">
+                    <div class="col-md-6">
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Tax ({{this.gst?.type}}): {{this.gst?.tax}}%:</div>
+                    </div>
+                    <div class="col-md-6 d-flex" style="flex-wrap: nowrap;justify-content: space-between; ">
+                        <div class="title-7">${{this.edited_invoice?.tax_amount}}</div>
+
+
+                    </div>
+                </div>
+                <div class="row mb-4px">
+                  <div class="col-md-12">
+                    <div class="d-flex align-items-center justify-content-center">
+                      <div class="myhr3 width-320px"></div>
+                    </div>
+                  </div>
+                    <div class="col-md-6">
+                        <div class="title-5-new2 text-color-black-shade2 mb-7 mt-1 text-right">Total :</div>
+                        <div class="myhr3 width-132px mb-3px float-right"></div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="d-flex mb-7 mt-1 "  style="flex-wrap: nowrap;justify-content: space-between; ">
+                          <div class="title-7">${{this.edited_invoice?.total}}</div>
+                        </div>
+                        <div class="myhr3 width-132px mb-3px float-left"></div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="d-flex align-items-center justify-content-center">
+                        <div class="myhr4 width-320px"></div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="mb-22 mt-3">
+                  <div class=" border-field">
+                      <div class="title-5-new2 text-color-black-shade2  pl-5px pt-5px mb-6">Your notes </div>
+                      <div class="position-relative">
+                        <textarea class="myinput5 pr-20px h-35px" placeholder="Type here" rows="4" readonly>{{this.edited_invoice?.invoice_notes}}</textarea>
+                        <img src="../../assets/icons/pencile-grey.png" alt="" class="top-right-icon" width="17px">
+                      </div>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-6" align="center">
+                        <div class="position-relative modal-div">
+                            <button class="mybtn2 mybtn-back-pink  border-pink common-btn no-wrap" (click)="downloadEditedInvoice()" *ngIf="this.is_loading!='download'">Download</button>
+                            <button class="mybtn2 mybtn-back-pink  border-pink common-btn no-wrap"  *ngIf="this.is_loading=='download'">Processing...</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6" align="center">
+                        <button class="mybtn2 mybtn-back-pink common-btn no-wrap"  (click)="resendInvoice()" *ngIf="this.is_loading!='resend'">Resend</button>
+                        <button class="mybtn2 mybtn-back-pink common-btn no-wrap" *ngIf="this.is_loading=='resend'">Processing...</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

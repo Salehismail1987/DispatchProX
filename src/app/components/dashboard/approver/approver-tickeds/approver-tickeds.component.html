@@ -1,0 +1,149 @@
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content2">
+            <div class="dashboard-title">
+                <div class="title mt-3 mb-4" align='center'>
+                    Tickets Waiting For Approval
+                </div>
+            </div>
+            <div class="setting-content-page">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="field text-field">
+                            <input class="field__input height-43px" placeholder="" (change)="changeDate($event)" type="date">
+                            <span class="field__label-wrap">
+                            <span class="field__label field__label2">Show dispatch</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="field text-field">
+                            <select class="field__input icon-none height-43px" (change)="handleSortByList($event)">
+                                <option value="project_id">Projects</option>
+                                <option value="ticket_date">Ticket Date</option>
+                                <option value="trucking_company_id">Trucking Company</option>
+                                <option value="approver_id">Approver</option>
+                            </select>
+                            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                            <span class="field__label-wrap">
+                                <span class="field__label field__label2">Sort by</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="field text-field">
+                            <select class="field__input icon-none height-43px" (change)="this.handleStatus($event)">
+                                <option value="">Select Status</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Declined">Declined</option>
+                                <option value="Accepted">Accepted</option>
+                                <option value="Driving">Driving</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Approved">Approved</option>
+                            </select>
+                            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                            <span class="field__label-wrap">
+                                <span class="field__label field__label2">Job status</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="position-relative">
+                            <label class="field text-field">
+                                <input class="field__input height-43px" placeholder="Search" (change)="searchBy(searchby.value)"  type="text" [(ngModel)]="this.search_by" #searchby>
+                                <span class="field__label-wrap">
+                                <span class="field__label field__label2">Search tickets</span>
+                                </span>
+                            </label>
+                            <div class="topright">
+                                <img src="../assets/icons/search.svg" (click)="searchBy(searchby.value)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table mytable">
+                                <thead>
+                                    <tr >
+                                        <th (click)="sortBy('ticket_no')">Ticket ID <span><img  src="../assets/icons/swap.svg"> </span></th>
+                                        <th (click)="sortBy('ticket_date')">Date <span><img  src="../assets/icons/swap.svg"> </span></th>
+                                        <th (click)="sortBy('project_id')">Project <span><img  src="../assets/icons/swap.svg"> </span></th>
+                                        <th (click)="sortBy('approver_id')">Job approver <span><img  src="../assets/icons/swap.svg"> </span></th>
+                                        <th (click)="sortBy('trucking_company_id')">Trucking company <span><img  src="../assets/icons/swap.svg"> </span></th>
+                                        <th>Driver name </th>
+                                        <th>Truck type </th>
+                                        <th>License plate#</th>
+                                        <th>Job status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="ticket_list && ticket_list.length>0; else elseRow">
+                                        <tr *ngFor="let ticket of ticket_list" (click)="this.setDetailTicket(ticket)"  data-toggle="modal" data-target="#myModal">
+                                        
+                                            <td>{{ticket.ticket_no}}</td>
+                                            <td>{{ticket.ticket_date}}</td>
+                                            <td>{{ticket.project?.project_name}}</td>
+                                            <td>{{ticket.approver?.full_name}}</td>
+                                            <td>{{ticket.trucking_company?.company_name}}</td>
+                                            <td>{{ticket?.driver_ticket?.driver?.full_name}}</td>
+                                            <td>{{ticket.ticket_truck_type?.project_combination ? ticket.ticket_truck_type?.project_combination?.nickname : (ticket.ticket_truck_type?.project_truck ? ticket.ticket_truck_type?.project_truck?.name + (ticket.ticket_truck_type?.project_trailer ?  ' - ' + ticket.ticket_truck_type?.project_trailer?.name :'') :'' ) }}</td>
+                                            <td>{{ticket?.driver_ticket?.truck?.truck_license_plate}}</td>
+                                            <td><button [ngClass]="getStatusClass(ticket.status)">{{ticket.status}}</button></td>
+                                        </tr>                                    
+                                    </ng-container>
+                                    <ng-template #elseRow>
+                                        <tr>
+                                            <td colspan="10" class="text-center" *ngIf="!is_loading">
+                                                <h4>No tickets to show.</h4>
+                                            </td>
+                                            <td colspan="10" class="text-center" *ngIf="is_loading">
+                                                <h4>Loading Dispatch List.</h4>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="width-64">
+                            <label class="field text-field">
+                                <select class="field__input icon-none bg-light-grey3 no-border height-34px custom-padding" (change)="this.handlePerPage($event)">
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="50">100</option>
+                                </select>
+                                <i class="fa fa-caret-down input-icon-right2 text-color-lightgrey" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                    <span class="field__label field__label2 left-6px">Rows</span>
+                                </span>
+                            </label>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-10">
+                        <div class="mypagination-div " *ngIf="ticket_pagination?.total>0">
+                            <a  style="cursor: pointer" (click)="changePage(ticket_pagination.current_page -1 )" [ngClass]="ticket_pagination.first_page == this.page ? 'mypagination ':'mypagination disable'" class="">Previous</a>
+                            <ng-container *ngFor="let item of ticket_pagination?.links" >
+                                <a  style="cursor: pointer" *ngIf="notSkip(item.label)" [ngClass]="item.active ? 'mypagination active' : 'mypagination'" (click)="changePage(parsePage(item.label.toString()))">{{item.label}}</a>
+                            
+                            </ng-container>
+                           
+                            <a  style="cursor: pointer" (click)="changePage(ticket_pagination.current_page +1 )" [ngClass]="this.page == ticket_pagination.last_page ? 'mypagination ':'mypagination next'">Next</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-customer-ticket-popup  (listing)="this.getTicketListing()" [approver]="true"  [ticketDetail]="this.ticketDetail" [roundId]="0">
+
+</app-customer-ticket-popup>

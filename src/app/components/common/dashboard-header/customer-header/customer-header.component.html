@@ -1,0 +1,776 @@
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="header-logo" [routerLink]="'/dashboard'">
+      <img src="assets/images/logo.png" class="logo-shadow" />
+    </div>
+  </div>
+
+  <!-- Approver  menu-->
+
+  <ul
+    class="list-unstyled components"
+    style="border-bottom: 0px !important"
+    *ngIf="
+      this.loggedinUser.account_type == 'User' &&
+      this.is_only_approver(this.loggedinUser?.user_roles)
+    "
+  >
+    <li
+      *ngIf="this.permissions.includes('projects')"
+      [ngClass]="
+        this.active_menu && this.active_menu?.parent == 'projects'
+          ? 'active active-menu'
+          : 'active '
+      "
+    >
+      <a routerLink="/approver-projects" class="sub-heading"
+        >Projects
+        {{
+          this.menu_counts && this.menu_counts?.total_approver_projects
+            ? "[" + this.menu_counts?.total_approver_projects + "]"
+            : "[0]"
+        }}
+      </a>
+    </li>
+
+    <li class="active">
+      <a
+        href="#homeSubmenu"
+        data-toggle="collapse"
+        aria-expanded="false"
+        class="dropdown-toggle"
+        >Tickets
+      </a>
+      <ul
+        class="collapse list-unstyled show submenu border-menu"
+        id="homeSubmenu"
+      >
+        <li
+          *ngIf="this.permissions.includes('approver_tickets')"
+          [ngClass]="
+            this.active_menu && this.active_menu?.child == 'approver_tickets'
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <a [routerLink]="'/approver-tickets'">
+            <img src="../assets/icons/file-plus.svg" />
+            <span
+              >Approve tickets
+              {{
+                this.menu_counts && this.menu_counts?.total_tickets_to_approve
+                  ? "[" + this.menu_counts?.total_tickets_to_approve + "]"
+                  : "[0]"
+              }}</span
+            ></a
+          >
+        </li>
+        <li
+          *ngIf="this.permissions.includes('approver_approved_tickets')"
+          [ngClass]="
+            this.active_menu &&
+            this.active_menu?.child == 'approver_approved_tickets'
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <a [routerLink]="'/approver-approved-tickets'"
+            ><img src="../assets/icons/file-up.svg" />
+            <span
+              >Approved tickets
+              {{
+                this.menu_counts && this.menu_counts?.total_tickets_approved
+                  ? "[" + this.menu_counts?.total_tickets_approved + "]"
+                  : "[0]"
+              }}</span
+            ></a
+          >
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- Customer menu-->
+
+  <ul
+    class="list-unstyled components"
+    style="border-bottom: 0px !important"
+    *ngIf="
+      this.loggedinUser.account_type != 'User' ||
+      (this.loggedinUser.account_type == 'User' &&
+        (this.permissions == 'all' ||
+          this.loggedinUser.role?.role_name == 'Admin'))
+    "
+  >
+    <!-- <li   [ngClass]="this.active_menu && this.active_menu?.parent =='projects' ?  'active active-menu':'active '">
+            <a routerLink="/project-listing" class="sub-heading">Projects </a>
+        </li>        -->
+
+    <li class="active">
+      <a
+        href="javascript:void(0)"
+        (click)="toggleProjectMenu()"
+        aria-expanded="false"
+        class="project-link heading_li_a"
+        >Projects
+        <span class="float-right">
+          <ng-container *ngIf="isProjectMenuOpen; else downArrow">
+            <img src="../assets/icons/arrow-up-black.svg" alt="Arrow Up" />
+          </ng-container>
+          <ng-template #downArrow>
+            <img src="../assets/icons/arrow-down.png" alt="Arrow Down" />
+          </ng-template>
+        </span>
+      </a>
+      <ul
+        class="collapse list-unstyled border-menu"
+        [class.show]="isProjectMenuOpen"
+        id="projectMenu"
+      >
+        <li
+          [ngClass]="
+            this.active_menu && this.active_menu?.child == 'projects'
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <a
+            [routerLink]="'/project-listing'"
+            [ngClass]="
+              this.active_menu && this.active_menu?.child == 'projects'
+                ? 'active-link'
+                : ''
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="15"
+              viewBox="0 0 16 15"
+              fill="none"
+              class="fill-property"
+            >
+              <g clip-path="url(#clip0_15176_2339)">
+                <path
+                  d="M15.5 5.36133C15.5 5.03771 15.2352 4.77539 14.9116 4.77539C14.588 4.77539 14.3256 5.03771 14.3256 5.36133V11.0379C14.0597 10.9111 13.7626 10.8398 13.4492 10.8398H2.66841C2.11892 10.8398 1.67188 10.4004 1.67188 9.81445C1.67188 9.22852 2.11892 8.78906 2.66841 8.78906H3.75195C4.07557 8.78906 4.33789 8.52674 4.33789 8.20312V3.01808H8.26367C8.58729 3.01808 8.84961 2.75575 8.84961 2.43214C8.84961 2.10853 8.58729 1.8462 8.26367 1.8462H4.33789V0.585938C4.33789 0.262324 4.07557 0 3.75195 0H2.66841C1.47274 0 0.5 0.972744 0.5 2.16841V9.84334C0.5 11.039 1.47274 12.0117 2.66841 12.0117H11.4863V14.4141C11.4863 14.7377 11.7487 15 12.0723 15H13.4492C14.58 15 15.5 14.08 15.5 12.9492C15.5 12.941 15.5 5.36133 15.5 5.36133ZM1.67188 2.16841C1.67188 1.61892 2.11892 1.17188 2.66841 1.17188H3.16602V7.61719H2.66841C2.30935 7.61719 1.97044 7.70511 1.67188 7.86059V2.16841ZM13.4492 13.8281H12.6582V12.0117H13.4492C13.9127 12.0117 14.2933 12.3764 14.3256 12.8369V13.0078C14.3256 13.0087 14.3258 13.0095 14.3258 13.0103C14.2943 13.4665 13.9133 13.8281 13.4492 13.8281ZM8.57671 6.8545C8.68851 6.96911 8.84038 7.03128 8.99612 7.03128C9.04827 7.03128 9.10086 7.02431 9.15251 7.00998L11.5175 6.35487C11.6148 6.32792 11.7036 6.27624 11.775 6.2049L14.9852 3.00079C15.6705 2.31542 15.6705 1.20026 14.9852 0.514863C14.2998 -0.170479 13.1846 -0.170537 12.4997 0.514395L9.28279 3.72416C9.21447 3.79233 9.16402 3.8763 9.13599 3.96864L8.43544 6.27504C8.37333 6.4795 8.42747 6.70154 8.57671 6.8545ZM13.3279 1.3435C13.5563 1.11504 13.928 1.11504 14.1565 1.3435C14.385 1.57195 14.385 1.94367 14.1569 2.17175L14.0434 2.28504L13.2147 1.45638L13.3279 1.3435ZM10.2146 4.44987L12.3852 2.28413L13.214 3.11291L11.0562 5.26664L9.86639 5.59623L10.2146 4.44987Z"
+                  fill=""
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_15176_2339">
+                  <rect
+                    width="15"
+                    height="15"
+                    fill="white"
+                    transform="translate(0.5)"
+                  />
+                </clipPath>
+              </defs>
+            </svg>
+            <span>Manage projects</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="active">
+      <a
+        data-toggle="collapse"
+        (click)="toggleProjectMenu('1'); $event.preventDefault()"
+        aria-expanded="false"
+        class="heading_li_a"
+        >Tickets
+        <span class="float-right">
+          <ng-container *ngIf="Tickets_list; else downArrow">
+            <img src="../assets/icons/arrow-up-black.svg" alt="Arrow Up" />
+          </ng-container>
+          <ng-template #downArrow>
+            <img src="../assets/icons/arrow-down.png" alt="Arrow Down" />
+          </ng-template>
+        </span>
+      </a>
+      <ul
+        class="collapse list-unstyled show submenu border-menu"
+        [class.show]="Tickets_list"
+      >
+        <li
+          [ngClass]="
+            this.active_menu && this.active_menu?.child == 'create-dispatch'
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <a
+            [routerLink]="'/customer-create-ticket'"
+            [ngClass]="
+              this.active_menu && this.active_menu?.child == 'create-dispatch'
+                ? 'active-link  '
+                : ''
+            "
+            ><img
+              src="../assets/icons/create_file.svg"
+              *ngIf="
+                !(
+                  this.active_menu &&
+                  this.active_menu?.child == 'create-dispatch'
+                )
+              "
+            /><img
+              src="../assets/icons/create-file-black.svg"
+              *ngIf="
+                this.active_menu && this.active_menu?.child == 'create-dispatch'
+              "
+            />
+            <span>Create dispatch</span></a
+          >
+        </li>
+        <!-- *ngIf="this.is_subscribed=='YES' || is_free_trial=='YES'  || tickets_to_approve"  -->
+        <li
+          [ngClass]="
+            this.active_menu && this.active_menu?.child == 'dispatched-tickets'
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <!-- *ngIf="!tickets_to_approve || (this.is_subscribed=='YES' || is_free_trial=='YES')" -->
+          <a
+            [routerLink]="'/customer-ticket-listing'"
+            [ngClass]="
+              this.active_menu &&
+              this.active_menu?.child == 'dispatched-tickets'
+                ? 'active-link  '
+                : ''
+            "
+          >
+            <img
+              src="../assets/icons/file-up.svg"
+              *ngIf="
+                !(
+                  this.active_menu &&
+                  this.active_menu?.child == 'dispatched-tickets'
+                )
+              "
+            />
+            <img
+              src="../assets/icons/file-up-black.svg"
+              *ngIf="
+                this.active_menu &&
+                this.active_menu?.child == 'dispatched-tickets'
+              "
+            />
+
+            <span
+              >Dispatched
+              <span class="float-right mt-1">{{
+                this.menu_counts && this.menu_counts?.dispatched_tickets
+                  ? "[" + this.menu_counts?.dispatched_tickets + "]"
+                  : "[0]"
+              }}</span>
+            </span></a
+          >
+          <!-- 
+                        Commented by junaid sep 5 2023
+                    
+                    <a *ngIf="tickets_to_approve && !(this.is_subscribed=='YES' || is_free_trial=='YES')"  [queryParams]="{status: 'Completed'}" [routerLink]="'/customer-ticket-listing'" ><img src="../assets/icons/file-up.svg"> <span>Dispatched  {{this.menu_counts && this.menu_counts?.dispatched_tickets  ? '['+this.menu_counts?.dispatched_tickets+']' : '[0]'}}</span></a>
+                    -->
+        </li>
+        <!-- *ngIf="this.is_subscribed=='YES' || is_free_trial=='YES'" -->
+        <li
+          [ngClass]="
+            this.active_menu &&
+            (this.active_menu?.child == 'closed-tickets' ||
+              this.active_menu?.child == 'cust-declined-tickets')
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <a
+            [routerLink]="'/cust-closed-tickets'"
+            [ngClass]="
+              this.active_menu &&
+              (this.active_menu?.child == 'closed-tickets' ||
+                this.active_menu?.child == 'cust-declined-tickets')
+                ? 'active-link  '
+                : ''
+            "
+          >
+            <svg
+              *ngIf="
+                this.active_menu?.child == 'closed-tickets' ||
+                (this.active_menu?.chile != 'closed-tickets' &&
+                  this.active_menu?.child != 'cust-declined-tickets')
+              "
+              width="14"
+              height="16"
+              viewBox="0 0 21 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="stroke-property"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M13.4626 1.01273H6.19169C3.91816 1.00398 2.05562 2.81515 2.00097 5.08867V16.8246C1.95179 19.1222 3.77498 21.0241 6.07145 21.0733C6.1119 21.0733 6.15234 21.0744 6.19169 21.0733H14.9229C17.2073 20.9924 19.013 19.1102 18.9999 16.8246V6.77961L13.4626 1.01273Z"
+                stroke=""
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M13.1768 1V4.17965C13.1768 5.73177 14.4327 6.98986 15.9848 6.99423H18.995"
+                stroke=""
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M7.5 14.4999L10.2403 17.4998L13.2404 9.9999"
+                stroke=""
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <svg
+              *ngIf="this.active_menu?.child == 'cust-declined-tickets'"
+              width="14"
+              height="16"
+              viewBox="0 0 14 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="stroke-property"
+            >
+              <g opacity="0.5">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M8.99367 1.00891H3.84242C2.27219 1.00891 1 2.28186 1 3.85133V12.1209C1.00915 13.7209 2.31335 15.0098 3.9133 14.9999C3.94379 14.9999 3.97352 14.9992 4.00325 14.9984H10.012C11.5884 14.9824 12.8575 13.698 12.8545 12.1209V5.03205L8.99367 1.00891Z"
+                  stroke=""
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M8.79303 1V3.21737C8.79303 4.29976 9.66809 5.17711 10.7505 5.18016H12.8505"
+                  stroke=""
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M8.10862 10.0691L5.46667 7.42712"
+                  stroke=""
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M5.46753 10.0691L8.10947 7.42712"
+                  stroke=""
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </g>
+            </svg>
+
+            <span
+              >Closed
+              <span class="float-right mt-1">{{
+                this.menu_counts && this.menu_counts?.closed_tickets
+                  ? "[" + this.menu_counts?.closed_tickets + "]"
+                  : "[0]"
+              }}</span>
+            </span></a
+          >
+        </li>
+
+        <!-- <li *ngIf="has_role(this.loggedinUser?.user_roles,'Approver') || (this.menu_counts?.total_tickets_to_approve  && this.menu_counts?.total_tickets_to_approve >0)" [ngClass]="this.active_menu && this.active_menu?.child =='approver_tickets' ?  'active-menu':''">
+                    <a [routerLink]="'/approver-tickets'" > <img src="../assets/icons/file-plus.svg"> <span>Approve Tickets {{this.menu_counts && this.menu_counts?.total_tickets_to_approve  ? '['+this.menu_counts?.total_tickets_to_approve+']' : ''}}</span></a>
+                </li> -->
+        <!-- <li *ngIf="( has_role(this.loggedinUser?.user_roles,'Approver')) || (  this.menu_counts?.total_tickets_approved && this.menu_counts?.total_tickets_approved >0) " [ngClass]="this.active_menu && this.active_menu?.child =='approver_approved_tickets' ?  'active-menu':''">
+                    <a  [routerLink]="'/approver-approved-tickets'"><img src="../assets/icons/file-up.svg"> <span>Approved Tickets {{this.menu_counts && this.menu_counts?.total_tickets_approved  ? '['+this.menu_counts?.total_tickets_approved+']' : ''}}</span></a>
+                </li> -->
+
+        <li
+          [ngClass]="
+            this.active_menu &&
+            (this.active_menu?.child == 'tragget-tickets' ||
+              this.active_menu?.child == 'tragget-ticket')
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <a
+            [routerLink]="'/cust-tragget-trial'"
+            *ngIf="
+              this.is_free_trial == 'YES' ||
+              ((!this.is_subscribed || this.is_subscribed != 'YES') &&
+                this.is_free_trial == 'NO')
+            "
+            [ngClass]="
+              this.active_menu &&
+              (this.active_menu?.child == 'tragget-tickets' ||
+                this.active_menu?.child == 'tragget-ticket')
+                ? 'active-link  '
+                : ''
+            "
+          >
+            <svg
+              width="14"
+              height="17"
+              viewBox="0 0 14 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="stroke-property"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8.70089 1.50881H3.81584C2.28858 1.50271 1.03666 2.76662 1.00068 4.35146V12.5181C0.966903 14.1288 2.19679 15.4637 3.74829 15.4995C3.77105 15.4995 3.79308 15.5002 3.81584 15.4995H9.68186C11.2194 15.4347 12.4309 14.1159 12.4199 12.5181V5.53076L8.70089 1.50881Z"
+                stroke=""
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M8.50781 1.5V3.71756C8.50781 4.80004 9.35075 5.67746 10.3934 5.68051H12.4163"
+                stroke=""
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M8.37078 11.1116H4.40576"
+                stroke=""
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6.86897 8.25078H4.40479"
+                stroke=""
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <span>DispatchProX tickets </span>
+            <span class="float-right mt-1">[0]</span>
+          </a>
+
+          <a
+            [routerLink]="'/cust-tragget-tickets'"
+            *ngIf="this.is_subscribed == 'YES'"
+            [ngClass]="
+              this.active_menu &&
+              (this.active_menu?.child == 'tragget-tickets' ||
+                this.active_menu?.child == 'tragget-ticket')
+                ? 'active-link  '
+                : ''
+            "
+          >
+            <svg
+              width="14"
+              height="17"
+              viewBox="0 0 14 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="stroke-property"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8.70089 1.50881H3.81584C2.28858 1.50271 1.03666 2.76662 1.00068 4.35146V12.5181C0.966903 14.1288 2.19679 15.4637 3.74829 15.4995C3.77105 15.4995 3.79308 15.5002 3.81584 15.4995H9.68186C11.2194 15.4347 12.4309 14.1159 12.4199 12.5181V5.53076L8.70089 1.50881Z"
+                stroke=""
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M8.50781 1.5V3.71756C8.50781 4.80004 9.35075 5.67746 10.3934 5.68051H12.4163"
+                stroke=""
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M8.37078 11.1116H4.40576"
+                stroke=""
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6.86897 8.25078H4.40479"
+                stroke=""
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <!-- <span>DispatchProX tickets  <span class="float-right mt-1"> {{this.menu_counts && this.menu_counts?.closed_tickets  ? '['+this.menu_counts?.closed_tickets+']' : '[0]'}} </span> </span></a> -->
+
+            <span
+              >DispatchProX tickets
+              <span class="float-right mt-1">
+                <ng-container
+                  *ngIf="
+                    this.tragget_tickets?.usage?.left > 0 &&
+                    this.tragget_tickets?.subscription
+                  "
+                >
+                  [{{
+                    this.tragget_tickets?.individual_tickets +
+                      this.tragget_tickets?.usage?.left
+                  }}]
+                </ng-container>
+
+                <ng-container *ngIf="!this.tragget_tickets?.subscription">
+                  <ng-container
+                    *ngIf="
+                      this.tragget_tickets?.without_tragget_tickets < 1 &&
+                      this.tragget_tickets?.individual_tickets > 0
+                    "
+                  >
+                    [{{ this.tragget_tickets?.individual_tickets }}]
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      this.tragget_tickets?.without_tragget_tickets > 0 &&
+                      this.tragget_tickets?.individual_tickets < 1
+                    "
+                  >
+                    [- {{ this.tragget_tickets?.without_tragget_tickets }}]
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      (this.tragget_tickets?.without_tragget_tickets < 1 &&
+                        this.tragget_tickets?.individual_tickets < 1) ||
+                      (this.tragget_tickets?.without_tragget_tickets > 0 &&
+                        this.tragget_tickets?.individual_tickets > 0)
+                    "
+                  >
+                    [0]
+                  </ng-container>
+                </ng-container>
+              </span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- *ngIf="this.is_subscribed=='YES' || is_free_trial=='YES'" -->
+    <li class="active">
+      <a
+        data-toggle="collapse"
+        (click)="toggleProjectMenu('2'); $event.preventDefault()"
+        aria-expanded="false"
+        class="heading_li_a"
+        >Business
+        <span class="float-right">
+          <ng-container *ngIf="Business_list; else downArrow">
+            <img src="../assets/icons/arrow-up-black.svg" alt="Arrow Up" />
+          </ng-container>
+          <ng-template #downArrow>
+            <img src="../assets/icons/arrow-down.png" alt="Arrow Down" />
+          </ng-template>
+        </span>
+      </a>
+      <ul
+        class="collapse list-unstyled show submenu border-menu"
+        [class.show]="Business_list"
+      >
+        <li
+          [ngClass]="
+            this.active_menu && this.active_menu?.child == 'billing-list'
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <a
+            [routerLink]="'/billing-list'"
+            [ngClass]="
+              this.active_menu && this.active_menu?.child == 'billing-list'
+                ? 'active-link  '
+                : ''
+            "
+            ><svg
+              width="15"
+              height="15"
+              viewBox="0 0 15 15"
+              class="fill-property"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_16256_2058)">
+                <path
+                  d="M4.05762 7.41211H3.76465C3.44104 7.41211 3.17871 7.67443 3.17871 7.99805C3.17871 8.32166 3.44104 8.58398 3.76465 8.58398H4.05762C4.38123 8.58398 4.64355 8.32166 4.64355 7.99805C4.64355 7.67443 4.38123 7.41211 4.05762 7.41211Z"
+                  fill=""
+                />
+                <path
+                  d="M9.8291 5.06836H6.1084C5.78479 5.06836 5.52246 5.33068 5.52246 5.6543C5.52246 5.97791 5.78479 6.24023 6.1084 6.24023H9.8291C10.1527 6.24023 10.415 5.97791 10.415 5.6543C10.415 5.33068 10.1527 5.06836 9.8291 5.06836Z"
+                  fill=""
+                />
+                <path
+                  d="M8.96198 13.5H3.20014C2.54806 13.5 2.5 13.3024 2.5 12.6562V2.34375C2.5 1.69758 2.54806 1.5 3.20014 1.5H10.4698C11.1219 1.5 11.6524 1.69758 11.6524 2.34375V5.6543C11.6524 5.97791 11.9171 6.24023 12.2437 6.24023C12.5702 6.24023 12.835 5.97791 12.835 5.6543V2.34375C12.835 1.05141 11.7739 0 10.4698 0H3.20014C1.89598 0 0.834961 1.05141 0.834961 2.34375V12.6562C0.834961 13.9486 1.89598 15 3.20014 15H8.96198C9.28855 15 9.55328 14.7377 9.55328 14.4141C9.55328 14.0904 9.28855 13.5 8.96198 13.5Z"
+                  fill=""
+                />
+                <path
+                  d="M4.05762 9.75586H3.76465C3.44104 9.75586 3.17871 10.0182 3.17871 10.3418C3.17871 10.6654 3.44104 10.9277 3.76465 10.9277H4.05762C4.38123 10.9277 4.64355 10.6654 4.64355 10.3418C4.64355 10.0182 4.38123 9.75586 4.05762 9.75586Z"
+                  fill=""
+                />
+                <path
+                  d="M9.8291 2.72461H6.1084C5.78479 2.72461 5.52246 2.98693 5.52246 3.31055C5.52246 3.63416 5.78479 3.89648 6.1084 3.89648H9.8291C10.1527 3.89648 10.415 3.63416 10.415 3.31055C10.415 2.98693 10.1527 2.72461 9.8291 2.72461Z"
+                  fill=""
+                />
+                <path
+                  d="M12.5139 10.5455H11.977C11.7144 10.5455 11.5008 10.3281 11.5008 10.0608V9.98162C11.5008 9.7193 11.7055 9.52148 11.977 9.52148H12.4847C12.6339 9.52148 12.7883 9.62139 12.7883 9.78855C12.7883 10.1122 13.0506 10.3745 13.3742 10.3745C13.6978 10.3745 13.9602 10.1122 13.9602 9.78855C13.9602 9.08634 13.4416 8.50037 12.7584 8.37483V7.99805C12.7584 7.67443 12.4961 7.41211 12.1725 7.41211C11.8488 7.41211 11.5865 7.67443 11.5865 7.99805V8.39496C11.2965 8.4634 11.0309 8.60798 10.8155 8.8188C10.5017 9.1258 10.3289 9.5388 10.3289 9.98162V10.0608C10.3289 10.9743 11.0682 11.7174 11.977 11.7174H12.5139C12.7783 11.7174 12.9934 11.9316 12.9934 12.1948V12.4731C12.9934 12.7278 12.7873 12.9199 12.5139 12.9199H11.6413C11.4761 12.9199 11.3516 12.8017 11.3516 12.6449C11.3516 12.3212 11.0892 12.0589 10.7656 12.0589C10.442 12.0589 10.1797 12.3212 10.1797 12.6449C10.1797 13.0373 10.3335 13.4036 10.6128 13.6763C10.8743 13.9316 11.2184 14.0773 11.5865 14.0905V14.4141C11.5865 14.7377 11.8488 15 12.1725 15C12.4961 15 12.7584 14.7377 12.7584 14.4141V14.0747C13.5644 13.9621 14.1652 13.2992 14.1652 12.4731V12.1948C14.1652 11.2854 13.4245 10.5455 12.5139 10.5455Z"
+                  fill=""
+                />
+                <path
+                  d="M8.65723 10.9277C8.98084 10.9277 9.24316 10.6654 9.24316 10.3418C9.24316 10.0182 8.98084 9.75586 8.65723 9.75586H6.1084C5.78479 9.75586 5.52246 10.0182 5.52246 10.3418C5.52246 10.6654 5.78479 10.9277 6.1084 10.9277H8.65723Z"
+                  fill=""
+                />
+                <path
+                  d="M4.05762 5.06836H3.76465C3.44104 5.06836 3.17871 5.33068 3.17871 5.6543C3.17871 5.97791 3.44104 6.24023 3.76465 6.24023H4.05762C4.38123 6.24023 4.64355 5.97791 4.64355 5.6543C4.64355 5.33068 4.38123 5.06836 4.05762 5.06836Z"
+                  fill=""
+                />
+                <path
+                  d="M10.415 7.99805C10.415 7.67443 10.1527 7.41211 9.8291 7.41211H6.1084C5.78479 7.41211 5.52246 7.67443 5.52246 7.99805C5.52246 8.32166 5.78479 8.58398 6.1084 8.58398H9.8291C10.1527 8.58398 10.415 8.32166 10.415 7.99805Z"
+                  fill=""
+                />
+                <path
+                  d="M4.05762 2.72461H3.76465C3.44104 2.72461 3.17871 2.98693 3.17871 3.31055C3.17871 3.63416 3.44104 3.89648 3.76465 3.89648H4.05762C4.38123 3.89648 4.64355 3.63416 4.64355 3.31055C4.64355 2.98693 4.38123 2.72461 4.05762 2.72461Z"
+                  fill=""
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_16256_2058">
+                  <rect width="15" height="15" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+
+            <span
+              >Billing
+              <!-- {{this.menu_counts && this.menu_counts?.billings  ? '['+this.menu_counts?.billings+']' : '[0]'}} -->
+            </span></a
+          >
+        </li>
+      </ul>
+    </li>
+    <li class="active">
+      <a
+        data-toggle="collapse"
+        (click)="toggleProjectMenu('3'); $event.preventDefault()"
+        aria-expanded="false"
+        class="heading_li_a"
+        >Company
+        <span class="float-right">
+          <ng-container *ngIf="Company_list; else downArrow">
+            <img src="../assets/icons/arrow-up-black.svg" alt="Arrow Up" />
+          </ng-container>
+          <ng-template #downArrow>
+            <img src="../assets/icons/arrow-down.png" alt="Arrow Down" />
+          </ng-template>
+        </span>
+      </a>
+      <ul
+        class="collapse list-unstyled show submenu border-menu"
+        [class.show]="Company_list"
+      >
+        <li
+          [ngClass]="
+            this.active_menu && this.active_menu?.child == 'company-settings'
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <a
+            [routerLink]="'/customer-company-profile'"
+            [ngClass]="
+              this.active_menu && this.active_menu?.child == 'company-settings'
+                ? 'active-link  '
+                : ''
+            "
+            ><img
+              src="../assets/icons/setting.svg"
+              *ngIf="
+                !(
+                  this.active_menu &&
+                  this.active_menu?.child == 'company-settings'
+                )
+              "
+            /><img
+              src="../assets/icons/setting-icon-menu-dark.svg"
+              *ngIf="
+                this.active_menu &&
+                this.active_menu?.child == 'company-settings'
+              "
+            />
+            <span>Company settings</span></a
+          >
+        </li>
+        <li
+          [ngClass]="
+            this.active_menu && this.active_menu?.child == 'customer-companies'
+              ? 'active-menu'
+              : ''
+          "
+        >
+          <a
+            [routerLink]="'/customer-companies'"
+            [ngClass]="
+              this.active_menu &&
+              this.active_menu?.child == 'customer-companies'
+                ? 'active-link  '
+                : ''
+            "
+          >
+            <svg
+              width="16"
+              height="13"
+              viewBox="0 0 16 13"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="stroke-property"
+            >
+              <path
+                d="M2.81154 10.7686C2.81154 11.3648 2.32793 11.8486 1.73077 11.8486C1.1336 11.8486 0.65 11.3648 0.65 10.7686C0.65 10.1724 1.1336 9.68857 1.73077 9.68857C2.32793 9.68857 2.81154 10.1724 2.81154 10.7686Z"
+                stroke=""
+                stroke-width="1.3"
+              />
+              <path
+                d="M6.27296 10.7686C6.27296 11.3648 5.78936 11.8486 5.1922 11.8486C4.59503 11.8486 4.11143 11.3648 4.11143 10.7686C4.11143 10.1724 4.59503 9.68857 5.1922 9.68857C5.78936 9.68857 6.27296 10.1724 6.27296 10.7686Z"
+                stroke=""
+                stroke-width="1.3"
+              />
+              <path
+                d="M13.773 10.7686C13.773 11.3648 13.2894 11.8486 12.6922 11.8486C12.095 11.8486 11.6114 11.3648 11.6114 10.7686C11.6114 10.1724 12.095 9.68857 12.6922 9.68857C13.2894 9.68857 13.773 10.1724 13.773 10.7686Z"
+                stroke=""
+                stroke-width="1.3"
+              />
+              <path
+                d="M14.35 10.5012C14.35 10.8602 14.641 11.1512 15 11.1512C15.359 11.1512 15.65 10.8602 15.65 10.5012H14.35ZM14.818 6.30489L15.3496 5.93096L14.818 6.30489ZM7 11.1512H9.07692V9.85122H7V11.1512ZM10.7269 9.50122V4.50122H9.42692V9.50122H10.7269ZM11.0769 4.15122H12.3269V2.85122H11.0769V4.15122ZM12.6132 4.29988L14.2863 6.67881L15.3496 5.93096L13.6765 3.55202L12.6132 4.29988ZM14.35 6.88016V10.5012H15.65V6.88016H14.35ZM14.2863 6.67881C14.3277 6.73777 14.35 6.80808 14.35 6.88016H15.65C15.65 6.54038 15.5451 6.20889 15.3496 5.93096L14.2863 6.67881ZM12.3269 4.15122C12.4408 4.15122 12.5476 4.20668 12.6132 4.29988L13.6765 3.55202C13.3675 3.11267 12.864 2.85122 12.3269 2.85122V4.15122ZM10.7269 4.50122C10.7269 4.30792 10.8836 4.15122 11.0769 4.15122V2.85122C10.1657 2.85122 9.42692 3.58995 9.42692 4.50122H10.7269ZM9.07692 11.1512C9.98819 11.1512 10.7269 10.4125 10.7269 9.50122H9.42692C9.42692 9.69452 9.27022 9.85122 9.07692 9.85122V11.1512Z"
+                fill=""
+              />
+              <path
+                d="M0.65 2.22122C0.65 2.02792 0.8067 1.87122 1 1.87122H6.94138C7.1608 1.87122 7.37802 1.82746 7.58032 1.74249L8.92309 1.17853C8.966 1.1605 9.01208 1.15122 9.05862 1.15122H9.35444C9.67693 1.15122 9.82781 1.55039 9.58595 1.76371L9.05143 2.23516C8.6963 2.54838 8.49286 2.99908 8.49286 3.47261V7.42122C8.49286 7.61452 8.33616 7.77122 8.14286 7.77122H1.68476C1.37703 7.77122 1.0777 7.87163 0.832227 8.05721L1.1972 8.53998L0.832226 8.05721C0.757344 8.11382 0.65 8.06041 0.65 7.96653V2.22122Z"
+                stroke=""
+                stroke-width="1.3"
+              />
+            </svg>
+            <span
+              >Vendors
+              <!-- {{this.menu_counts && this.menu_counts?.vendors  ? '['+this.menu_counts?.vendors+']' : '[0]'}} -->
+            </span></a
+          >
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

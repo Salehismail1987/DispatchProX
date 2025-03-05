@@ -1,0 +1,943 @@
+<div class="alldivs signup-div" *ngIf="accountType == 'Trucking Company' || accountType == 'Driver'">
+    <div class="row m-0 content-container" *ngIf="!is_signupform_done || show_signup">
+        <div class="col-md-6 ">
+            <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png"></div>
+            <div class="login-form-div display-table">
+                <div class="form-div vertical-middle">
+                    <div class="welcome-back-text">Create free</div>
+                    <div class="login-title mb-30">tragget account</div>
+                    <form [formGroup]="signUpForm" (ngSubmit)="onSubmitSignup()">
+                      <span *ngIf="full_nameError != ''" class="text-danger">{{
+                          full_nameError
+                      }}</span>
+                      <label class="field text-field required_field">
+                          <input class="field__input" placeholder="Scott" [(ngModel)]="this.account_details.full_name" formControlName="full_name">
+                          <span class="field__label-wrap">
+                          <span class="field__label">Full name</span>
+                          </span>
+                      </label>
+                        <span *ngIf="emailError != ''" class="text-danger">{{
+                            emailError
+                        }}</span>
+                        <label class="field text-field required_field">
+                            <input class="field__input" placeholder="example@mail.com" [(ngModel)]="this.account_details.email" formControlName="email">
+                            <span class="field__label-wrap">
+                            <span class="field__label">Email</span>
+                            </span>
+                        </label>
+                        <span *ngIf="retypeEmailError != ''" class="text-danger">{{
+                            retypeEmailError
+                        }}</span>
+                        <br>
+                        <label class="field text-field required_field">
+                            <input class="field__input" placeholder="example@mail.com" formControlName="retype_email">
+                            <span class="field__label-wrap">
+                            <span class="field__label">Retype email</span>
+                            </span>
+
+                        </label>
+                        <div class="row">
+                            <div class="col-md-12  tc-link  p-3" [align]="'center'">
+                               <div class="d-flex">
+                                <input style="margin-top: -8px;
+                                width: 24px;" type="checkbox" value="1" [checked]="this.is_aggreed_terms" class="form-control" (change)="handleTermsClick($event)"/>
+
+                                  <div class="ml-1">
+                                    I agree to the <span (click)="showModal()" class="terms-tc cursor-pointer">
+                                        Terms & Conditions
+                                    </span>
+
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col-md-6 padding-left-0">
+                                <button class="mybtn primary_button" type="submit">Continue</button>
+                            </div>
+                        </div>
+                        <br>
+                    </form>
+                    <div class="already-account-div gotologin" [routerLink]="['/home']">
+                        <div class="already-account">
+                            <div>
+                                <div class="alredyhaveaccount">Already have an account?</div>
+                                <div class="login-sub-heading">Log In to your account</div>
+                            </div>
+                            <img src="assets/icons/arrow-right.svg">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 padding-right-0 padding-left-0">
+            <div class="truck-back trucksidediv">
+                <div class="welcome-div-content">
+                    <div class="welcome-div">
+                        <div class="welcome-title">
+                            Welcome to DispatchProX, the place for truck jobs
+                        </div>
+                        <div class="welcome-desc">DispatchProX empowers Trucking companies and simplifies their utilization for their customers by providing accurate data flow between the entities. </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="alldivs signup-div" *ngIf="accountType == 'Customer'">
+    <div class="row m-0 content-container" *ngIf="!is_signupform_done || show_signup">
+        <div class="col-md-6 ">
+            <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'"src="assets/images/logo.png"></div>
+            <div class="login-form-div display-table">
+                <div class="form-div vertical-middle">
+                    <div class="welcome-back-text">Create free</div>
+                    <div class="login-title mb-30">tragget account</div>
+                    <form [formGroup]="signUpForm" (ngSubmit)="onSubmitSignup()">
+
+                        <span *ngIf="full_nameError != ''" class="text-danger">{{
+                            full_nameError
+                        }}</span>
+                        <label class="field text-field required_field">
+                            <input class="field__input" placeholder="Scott" [(ngModel)]="this.account_details.full_name" formControlName="full_name">
+                            <span class="field__label-wrap">
+                            <span class="field__label">Full name</span>
+                            </span>
+                        </label>
+
+                        <span *ngIf="emailError != ''" class="text-danger">{{
+                            emailError
+                        }}</span>
+                        <label class="field text-field required_field">
+                            <input class="field__input" placeholder="example@mail.com" [(ngModel)]="this.account_details.email" formControlName="email">
+                            <span class="field__label-wrap">
+                            <span class="field__label">Email</span>
+                            </span>
+                        </label>
+                        <span *ngIf="retypeEmailError != ''" class="text-danger">{{
+                            retypeEmailError
+                        }}</span>
+                        <br>
+                        <label class="field text-field required_field">
+                            <input class="field__input" placeholder="example@mail.com" formControlName="retype_email">
+                            <span class="field__label-wrap">
+                            <span class="field__label">Retype email</span>
+                            </span>
+
+                        </label>
+                        <div class="row">
+                            <div class="col-md-12  tc-link  p-3" [align]="'center'">
+
+                                <div class="d-flex">
+                                    <input style="margin-top: -8px;
+                                    width: 24px;" type="checkbox" [checked]="this.is_aggreed_terms"  (change)="handleTermsClick($event)" value="1" class="form-control" />
+
+                                      <div class="ml-1">
+                                        I agree to the <span (click)="showModal()" class="terms cursor-pointer">
+                                            Terms & Conditions
+                                        </span>
+
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col-md-6 padding-left-0">
+                                <button class="mybtn primary_button" type="submit">Continue</button>
+                            </div>
+                        </div>
+                        <br>
+                    </form>
+                    <div class="already-account-div gotologin" [routerLink]="['/home']">
+                        <div class="already-account">
+                            <div>
+                                <div class="alredyhaveaccount">Already have an account?</div>
+                                <div class="login-sub-heading">Log In to your account</div>
+                            </div>
+                            <img src="assets/icons/arrow-right.svg">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 padding-right-0 padding-left-0">
+            <div class="truck-back trucksidediv">
+                <div class="welcome-div-content">
+                    <div class="welcome-div">
+                        <div class="welcome-title">
+                            Welcome to DispatchProX, the place for truck jobs
+                        </div>
+                        <div class="welcome-desc">DispatchProX empowers Trucking companies and simplifies their utilization for their customers by providing accurate data flow between the entities. </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="declinereasonModal" role="dialog"  *ngIf="show_modal_aggreement && accountType == 'Trucking Company'" style="display: block;padding-top: 0%;background: #0000002c;">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-lg vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-header">
+                        <div class="title-term-1 text-left">Terms & Conditions</div>
+                    </div>
+                    <div class="agreement-div mt-2 mb-2">
+                        <div class="title-term-2 text-left">Your Agreement</div>
+                        <div class="agreement-content col-md-12" >
+                            We are DispatchProX Technology Inc., doing business as DispatchProX (“DispatchProX,” “we,” “us,” or “our”), a company registered in the province of British Columbia. We operate the website https://tragget.com/ (the “Website”) through which we provide you our services, (collectively, the “Services” which include the provision and use of the Website).
+                            <p>We are DispatchProX Technology Inc., doing business as DispatchProX (&ldquo;<strong>DispatchProX</strong>,&rdquo; &ldquo;<strong>we</strong>,&rdquo; &ldquo;<strong>us</strong>,&rdquo; or &ldquo;<strong>our</strong>&rdquo;), a company registered in the province of British Columbia. We operate the website <a href="https://tragget.com/">https://tragget.com/</a> (the &ldquo;<strong>Website</strong>&rdquo;) through which we provide you our services, (collectively, the &ldquo;<strong>Services</strong>&rdquo; which include the provision and use of the Website).</p>
+
+                            <p>You can contact us by phone at (604) 726 8109, by email at contact@tragget.com, or by post to DispatchProX Technology Inc. 1104 &ndash; 8 Laguna Crt, New Westminster, BC, Canada, V3M 6M6.</p>
+
+                            <p>These Terms and Conditions constitute a legally binding agreement made between you, whether personally or on behalf of an entity (&ldquo;<strong>you</strong>&rdquo;) concerning your access to and use of the Website and the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by these Terms and Conditions. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS AND CONDITIONS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.</p>
+
+                            <p>Supplemental terms and conditions or documents that may be posted on the Website from time to time are hereby expressly incorporated herein by reference. We reserve the right, in DispatchProX&rsquo;s sole discretion, to make changes or modifications to these Terms and Conditions from time to time. We will alert you about any changes by updating the &ldquo;Last updated&rdquo; date of these Terms and Conditions, and you waive any right to receive specific notice of each such change. It is your responsibility to periodically review these Terms and Conditions to stay informed as each time you access the Services, you will be subject to, and will be deemed to have been made aware of and to have accepted, the then applicable Terms and Conditions.</p>
+
+                            <p>The Services are intended for business users who are at least 18 years old. Persons under the age of 18 are not permitted to use or register for the Services.</p>
+
+                            <p><a name="_Toc115022326"><strong>TABLE OF CONTENTS</strong></a></p>
+
+                            <p>Contents</p>
+
+                            <p><a href="#_Toc115022324"><strong>DispatchProX Terms and Conditions</strong>.. 1</a></p>
+
+                            <p><strong><a href="#_Toc115022325">AGREEMENT TO TERMS AND CONDITIONS 1</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022326">TABLE OF CONTENTS 1</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022327">1. OUR WEBSITE AND SERVICES 3</a></strong></p>
+
+                            <p><a href="#_Toc115022328">Using DispatchProX Tickets.. 3</a></p>
+
+                            <p><a href="#_Toc115022329">Using DispatchProX&rsquo;s Truck Job Platform.. 4</a></p>
+
+                            <p><strong><a href="#_Toc115022330">2. INTELLECTUAL PROPERTY RIGHTS 4</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022331">3. USER REPRESENTATIONS 5</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022332">4. USER REGISTRATION 5</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022333">5. FEES AND PAYMENT 5</a></strong></p>
+
+                            <p><a href="#_Toc115022334">Fees for Subscriptions.. 6</a></p>
+
+                            <p><a href="#_Toc115022335">Fees for Single Tickets.. 6</a></p>
+
+                            <p><a href="#_Toc115022336">Accepted Forms of Payment.. 6</a></p>
+
+                            <p><a href="#_Toc115022337">Sales Tax.. 7</a></p>
+
+                            <p><a href="#_Toc115022338">Account Upgrades, Downgrades, and Cancellations.. 7</a></p>
+
+                            <p><a href="#_Toc115022339">How to Cancel a Subscription Plan.. 8</a></p>
+
+                            <p><strong><a href="#_Toc115022340">6. PROHIBITED ACTIVITIES 8</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022341">7. THIRD-PARTY WEBSITES AND CONTENT 9</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022342">8. SERVICES MANAGEMENT 10</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022343">9. PRIVACY NOTICE 10</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022344">10. TERM AND TERMINATION 11</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022345">11. MODIFICATIONS AND INTERRUPTIONS 11</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022346">12. GOVERNING LAW 12</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022347">13. DISPUTE RESOLUTION 12</a></strong></p>
+
+                            <p><a href="#_Toc115022348">Informal Negotiations.. 12</a></p>
+
+                            <p><a href="#_Toc115022349">Arbitration.. 12</a></p>
+
+                            <p><a href="#_Toc115022350">Restrictions.. 12</a></p>
+
+                            <p><a href="#_Toc115022351">Exceptions to Informal Negotiations and Arbitration.. 13</a></p>
+
+                            <p><strong><a href="#_Toc115022352">14. CORRECTIONS 13</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022353">15. DISCLAIMER 13</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022354">16. LIMITATIONS OF LIABILITY 14</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022355">17. INDEMNIFICATION 14</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022356">18. USER DATA 15</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022357">19. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES 15</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022358">20. OTHER IMPORTANT INFORMATION 15</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022359">21. CONTACT US 17</a></strong></p>
+
+                            <p>&nbsp;</p>
+
+                            <p>&nbsp;</p>
+
+                            <h2><a name="_Toc115022327">1. OUR WEBSITE AND SERVICES</a></h2>
+
+                            <p>We are a platform for entities using trucks, truck brokers, trucking companies, and for drivers. Our truck job platform provides common processes for managing and tracking the truck jobs between the different entities and actors. We provide you software (the &ldquo;<strong>Software</strong>&rdquo;), that you access remotely via the cloud, that you can use for (a) managing your Truck Jobs (&ldquo;<strong>Truck Job Platform</strong>&rdquo;); and generating DispatchProX tickets (collectively &ldquo;<strong>Tickets</strong>&rdquo;) from the data you and others provide to generate outputs for your business like, but not limited to, invoices, bills, work schedules, and business insights.</p>
+
+                            <p>The information, Truck Job Platform, and Tickets provided when using the Services are not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law or regulation or which would subject us to any registration requirement within such jurisdiction or country. Accordingly, those persons who choose to access the Services from other locations do so on their initiative and are solely responsible for compliance with local laws, if and to the extent local laws are applicable.</p>
+
+                            <h3><a name="_Toc115022328">Using DispatchProX Tickets</a></h3>
+
+                            <p>DispatchProX Tickets have the following lifecycle statuses; Pending, Accepted, Driving, Completed, and Approved. When a ticket is Approved, it is considered used, the ticket becomes a closed ticket.</p>
+
+                            <p>You may use Tickets (in any lifecycle) generated by the Software for your business or organization. It is your responsibility to determine whether the Tickets generated by the Software are appropriate for your use. From time to time, we may notify you that a particular Ticket may need to be updated in response to changes in applicable laws or other guidance, rules, requirements, or regulations, and you are responsible for determining whether to update the Tickets used in your business or organization.</p>
+
+                            <p><strong>WE DO NOT REPRESENT THAT THE TICKETS WILL MEET YOUR SPECIFIC GOALS, PROTECT YOUR SPECIFIC INTERESTS, OR WITHSTAND CHALLENGES TO THEIR LEGAL OR FACTUAL SUFFICIENCY. THE TICKETS ARE NOT PROVIDED WITH ANY GUARANTEE, WARRANTY, OR REPRESENTATION AS TO QUALITY OR SUITABILITY FOR ANY PARTICULAR PURPOSE. </strong></p>
+
+                            <p>You should be aware that there are certain things that DispatchProX will not take responsibility for. Certain functions of the Service will require the Service to have an active internet connection. The connection can be Wi-Fi or provided by your mobile network provider, but DispatchProX cannot take responsibility for the Service not working at full functionality if you don&rsquo;t have access to Wi-Fi, and you don&rsquo;t have any of your data allowance left.</p>
+
+                            <p>If you&rsquo;re using the Service outside of an area with Wi-Fi, you should remember that the terms of the agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the Service, or other third-party charges. In using the Service, you&rsquo;re accepting responsibility for any such charges, including roaming data charges if you use the Service outside of your home territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the device on which you&rsquo;re using the Service, please be aware that we assume that you have received permission from the bill payer for using the Service.</p>
+
+                            <p>If you&rsquo;re using the Service via Mobile phone, you should interact with the Service only when it is safe to do so. You should not interact with the service when you are driving a truck or any other vehicle.</p>
+
+                            <h3><a name="_Toc115022329">Using DispatchProX&rsquo;s Truck Job Platform</a></h3>
+
+                            <p>If you use DispatchProX&rsquo;s Truck Job Platform, you may access the features of the Software designed to track and monitor Truck Jobs given or withdrawn by the users of your website(s) concerning cookies or similar tracking technology used on such website(s).</p>
+
+                            <p><strong>TRAGGET IS NOT LIABLE FOR YOUR FAILURE TO DISABLE OR REMOVE COOKIES IF YOUR USERS DO NOT CONSENT TO THEIR USE.</strong></p>
+
+                            <h2><a name="_Toc115022330">2. INTELLECTUAL PROPERTY RIGHTS</a></h2>
+
+                            <p>Unless otherwise indicated, we retain all right, title, and interest in and to the Software and the Website, including without limitation all graphics, user interfaces, databases, functionality, software, website designs, audio, video, text, photographs, graphics, logos, and trademarks or service marks reproduced through the System. These Terms and Conditions do not grant you any intellectual property license or rights in or to the Software and the Website or any of its components, except to the limited extent that these Terms and Conditions specifically sets forth your license rights to it. You recognize that the Software and the Website and their components are protected by copyright and other laws.</p>
+
+                            <p>Conditioned upon your compliance with these Terms and Conditions and, if applicable, your payment of the Subscription Fees and/or Single Tickets, we grant you the rights to reproduce, modify, and publicly display the Tickets and use the Truck Job Platform (all together &ldquo;<strong>Content</strong>&rdquo;) for your business. In addition, as a Ticket is intended to serve as a source for various outputs like, and not limited to, invoices, bills, and work schedules, you may use the outputs as you see best to serve your business.</p>
+
+                            <p>You and DispatchProX agree that none of the Feedback (as defined below) you or your users provide to us constitutes confidential information, and nothing in these Terms and Conditions or our dealings arising out of or related to the subject matter of these Terms and Conditions will restrict our right to use, profit from, disclose, publish, keep secret, or otherwise exploit Feedback, without compensating or crediting you or the user in question. You hereby grant us a perpetual, irrevocable right and license to exploit the Feedback in any and every way and subject to applicable law waive any moral rights in such Feedback. Feedback will not constitute your confidential information. (&ldquo;<strong>Feedback</strong>&rdquo; refers to any suggestion or idea for improving or otherwise modifying any of DispatchProX&rsquo;s products or services.)</p>
+
+                            <h2><a name="_Toc115022331">3. USER REPRESENTATIONS</a></h2>
+
+                            <p>By using the Services, you represent and warrant that:&nbsp;(1) all registration information you submit will be true, accurate, current, and complete; (2) you will maintain the accuracy of such information and promptly update such registration information as necessary;&nbsp;(3) you have the legal capacity and you agree to comply with these Terms and Conditions;&nbsp;(4) you are not a minor in the jurisdiction in which you reside; (5) you will not access the Services through automated or non-human means, whether through a bot, script or otherwise; (6) you will not use the Services for any illegal or unauthorized purpose; and (7) your use of the Services will not violate any applicable law or regulation.</p>
+
+                            <p>If you provide any information that is untrue, inaccurate, not current, or incomplete, we have the right to suspend or terminate your account and refuse any current or future use of the Services (or any portion thereof).</p>
+
+                            <h2><a name="_Toc115022332">4. USER REGISTRATION</a></h2>
+
+                            <p>You may be required to register with the Services. You agree to keep your password confidential and will be responsible for all use of your account and password. We reserve the right to remove, reclaim, or change a username you select if we determine, in our sole discretion, that such username is inappropriate, obscene, or otherwise objectionable.</p>
+
+                            <h2><a name="_Toc115022333">5. FEES AND PAYMENT</a></h2>
+
+                            <p>DispatchProX offers free and paid account options. You can create a free account (&ldquo;<strong>Free Account</strong>&rdquo;) without providing any credit card information, but your access to our Website&rsquo;s features will be limited. Depending on your needs, you may want to access more or all of DispatchProX&rsquo;s Services by creating or upgrading to a paid account (&ldquo;<strong>Paid Account</strong>&rdquo;). You can create or upgrade to a Paid Account by signing up for one of DispatchProX&rsquo;s subscription plans (&ldquo;<strong>Subscription Plans</strong>&rdquo; and each a &ldquo;<strong>Subscription</strong>&rdquo;) and/or Single tickets in packs of tens (&ldquo;<strong>Single tickets</strong>&rdquo;).</p>
+
+                            <p>You can find information about our pricing options on the following page <a href="https://tragget.com/pricing" target="_blank">here</a>.</p>
+
+                            <h3><a name="_Toc115022334">Fees for Subscriptions</a></h3>
+
+                            <p>Fees for Subscriptions (&ldquo;<strong>Subscription Fees</strong>&rdquo;) shall be based on the length of your Subscription (&ldquo;<strong>Subscription Period</strong>&rdquo;) and the number of tickets (&ldquo;<strong>Subscription Size</strong>&rdquo;) you have for you to use during the Subscription period. All Subscriptions will auto-renew at the end of the then Subscription Period. You may adjust the Subscription Size monthly basis up and down depending on your need.</p>
+
+                            <p>We bill you for all initial and recurring Subscription Fees through an online billing account and you agree to provide (and keep updated) current, complete, and accurate purchase and account information including email address, payment method, and payment card expiration date, so that we can process your payments and contact you as needed.</p>
+
+                            <p>Our prices may be updated from time to time so please make sure that you check our current Subscription Fees before placing your order. All payments shall be in USD or CAD.</p>
+
+                            <h3><a name="_Toc115022335">Fees for Single Tickets</a></h3>
+
+                            <p>Fees for Single Tickets (&ldquo;<strong>Single Ticket Fees</strong>&rdquo;) shall be based on the number of 10-packs you are purchasing.</p>
+
+                            <h3><a name="_Toc115022336">Accepted Forms of Payment</a></h3>
+
+                            <p>We accept the following forms of payment:</p>
+
+                            <ul>
+                                <li>Visa</li>
+                                <li>Mastercard</li>
+                                <li>American Express</li>
+                                <li>Discover</li>
+                                <li>Any other <a href="https://stripe.com/docs/payments/cards/supported-card-brands" target="_blank">Stripe supported card brands</a></li>
+                            </ul>
+
+                            <p>You agree to pay all charges or fees at the prices then in effect for your Subscription and Single Tickets, and you authorize us to charge your chosen payment provider for any such amounts upon placing your order. If your Subscription is subject to recurring charges, then you consent to our charging your payment method on a recurring basis without requiring your prior approval for each recurring charge, until you notify us of your cancellation in accordance with the cancellation information described in this section below.</p>
+
+                            <p>We reserve the right to correct any errors or mistakes in pricing, even if we have already requested or received payment. We also reserve the right to refuse any order placed through the Services. In such case, we will notify you by email and refund you any Subscription Fees that you have paid.</p>
+
+                            <h3><a name="_Toc115022337">Sales Tax</a></h3>
+
+                            <p>Sales tax will be added to the price of purchases as deemed required by us. Amounts due under these Terms and Conditions are payable to us without deduction and are net of any tax, tariff, duty, or assessment imposed by any government authority (national, state, provincial, or local), including without limitation any sales, use, excise, ad valorem, property, withholding, or value-added tax, whether or not withheld at the source (collectively, &ldquo;<strong>Sales Tax</strong>&rdquo;). Except as forbidden by applicable law, we may require that you submit applicable Sales Taxes to us. However, the preceding sentence does not apply to the extent that you are tax exempt, provided you give us a valid tax exemption certificate within thirty (30) days of the start of your Subscription. Our failure to include any applicable tax in an invoice will not waive or dismiss the parties&rsquo; rights or obligations according to this Section. If applicable law requires withholding or deduction of Sales Taxes or any other tax or duty, you shall separately pay us the withheld or deducted amount, over and above fees due. For the avoidance of doubt, this Section does not govern taxes based on our net income.</p>
+
+                            <h3><a name="_Toc115022338">Account Upgrades, Downgrades, and Cancellations</a></h3>
+
+                            <p>If you created a Free Account but want to upgrade to a Paid Account, your upgrade will occur immediately upon payment of the relevant Subscription Fees and your Subscription Period will run from the date of your upgrade.</p>
+
+                            <p>If you created or upgraded to a Paid Account, and you want to:</p>
+
+                            <ul>
+                                <li><strong>Upgrade to a different Subscription Plan</strong>: Your upgrade will occur immediately at a prorated rate upon payment of the price difference between the two Subscription Plans for the remainder of your Subscription Period. Your upgraded Subscription Plan will run until the end of the initial Subscription Period and will auto-renew as the upgraded Subscription Plan.</li>
+                                <li><strong>Cancel your Subscription Plan and/or downgrade your Subscription</strong>: Your downgrade will take place following the end of your current Subscription Period.</li>
+                            </ul>
+
+                            <p>PLEASE NOTE THAT WHEN YOU DOWNGRADE YOUR ACCOUNT, YOU WILL ONLY BE ABLE TO ACCESS THE SERVICES AVAILABLE WITHIN YOUR NEW SUBSCRIPTION PLAN, AND THEREFORE YOU MAY LOSE ACCESS TO ANY ADDITIONAL TICKETS OR ANY PREMIUM TRUCK JOB PLATFORM FEATURES CREATED OR AVAILABLE THROUGH YOUR PREVIOUS SUBSCRIPTION PLAN.</p>
+
+                            <h3><a name="_Toc115022339">How to Cancel a Subscription Plan</a></h3>
+
+                            <p>You can cancel your Subscription Plan at any time by logging into your account or contacting us using the contact information provided below. Your cancellation will take effect at the end of your current Subscription Period.</p>
+
+                            <p>Except as stated in this Section, we will not be required to refund Subscription Fees under any circumstances.</p>
+
+                            <p>If you are unsatisfied with our services, please email us a contact@<u>tragget.com</u> or call us at (604) 726 8109.</p>
+
+                            <h2><a name="_Toc115022340">6. PROHIBITED ACTIVITIES</a></h2>
+
+                            <p>You may not access or use the Services for any purpose other than that for which we make the Services available. The Services may not be used in connection with any commercial endeavors except those that are specifically endorsed or approved by us.</p>
+
+                            <p>As a user of the Services, you agree not to:</p>
+
+                            <ul>
+                                <li>Systematically retrieve data, Tickets, or other Content from the Services to create or compile, directly or indirectly, a collection, compilation, database, or directory without written permission from us.</li>
+                                <li>Make any unauthorized use of the Services, including collecting usernames and/or email addresses of users by electronic or other means to send unsolicited email, or create user accounts by automated means or under pretenses.</li>
+                                <li>Use a buying agent or purchasing agent to make purchases on the Services.</li>
+                                <li>Use the Services to advertise or offer to sell goods and services.</li>
+                                <li>Circumvent, disable, or otherwise interfere with security-related features of the Services, including features that prevent or restrict the use or copying of any Content or enforce limitations on the use of the Services and/or the Content contained therein.</li>
+                                <li>Engage in unauthorized framing of or linking to the Services.</li>
+                                <li>Trick, defraud, or mislead us and other users, especially in any attempt to learn sensitive account information such as user passwords.</li>
+                                <li>Make improper use of our support services or submit false reports of abuse or misconduct.</li>
+                                <li>Engage in any automated use of the Website or Services, such as using scripts to send comments or messages, or using any data mining, robots, or similar data gathering and extraction tools.</li>
+                                <li>Interfere with, disrupt, or create an undue burden on the Services or the networks or services connected to the Services.</li>
+                                <li>Attempt to impersonate another user or person or use the username of another user.</li>
+                                <li>Sell or otherwise transfer your DispatchProX profile or account.</li>
+                                <li>Use any information obtained from the Services to harass, abuse, or harm another person.</li>
+                                <li>Use the Services as part of any effort to compete with us or otherwise use the Services and/or the Content for any revenue-generating endeavor or commercial enterprise beyond the license granted to you under these Terms and Conditions.</li>
+                                <li>Decipher, decompile, disassemble, or reverse engineer any of the Software comprising or in any way making up a part of the Services.</li>
+                                <li>Attempt to bypass any measures of the Website or Software designed to prevent or restrict access to the Services, or any portion of the Services.</li>
+                                <li>Harass, annoy, intimidate, or threaten any of our employees or agents engaged in providing any portion of the Services to you.</li>
+                                <li>Delete the copyright or other proprietary rights notice from any Content.</li>
+                                <li>Copy or adapt the Software, including but not limited to Flash, PHP, HTML, JavaScript, or other code.</li>
+                                <li>Upload or transmit (or attempt to upload or to transmit) viruses, Trojan horses, or other material, including excessive use of capital letters and spamming (continuous posting of repetitive text), that interferes with any party&rsquo;s uninterrupted use and enjoyment of the Software or the Services or modifies, impairs, disrupts, alters, or interferes with the use, features, functions, operation, or maintenance of the Software or the Services.</li>
+                                <li>Upload or transmit (or attempt to upload or to transmit) any material that acts as a passive or active information collection or transmission mechanism, including without limitation, clear graphics interchange formats (&ldquo;gifs&rdquo;), 1&times;1 pixels, web bugs, cookies, or other similar devices (sometimes referred to as &ldquo;spyware&rdquo; or &ldquo;passive collection mechanisms&rdquo; or &ldquo;pcms&rdquo;).</li>
+                                <li>Except as may be the result of standard search engine or Internet browser usage, use, launch, develop, or distribute any automated system, including without limitation, any spider, robot, cheat utility, scraper, or offline reader that accesses the Software or the Services, or using or launching any unauthorized script or other software.</li>
+                                <li>Disparage, tarnish, or otherwise harm, in our opinion, DispatchProX, the Software, Website, and/or the Services.</li>
+                                <li>Use the Services in a manner inconsistent with any applicable laws or regulations.</li>
+                            </ul>
+
+                            <h2><a name="_Toc115022341">7. THIRD-PARTY WEBSITES AND CONTENT</a></h2>
+
+                            <p>The Services may contain (or you may be sent via the Services) links to other websites (&ldquo;<strong>Third-Party</strong><strong>&nbsp;</strong><strong>Websites</strong>&rdquo;) as well as articles, photographs, text, graphics, pictures, designs, music, sound, video, information, applications, software, and other content or items belonging to or originating from third parties (&ldquo;<strong>Third-Party</strong><strong>&nbsp;</strong><strong>Content</strong>&rdquo;). Such&nbsp;Third-Party&nbsp;Websites and&nbsp;Third-Party&nbsp;Content are not investigated, monitored, or checked for accuracy, appropriateness, or completeness by us, and we are not responsible for any&nbsp;Third-Party&nbsp;Websites accessed through the Services or any&nbsp;Third-Party&nbsp;Content posted on, available through, or installed from the Services, including the content, accuracy, offensiveness, opinions, reliability, privacy practices, or other policies of or contained in the&nbsp;Third-Party&nbsp;Websites or the&nbsp;Third-Party&nbsp;Content. Inclusion of, linking to, or permitting the use or installation of any&nbsp;Third-Party&nbsp;Websites or any&nbsp;Third-Party&nbsp;Content does not imply approval or endorsement thereof by us. If you decide to leave the Services and access the&nbsp;Third-Party&nbsp;Websites or to use or install any&nbsp;Third-Party&nbsp;Content, you do so at your own risk, and you should be aware these Terms and Conditions no longer govern.</p>
+
+                            <p>You should review the applicable terms and policies, including privacy and data gathering practices, of any website to which you navigate from the Services or relating to any applications you use or install from the Services. Any purchases you make through&nbsp;Third-Party&nbsp;Websites will be through other websites and from other companies, and we take no responsibility whatsoever in relation to such purchases which are exclusively between you and the applicable third party. You agree and acknowledge that we do not endorse the products or services offered on&nbsp;Third-Party&nbsp;Websites and you shall hold us harmless from any harm caused by your purchase of such products or services. Additionally, you shall hold us harmless from any losses sustained by you or harm caused to you relating to or resulting in any way from any&nbsp;Third-Party&nbsp;Content or any contact with&nbsp;Third-Party&nbsp;Websites.</p>
+
+                            <h2><a name="_Toc115022342">8. SERVICES MANAGEMENT</a></h2>
+
+                            <p>We reserve the right, but not the obligation, to: (1) monitor the Services for violations of these Terms and Conditions; (2) take appropriate legal action against anyone who, in our sole discretion, violates the law or these Terms and Conditions, including without limitation, reporting such user to law enforcement authorities; (3) in our sole discretion and without limitation, refuse, restrict access to, limit the availability of, or disable (to the extent technologically feasible) any of your contributions or any portion thereof; (4) in our sole discretion and without limitation, notice, or liability, to remove from the Services or otherwise disable all files and content that are excessive in size or are in any way burdensome to our systems; and (5) otherwise manage the Services in a manner designed to protect our rights and property and to facilitate the proper functioning of the Services.</p>
+
+                            <h2><a name="_Toc115022343">9. PRIVACY NOTICE</a></h2>
+
+                            <p>We care about data privacy and security. Please review our <a href="https://termly.io/our-privacy-policy/" target="_blank">Privacy Notice</a> to understand our use of your personal information. You acknowledge that you have reviewed and understand our Privacy Notice.</p>
+
+                            <p>Please be advised the Services is hosted in the United States. If you access the Services from any other region of the world with laws or other requirements governing personal data collection, use, or disclosure that differ from applicable laws in the United States, then through your continued use of the Services, you are transferring your data to the United States, and you agree to have your data transferred to and processed in the United States.</p>
+
+                            <h2><a name="_Toc115022344">10. TERM AND TERMINATION</a></h2>
+
+                            <p>These Terms and Conditions shall remain in full force and effect while you use the Services. WITHOUT LIMITING ANY OTHER PROVISION OF THESE TERMS AND CONDITIONS, WE RESERVE THE RIGHT TO, IN OUR SOLE DISCRETION AND WITHOUT NOTICE OR LIABILITY, DENY ACCESS TO AND USE OF THE SERVICES (INCLUDING BLOCKING CERTAIN IP ADDRESSES), TO ANY PERSON IF WE REASONABLY CONSIDER THAT SUCH PERSON IS IN BREACH OF THESE TERMS AND CONDITIONS, OUR ACCEPTABLE USE POLICY, OR OF ANY APPLICABLE LAW OR REGULATION, INCLUDING WITHOUT LIMITATION BREACHES OF ANY REPRESENTATION, WARRANTY, OR COVENANT CONTAINED IN THESE TERMS AND CONDITIONS.</p>
+
+                            <p>WE MAY TERMINATE YOUR USE OR PARTICIPATION IN THE SERVICES OR DELETE YOUR ACCOUNT AND ANY CONTENT OR INFORMATION THAT YOU POSTED AT ANY TIME, WITHOUT WARNING, IN OUR SOLE DISCRETION IF WE CONSIDER THAT YOU HAVE BREACHED, OR ARE LIKELY TO BREACH, ANY OF THE ABOVE.</p>
+
+                            <p>If we terminate or suspend your account for any reason, you are prohibited from registering and creating a new account under your name, a fake or borrowed name, or the name of any third party, even if you may be acting on behalf of the third party. In addition to terminating or suspending your account, we reserve the right to take appropriate legal action, including without limitation pursuing civil, criminal, and injunctive redress.</p>
+
+                            <h2><a name="_Toc115022345">11. MODIFICATIONS AND INTERRUPTIONS</a></h2>
+
+                            <p>We reserve the right to change, modify, or remove the Content or the Services from time to time to comply with new laws or regulations or to update our offerings. We also reserve the right to modify or discontinue all or part of the Services if DispatchProX were to close down or if we decide to change DispatchProX&rsquo;s business offering. We will not be liable to you or any third party for any modification, price change, suspension, or discontinuance of the Services.</p>
+
+                            <p>We cannot guarantee the Services will be available at all times. We may experience hardware, software, or other problems or need to perform maintenance related to the Services, resulting in interruptions, delays, or errors. We reserve the right to change, revise, update, suspend, discontinue, or otherwise modify the Services from time to time and will endeavor to give you notice of such changes. You agree that we have no liability whatsoever for any loss, damage, or inconvenience caused by your inability to access or use the Services during any downtime or discontinuance of the Services.</p>
+
+                            <p>Nothing in these Terms and Conditions will be construed to obligate us to maintain and support the Services or to supply any corrections, updates, or releases in connection therewith.</p>
+
+                            <h2><a name="_Toc115022346">12. GOVERNING LAW</a></h2>
+
+                            <p>These Terms and Conditions and your use of the Services are governed by and construed under the laws of the&nbsp;Province of&nbsp;British Columbia applicable to agreements made and to be entirely performed within&nbsp;the&nbsp;Province of British Columbia, without regard to its conflict of law principles.</p>
+
+                            <h2><a name="_Toc115022347">13. DISPUTE RESOLUTION</a></h2>
+
+                            <h3><a name="_Toc115022348">Informal Negotiations</a></h3>
+
+                            <p>To expedite resolution and control the cost of any dispute, controversy, or claim related to these Terms and Conditions (each a &ldquo;<strong>Dispute</strong>&rdquo; and collectively, the &ldquo;<strong>Disputes</strong>&rdquo;) brought by either you or us (individually, a &ldquo;<strong>Party</strong>&rdquo; and collectively, the &ldquo;<strong>Parties</strong>&rdquo;), the Parties agree to first attempt to negotiate any Dispute (except those Disputes expressly provided below) informally for at least&nbsp;thirty (30)&nbsp;days before initiating arbitration or litigation (as applicable per below). Such informal negotiations commence upon written notice from one Party to the other Party.</p>
+
+                            <h3><a name="_Toc115022349">Arbitration</a></h3>
+
+                            <p>Any dispute, controversy or claim arising out of or relating to this contract including any question regarding its existence, interpretation, validity, breach or termination or the business relationship created by it shall be referred to and finally resolved by arbitration under the Canadian Arbitration Association Arbitration Rules. The place of the arbitration shall be Vancouver, BC.</p>
+
+                            <p>In no event shall any Dispute brought by either Party related in any way to the Services be commenced more than one (1) year after the cause of action arose. If this provision is found to be illegal or unenforceable, then neither Party will elect to arbitrate any Dispute falling within that portion of this provision found to be illegal or unenforceable and such Dispute shall be decided by a court of competent jurisdiction within the courts listed for jurisdiction above, and the Parties agree to submit to the personal jurisdiction of that court.</p>
+
+                            <h3><a name="_Toc115022350">Restrictions</a></h3>
+
+                            <p>The Parties agree that any arbitration shall be limited to the Dispute between the Parties individually. To the full extent permitted by law, (a) no arbitration shall be joined with any other proceeding; (b) there is no right or authority for any Dispute to be arbitrated on a class-action basis or to utilize class action procedures; and (c) there is no right or authority for any Dispute to be brought in a purported representative capacity on behalf of the general public or any other persons.</p>
+
+                            <h3><a name="_Toc115022351">Exceptions to Informal Negotiations and Arbitration</a></h3>
+
+                            <p>The Parties agree that the following Disputes are not subject to the above provisions concerning informal negotiations and binding arbitration: (a) any Disputes seeking to enforce or protect, or concerning the validity of, any of the intellectual property rights of a Party; (b) any Dispute related to, or arising from, allegations of theft, piracy, invasion of privacy, or unauthorized use; and (c) any claim for injunctive relief. If this provision is found to be illegal or unenforceable, then neither Party will elect to arbitrate any Dispute falling within that portion of this provision found to be illegal or unenforceable and such Dispute shall be decided by a court of competent jurisdiction within the courts listed for jurisdiction above, and the Parties agree to submit to the personal jurisdiction of that court.</p>
+
+                            <h2><a name="_Toc115022352">14. CORRECTIONS</a></h2>
+
+                            <p>There may be information on the Services that contains typographical errors, inaccuracies, or omissions, including descriptions, pricing, availability, and various other information.</p>
+
+                            <p>We reserve the right to correct any errors, inaccuracies, or omissions and to change or update the information on the Services at any time, without prior notice.</p>
+
+                            <h2><a name="_Toc115022353">15. DISCLAIMER</a></h2>
+
+                            <p>THE SERVICES ARE PROVIDED ON AN &ldquo;AS-IS&rdquo; AND &ldquo;AS-AVAILABLE&rdquo; BASIS. YOU AGREE THAT YOUR USE OF OUR SERVICES WILL BE AT YOUR SOLE RISK. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, IN CONNECTION WITH THE SOFTWARE OR THE SERVICES AND YOUR USE THEREOF, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+
+                            <p>WE MAKE NO WARRANTIES OR REPRESENTATIONS ABOUT THE ACCURACY OR COMPLETENESS OF THE SERVICES, THE CONTENT OR ANY THIRD-PARTY CONTENT AND WE WILL ASSUME NO LIABILITY OR RESPONSIBILITY FOR ANY (1) ERRORS, MISTAKES, OR INACCURACIES OF CONTENT AND MATERIALS, (2) PERSONAL INJURY OR PROPERTY DAMAGE, OF ANY NATURE WHATSOEVER, RESULTING FROM YOUR ACCESS TO AND USE OF THE SERVICES, (3) ANY UNAUTHORIZED ACCESS TO OR USE OF OUR SECURE SERVERS AND/OR ANY AND ALL PERSONAL INFORMATION AND/OR FINANCIAL INFORMATION STORED THEREIN, (4) ANY INTERRUPTION OR CESSATION OF TRANSMISSION TO OR FROM THE SERVICES, (5) ANY BUGS, VIRUSES, TROJAN HORSES, OR THE LIKE WHICH MAY BE TRANSMITTED TO OR THROUGH THE SERVICES BY ANY THIRD PARTY, AND/OR (6) ANY ERRORS OR OMISSIONS IN ANY CONTENT AND MATERIALS OR FOR ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF THE USE OF ANY CONTENT POSTED, TRANSMITTED, OR OTHERWISE MADE AVAILABLE VIA THE SERVICES.</p>
+
+                            <p>WE DO NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME RESPONSIBILITY FOR ANY PRODUCT OR SERVICE ADVERTISED OR OFFERED BY A THIRD-PARTY WEBSITE AND WE WILL NOT BE A PARTY TO OR IN ANY WAY BE RESPONSIBLE FOR MONITORING ANY TRANSACTION BETWEEN YOU AND ANY THIRD-PARTY PROVIDERS OF PRODUCTS OR SERVICES. AS WITH THE PURCHASE OF A PRODUCT OR SERVICE THROUGH ANY MEDIUM OR IN ANY ENVIRONMENT, YOU SHOULD USE YOUR BEST JUDGMENT AND EXERCISE CAUTION WHERE APPROPRIATE.</p>
+
+                            <h2><a name="_Toc115022354">16. LIMITATIONS OF LIABILITY</a></h2>
+
+                            <p>IN NO EVENT WILL WE OR TRAGGET&rsquo;S DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY INDIRECT, CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES, OR ANY (DIRECT OR INDIRECT): (A) LOSS OF DATA, (B) LOST PROFIT, OR (C) LOST REVENUE OR OTHER DAMAGES ARISING FROM YOUR USE OF THE SERVICES, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+
+                            <p>NOTWITHSTANDING ANYTHING TO THE CONTRARY CONTAINED HEREIN, OUR LIABILITY TO YOU FOR ANY CAUSE WHATSOEVER AND REGARDLESS OF THE FORM OF THE ACTION, WILL AT ALL TIMES BE LIMITED TO THE LESSER OF (A) THE AMOUNT PAID, IF ANY, BY YOU TO US DURING THE SIX (6) MONTH PERIOD PRIOR TO ANY CAUSE OF ACTION ARISING AND (B) THE SUM OF CAD$50.</p>
+
+                            <p>SOME PROVINCES, CERTAIN STATE LAWS AND COUNTRIES&rsquo; LAWS DO NOT ALLOW LIMITATIONS ON IMPLIED WARRANTIES OR THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES. IF THESE LAWS APPLY TO YOU, SOME OR ALL OF THE ABOVE DISCLAIMERS OR LIMITATIONS MAY NOT APPLY TO YOU, AND YOU MAY HAVE ADDITIONAL RIGHTS.</p>
+
+                            <h2><a name="_Toc115022355">17. INDEMNIFICATION</a></h2>
+
+                            <p>You agree to defend, indemnify, and hold us harmless, including our subsidiaries, affiliates, and all of our respective officers, agents, partners, and employees, from and against any loss, damage, liability, claim, or demand, including reasonable attorneys&rsquo; fees and expenses, made by any third party due to or arising out of:&nbsp;(1) your contributions;&nbsp;(2) use of the Services; (3) breach of these Terms and Conditions; (4) any breach of your representations and warranties set forth in these Terms and Conditions; (5) your violation of the rights of a third party, including but not limited to intellectual property rights; or (6) any overt harmful act toward any other user of the Services with whom you connected via the Services. Notwithstanding the foregoing, we reserve the right, at your expense, to assume the exclusive defense and control of any matter for which you are required to indemnify us, and you agree to cooperate, at your expense, with our defense of such claims. We will use reasonable efforts to notify you of any such claim, action, or proceeding which is subject to this indemnification upon becoming aware of it.</p>
+
+                            <h2><a name="_Toc115022356">18. USER DATA</a></h2>
+
+                            <p>We will maintain certain data that you transmit to the Services for the purpose of managing the performance of the Services, as well as data relating to your use of the Services. Although we perform regular routine backups of data, you are solely responsible for all data that you transmit or that relates to any activity you have undertaken using the Services.</p>
+
+                            <p>You agree that we shall have no liability to you for any loss or corruption of any such data, and you hereby agree that you shall independently back up all your data and waive any right of action against us arising from any such loss or corruption of such data.</p>
+
+                            <h2><a name="_Toc115022357">19. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES</a></h2>
+
+                            <p>Visiting the Website or using the Services, sending us emails, and completing online tickets/forms constitute electronic communications. You consent to receive electronic communications, and you agree that all agreements, notices, disclosures, and other communications we provide to you electronically, via email and on the Services, satisfy any legal requirement that such communication be in writing.</p>
+
+                            <p>YOU HEREBY AGREE TO THE USE OF ELECTRONIC SIGNATURES, CONTRACTS, ORDERS, AND OTHER RECORDS, AND TO ELECTRONIC DELIVERY OF NOTICES, POLICIES, AND RECORDS OF TRANSACTIONS INITIATED OR COMPLETED BY US OR VIA THE SERVICES.</p>
+
+                            <p>You hereby waive any rights or requirements under any statutes, regulations, rules, ordinances, or other laws in any jurisdiction which require an original signature or delivery or retention of non-electronic records, or to payments or the granting of credits by any means other than electronic means.</p>
+
+                            <h2><a name="_Toc115022358">20. OTHER IMPORTANT INFORMATION</a></h2>
+
+                            <p>These Terms and Conditions and any policies or operating rules posted by us on the Services or in respect to the Services constitute the entire agreement and understanding between you and DispatchProX. You confirm that you have not relied on any prior or side statement, agreement, or representation, whether these were oral or written, to enter into this agreement with us.</p>
+
+                            <p>Our failure to exercise or enforce any right or provision of these Terms and Conditions shall not operate as a waiver of such right or provision. These Terms and Conditions operate to the fullest extent permissible by law.</p>
+
+                            <p>We may assign any or all of our rights and obligations to others at any time.</p>
+
+                            <p>If any provision or part of a provision of these Terms and Conditions is determined to be unlawful, void, or unenforceable, that provision or part of the provision is deemed severable from these Terms and Conditions and does not affect the validity and enforceability of any remaining provisions.</p>
+
+                            <p>You and DispatchProX are independent contractors and shall so represent ourselves in all regards. There is no joint venture, partnership, employment or agency relationship created between you and us as a result of these Terms and Conditions or use of the Services.</p>
+
+                            <p>You hereby waive any and all defenses you may have based on the electronic form of these Terms and Conditions and the lack of signing by the parties hereto to execute these Terms and Conditions.</p>
+
+                            <p>You and DispatchProX agree that these Terms and Conditions will not be construed in favor of or against either party by reason of authorship.</p>
+
+                            <p>You shall not (a) permit any third party to access or use the Services or Software in violation of any Canadian or U.S. law or regulation; or (b) export any software provided by us or otherwise remove it from the United States except in compliance with all applicable U.S. laws and regulations. Without limiting the generality of the foregoing, you shall not permit any third party to access or use the Services in, or export the Software to, a country subject to a United States embargo (as of the Effective Date, Cuba, Iran, North Korea, Sudan, and Syria).</p>
+
+                            <p>We may send notices pursuant to these Terms and Conditions to the email address you provided us, and such notices will be deemed received twenty-four (24) hours after they are sent. You may send notices pursuant to these Terms and Conditions to <u>contact@tragget.com</u>, and such notices will be deemed received seventy-two (72) hours after they are sent.</p>
+
+                            <p>No delay, failure, or default, other than a failure to pay any fees when due, will constitute a breach of these Terms and Conditions to the extent such delay, failure, or default is caused by epidemics or pandemics, acts of war, terrorism, hurricanes, earthquakes, other acts of God or of nature, any law or any action taken by a government or public authority, non-performance by suppliers or subcontractors, interruption or failure of utility&nbsp;service, strikes or other labor disputes, riots or other acts of civil disorder, embargoes, or other causes beyond our reasonable control.</p>
+
+                            <h2><a name="_Toc115022359">21. CONTACT US</a></h2>
+
+                            <p>In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at:</p>
+
+                            <p>DispatchProX Technology Inc.<br />
+                            1104 8- Laguna Crt, New Westminster, BC, V3M 6M6<br />
+                            <a href="mailto:contact@tragget.com">contact@tragget.com</a></p>
+
+                            <p>&nbsp;</p>
+
+
+
+                        </div>
+                    </div>
+                   <div class="modal-footer">
+                    <div class="d-flex justify-content-right align-items-right" style="justify-content: flex-end;">
+                        <div class="mr-2"><button type="button"   class="mybtn mybtn-back-blue btn-padding " (click)="setTermsAgree()" >Accept</button></div>
+                        <div class=""><button type="button"  class="mybtn mybtn-border-blue " (click)="cancelModal()">Cancel</button></div>
+                    </div>
+                   </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="declinereasonModal" role="dialog"  *ngIf="show_modal_aggreement && accountType == 'Customer'" style="display: block;padding-top: 0%;background: #0000002c;">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-lg vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-header">
+                        <div class="title-term-1 text-left">Terms & Conditions</div>
+                    </div>
+                    <div class="agreement-div mt-2 mb-2">
+                        <div class="title-term-2 text-left">Your Agreement</div>
+                        <div class="agreement-content col-md-12" >
+                            We are DispatchProX Technology Inc., doing business as DispatchProX (“DispatchProX,” “we,” “us,” or “our”), a company registered in the province of British Columbia. We operate the website https://tragget.com/ (the “Website”) through which we provide you our services, (collectively, the “Services” which include the provision and use of the Website).
+                            <p>We are DispatchProX Technology Inc., doing business as DispatchProX (&ldquo;<strong>DispatchProX</strong>,&rdquo; &ldquo;<strong>we</strong>,&rdquo; &ldquo;<strong>us</strong>,&rdquo; or &ldquo;<strong>our</strong>&rdquo;), a company registered in the province of British Columbia. We operate the website <a href="https://tragget.com/">https://tragget.com/</a> (the &ldquo;<strong>Website</strong>&rdquo;) through which we provide you our services, (collectively, the &ldquo;<strong>Services</strong>&rdquo; which include the provision and use of the Website).</p>
+
+                            <p>You can contact us by phone at (604) 726 8109, by email at contact@tragget.com, or by post to DispatchProX Technology Inc. 1104 &ndash; 8 Laguna Crt, New Westminster, BC, Canada, V3M 6M6.</p>
+
+                            <p>These Terms and Conditions constitute a legally binding agreement made between you, whether personally or on behalf of an entity (&ldquo;<strong>you</strong>&rdquo;) concerning your access to and use of the Website and the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by these Terms and Conditions. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS AND CONDITIONS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.</p>
+
+                            <p>Supplemental terms and conditions or documents that may be posted on the Website from time to time are hereby expressly incorporated herein by reference. We reserve the right, in DispatchProX&rsquo;s sole discretion, to make changes or modifications to these Terms and Conditions from time to time. We will alert you about any changes by updating the &ldquo;Last updated&rdquo; date of these Terms and Conditions, and you waive any right to receive specific notice of each such change. It is your responsibility to periodically review these Terms and Conditions to stay informed as each time you access the Services, you will be subject to, and will be deemed to have been made aware of and to have accepted, the then applicable Terms and Conditions.</p>
+
+                            <p>The Services are intended for business users who are at least 18 years old. Persons under the age of 18 are not permitted to use or register for the Services.</p>
+
+                            <p><a name="_Toc115022326"><strong>TABLE OF CONTENTS</strong></a></p>
+
+                            <p>Contents</p>
+
+                            <p><a href="#_Toc115022324"><strong>DispatchProX Terms and Conditions</strong>.. 1</a></p>
+
+                            <p><strong><a href="#_Toc115022325">AGREEMENT TO TERMS AND CONDITIONS 1</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022326">TABLE OF CONTENTS 1</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022327">1. OUR WEBSITE AND SERVICES 3</a></strong></p>
+
+                            <p><a href="#_Toc115022328">Using DispatchProX Tickets.. 3</a></p>
+
+                            <p><a href="#_Toc115022329">Using DispatchProX&rsquo;s Truck Job Platform.. 4</a></p>
+
+                            <p><strong><a href="#_Toc115022330">2. INTELLECTUAL PROPERTY RIGHTS 4</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022331">3. USER REPRESENTATIONS 5</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022332">4. USER REGISTRATION 5</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022333">5. FEES AND PAYMENT 5</a></strong></p>
+
+                            <p><a href="#_Toc115022334">Fees for Subscriptions.. 6</a></p>
+
+                            <p><a href="#_Toc115022335">Fees for Single Tickets.. 6</a></p>
+
+                            <p><a href="#_Toc115022336">Accepted Forms of Payment.. 6</a></p>
+
+                            <p><a href="#_Toc115022337">Sales Tax.. 7</a></p>
+
+                            <p><a href="#_Toc115022338">Account Upgrades, Downgrades, and Cancellations.. 7</a></p>
+
+                            <p><a href="#_Toc115022339">How to Cancel a Subscription Plan.. 8</a></p>
+
+                            <p><strong><a href="#_Toc115022340">6. PROHIBITED ACTIVITIES 8</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022341">7. THIRD-PARTY WEBSITES AND CONTENT 9</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022342">8. SERVICES MANAGEMENT 10</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022343">9. PRIVACY NOTICE 10</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022344">10. TERM AND TERMINATION 11</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022345">11. MODIFICATIONS AND INTERRUPTIONS 11</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022346">12. GOVERNING LAW 12</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022347">13. DISPUTE RESOLUTION 12</a></strong></p>
+
+                            <p><a href="#_Toc115022348">Informal Negotiations.. 12</a></p>
+
+                            <p><a href="#_Toc115022349">Arbitration.. 12</a></p>
+
+                            <p><a href="#_Toc115022350">Restrictions.. 12</a></p>
+
+                            <p><a href="#_Toc115022351">Exceptions to Informal Negotiations and Arbitration.. 13</a></p>
+
+                            <p><strong><a href="#_Toc115022352">14. CORRECTIONS 13</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022353">15. DISCLAIMER 13</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022354">16. LIMITATIONS OF LIABILITY 14</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022355">17. INDEMNIFICATION 14</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022356">18. USER DATA 15</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022357">19. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES 15</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022358">20. OTHER IMPORTANT INFORMATION 15</a></strong></p>
+
+                            <p><strong><a href="#_Toc115022359">21. CONTACT US 17</a></strong></p>
+
+                            <p>&nbsp;</p>
+
+                            <p>&nbsp;</p>
+
+                            <h2><a name="_Toc115022327">1. OUR WEBSITE AND SERVICES</a></h2>
+
+                            <p>We are a platform for entities using trucks, truck brokers, trucking companies, and for drivers. Our truck job platform provides common processes for managing and tracking the truck jobs between the different entities and actors. We provide you software (the &ldquo;<strong>Software</strong>&rdquo;), that you access remotely via the cloud, that you can use for (a) managing your Truck Jobs (&ldquo;<strong>Truck Job Platform</strong>&rdquo;); and generating DispatchProX tickets (collectively &ldquo;<strong>Tickets</strong>&rdquo;) from the data you and others provide to generate outputs for your business like, but not limited to, invoices, bills, work schedules, and business insights.</p>
+
+                            <p>The information, Truck Job Platform, and Tickets provided when using the Services are not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law or regulation or which would subject us to any registration requirement within such jurisdiction or country. Accordingly, those persons who choose to access the Services from other locations do so on their initiative and are solely responsible for compliance with local laws, if and to the extent local laws are applicable.</p>
+
+                            <h3><a name="_Toc115022328">Using DispatchProX Tickets</a></h3>
+
+                            <p>DispatchProX Tickets have the following lifecycle statuses; Pending, Accepted, Driving, Completed, and Approved. When a ticket is Approved, it is considered used, the ticket becomes a closed ticket.</p>
+
+                            <p>You may use Tickets (in any lifecycle) generated by the Software for your business or organization. It is your responsibility to determine whether the Tickets generated by the Software are appropriate for your use. From time to time, we may notify you that a particular Ticket may need to be updated in response to changes in applicable laws or other guidance, rules, requirements, or regulations, and you are responsible for determining whether to update the Tickets used in your business or organization.</p>
+
+                            <p><strong>WE DO NOT REPRESENT THAT THE TICKETS WILL MEET YOUR SPECIFIC GOALS, PROTECT YOUR SPECIFIC INTERESTS, OR WITHSTAND CHALLENGES TO THEIR LEGAL OR FACTUAL SUFFICIENCY. THE TICKETS ARE NOT PROVIDED WITH ANY GUARANTEE, WARRANTY, OR REPRESENTATION AS TO QUALITY OR SUITABILITY FOR ANY PARTICULAR PURPOSE. </strong></p>
+
+                            <p>You should be aware that there are certain things that DispatchProX will not take responsibility for. Certain functions of the Service will require the Service to have an active internet connection. The connection can be Wi-Fi or provided by your mobile network provider, but DispatchProX cannot take responsibility for the Service not working at full functionality if you don&rsquo;t have access to Wi-Fi, and you don&rsquo;t have any of your data allowance left.</p>
+
+                            <p>If you&rsquo;re using the Service outside of an area with Wi-Fi, you should remember that the terms of the agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the Service, or other third-party charges. In using the Service, you&rsquo;re accepting responsibility for any such charges, including roaming data charges if you use the Service outside of your home territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the device on which you&rsquo;re using the Service, please be aware that we assume that you have received permission from the bill payer for using the Service.</p>
+
+                            <p>If you&rsquo;re using the Service via Mobile phone, you should interact with the Service only when it is safe to do so. You should not interact with the service when you are driving a truck or any other vehicle.</p>
+
+                            <h3><a name="_Toc115022329">Using DispatchProX&rsquo;s Truck Job Platform</a></h3>
+
+                            <p>If you use DispatchProX&rsquo;s Truck Job Platform, you may access the features of the Software designed to track and monitor Truck Jobs given or withdrawn by the users of your website(s) concerning cookies or similar tracking technology used on such website(s).</p>
+
+                            <p><strong>TRAGGET IS NOT LIABLE FOR YOUR FAILURE TO DISABLE OR REMOVE COOKIES IF YOUR USERS DO NOT CONSENT TO THEIR USE.</strong></p>
+
+                            <h2><a name="_Toc115022330">2. INTELLECTUAL PROPERTY RIGHTS</a></h2>
+
+                            <p>Unless otherwise indicated, we retain all right, title, and interest in and to the Software and the Website, including without limitation all graphics, user interfaces, databases, functionality, software, website designs, audio, video, text, photographs, graphics, logos, and trademarks or service marks reproduced through the System. These Terms and Conditions do not grant you any intellectual property license or rights in or to the Software and the Website or any of its components, except to the limited extent that these Terms and Conditions specifically sets forth your license rights to it. You recognize that the Software and the Website and their components are protected by copyright and other laws.</p>
+
+                            <p>Conditioned upon your compliance with these Terms and Conditions and, if applicable, your payment of the Subscription Fees and/or Single Tickets, we grant you the rights to reproduce, modify, and publicly display the Tickets and use the Truck Job Platform (all together &ldquo;<strong>Content</strong>&rdquo;) for your business. In addition, as a Ticket is intended to serve as a source for various outputs like, and not limited to, invoices, bills, and work schedules, you may use the outputs as you see best to serve your business.</p>
+
+                            <p>You and DispatchProX agree that none of the Feedback (as defined below) you or your users provide to us constitutes confidential information, and nothing in these Terms and Conditions or our dealings arising out of or related to the subject matter of these Terms and Conditions will restrict our right to use, profit from, disclose, publish, keep secret, or otherwise exploit Feedback, without compensating or crediting you or the user in question. You hereby grant us a perpetual, irrevocable right and license to exploit the Feedback in any and every way and subject to applicable law waive any moral rights in such Feedback. Feedback will not constitute your confidential information. (&ldquo;<strong>Feedback</strong>&rdquo; refers to any suggestion or idea for improving or otherwise modifying any of DispatchProX&rsquo;s products or services.)</p>
+
+                            <h2><a name="_Toc115022331">3. USER REPRESENTATIONS</a></h2>
+
+                            <p>By using the Services, you represent and warrant that:&nbsp;(1) all registration information you submit will be true, accurate, current, and complete; (2) you will maintain the accuracy of such information and promptly update such registration information as necessary;&nbsp;(3) you have the legal capacity and you agree to comply with these Terms and Conditions;&nbsp;(4) you are not a minor in the jurisdiction in which you reside; (5) you will not access the Services through automated or non-human means, whether through a bot, script or otherwise; (6) you will not use the Services for any illegal or unauthorized purpose; and (7) your use of the Services will not violate any applicable law or regulation.</p>
+
+                            <p>If you provide any information that is untrue, inaccurate, not current, or incomplete, we have the right to suspend or terminate your account and refuse any current or future use of the Services (or any portion thereof).</p>
+
+                            <h2><a name="_Toc115022332">4. USER REGISTRATION</a></h2>
+
+                            <p>You may be required to register with the Services. You agree to keep your password confidential and will be responsible for all use of your account and password. We reserve the right to remove, reclaim, or change a username you select if we determine, in our sole discretion, that such username is inappropriate, obscene, or otherwise objectionable.</p>
+
+                            <h2><a name="_Toc115022333">5. FEES AND PAYMENT</a></h2>
+
+                            <p>DispatchProX offers free and paid account options. You can create a free account (&ldquo;<strong>Free Account</strong>&rdquo;) without providing any credit card information, but your access to our Website&rsquo;s features will be limited. Depending on your needs, you may want to access more or all of DispatchProX&rsquo;s Services by creating or upgrading to a paid account (&ldquo;<strong>Paid Account</strong>&rdquo;). You can create or upgrade to a Paid Account by signing up for one of DispatchProX&rsquo;s subscription plans (&ldquo;<strong>Subscription Plans</strong>&rdquo; and each a &ldquo;<strong>Subscription</strong>&rdquo;) and/or Single tickets in packs of tens (&ldquo;<strong>Single tickets</strong>&rdquo;).</p>
+
+                            <p>You can find information about our pricing options on the following page <a href="https://tragget.com/pricing" target="_blank">here</a>.</p>
+
+                            <h3><a name="_Toc115022334">Fees for Subscriptions</a></h3>
+
+                            <p>Fees for Subscriptions (&ldquo;<strong>Subscription Fees</strong>&rdquo;) shall be based on the length of your Subscription (&ldquo;<strong>Subscription Period</strong>&rdquo;) and the number of tickets (&ldquo;<strong>Subscription Size</strong>&rdquo;) you have for you to use during the Subscription period. All Subscriptions will auto-renew at the end of the then Subscription Period. You may adjust the Subscription Size monthly basis up and down depending on your need.</p>
+
+                            <p>We bill you for all initial and recurring Subscription Fees through an online billing account and you agree to provide (and keep updated) current, complete, and accurate purchase and account information including email address, payment method, and payment card expiration date, so that we can process your payments and contact you as needed.</p>
+
+                            <p>Our prices may be updated from time to time so please make sure that you check our current Subscription Fees before placing your order. All payments shall be in USD or CAD.</p>
+
+                            <h3><a name="_Toc115022335">Fees for Single Tickets</a></h3>
+
+                            <p>Fees for Single Tickets (&ldquo;<strong>Single Ticket Fees</strong>&rdquo;) shall be based on the number of 10-packs you are purchasing.</p>
+
+                            <h3><a name="_Toc115022336">Accepted Forms of Payment</a></h3>
+
+                            <p>We accept the following forms of payment:</p>
+
+                            <ul>
+                                <li>Visa</li>
+                                <li>Mastercard</li>
+                                <li>American Express</li>
+                                <li>Discover</li>
+                                <li>Any other <a href="https://stripe.com/docs/payments/cards/supported-card-brands" target="_blank">Stripe supported card brands</a></li>
+                            </ul>
+
+                            <p>You agree to pay all charges or fees at the prices then in effect for your Subscription and Single Tickets, and you authorize us to charge your chosen payment provider for any such amounts upon placing your order. If your Subscription is subject to recurring charges, then you consent to our charging your payment method on a recurring basis without requiring your prior approval for each recurring charge, until you notify us of your cancellation in accordance with the cancellation information described in this section below.</p>
+
+                            <p>We reserve the right to correct any errors or mistakes in pricing, even if we have already requested or received payment. We also reserve the right to refuse any order placed through the Services. In such case, we will notify you by email and refund you any Subscription Fees that you have paid.</p>
+
+                            <h3><a name="_Toc115022337">Sales Tax</a></h3>
+
+                            <p>Sales tax will be added to the price of purchases as deemed required by us. Amounts due under these Terms and Conditions are payable to us without deduction and are net of any tax, tariff, duty, or assessment imposed by any government authority (national, state, provincial, or local), including without limitation any sales, use, excise, ad valorem, property, withholding, or value-added tax, whether or not withheld at the source (collectively, &ldquo;<strong>Sales Tax</strong>&rdquo;). Except as forbidden by applicable law, we may require that you submit applicable Sales Taxes to us. However, the preceding sentence does not apply to the extent that you are tax exempt, provided you give us a valid tax exemption certificate within thirty (30) days of the start of your Subscription. Our failure to include any applicable tax in an invoice will not waive or dismiss the parties&rsquo; rights or obligations according to this Section. If applicable law requires withholding or deduction of Sales Taxes or any other tax or duty, you shall separately pay us the withheld or deducted amount, over and above fees due. For the avoidance of doubt, this Section does not govern taxes based on our net income.</p>
+
+                            <h3><a name="_Toc115022338">Account Upgrades, Downgrades, and Cancellations</a></h3>
+
+                            <p>If you created a Free Account but want to upgrade to a Paid Account, your upgrade will occur immediately upon payment of the relevant Subscription Fees and your Subscription Period will run from the date of your upgrade.</p>
+
+                            <p>If you created or upgraded to a Paid Account, and you want to:</p>
+
+                            <ul>
+                                <li><strong>Upgrade to a different Subscription Plan</strong>: Your upgrade will occur immediately at a prorated rate upon payment of the price difference between the two Subscription Plans for the remainder of your Subscription Period. Your upgraded Subscription Plan will run until the end of the initial Subscription Period and will auto-renew as the upgraded Subscription Plan.</li>
+                                <li><strong>Cancel your Subscription Plan and/or downgrade your Subscription</strong>: Your downgrade will take place following the end of your current Subscription Period.</li>
+                            </ul>
+
+                            <p>PLEASE NOTE THAT WHEN YOU DOWNGRADE YOUR ACCOUNT, YOU WILL ONLY BE ABLE TO ACCESS THE SERVICES AVAILABLE WITHIN YOUR NEW SUBSCRIPTION PLAN, AND THEREFORE YOU MAY LOSE ACCESS TO ANY ADDITIONAL TICKETS OR ANY PREMIUM TRUCK JOB PLATFORM FEATURES CREATED OR AVAILABLE THROUGH YOUR PREVIOUS SUBSCRIPTION PLAN.</p>
+
+                            <h3><a name="_Toc115022339">How to Cancel a Subscription Plan</a></h3>
+
+                            <p>You can cancel your Subscription Plan at any time by logging into your account or contacting us using the contact information provided below. Your cancellation will take effect at the end of your current Subscription Period.</p>
+
+                            <p>Except as stated in this Section, we will not be required to refund Subscription Fees under any circumstances.</p>
+
+                            <p>If you are unsatisfied with our services, please email us a contact@<u>tragget.com</u> or call us at (604) 726 8109.</p>
+
+                            <h2><a name="_Toc115022340">6. PROHIBITED ACTIVITIES</a></h2>
+
+                            <p>You may not access or use the Services for any purpose other than that for which we make the Services available. The Services may not be used in connection with any commercial endeavors except those that are specifically endorsed or approved by us.</p>
+
+                            <p>As a user of the Services, you agree not to:</p>
+
+                            <ul>
+                                <li>Systematically retrieve data, Tickets, or other Content from the Services to create or compile, directly or indirectly, a collection, compilation, database, or directory without written permission from us.</li>
+                                <li>Make any unauthorized use of the Services, including collecting usernames and/or email addresses of users by electronic or other means to send unsolicited email, or create user accounts by automated means or under pretenses.</li>
+                                <li>Use a buying agent or purchasing agent to make purchases on the Services.</li>
+                                <li>Use the Services to advertise or offer to sell goods and services.</li>
+                                <li>Circumvent, disable, or otherwise interfere with security-related features of the Services, including features that prevent or restrict the use or copying of any Content or enforce limitations on the use of the Services and/or the Content contained therein.</li>
+                                <li>Engage in unauthorized framing of or linking to the Services.</li>
+                                <li>Trick, defraud, or mislead us and other users, especially in any attempt to learn sensitive account information such as user passwords.</li>
+                                <li>Make improper use of our support services or submit false reports of abuse or misconduct.</li>
+                                <li>Engage in any automated use of the Website or Services, such as using scripts to send comments or messages, or using any data mining, robots, or similar data gathering and extraction tools.</li>
+                                <li>Interfere with, disrupt, or create an undue burden on the Services or the networks or services connected to the Services.</li>
+                                <li>Attempt to impersonate another user or person or use the username of another user.</li>
+                                <li>Sell or otherwise transfer your DispatchProX profile or account.</li>
+                                <li>Use any information obtained from the Services to harass, abuse, or harm another person.</li>
+                                <li>Use the Services as part of any effort to compete with us or otherwise use the Services and/or the Content for any revenue-generating endeavor or commercial enterprise beyond the license granted to you under these Terms and Conditions.</li>
+                                <li>Decipher, decompile, disassemble, or reverse engineer any of the Software comprising or in any way making up a part of the Services.</li>
+                                <li>Attempt to bypass any measures of the Website or Software designed to prevent or restrict access to the Services, or any portion of the Services.</li>
+                                <li>Harass, annoy, intimidate, or threaten any of our employees or agents engaged in providing any portion of the Services to you.</li>
+                                <li>Delete the copyright or other proprietary rights notice from any Content.</li>
+                                <li>Copy or adapt the Software, including but not limited to Flash, PHP, HTML, JavaScript, or other code.</li>
+                                <li>Upload or transmit (or attempt to upload or to transmit) viruses, Trojan horses, or other material, including excessive use of capital letters and spamming (continuous posting of repetitive text), that interferes with any party&rsquo;s uninterrupted use and enjoyment of the Software or the Services or modifies, impairs, disrupts, alters, or interferes with the use, features, functions, operation, or maintenance of the Software or the Services.</li>
+                                <li>Upload or transmit (or attempt to upload or to transmit) any material that acts as a passive or active information collection or transmission mechanism, including without limitation, clear graphics interchange formats (&ldquo;gifs&rdquo;), 1&times;1 pixels, web bugs, cookies, or other similar devices (sometimes referred to as &ldquo;spyware&rdquo; or &ldquo;passive collection mechanisms&rdquo; or &ldquo;pcms&rdquo;).</li>
+                                <li>Except as may be the result of standard search engine or Internet browser usage, use, launch, develop, or distribute any automated system, including without limitation, any spider, robot, cheat utility, scraper, or offline reader that accesses the Software or the Services, or using or launching any unauthorized script or other software.</li>
+                                <li>Disparage, tarnish, or otherwise harm, in our opinion, DispatchProX, the Software, Website, and/or the Services.</li>
+                                <li>Use the Services in a manner inconsistent with any applicable laws or regulations.</li>
+                            </ul>
+
+                            <h2><a name="_Toc115022341">7. THIRD-PARTY WEBSITES AND CONTENT</a></h2>
+
+                            <p>The Services may contain (or you may be sent via the Services) links to other websites (&ldquo;<strong>Third-Party</strong><strong>&nbsp;</strong><strong>Websites</strong>&rdquo;) as well as articles, photographs, text, graphics, pictures, designs, music, sound, video, information, applications, software, and other content or items belonging to or originating from third parties (&ldquo;<strong>Third-Party</strong><strong>&nbsp;</strong><strong>Content</strong>&rdquo;). Such&nbsp;Third-Party&nbsp;Websites and&nbsp;Third-Party&nbsp;Content are not investigated, monitored, or checked for accuracy, appropriateness, or completeness by us, and we are not responsible for any&nbsp;Third-Party&nbsp;Websites accessed through the Services or any&nbsp;Third-Party&nbsp;Content posted on, available through, or installed from the Services, including the content, accuracy, offensiveness, opinions, reliability, privacy practices, or other policies of or contained in the&nbsp;Third-Party&nbsp;Websites or the&nbsp;Third-Party&nbsp;Content. Inclusion of, linking to, or permitting the use or installation of any&nbsp;Third-Party&nbsp;Websites or any&nbsp;Third-Party&nbsp;Content does not imply approval or endorsement thereof by us. If you decide to leave the Services and access the&nbsp;Third-Party&nbsp;Websites or to use or install any&nbsp;Third-Party&nbsp;Content, you do so at your own risk, and you should be aware these Terms and Conditions no longer govern.</p>
+
+                            <p>You should review the applicable terms and policies, including privacy and data gathering practices, of any website to which you navigate from the Services or relating to any applications you use or install from the Services. Any purchases you make through&nbsp;Third-Party&nbsp;Websites will be through other websites and from other companies, and we take no responsibility whatsoever in relation to such purchases which are exclusively between you and the applicable third party. You agree and acknowledge that we do not endorse the products or services offered on&nbsp;Third-Party&nbsp;Websites and you shall hold us harmless from any harm caused by your purchase of such products or services. Additionally, you shall hold us harmless from any losses sustained by you or harm caused to you relating to or resulting in any way from any&nbsp;Third-Party&nbsp;Content or any contact with&nbsp;Third-Party&nbsp;Websites.</p>
+
+                            <h2><a name="_Toc115022342">8. SERVICES MANAGEMENT</a></h2>
+
+                            <p>We reserve the right, but not the obligation, to: (1) monitor the Services for violations of these Terms and Conditions; (2) take appropriate legal action against anyone who, in our sole discretion, violates the law or these Terms and Conditions, including without limitation, reporting such user to law enforcement authorities; (3) in our sole discretion and without limitation, refuse, restrict access to, limit the availability of, or disable (to the extent technologically feasible) any of your contributions or any portion thereof; (4) in our sole discretion and without limitation, notice, or liability, to remove from the Services or otherwise disable all files and content that are excessive in size or are in any way burdensome to our systems; and (5) otherwise manage the Services in a manner designed to protect our rights and property and to facilitate the proper functioning of the Services.</p>
+
+                            <h2><a name="_Toc115022343">9. PRIVACY NOTICE</a></h2>
+
+                            <p>We care about data privacy and security. Please review our <a href="https://termly.io/our-privacy-policy/" target="_blank">Privacy Notice</a> to understand our use of your personal information. You acknowledge that you have reviewed and understand our Privacy Notice.</p>
+
+                            <p>Please be advised the Services is hosted in the United States. If you access the Services from any other region of the world with laws or other requirements governing personal data collection, use, or disclosure that differ from applicable laws in the United States, then through your continued use of the Services, you are transferring your data to the United States, and you agree to have your data transferred to and processed in the United States.</p>
+
+                            <h2><a name="_Toc115022344">10. TERM AND TERMINATION</a></h2>
+
+                            <p>These Terms and Conditions shall remain in full force and effect while you use the Services. WITHOUT LIMITING ANY OTHER PROVISION OF THESE TERMS AND CONDITIONS, WE RESERVE THE RIGHT TO, IN OUR SOLE DISCRETION AND WITHOUT NOTICE OR LIABILITY, DENY ACCESS TO AND USE OF THE SERVICES (INCLUDING BLOCKING CERTAIN IP ADDRESSES), TO ANY PERSON IF WE REASONABLY CONSIDER THAT SUCH PERSON IS IN BREACH OF THESE TERMS AND CONDITIONS, OUR ACCEPTABLE USE POLICY, OR OF ANY APPLICABLE LAW OR REGULATION, INCLUDING WITHOUT LIMITATION BREACHES OF ANY REPRESENTATION, WARRANTY, OR COVENANT CONTAINED IN THESE TERMS AND CONDITIONS.</p>
+
+                            <p>WE MAY TERMINATE YOUR USE OR PARTICIPATION IN THE SERVICES OR DELETE YOUR ACCOUNT AND ANY CONTENT OR INFORMATION THAT YOU POSTED AT ANY TIME, WITHOUT WARNING, IN OUR SOLE DISCRETION IF WE CONSIDER THAT YOU HAVE BREACHED, OR ARE LIKELY TO BREACH, ANY OF THE ABOVE.</p>
+
+                            <p>If we terminate or suspend your account for any reason, you are prohibited from registering and creating a new account under your name, a fake or borrowed name, or the name of any third party, even if you may be acting on behalf of the third party. In addition to terminating or suspending your account, we reserve the right to take appropriate legal action, including without limitation pursuing civil, criminal, and injunctive redress.</p>
+
+                            <h2><a name="_Toc115022345">11. MODIFICATIONS AND INTERRUPTIONS</a></h2>
+
+                            <p>We reserve the right to change, modify, or remove the Content or the Services from time to time to comply with new laws or regulations or to update our offerings. We also reserve the right to modify or discontinue all or part of the Services if DispatchProX were to close down or if we decide to change DispatchProX&rsquo;s business offering. We will not be liable to you or any third party for any modification, price change, suspension, or discontinuance of the Services.</p>
+
+                            <p>We cannot guarantee the Services will be available at all times. We may experience hardware, software, or other problems or need to perform maintenance related to the Services, resulting in interruptions, delays, or errors. We reserve the right to change, revise, update, suspend, discontinue, or otherwise modify the Services from time to time and will endeavor to give you notice of such changes. You agree that we have no liability whatsoever for any loss, damage, or inconvenience caused by your inability to access or use the Services during any downtime or discontinuance of the Services.</p>
+
+                            <p>Nothing in these Terms and Conditions will be construed to obligate us to maintain and support the Services or to supply any corrections, updates, or releases in connection therewith.</p>
+
+                            <h2><a name="_Toc115022346">12. GOVERNING LAW</a></h2>
+
+                            <p>These Terms and Conditions and your use of the Services are governed by and construed under the laws of the&nbsp;Province of&nbsp;British Columbia applicable to agreements made and to be entirely performed within&nbsp;the&nbsp;Province of British Columbia, without regard to its conflict of law principles.</p>
+
+                            <h2><a name="_Toc115022347">13. DISPUTE RESOLUTION</a></h2>
+
+                            <h3><a name="_Toc115022348">Informal Negotiations</a></h3>
+
+                            <p>To expedite resolution and control the cost of any dispute, controversy, or claim related to these Terms and Conditions (each a &ldquo;<strong>Dispute</strong>&rdquo; and collectively, the &ldquo;<strong>Disputes</strong>&rdquo;) brought by either you or us (individually, a &ldquo;<strong>Party</strong>&rdquo; and collectively, the &ldquo;<strong>Parties</strong>&rdquo;), the Parties agree to first attempt to negotiate any Dispute (except those Disputes expressly provided below) informally for at least&nbsp;thirty (30)&nbsp;days before initiating arbitration or litigation (as applicable per below). Such informal negotiations commence upon written notice from one Party to the other Party.</p>
+
+                            <h3><a name="_Toc115022349">Arbitration</a></h3>
+
+                            <p>Any dispute, controversy or claim arising out of or relating to this contract including any question regarding its existence, interpretation, validity, breach or termination or the business relationship created by it shall be referred to and finally resolved by arbitration under the Canadian Arbitration Association Arbitration Rules. The place of the arbitration shall be Vancouver, BC.</p>
+
+                            <p>In no event shall any Dispute brought by either Party related in any way to the Services be commenced more than one (1) year after the cause of action arose. If this provision is found to be illegal or unenforceable, then neither Party will elect to arbitrate any Dispute falling within that portion of this provision found to be illegal or unenforceable and such Dispute shall be decided by a court of competent jurisdiction within the courts listed for jurisdiction above, and the Parties agree to submit to the personal jurisdiction of that court.</p>
+
+                            <h3><a name="_Toc115022350">Restrictions</a></h3>
+
+                            <p>The Parties agree that any arbitration shall be limited to the Dispute between the Parties individually. To the full extent permitted by law, (a) no arbitration shall be joined with any other proceeding; (b) there is no right or authority for any Dispute to be arbitrated on a class-action basis or to utilize class action procedures; and (c) there is no right or authority for any Dispute to be brought in a purported representative capacity on behalf of the general public or any other persons.</p>
+
+                            <h3><a name="_Toc115022351">Exceptions to Informal Negotiations and Arbitration</a></h3>
+
+                            <p>The Parties agree that the following Disputes are not subject to the above provisions concerning informal negotiations and binding arbitration: (a) any Disputes seeking to enforce or protect, or concerning the validity of, any of the intellectual property rights of a Party; (b) any Dispute related to, or arising from, allegations of theft, piracy, invasion of privacy, or unauthorized use; and (c) any claim for injunctive relief. If this provision is found to be illegal or unenforceable, then neither Party will elect to arbitrate any Dispute falling within that portion of this provision found to be illegal or unenforceable and such Dispute shall be decided by a court of competent jurisdiction within the courts listed for jurisdiction above, and the Parties agree to submit to the personal jurisdiction of that court.</p>
+
+                            <h2><a name="_Toc115022352">14. CORRECTIONS</a></h2>
+
+                            <p>There may be information on the Services that contains typographical errors, inaccuracies, or omissions, including descriptions, pricing, availability, and various other information.</p>
+
+                            <p>We reserve the right to correct any errors, inaccuracies, or omissions and to change or update the information on the Services at any time, without prior notice.</p>
+
+                            <h2><a name="_Toc115022353">15. DISCLAIMER</a></h2>
+
+                            <p>THE SERVICES ARE PROVIDED ON AN &ldquo;AS-IS&rdquo; AND &ldquo;AS-AVAILABLE&rdquo; BASIS. YOU AGREE THAT YOUR USE OF OUR SERVICES WILL BE AT YOUR SOLE RISK. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, IN CONNECTION WITH THE SOFTWARE OR THE SERVICES AND YOUR USE THEREOF, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+
+                            <p>WE MAKE NO WARRANTIES OR REPRESENTATIONS ABOUT THE ACCURACY OR COMPLETENESS OF THE SERVICES, THE CONTENT OR ANY THIRD-PARTY CONTENT AND WE WILL ASSUME NO LIABILITY OR RESPONSIBILITY FOR ANY (1) ERRORS, MISTAKES, OR INACCURACIES OF CONTENT AND MATERIALS, (2) PERSONAL INJURY OR PROPERTY DAMAGE, OF ANY NATURE WHATSOEVER, RESULTING FROM YOUR ACCESS TO AND USE OF THE SERVICES, (3) ANY UNAUTHORIZED ACCESS TO OR USE OF OUR SECURE SERVERS AND/OR ANY AND ALL PERSONAL INFORMATION AND/OR FINANCIAL INFORMATION STORED THEREIN, (4) ANY INTERRUPTION OR CESSATION OF TRANSMISSION TO OR FROM THE SERVICES, (5) ANY BUGS, VIRUSES, TROJAN HORSES, OR THE LIKE WHICH MAY BE TRANSMITTED TO OR THROUGH THE SERVICES BY ANY THIRD PARTY, AND/OR (6) ANY ERRORS OR OMISSIONS IN ANY CONTENT AND MATERIALS OR FOR ANY LOSS OR DAMAGE OF ANY KIND INCURRED AS A RESULT OF THE USE OF ANY CONTENT POSTED, TRANSMITTED, OR OTHERWISE MADE AVAILABLE VIA THE SERVICES.</p>
+
+                            <p>WE DO NOT WARRANT, ENDORSE, GUARANTEE, OR ASSUME RESPONSIBILITY FOR ANY PRODUCT OR SERVICE ADVERTISED OR OFFERED BY A THIRD-PARTY WEBSITE AND WE WILL NOT BE A PARTY TO OR IN ANY WAY BE RESPONSIBLE FOR MONITORING ANY TRANSACTION BETWEEN YOU AND ANY THIRD-PARTY PROVIDERS OF PRODUCTS OR SERVICES. AS WITH THE PURCHASE OF A PRODUCT OR SERVICE THROUGH ANY MEDIUM OR IN ANY ENVIRONMENT, YOU SHOULD USE YOUR BEST JUDGMENT AND EXERCISE CAUTION WHERE APPROPRIATE.</p>
+
+                            <h2><a name="_Toc115022354">16. LIMITATIONS OF LIABILITY</a></h2>
+
+                            <p>IN NO EVENT WILL WE OR TRAGGET&rsquo;S DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY INDIRECT, CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, SPECIAL, OR PUNITIVE DAMAGES, OR ANY (DIRECT OR INDIRECT): (A) LOSS OF DATA, (B) LOST PROFIT, OR (C) LOST REVENUE OR OTHER DAMAGES ARISING FROM YOUR USE OF THE SERVICES, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+
+                            <p>NOTWITHSTANDING ANYTHING TO THE CONTRARY CONTAINED HEREIN, OUR LIABILITY TO YOU FOR ANY CAUSE WHATSOEVER AND REGARDLESS OF THE FORM OF THE ACTION, WILL AT ALL TIMES BE LIMITED TO THE LESSER OF (A) THE AMOUNT PAID, IF ANY, BY YOU TO US DURING THE SIX (6) MONTH PERIOD PRIOR TO ANY CAUSE OF ACTION ARISING AND (B) THE SUM OF CAD$50.</p>
+
+                            <p>SOME PROVINCES, CERTAIN STATE LAWS AND COUNTRIES&rsquo; LAWS DO NOT ALLOW LIMITATIONS ON IMPLIED WARRANTIES OR THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES. IF THESE LAWS APPLY TO YOU, SOME OR ALL OF THE ABOVE DISCLAIMERS OR LIMITATIONS MAY NOT APPLY TO YOU, AND YOU MAY HAVE ADDITIONAL RIGHTS.</p>
+
+                            <h2><a name="_Toc115022355">17. INDEMNIFICATION</a></h2>
+
+                            <p>You agree to defend, indemnify, and hold us harmless, including our subsidiaries, affiliates, and all of our respective officers, agents, partners, and employees, from and against any loss, damage, liability, claim, or demand, including reasonable attorneys&rsquo; fees and expenses, made by any third party due to or arising out of:&nbsp;(1) your contributions;&nbsp;(2) use of the Services; (3) breach of these Terms and Conditions; (4) any breach of your representations and warranties set forth in these Terms and Conditions; (5) your violation of the rights of a third party, including but not limited to intellectual property rights; or (6) any overt harmful act toward any other user of the Services with whom you connected via the Services. Notwithstanding the foregoing, we reserve the right, at your expense, to assume the exclusive defense and control of any matter for which you are required to indemnify us, and you agree to cooperate, at your expense, with our defense of such claims. We will use reasonable efforts to notify you of any such claim, action, or proceeding which is subject to this indemnification upon becoming aware of it.</p>
+
+                            <h2><a name="_Toc115022356">18. USER DATA</a></h2>
+
+                            <p>We will maintain certain data that you transmit to the Services for the purpose of managing the performance of the Services, as well as data relating to your use of the Services. Although we perform regular routine backups of data, you are solely responsible for all data that you transmit or that relates to any activity you have undertaken using the Services.</p>
+
+                            <p>You agree that we shall have no liability to you for any loss or corruption of any such data, and you hereby agree that you shall independently back up all your data and waive any right of action against us arising from any such loss or corruption of such data.</p>
+
+                            <h2><a name="_Toc115022357">19. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES</a></h2>
+
+                            <p>Visiting the Website or using the Services, sending us emails, and completing online tickets/forms constitute electronic communications. You consent to receive electronic communications, and you agree that all agreements, notices, disclosures, and other communications we provide to you electronically, via email and on the Services, satisfy any legal requirement that such communication be in writing.</p>
+
+                            <p>YOU HEREBY AGREE TO THE USE OF ELECTRONIC SIGNATURES, CONTRACTS, ORDERS, AND OTHER RECORDS, AND TO ELECTRONIC DELIVERY OF NOTICES, POLICIES, AND RECORDS OF TRANSACTIONS INITIATED OR COMPLETED BY US OR VIA THE SERVICES.</p>
+
+                            <p>You hereby waive any rights or requirements under any statutes, regulations, rules, ordinances, or other laws in any jurisdiction which require an original signature or delivery or retention of non-electronic records, or to payments or the granting of credits by any means other than electronic means.</p>
+
+                            <h2><a name="_Toc115022358">20. OTHER IMPORTANT INFORMATION</a></h2>
+
+                            <p>These Terms and Conditions and any policies or operating rules posted by us on the Services or in respect to the Services constitute the entire agreement and understanding between you and DispatchProX. You confirm that you have not relied on any prior or side statement, agreement, or representation, whether these were oral or written, to enter into this agreement with us.</p>
+
+                            <p>Our failure to exercise or enforce any right or provision of these Terms and Conditions shall not operate as a waiver of such right or provision. These Terms and Conditions operate to the fullest extent permissible by law.</p>
+
+                            <p>We may assign any or all of our rights and obligations to others at any time.</p>
+
+                            <p>If any provision or part of a provision of these Terms and Conditions is determined to be unlawful, void, or unenforceable, that provision or part of the provision is deemed severable from these Terms and Conditions and does not affect the validity and enforceability of any remaining provisions.</p>
+
+                            <p>You and DispatchProX are independent contractors and shall so represent ourselves in all regards. There is no joint venture, partnership, employment or agency relationship created between you and us as a result of these Terms and Conditions or use of the Services.</p>
+
+                            <p>You hereby waive any and all defenses you may have based on the electronic form of these Terms and Conditions and the lack of signing by the parties hereto to execute these Terms and Conditions.</p>
+
+                            <p>You and DispatchProX agree that these Terms and Conditions will not be construed in favor of or against either party by reason of authorship.</p>
+
+                            <p>You shall not (a) permit any third party to access or use the Services or Software in violation of any Canadian or U.S. law or regulation; or (b) export any software provided by us or otherwise remove it from the United States except in compliance with all applicable U.S. laws and regulations. Without limiting the generality of the foregoing, you shall not permit any third party to access or use the Services in, or export the Software to, a country subject to a United States embargo (as of the Effective Date, Cuba, Iran, North Korea, Sudan, and Syria).</p>
+
+                            <p>We may send notices pursuant to these Terms and Conditions to the email address you provided us, and such notices will be deemed received twenty-four (24) hours after they are sent. You may send notices pursuant to these Terms and Conditions to <u>contact@tragget.com</u>, and such notices will be deemed received seventy-two (72) hours after they are sent.</p>
+
+                            <p>No delay, failure, or default, other than a failure to pay any fees when due, will constitute a breach of these Terms and Conditions to the extent such delay, failure, or default is caused by epidemics or pandemics, acts of war, terrorism, hurricanes, earthquakes, other acts of God or of nature, any law or any action taken by a government or public authority, non-performance by suppliers or subcontractors, interruption or failure of utility&nbsp;service, strikes or other labor disputes, riots or other acts of civil disorder, embargoes, or other causes beyond our reasonable control.</p>
+
+                            <h2><a name="_Toc115022359">21. CONTACT US</a></h2>
+
+                            <p>In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at:</p>
+
+                            <p>DispatchProX Technology Inc.<br />
+                            1104 8- Laguna Crt, New Westminster, BC, V3M 6M6<br />
+                            <a href="mailto:contact@tragget.com">contact@tragget.com</a></p>
+
+                            <p>&nbsp;</p>
+
+
+
+                        </div>
+                    </div>
+                   <div class="modal-footer">
+                    <div class="d-flex justify-content-right align-items-right" style="justify-content: flex-end;">
+                        <div class="mr-2"><button type="button"   class="mybtn mybtn-back-yellow btn-padding " (click)="setTermsAgree()" >Accept</button></div>
+                        <div class=""><button type="button"  class="mybtn mybtn-border-yellow " (click)="cancelModal()">Cancel</button></div>
+                    </div>
+                   </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

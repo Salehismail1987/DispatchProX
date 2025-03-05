@@ -1,0 +1,664 @@
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+      <app-dashboard-top-header></app-dashboard-top-header>
+      <div class="body-content">
+        <div>
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="ticket-detail"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              <div
+                class="bg-white border-div br-10 custom-padding13 inner_main_shadow"
+              >
+                <div class="row mb-95 justify-content-center align-content-center">
+                  <div class="col-lg-5 col-md-9 col-sm-8 display-table">
+                    <div class="vertical-middle d-flex align-items-center">
+                        <div>
+                            <div class="driver-type-top">E</div>
+                        </div>
+                      <div class="title-9 text-color-black-shade mb-16-sm ml-2">
+                        <div class="title-driver mb-10">Driver<br></div>
+                        <div class="title-22 text-color-black-shade2">
+                            {{ this.loggedinUser?.company_name }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-5 col-md-9 col-sm-8 display-table">
+                    <div class="vertical-middle d-flex align-items-center">
+                      <div class="title-9 text-color-black-shade mb-16-sm ml-2">
+                        <div class="heading-2-300 text-color-111727">
+                            Tickets
+                          </div>
+                          <div class="text-2-300">Driver’s ticket on selected period</div>
+                        </div>
+                      </div>
+                    </div>
+                  <div class="col-lg-2 col-md-3 col-sm-4" style="display: flex; justify-content: end; align-items: center;">
+                    <button
+                      class="mybtn btn-small text-white mybtn-back-blue2 btn-customer m-0"
+                    >
+                    Since May 2015
+                    </button>
+                  </div>
+                </div>
+
+
+
+                <div class="row my-row3 mb-5">
+                  <div class="col-md-6">
+                    <div class="row">
+                   
+                  <div class="col-md-4 col-padding-rl">
+                    <div class="input-div getinputfield3 cur_p">
+                      <div class="title-5-new2 text-color-black-shade5 text-left">
+                        Sort by
+                      </div>
+                      <div
+                        class="myinput-new sa_sel sa_select selected"
+                        *ngIf="!this.sort_by"
+                      >
+                        Select
+                      </div>
+                      <div
+                        class="myinput-new sa_sel sa_sel2 selected"
+                        *ngIf="this.sort_by != null"
+                      >
+                        {{
+                          this.sort_by == "number_of_trucks"
+                            ? "Number of trucks "
+                            : this.sort_by == "city"
+                            ? "City "
+                            : "Recently invited"
+                        }}
+                      </div>
+                      <img
+                        src="../../assets/images/dropdown.svg"
+                        class="icon-center-right"
+                      />
+                      <div
+                        class="input-popup-div3 cust_drop companies_list"
+                        style="display: none"
+                      >
+                        <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                          Sort by
+                        </div>
+                        <div class="title-18 text-right mb-2px d-none">
+                          Default
+                        </div>
+  
+                        <div
+                          (click)="setSortBy('recently_invited')"
+                          class="d-flex justify-content-between mb-5px list-item"
+                          [ngClass]="
+                            this.sort_by == 'recently_invited'
+                              ? 'title-5-new33_active'
+                              : ''
+                          "
+                        >
+                          <div
+                            [ngClass]="
+                              this.sort_by == 'recently_invited'
+                                ? 'title-5-new33 title-5-new33_active'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            Recently invited
+                          </div>
+                        </div>
+                        <div
+                          (click)="setSortBy('number_of_trucks')"
+                          class="d-flex justify-content-between mb-5px list-item"
+                        >
+                          <div
+                            [ngClass]="
+                              this.sort_by == 'number_of_trucks'
+                                ? 'title-5-new33 title-5-new33_active'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            Number of trucks
+                          </div>
+                        </div>
+                        <div
+                          (click)="setSortBy('city')"
+                          class="d-flex justify-content-between mb-5px list-item"
+                        >
+                          <div
+                            [ngClass]="
+                              this.sort_by == 'city'
+                                ? 'title-5-new33 title-5-new33_active'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            City
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            
+                  <div class="col-md-4 col-padding-rl">
+                    <div class="input-div getinputfield3 cur_p">
+                      <div class="title-5-new2 text-color-black-shade5 text-left">
+                        Sort by
+                      </div>
+                      <div
+                        class="myinput-new sa_sel sa_select selected"
+                        *ngIf="!this.sort_by"
+                      >
+                        Select
+                      </div>
+                      <div
+                        class="myinput-new sa_sel sa_sel2 selected"
+                        *ngIf="this.sort_by != null"
+                      >
+                        {{
+                          this.sort_by == "number_of_trucks"
+                            ? "Number of trucks "
+                            : this.sort_by == "city"
+                            ? "City "
+                            : "Recently invited"
+                        }}
+                      </div>
+                      <img
+                        src="../../assets/images/dropdown.svg"
+                        class="icon-center-right"
+                      />
+                      <div
+                        class="input-popup-div3 cust_drop companies_list"
+                        style="display: none"
+                      >
+                        <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                          Sort by
+                        </div>
+                        <div class="title-18 text-right mb-2px d-none">
+                          Default
+                        </div>
+  
+                        <div
+                          (click)="setSortBy('recently_invited')"
+                          class="d-flex justify-content-between mb-5px list-item"
+                          [ngClass]="
+                            this.sort_by == 'recently_invited'
+                              ? 'title-5-new33_active'
+                              : ''
+                          "
+                        >
+                          <div
+                            [ngClass]="
+                              this.sort_by == 'recently_invited'
+                                ? 'title-5-new33 title-5-new33_active'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            Recently invited
+                          </div>
+                        </div>
+                        <div
+                          (click)="setSortBy('number_of_trucks')"
+                          class="d-flex justify-content-between mb-5px list-item"
+                        >
+                          <div
+                            [ngClass]="
+                              this.sort_by == 'number_of_trucks'
+                                ? 'title-5-new33 title-5-new33_active'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            Number of trucks
+                          </div>
+                        </div>
+                        <div
+                          (click)="setSortBy('city')"
+                          class="d-flex justify-content-between mb-5px list-item"
+                        >
+                          <div
+                            [ngClass]="
+                              this.sort_by == 'city'
+                                ? 'title-5-new33 title-5-new33_active'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            City
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                     
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="project-profile-header-container d-flex mb-25px"
+                    style="justify-content: flex-end;"
+                    >
+                      <div class="profile_heading_div1">
+                        <div
+                          class="project-profile-header-left d-flex align-items-center ml-0"
+                        >
+                        
+                          <div class="heading-1-400 text-color-black"></div>
+                        </div>
+                      </div>
+                      <nav>
+                        <div class="nav nav-pills nav-fill ticket-tabs" id="nav-tab" role="tablist">
+                          <a
+                            class="nav-item btn-nav nav-link"
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            href="#company"
+                            role="tab"
+                            aria-controls="company"
+                            aria-selected="true"
+                            >Info</a
+                          >
+                          <a
+                            class="nav-item btn-nav nav-link active"
+                            id="nav-hoursheet-tab"
+                            data-bs-toggle="tab"
+                            href="#hoursheet"
+                            role="tab"
+                            aria-controls="hoursheet"
+                            aria-selected="false"
+                            >Hour sheets</a
+                          >
+                        </div>
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="table-responsive">
+                  <table class="vendorTable">
+                    <tr>
+                      <th>Ticket ID</th>
+                      <th>Date</th>
+                      <th>Paper ticket</th>
+                      <th>Truck type</th>
+                      <th>Job started</th>
+                      <th>Job total</th>
+                      <th>Rounds</th>
+                      <th>Rate</th>
+                      <th>Hours</th>
+                      <th></th>
+                      <th></th>
+
+                    </tr>
+                    <ng-container *ngIf="this.drivers_list?.length > 0">
+                      <ng-container *ngFor="let driver of this.drivers_list">
+                        <tr
+                          data-toggle="modal"
+                          (click)="setDriver(driver)"
+                          data-target="#driverinfo"
+                        >
+                        <td class="text-center">
+                            <div class="invoiced-div">
+                                BC0021589
+                            </div>
+                          </td>
+                        
+                         <td class="text-center">
+                            25-08-24
+                          </td>
+                          <td class="text-center">
+                            25432
+                          </td>
+                          <td class="text-center">
+                            Tandem - Transfer
+                          </td>
+                          <td class="text-center">
+                            06:45 AM
+                          </td>
+                          <td class="text-center">
+                            9:45
+                          </td>
+                          <td class="text-center">
+                            4
+                          </td>
+                          <td class="text-center">
+                            $31.50
+                          </td>
+                          <td class="text-center">
+                            10.25 hr
+                          </td>
+                        
+                        </tr>
+                      </ng-container>
+
+                      <tr class="bg-grey">
+                        <td class="text-center">
+                            <div class="d-inline-block" align="center">
+                                <label class="label-qty">Ticket Qty
+                                </label>
+                                <div class="text-semibold-16-400 ticket-qty">18</div>
+                            </div>
+                          </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-center">
+                            <div class="d-inline-block" align="center">
+                              <div class="text-semibold-16-400">Summary: </div>
+                            </div>
+                          </td>
+                        <td class="text-center">
+                          <div class="white-container d-inline-block" align="center">
+                            <label class="label-qty">Total Hours</label>
+                            <div class="text-semibold-16-400">18 hr</div>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <div class="white-container d-inline-block" align="center">
+                            <label class="label-qty">Total Rounds</label>
+                            <div class="text-semibold-16-400">9</div>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <div class="white-container d-inline-block" align="center">
+                            <label class="label-qty"> Total</label>
+                            <div class="text-semibold-16-400">$1980.00</div>
+                          </div>
+                        </td>
+                        <td>
+                            <button
+                            class="mybtn btn-small text-white mybtn-back-blue2 btn-customer m-0"
+                            style="   height:50px  !important;
+                                padding: 3px 16px !important;
+                            "
+                              data-bs-toggle="modal"
+                              data-bs-target="#invoiceModal"
+
+                          >
+                          Approve and<br>move to bills
+                          </button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                     
+                      </tr>
+
+                    </ng-container>
+                    
+  
+                    <ng-container *ngIf="!loading">
+                      <ng-container
+                        *ngIf="
+                          !this.drivers_list || this.drivers_list?.length < 1
+                        "
+                      >
+                        <tr>
+                          <td colspan="5">No drivers found</td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                  </table>
+                </div>
+                <div
+                  class="row border-blue pt-2"
+                  *ngIf="
+                    this.loggedinUser.role_id != 6 &&
+                    this.loggedinUser.account_type == 'Trucking Company'
+                  "
+                >
+                  <div class="col-md-1 pt-1">
+                  </div>
+                  <div class="col-md-2 pt-1" style="
+  
+                         display: flex;
+                         align-items: center;
+                         font-family: Gilroy;
+                         color: #68696D;
+                         font-weight: 700;
+                         justify-content:center;
+  font-size: 14px;
+  line-height: 17.33px;
+  
+  
+  
+                  ">
+                    
+                      {{ this.loggedinUser?.full_name }}
+                    
+                  </div>
+                  <div class="col-md-5" style="padding-left: 0px !important;">
+                    <button
+                      class="mybtn2 text-white btn-driver btn-customer"
+                      (click)="setAsDriver()"
+                    >
+                      Set
+                    </button>
+                    <span class="ml-1" style="
+  
+                         
+  
+                         font-family: Gilroy;
+                         color: #68696D;
+                         font-weight: 700;
+                         margin-left:30px !important;
+                   
+  font-size: 14px;
+  line-height: 17.33px;
+  
+  
+  
+  
+                  "> as driver </span>
+                  </div>
+                </div>
+                <div class="row mt-2" *ngIf="this.drivers_list?.length > 24">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-10">
+                    <div class="mypagination-div" *ngIf="pagination?.total > 0">
+                      <a
+                        style="cursor: pointer"
+                        (click)="changePage(pagination.current_page - 1)"
+                        [ngClass]="
+                          pagination.first_page == this.page
+                            ? 'mypagination '
+                            : 'mypagination disable'
+                        "
+                        class=""
+                        >Previous</a
+                      >
+                      <ng-container *ngFor="let item of pagination?.links">
+                        <a
+                          style="cursor: pointer"
+                          *ngIf="notSkip(item.label)"
+                          [ngClass]="
+                            item.active ? 'mypagination active' : 'mypagination'
+                          "
+                          (click)="changePage(parsePage(item.label.toString()))"
+                          >{{ item.label }}</a
+                        >
+                      </ng-container>
+  
+                      <a
+                        style="cursor: pointer"
+                        (click)="changePage(pagination.current_page + 1)"
+                        [ngClass]="
+                          this.page == pagination.last_page
+                            ? 'mypagination '
+                            : 'mypagination next'
+                        "
+                        >Next</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <div   class="modal fade come-from-modal right" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document"
+   
+    >
+      <div class="modal-content"  style="background:#FAFAFA ;">
+        <div class="modal-body modal-body-padding">
+          <div class="d-flex justify-content-between align-items-center border-div2 p-8 mb-42">
+            <div class="width-75px">
+              <div class="title-7-new text-color-black-shade5 mb-3px">Time sheet #</div>
+              <div class="title-7">123456</div>
+            </div>
+            <div class="border-div width-143px text-center p-1"
+            style="border-radius: 5px; background: white;">
+              <div class="title-5-new2 text-color-black-shade5 mb-2px">Invoice date</div>
+              <div class="title-5-new3 text-color-black-shade6">January 1, 2025</div>
+            </div>
+            <div>
+              <div class="title-6-2 m-0 mybtn-back-pink approved-div br-4">Approving</div>
+            </div>
+          </div>
+
+          <div class="border-div2 mb-55px"
+          style="background: white;">
+          
+            <div class="d-flex justify-content-between custom-padding17">
+              <div>
+                <div class="title-5-new2 text-color-black-shade2 mb-7">Business Name</div>
+                <div class="title-7">ABC Company</div>
+              </div>
+              <div>
+                <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Email address</div>
+                <div class="title-7 text-right">contact abccompany.com</div>
+              </div>
+            </div>
+            <div class="myhr2"></div>
+            <div class="d-flex justify-content-between custom-padding17">
+              <div>
+                <div class="title-5-new2 text-color-black-shade2 mb-7">Address</div>
+                <div class="title-7">Block c </div>
+              </div>
+            </div>
+            <div class="myhr2"></div>
+            <div class="d-flex justify-content-between custom-padding17">
+              <div>
+                <div class="title-5-new2 text-color-black-shade2 mb-7">Business number</div>
+                <div class="title-7">559-6663-665</div>
+              </div>
+              <div>
+                <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Work safety number</div>
+                <div class="title-7 text-right">225 33 2212 55</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-div2 mb-15px"
+          style="background: white;">
+          
+            <div class="d-flex justify-content-center custom-padding17"
+            style="background: #D9D9D9;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+            
+            ">
+              <div class="title-driver"
+              >Driver</div>
+            </div>
+            <div class="d-flex justify-content-between custom-padding17">
+              <div>
+                <div class="title-5-new2 text-color-black-shade2 mb-7">Business number</div>
+                <div class="title-7">559-6663-665</div>
+              </div>
+              <div>
+                <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Work safety number</div>
+                <div class="title-7 text-right">225 33 2212 55</div>
+              </div>
+            </div>
+            <div class="myhr2"></div>
+            <div class="d-flex justify-content-between custom-padding17">
+            
+              <div>
+                <div class="title-5-new2 text-color-black-shade2 mb-7">Business number</div>
+                <div class="title-7">559-6663-665</div>
+              </div>
+              <div>
+                <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Work safety number</div>
+                <div class="title-7 text-right">225 33 2212 55</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between custom-padding17 mb-15px">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">Invoicing period
+              </div>
+              <div class="title-7">Monthly
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Dates
+              </div>
+              <div class="title-7 text-right">January 1 - January 31, 2025
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4px align-items-center">
+            <div class="col-md-6 text-right">
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Hours :</div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-between">
+              <div class="title-7">48</div>
+            </div>
+          </div>
+          
+          <div class="row mb-4px align-items-center">
+            <div class="col-md-6 text-right">
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Rounds :</div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-between">
+              <div class="title-7">13</div>
+            </div>
+          </div>
+          
+          <div class="row mb-15px total-div align-items-center">
+            <div class="col-md-6 text-right">
+              <div class="title-5-new2 text-color-black-shade2 mb-7 ml-15px">Total :</div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-between">
+              <div class="title-7 total-bold-text">$13424.00</div>
+            </div>
+          </div>
+          
+          <div class="mb-22">
+            <div class="position-relative notes-div">
+              <div class="title-5-new2 text-color-black-shade2 mb-6 text-align-left">Your notes</div>
+              <textarea class="myinput5 myinput5-textarea" placeholder="Type here" readonly rows="2">Thank you for your business!</textarea>
+            </div>
+          </div>
+
+
+          <div class="d-flex justify-content-center custom-padding17">
+            <div>
+            <button class="mybtn btn-small text-white mybtn-back-blue2 btn-customer m-0" 
+            style="   height:50px  !important; padding: 3px 16px !important; " 
+            > Approve and<br>move to bills </button>
+          
+          
+          </div>
+          </div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  

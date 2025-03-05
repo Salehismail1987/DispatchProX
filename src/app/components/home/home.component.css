@@ -1,0 +1,35 @@
+@import url('../../../assets/css/margins.css') only screen and (min-width: 768px);
+
+@import url('../../../assets/css/trucking-style2.css') only screen and (min-width: 768px);
+
+.bg-pink, .bg-transparent{
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.myinput{
+    border : 1px solid rgba(0, 0, 0, .25) ;
+
+}
+@media (min-width: 768px) {
+  
+    .float-right{
+        float: right !important;
+    }
+    .color-blackshade {
+        color: #0B1E26 !important;
+    }
+    .header-logo{
+        padding: 35px 70px;
+    }
+
+    
+    .keepmelogin {
+        font-family: 'Gilroy-SemiBold';
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: #111727;
+        margin-left: 10px;
+    }
+}
+

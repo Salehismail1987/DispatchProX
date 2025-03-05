@@ -1,0 +1,613 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="bg-white border-div br-15 mb-15 p-15px br-10px">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="project-profile-header-left d-flex align-items-center">
+            <img
+              src="./assets/icons/billing-icon-black.svg"
+              alt="project-profile-file-icon"
+            />
+
+            <div class="title-9 text-black-shade ml-2">Billing Status</div>
+          </div>
+          <div class="">
+            <nav>
+              <div
+                class="nav nav-pills nav-fill ticket-tabs"
+                id="nav-tab"
+                role="tablist"
+              >
+                <a
+                  class="nav-item btn-customer nav-link {{
+                    this.current_tab == 'billed' ? 'active' : ''
+                  }}"
+                  id="nav-home-tab"
+                  data-toggle="tab"
+                  href="#bill-billed"
+                  role="tab"
+                  aria-controls="nav-home"
+                  aria-selected="true"
+                  >Bills</a
+                >
+                <a
+                  class="nav-item  btn-customer  nav-link {{
+                    this.current_tab == 'unbilled' ? 'active' : ''
+                  }}"
+                  id="nav-profile-tab"
+                  data-toggle="tab"
+                  href="#bill-unbilled"
+                  role="tab"
+                  aria-controls="nav-profile"
+                  aria-selected="true"
+                  >Un-billed</a
+                >
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade  {{
+              this.current_tab == 'billed' ? 'show active' : ''
+            }}"
+            id="bill-billed"
+            role="tabpanel"
+            aria-labelledby="nav-home-tab"
+          >
+            <div
+              class="bg-white border-div br-15 p-15px br-10px inner_main_shadow"
+            >
+              <div class="row mb-10">
+                <div class="col-md-2">
+                  <div class="input-div getinputfield">
+                    <div class="title-5-new2 text-color-black-shade5 text-left">
+                      Fileter by Vendor
+                    </div>
+                    <div
+                      class="myinput-new sa_select selected"
+                      *ngIf="
+                        !this.selected_company || this.selected_company == null
+                      "
+                    >
+                      Select
+                    </div>
+                    <div
+                      class="myinput-new selected"
+                      *ngIf="this.selected_company_name != ''"
+                    >
+                      {{ this.selected_company_name }}
+                    </div>
+                    <img
+                      src="../../assets/images/dropdown.svg"
+                      class="icon-center-right"
+                    />
+                    <div
+                      class="input-popup-div cust_drop companies_list"
+                      style="display: none"
+                    >
+                      <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                        Vendor
+                      </div>
+                      <div class="title-18 text-right mb-2px d-none">
+                        Default
+                      </div>
+                      <div
+                        (click)="handleFilterByCompany('', '')"
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          [ngClass]="
+                            this.selected_company != ''
+                              ? 'title-5-new33'
+                              : 'title-5-new33 text-color-black-shade7'
+                          "
+                        >
+                          All
+                        </div>
+                      </div>
+                      <ng-container *ngFor="let company of this.companies_list">
+                        <div
+                          (click)="
+                            handleFilterByCompany(
+                              company?.id,
+                              company?.company_name
+                            )
+                          "
+                          class="d-flex justify-content-between mb-5px list-item"
+                          *ngIf="
+                            company?.id &&
+                            company?.account_type == 'Trucking Company'
+                          "
+                        >
+                          <div
+                            *ngIf="
+                              company?.id &&
+                              company?.account_type == 'Trucking Company'
+                            "
+                            [ngClass]="
+                              this.selected_company.id == company.id
+                                ? 'title-5-new33'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            {{ company?.company_name }}
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-2">
+                                    <label class="field text-field">
+                                        <select class="field__input height-43px icon-none"  (change)="handleFilterByCompany($event, '')" [(ngModel)]="this.selected_company">
+                                            <option value="">All</option>
+                                            <option *ngFor="let comp of this.companies_list"  value="{{comp.id}}">{{comp.company_name}}</option>
+                                        </select>
+                                        <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                        <span class="field__label-wrap">
+                                            <span class="field__label field__label2">Vendor</span>
+                                        </span>
+                                    </label>
+                                </div> -->
+                <div class="col-md-2 selmonthtype">
+                  <label class="field text-field" id="select-month">
+                    <input type="hidden" class="filter_date" />
+                    <div class="field__input height-43px">
+                      {{
+                        this.selected_monthly != "" && this.selected_year != ""
+                          ? this.selected_monthly
+                          : "All time"
+                      }}
+                    </div>
+
+                    <i
+                      class="fa fa-caret-down input-icon-right"
+                      aria-hidden="true"
+                    ></i>
+                    <span class="field__label-wrap">
+                      <span class="field__label field__label2"
+                        >Filter by month</span
+                      >
+                    </span>
+                  </label>
+                  <div class="selectcontroldiv2 selectmonth">
+                    <div class="calendareyeardiv">
+                      <div>
+                        <img
+                          src="../assets/icons/cal-arrow-left.svg"
+                          (click)="decYear(this.selected_year)"
+                        />
+                      </div>
+                      <div class="calendareyear">{{ this.selected_year }}</div>
+                      <div>
+                        <img
+                          src="../assets/icons/cal-arrow-right.svg"
+                          (click)="incYear(this.selected_year)"
+                        />
+                      </div>
+                    </div>
+                    <ul class="calendarlist">
+                      <li data-month="1" (click)="setMonth('January')">
+                        January
+                      </li>
+                      <li data-month="2" (click)="setMonth('February')">
+                        February
+                      </li>
+                      <li data-month="3" (click)="setMonth('March')">March</li>
+                      <li data-month="4" (click)="setMonth('April')">April</li>
+                      <li data-month="5" (click)="setMonth('May')">May</li>
+                      <li data-month="6" (click)="setMonth('June')">June</li>
+                      <li data-month="7" (click)="setMonth('July')">July</li>
+                      <li data-month="8" (click)="setMonth('August')">
+                        August
+                      </li>
+                      <li data-month="9" (click)="setMonth('September')">
+                        September
+                      </li>
+                      <li data-month="10" (click)="setMonth('October')">
+                        October
+                      </li>
+                      <li data-month="11" (click)="setMonth('November')">
+                        November
+                      </li>
+                      <li data-month="12" (click)="setMonth('December')">
+                        December
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="position-relative">
+                    <label class="field text-field">
+                      <input
+                        class="field__input height-43px"
+                        (input)="handleSearchByBill($event)"
+                        placeholder="Search"
+                        value=""
+                        type="text"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label field__label2"
+                          >Search bill</span
+                        >
+                      </span>
+                    </label>
+                    <div class="topright">
+                      <img src="../../assets/icons/search.svg" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 p-0">
+                  <button
+                    class="mybtn3 btn-customer"
+                    data-toggle="modal"
+                    data-target="#modal-addbill"
+                  >
+                    Add bill
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="vendorTable">
+                  <tr>
+                    <th>Invoice number</th>
+                    <th>Invoice date</th>
+                    <th>Vendor</th>
+                    <th># of Tickets</th>
+                    <th>Billing cycle</th>
+                    <th>Hours</th>
+                    <th>Rounds</th>
+                    <th>Subtotal</th>
+                    <th>Tax</th>
+                    <th>Total</th>
+                  </tr>
+                  <ng-container
+                    *ngIf="billings && loading_bills != 'billed_tickets'"
+                  >
+                    <tr
+                      *ngFor="let bill of billings"
+                      (click)="setInvoice(bill)"
+                      data-toggle="modal"
+                      data-target="#myModalDetail2"
+                    >
+                      <td>{{ bill.invoice_no }}</td>
+                      <td>{{ bill.invoice_date }}</td>
+                      <td>{{ bill.invoice_by?.company_name }}</td>
+                      <td>{{ bill.total_tickets }}</td>
+                      <td>{{ bill.invoice_period_type }}</td>
+                      <td>{{ bill.hours ? bill.hours : "-" }}</td>
+                      <td>{{ bill.rounds ? bill.rounds : "-" }}</td>
+                      <td>{{ bill.subtotal | currency }}</td>
+                      <td>{{ bill.tax_amount | currency }}</td>
+                      <td>{{ bill.total | currency }}</td>
+                    </tr>
+                    <tr
+                      *ngIf="billings_data"
+                      style="border-bottom: 4px double #9b9999"
+                    >
+                      <td colspan="2"></td>
+                      <td>Total:</td>
+                      <td>{{ billings_data?.total_tickets }}</td>
+                      <td></td>
+                      <td>
+                        {{ billings_data?.hours ? billings_data?.hours : "-" }}
+                      </td>
+                      <td>
+                        {{
+                          billings_data?.rounds ? billings_data?.rounds : "-"
+                        }}
+                      </td>
+                      <td>{{ billings_data?.subtotal | currency }}</td>
+                      <td>{{ billings_data?.tax_amount | currency }}</td>
+                      <td>{{ billings_data?.total | currency }}</td>
+                    </tr>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="!billings && loading_bills != 'billed_tickets'"
+                  >
+                    <tr>
+                      <th colspan="9" class="text-center">No bills found.</th>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="loading_bills == 'billed_tickets'">
+                    <tr>
+                      <th colspan="9" class="text-center">Fetching bills...</th>
+                    </tr>
+                  </ng-container>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade {{
+              this.current_tab == 'unbilled' ? 'show active' : ''
+            }}"
+            id="bill-unbilled"
+            role="tabpanel"
+            aria-labelledby="nav-profile-tab"
+          >
+            <div
+              class="bg-white border-div br-15 custom-padding13 border-radius-15 inner_main_shadow"
+            >
+              <div class="row mb-10">
+                <div class="col-md-2">
+                  <div class="input-div getinputfield">
+                    <div class="title-5-new2 text-color-black-shade5 text-left">
+                      Fileter by Vendor
+                    </div>
+                    <div
+                      class="myinput-new sa_select selected"
+                      *ngIf="
+                        !this.selected_company || this.selected_company == null
+                      "
+                    >
+                      Select
+                    </div>
+                    <div
+                      class="myinput-new selected"
+                      *ngIf="this.selected_company_name != ''"
+                    >
+                      {{ this.selected_company_name }}
+                    </div>
+                    <img
+                      src="../../assets/images/dropdown.svg"
+                      class="icon-center-right"
+                    />
+                    <div
+                      class="input-popup-div cust_drop companies_list"
+                      style="display: none"
+                    >
+                      <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                        Vendor
+                      </div>
+                      <div class="title-18 text-right mb-2px d-none">
+                        Default
+                      </div>
+                      <div
+                        (click)="handleFilterByCompany('', '')"
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          [ngClass]="
+                            this.selected_company != ''
+                              ? 'title-5-new33'
+                              : 'title-5-new33 text-color-black-shade7'
+                          "
+                        >
+                          All
+                        </div>
+                      </div>
+                      <ng-container *ngFor="let company of this.companies_list">
+                        <div
+                          (click)="
+                            handleFilterByCompany(
+                              company?.id,
+                              company?.company_name
+                            )
+                          "
+                          class="d-flex justify-content-between mb-5px list-item"
+                          *ngIf="
+                            company?.id &&
+                            company?.account_type == 'Trucking Company'
+                          "
+                        >
+                          <div
+                            *ngIf="
+                              company?.id &&
+                              company?.account_type == 'Trucking Company'
+                            "
+                            [ngClass]="
+                              this.selected_company.id == company.id
+                                ? 'title-5-new33'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            {{ company?.company_name }}
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-2">
+                                    <label class="field text-field">
+                                        <select class="field__input icon-none"  (change)="handleFilterByCompany($event, '')" [value]="this.selected_company">
+                                            <option value="">All</option>
+                                            <option *ngFor="let comp of this.companies_list"  value="{{comp.id}}">{{comp.company_name}}</option>
+                                        </select>
+                                        <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                        <span class="field__label-wrap">
+                                            <span class="field__label field__label2">Vendor</span>
+                                        </span>
+                                    </label>
+                                </div> -->
+                <div class="col-md-2 selmonthtype">
+                  <label class="field text-field" id="select-month2">
+                    <input type="hidden" class="filter_date" />
+                    <div class="field__input height-43px">
+                      {{
+                        this.selected_monthly != "" && this.selected_year != ""
+                          ? this.selected_monthly
+                          : "All time"
+                      }}
+                    </div>
+
+                    <i
+                      class="fa fa-caret-down input-icon-right"
+                      aria-hidden="true"
+                    ></i>
+                    <span class="field__label-wrap">
+                      <span class="field__label field__label2"
+                        >Filter by month</span
+                      >
+                    </span>
+                  </label>
+                  <div class="selectcontroldiv2 selectmonth">
+                    <div class="calendareyeardiv">
+                      <div>
+                        <img
+                          src="../assets/icons/cal-arrow-left.svg"
+                          (click)="decYear(this.selected_year)"
+                        />
+                      </div>
+                      <div class="calendareyear">{{ this.selected_year }}</div>
+                      <div>
+                        <img
+                          src="../assets/icons/cal-arrow-right.svg"
+                          (click)="incYear(this.selected_year)"
+                        />
+                      </div>
+                    </div>
+                    <ul class="calendarlist">
+                      <li data-month="1" (click)="setMonth('January')">
+                        January
+                      </li>
+                      <li data-month="2" (click)="setMonth('February')">
+                        February
+                      </li>
+                      <li data-month="3" (click)="setMonth('March')">March</li>
+                      <li data-month="4" (click)="setMonth('April')">April</li>
+                      <li data-month="5" (click)="setMonth('May')">May</li>
+                      <li data-month="6" (click)="setMonth('June')">June</li>
+                      <li data-month="7" (click)="setMonth('July')">July</li>
+                      <li data-month="8" (click)="setMonth('August')">
+                        August
+                      </li>
+                      <li data-month="9" (click)="setMonth('September')">
+                        September
+                      </li>
+                      <li data-month="10" (click)="setMonth('October')">
+                        October
+                      </li>
+                      <li data-month="11" (click)="setMonth('November')">
+                        November
+                      </li>
+                      <li data-month="12" (click)="setMonth('December')">
+                        December
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="position-relative">
+                    <label class="field text-field">
+                      <input
+                        class="field__input height-43px"
+                        (input)="handleSearchByUnBill($event)"
+                        placeholder="Search"
+                        value=""
+                        type="text"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label field__label2"
+                          >Search ticket</span
+                        >
+                      </span>
+                    </label>
+                    <div class="topright">
+                      <img src="../../assets/icons/search.svg" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="vendorTable">
+                  <tr>
+                    <th>Ticket no</th>
+                    <th>Date</th>
+                    <th>Vendor</th>
+                    <th>Project</th>
+                    <th>Hour rate</th>
+                    <th>Hours</th>
+                    <th>Rounds</th>
+                    <th>Subtotal</th>
+                  </tr>
+                  <ng-container
+                    *ngIf="unbilled_tickets && loading != 'unbilled_tickets'"
+                  >
+                    <tr
+                      *ngFor="let ticket of unbilled_tickets"
+                      (click)="setDetail(ticket)"
+                      data-toggle="modal"
+                      data-target="#myModal"
+                    >
+                      <td>{{ ticket?.ticket_no }}</td>
+                      <td>{{ ticket?.ticket_date }}</td>
+                      <td>{{ ticket?.dispatch_to?.company_name }}</td>
+                      <td>{{ ticket?.project?.project_name }}</td>
+                      <td>${{ ticket?.rate }}</td>
+                      <td>{{ ticket?.hour ? ticket?.hour + " hr" : "-" }}</td>
+                      <td>{{ ticket?.round ? ticket?.round : "-" }}</td>
+                      <td>{{ ticket?.subtotal | currency }}</td>
+                    </tr>
+
+                    <tr
+                      *ngIf="unbilled_tickets_data"
+                      style="border-bottom: 4px double #9b9999"
+                    >
+                      <td colspan="4"></td>
+                      <td>Total:</td>
+                      <td>
+                        {{
+                          unbilled_tickets_data?.hours
+                            ? unbilled_tickets_data?.hours + " hr"
+                            : "-"
+                        }}
+                      </td>
+                      <td>
+                        {{
+                          unbilled_tickets_data?.rounds
+                            ? unbilled_tickets_data?.rounds
+                            : "-"
+                        }}
+                      </td>
+                      <td>{{ unbilled_tickets_data?.total | currency }}</td>
+                    </tr>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="!unbilled_tickets && loading != 'unbilled_tickets'"
+                  >
+                    <tr>
+                      <th colspan="7" class="text-center">No tickets found.</th>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="loading == 'unbilled_tickets'">
+                    <tr>
+                      <th colspan="7" class="text-center">
+                        Fetching tickets...
+                      </th>
+                    </tr>
+                  </ng-container>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-customer-ticket-popup
+  *ngIf="ticketDetail"
+  (listing)="this.getBillings()"
+  [ticketDetail]="this.ticketDetail"
+  [roundId]="0"
+>
+</app-customer-ticket-popup>
+
+<app-customer-billing-popup
+  [edited_invoice]="this.edited_invoice"
+  [gst]="this.gst"
+  *ngIf="edited_invoice"
+></app-customer-billing-popup>
+<app-customer-add-bill
+  [all_companies]="all_companies_list"
+  (getBillings)="this.getBillings()"
+  (listing)="this.getAllCompanies()"
+></app-customer-add-bill>

@@ -1,0 +1,448 @@
+<div class="modal fade  come-from-modal right show" style="display: block !important;padding-right: 17px;"
+    id="newProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable max-width-50px t-10perc" role="document">
+        <div class="modal-content modal-bg-white border-15px ">
+            <div class="modal-body p-15-20" >
+                <div class="d-flex justify-content-between ">
+                    <div>
+                        <div class="title-0 pl-3">New Project</div>
+                    </div>
+                </div>
+
+                <form [formGroup]="newProjForm" (ngSubmit)="onNewProject()" enctype="multipart/form-data" class="mt-15px">
+                    <div class="row">
+                        <div class="col-md-6">
+                          <span *ngIf="newProjNameError != ''" class="text-danger">{{
+                              newProjNameError
+                              }}</span>
+                          <label class="field text-field required_field2">
+                              <input class="field__input" placeholder="Hospital A construction"
+                                  formControlName="project_name" value="" type="text">
+                              <span class="field__label-wrap">
+                                  <span class="field__label">Project name</span>
+                              </span>
+                          </label>
+                        </div>
+                        <div class="col-md-6">
+                            <span *ngIf="newProjJobNumberError != ''" class="text-danger">{{
+                                newProjJobNumberError
+                                }}</span>
+                            <label class="field text-field required_field2">
+                                <input class="field__input" placeholder="0921" formControlName="job_number" type="text">
+                                <span class="field__label-wrap">
+                                    <span class="field__label">Job Number</span>
+                                </span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="0921" formControlName="start_date" type="date">
+                                <span class="field__label-wrap">
+                                    <span class="field__label">Start date</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="" formControlName="planned_enddate"
+                                    type="date">
+                                <span class="field__label-wrap">
+                                    <span class="field__label">Planned end date</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span *ngIf="newProjLocationError != ''" class="text-danger">{{
+                                newProjLocationError
+                                }}</span>
+                                <label class="field text-field required_field2">
+                                    <input class="field__input " placeholder="Add address" data-target="#changeAddress" data-toggle="modal" readonly=""
+                                        formControlName="project_location" type="text">
+                                    <span class="field__label-wrap">
+                                        <span class="field__label ">Project location</span>
+                                    </span>
+                                </label>
+
+                        </div>
+                        <div class="col-md-12">
+                          <div
+                              style="
+                                position: absolute;
+                                width: max-content;
+                              "
+                            >
+                              <div
+                                tabindex="-1"
+                                id="changeAddress"
+                                aria-labelledby="changeAddress"
+                                aria-modal="true"
+                                role="dialog"
+                                class="modal fade"
+                                style="position: relative !important"
+                              >
+                                <div class="modal-dialog margin-auto pr-15px">
+                                  <div class="modal-content br-5px">
+                                    <div class="modal-body p-15-20 address-modal-body">
+                                      <div class="row">
+                                        <div
+                                          class="col-11 row ml-1 mb-2 pr-0"
+                                        >
+                                          <div class="col-12 text-center">
+                                            <div
+                                              class="heading-5-400 text-color-111727 text-center"
+                                            >
+                                              Add/update address
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-1">
+                                          <button
+                                            type="button"
+                                            data-bs-dismiss="modal"
+                                            data-dismiss="modal"
+                                            aria-label="Close"
+                                            id="closeBtn"
+                                            class="my-modal-close border-0 bg-transparent shadow-none"
+                                          >
+                                            <img
+                                              src="./assets/images/cross_2.svg"
+                                              alt="Close"
+                                              style="
+                                                width: 14px;
+                                                height: 14px;
+                                                margin-top: -10px;
+                                                margin-right: -15px;
+                                              "
+                                            />
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <div class="row mt-1">
+                                        <div class="col-6">
+                                          <div
+                                            class="title-52 text-grey-shade2"
+                                          >
+                                            Street
+                                          </div>
+                                          <div
+                                            class="position-relative required_field11"
+                                          >
+                                            <img
+                                              src="../../assets/icons/pencile.svg"
+                                              alt=""
+                                              width="17px"
+                                              class="top-right-icon22"
+                                            /><input
+                                              type="text"
+                                              id="street"
+                                              placeholder="Type here"
+                                              class="field-input2"
+                                              ng-reflect-name="street"
+                                            />
+                                          </div>
+                                        </div>
+                                        <div class="col-6">
+                                          <div
+                                            class="title-52 text-grey-shade2 text-right"
+                                          >
+                                            City/Town
+                                          </div>
+                                          <div
+                                            class="position-relative required_field12"
+                                          >
+                                            <img
+                                              src="../../assets/icons/pencile.svg"
+                                              alt=""
+                                              width="17px"
+                                              class="top-left-icon22"
+                                            /><input
+                                              type="text"
+                                              id="city"
+                                              placeholder="Type here"
+                                              class="field-input2 text-right ng-untouched ng-pristine ng-valid"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row mt-2">
+                                        <div class="col-4">
+                                          <div
+                                            class="title-52 text-grey-shade2"
+                                          >
+                                            Country
+                                          </div>
+                                          <div
+                                            class="position-relative required_field11"
+                                          >
+                                            <select
+                                              id="country"
+                                              class="field-input2"
+                                              (change)="
+                                                setCountry($event)
+                                              "
+                                            >
+                                              <option
+                                                value="Canada"
+                                                [selected]="
+                                                  this.country == 'Canada'
+                                                "
+                                              >
+                                                Canada
+                                              </option>
+                                              <option
+                                                value="USA"
+                                                [selected]="
+                                                  this.country == 'USA'
+                                                "
+                                              >
+                                                USA
+                                              </option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                        <div class="col-4">
+                                          <div
+                                            class="title-52 text-grey-shade2 text-center"
+                                          >
+                                            Province/State
+                                          </div>
+                                          <div
+                                            class="position-relative required_field11"
+                                          >
+                                            <select
+                                              type="text"
+                                              id="province_state"
+                                              class="field-input2"
+                                            >
+                                              <ng-container
+                                                *ngIf="
+                                                  this.country == 'Canada'
+                                                "
+                                              >
+                                                <option
+                                                  *ngFor="
+                                                    let pro of this
+                                                      .canada_provinces
+                                                  "
+                                                  value="{{ pro }}"
+                                                  [selected]="
+                                                    pro == this.province
+                                                  "
+                                                >
+                                                  {{ pro }}
+                                                </option>
+                                              </ng-container>
+
+                                              <ng-container
+                                                *ngIf="
+                                                  this.country == 'USA'
+                                                "
+                                              >
+                                                <option
+                                                  *ngFor="
+                                                    let pro of this
+                                                      .usa_provinces
+                                                  "
+                                                  value="{{ pro }}"
+                                                  [selected]="
+                                                    pro == this.province
+                                                  "
+                                                >
+                                                  {{ pro }}
+                                                </option>
+                                              </ng-container>
+                                            </select>
+                                          </div>
+                                        </div>
+                                        <div class="col-4">
+                                          <div
+                                            class="title-52 text-grey-shade2 text-right"
+                                          >
+                                            Postal Code
+                                          </div>
+                                          <div class="position-relative">
+                                            <img
+                                              src="../../assets/icons/pencile.svg"
+                                              alt=""
+                                              width="17px"
+                                              class="top-left-icon22"
+                                            /><input
+                                              type="text"
+                                              id="postal_code"
+                                              placeholder="Type here"
+                                              class="field-input2 text-right ng-untouched ng-pristine ng-valid"
+                                              ng-reflect-name="postal_code"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row mt-3">
+                                        <div
+                                          class="col-12 d-flex align-items-center justify-content-center"
+                                        >
+                                          <button
+                                            type="button"
+                                            (click)="saveAddress()"
+                                            class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black button-update mb-0 "
+                                          >
+                                            Update
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <label class="field text-field">
+                                <select class="field__input icon-none" formControlName="supritendent_id">
+                                    <ng-container *ngFor="let suprident of suprident_list">
+                                        <option  [value]="suprident.id" >
+
+                                            {{suprident.full_name}}
+                                        </option>
+                                    </ng-container>
+
+                                </select>
+                                <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                    <span class="field__label">Select Superintendent</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+
+                            <label class="field text-field">
+                                <select class="field__input icon-none" formControlName="approver_id">
+                                    <option [selected]="true" [value]="this.loggedinUser?.id ? this.loggedinUser?.id: this.loggedinUser?.user_data_request_id">
+                                        {{this.loggedinUser.full_name}}
+                                    </option>
+                                    <ng-container *ngFor="let approver of approver_list">
+                                        <option  [value]="approver.id" *ngIf="(this.loggedinUser.full_name) != (approver.full_name)">
+
+                                            {{approver.full_name}}
+                                        </option>
+                                    </ng-container>
+
+                                </select>
+                                <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                    <span class="field__label">Select approvers</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- <div class="row" formArrayName="dump_sites">
+                        <div class="col-md-12" *ngFor="let site of dump_sites.controls; index as idx">
+                            <span *ngIf="site.invalid" class="text-danger">Dump Site is required</span>
+
+                            <label class="field text-field ">
+                                <input class="field__input" [formControlName]="idx"  placeholder="Search location" value=""
+                                    type="text">
+                                <span class="field__label-wrap">
+                                    <span class="field__label ">Dump site</span>
+                                </span>
+                            </label>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="mybtn mybtn-back-grey width-fit-content btn-text-medium-small" (click)="addDumpField()">Add another
+                                dump
+                                site <span>+</span></button>
+                        </div>
+                    </div> -->
+                    <ng-container  formArrayName="dump_sites">
+                        <ng-container  *ngFor="let site of dump_sites.controls; index as idx">
+
+
+                            <div class="row " [formGroupName]="idx">
+                                <div class="col-md-6">
+                                    <span *ngIf=" this.is_clicked && site.get('name')?.invalid" class="text-danger">Dump Site name is required</span>
+
+                                    <div class="position-relative">
+                                        <label class="field text-field mb-15px required_field">
+                                            <input class="field__input" formControlName="name"  placeholder="Type here"  type="text" />
+                                            <span class="field__label-wrap">
+                                            <span class="field__label">Dump site name</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 ">
+
+                                    <div class="position-relative">
+                                        <label class="field text-field mb-15px">
+                                            <input class="field__input" formControlName="location" placeholder="Type here"  type="text">
+                                            <span class="field__label-wrap">
+                                            <span class="field__label">Dump site address</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row " *ngIf="idx == this.dump_sites.length-1">
+                              <div class="col-md-12 d-flex justify-content-center align-items-center">
+                                <div (click)="addDumpField()" class="add-round-button d-flex align-items-center justify-content-between mb-20 cursor-pointer">
+                                  <div class="">Add another dump site</div>
+                                  <img   src="../../assets/icons/plus-icon-grey.svg" alt="">
+
+                                </div>
+                              </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="Enter" formControlName="default_rounds"
+                                    type="number">
+                                <span class="field__label-wrap">
+                                    <span class="field__label">Default number of rounds</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="submenu-subheading">This will come as a default number of rounds between the
+                                site
+                                and the dumpsite when dispatching trucks</div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-25px mb-10">
+                        <div class="col-md-12 d-flex align-items-center justify-content-center g-15px">
+                            <button class="btn-back btn-back-2 gotosignup mb-0" (click)="showModal('')">Back</button>
+                            <input type="hidden" formControlName="parent_user_id" [(ngModel)]="this.user_id">
+                            <button class="mybtn mybtn-back-yellow mb-0 " type="submit" *ngIf="!is_loading">Add project </button>
+                            <button class="mybtn mybtn-back-yellow mb-0" type="button" *ngIf="is_loading">Processing... </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="this.current_modal=='new-project'" class="modal-backdrop fade show"></div>

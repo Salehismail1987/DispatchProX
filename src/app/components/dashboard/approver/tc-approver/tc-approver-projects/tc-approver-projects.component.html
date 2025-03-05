@@ -1,0 +1,94 @@
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content">
+            <div class="main-content p-0 main-content-table-margin">
+                <div class="row" >
+                    <div class="col-lg-6 col-md-6">
+                        <div class="dashboard-title">Project Details</div>
+                    </div>
+                    <div class="col-lg-6 col-md-6" align="right">
+                     </div>
+                </div>
+                <br/>
+                <div class="">
+                  
+                    <div class="row p-10">
+                        <ng-container *ngIf="this.project_list && this.project_list !==null && this.project_list.length>0; elseBloxk">
+                            <ng-container *ngFor="let project of this.project_list">
+                                <div class="col-md-12 col-lg-12 setting-content-page p-3 bg-white mb-14 mb-3">
+
+                                        <div class="col-md-12  col-lg-12  mb-14" class="title-label">{{project.project_name}}</div>
+                                        <br/>
+                                        <div class="col-md-12   col-lg-12 mb-14" class="title-detail-label">Project Details</div>
+                                        <br/>
+                                    <div class="row m-0 p-0 mb-10px" style="margin-bottom: 10px !important">
+                                            <div class="col-lg-2 col-md-3 p-0">
+                                                <div class="title-label">
+                                                    Project Name
+                                                </div>
+                                            </div>
+                                            <div class=" col-lg-8 col-md-8 p-0">
+                                                <div class="title-desc">
+                                                    {{project.project_name}}
+                                                </div>
+    
+                                            </div>
+                                        </div>
+                                        <div class="row m-0 p-0 mb-10px" style="margin-bottom: 10px !important">
+                                            <div class="col-lg-2 col-md-3 p-0">
+                                                <div class="title-label">
+                                                    Pickup Site
+                                                </div>
+                                            </div>
+                                            <div class=" col-lg-8 col-md-8 p-0">
+                                                <div class="title-desc">
+                                                    {{project.project_location}}
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row m-0 p-0 mb-10px" style="margin-bottom: 10px !important">
+                                            <div class="col-md-3 col-lg-2 p-0">
+                                                <div class="title-label">
+                                                    Dump Site
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 col-lg-8 p-0">
+                                                <div class="title-desc">
+                                                    <span *ngFor="let site of project.dump_sites">
+                                                        {{site.dump_site}}
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="row m-0 p-0 mb-10px" style="margin-bottom: 10px !important">
+                                            <div class="col-md-3 col-lg-2 p-0">
+                                                <div class="title-label">
+                                                    Trucks Required
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 col-lg-8 p-0">
+                                                <div class="title-desc">
+                                                    {{project.default_rounds}}
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                </div>
+                            </ng-container>
+                           
+                        </ng-container>
+                        <ng-template #elseBlock>
+
+                        </ng-template>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1030 @@
+<div class="grid-container">
+  <app-dashboard-header [active_menu]="''"></app-dashboard-header>
+  <div id="" class="main-container ptb-20px">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="main-inner-body-container mt-15px">
+      <div class="main-project-setting-container inner_main_shadow">
+        <!-- <div class="dashboard-title mb-16">{{current_nav=='profile'? 'Profile Settings':' Change Password'}}</div> -->
+        <!-- <br> -->
+        <div class="">
+          <div class="row">
+            <div
+              class="col-md-7"
+              style="display: flex; align-content: center; flex-wrap: wrap"
+            >
+              <div class="mb-6 mr-2">
+                <img src="assets/icons/user-icon-profile.svg" />
+              </div>
+              <div class="heading_name mb-5">User profile</div>
+            </div>
+            <div class="col-md-5" *ngIf="this.loggedinUser.role_id == 6"></div>
+          </div>
+
+          <form [formGroup]="updateProfile" (ngSubmit)="onSaveUser()">
+            <div class="row mt-20">
+              <div class="col-md-7">
+                <div class="p-0 row align-items-center">
+                  <div class="col-md-5">
+                    <div class="div-image d-flex align-items-center" 
+                    style="border: 1px solid #E1E1E1;
+                    border-radius: 5px;
+                    box-shadow: 0px 4px 4px 0px #00000040;">
+                      <div
+                        class="bg-profile-container d-flex justify-content-center align-items-center"
+                      >
+                        <img
+                          src="../assets/icons/user.svg"
+                          class=""
+                          *ngIf="
+                            !loggedinUser?.profile_image ||
+                            loggedinUser?.profile_image == ''
+                          "
+                        />
+                        <img
+                          class="user-profile-pic"
+                          [src]="
+                            backendAPIURL + this.loggedinUser?.profile_image
+                          "
+                          (error)="handleImageError($event)"
+                          *ngIf="
+                            this.loggedinUser?.profile_image != '' &&
+                            this.loggedinUser?.profile_image !== undefined &&
+                            this.loggedinUser?.profile_image !== null
+                          "
+                        />
+                      </div>
+                      <div
+                        class="p-3 profile-text"
+                        (click)="logoFileInput.click()"
+                      >
+                        Update <br />
+                        profile picture
+                        <input
+                          id="logo-file-input"
+                          hidden
+                          type="file"
+                          [multiple]="false"
+                          [accept]="'image/jpeg, image/png'"
+                          (change)="uploadimage($event)"
+                          #logoFileInput
+                          formControlName="profile_image"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <div style="position: absolute; width: 100%">
+                      <div
+                        tabindex="-1"
+                        class="modal fade"
+                        style="position: relative !important"
+                        id="editProfile"
+                        aria-labelledby="editProfile"
+                        aria-modal="true"
+                        role="dialog"
+                      >
+                        <div class="modal-dialog margin-auto">
+                          <div class="modal-content modal-bg-white">
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-11 row ml-1 mb-2 pr-0">
+                                  <div class="col-12 text-center">
+                                    <div
+                                      class="heading-5-400 text-color-111727 text-center"
+                                    >
+                                      Edit contact details
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-1">
+                                  <button
+                                    type="button"
+                                    data-bs-dismiss="modal"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                    class="my-modal-close border-0 bg-transparent shadow-none"
+                                  >
+                                    <img
+                                      src="./assets/images/cross_2.svg"
+                                      alt="Close"
+                                      style="
+                                        width: 14px;
+                                        height: 14px;
+                                        margin-top: -10px;
+                                        margin-right: -15px;
+                                      "
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-12 mt-3">
+                                  <div class="col pl-0 pr-0 main3 mb-2">
+                                    <label
+                                      class="field fieldd required_fieldd3"
+                                    >
+                                      <input
+                                        class="field__input field__inputt name-input2"
+                                        type="text"
+                                        formControlName="full_name"
+                                        value="{{
+                                          this.loggedinUser?.full_name
+                                        }}"
+                                        (input)="changeFull($event)"
+                                      />
+                                      <span class="field__label-wrap">
+                                        <span class="field__label cust-label"
+                                          >Full name</span
+                                        >
+                                      </span>
+                                      <span class="required-symboll">*</span>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-12 mt-1">
+                                  <div class="col pl-0 pr-0 main3 mb-2 bg-grey">
+                                    <label class="field fieldd pr-0">
+                                      <input
+                                        class="field__input field__inputt text-right pr-3"
+                                        type="email"
+                                        [readonly]="true"
+                                        placeholder="Enter Email Address"
+                                        value="{{ this.loggedinUser?.email }}"
+                                        formControlName="email"
+                                      />
+                                      <span class="field__label-wrap">
+                                        <span class="field__label field__label2"
+                                          >Email Address</span
+                                        >
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-12 mt-1">
+                                  <span
+                                    *ngIf="contactNoError != ''"
+                                    class="text-danger"
+                                    >{{ contactNoError }}</span
+                                  >
+                                  <div class="col pl-0 pr-0 main3 mb-2">
+                                    <label
+                                      class="field fieldd required_fieldd3"
+                                    >
+                                      <input
+                                        class="field__input field__inputt text-right pr-3"
+                                        type="text"
+                                        placeholder="+1(xxx) xxx xxxx"
+                                        (input)="changeNumber($event)"
+                                        formControlName="contact_number"
+                                      />
+                                      <span class="field__label-wrap">
+                                        <span class="field__label field__label2"
+                                          >Phone number</span
+                                        >
+                                      </span>
+                                    </label>
+                                  </div>
+                                </div>
+
+                                <div class="col-12 row center mt-4">
+                                  <div
+                                    class="col-6 d-flex align-items-center justify-content-center"
+                                  >
+                                    <button
+                                      *ngIf="!update_loading"
+                                      type="submit"
+                                      class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                                    >
+                                      Update
+                                    </button>
+                                    <button
+                                      *ngIf="update_loading"
+                                      type="button"
+                                      disabled
+                                      class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                                    >
+                                      Updating...
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="">
+                      <div
+                        class="main3 mb-2 cursor-pointer"
+                        data-toggle="modal"
+                        data-target="#editProfile"
+                      >
+                        <div class="col-md-12 row p-0">
+                          <div class="col pr-0">
+                            <label class="field fieldd required_fieldd">
+                              <input
+                                class="field__input field__inputt name-input cursor-pointer"
+                                type="text"
+                                [readonly]="true"
+                                value="{{ this.loggedinUser?.full_name }}"
+                              />
+                              <span class="field__label-wrap">
+                                <span class="field__label cust-label"
+                                  >Full name</span
+                                >
+                              </span>
+                              <span class="required-symboll">*</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="main3 mb-2 cursor-pointer"
+                        data-toggle="modal"
+                        data-target="#editProfile"
+                      >
+                        <div class="col-md-12 row p-0">
+                          <div class="col pr-0">
+                            <label class="field fieldd pr-0">
+                              <input
+                                class="field__input field__inputt text-right pr-3 cursor-pointer"
+                                type="email"
+                                [readonly]="true"
+                                placeholder="Enter Email Address"
+                                value="{{ this.loggedinUser?.email }}"
+                              />
+                              <span class="field__label-wrap">
+                                <span class="field__label field__label2"
+                                  >Email Address</span
+                                >
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div
+                        class="main3 mb-2 cursor-pointer"
+                        data-toggle="modal"
+                        data-target="#editProfile"
+                      >
+                        <div class="col-md-12 row p-0">
+                          <div class="col pr-0 cursor-pointer">
+                            <label
+                              class="field fieldd required_fieldd cursor-pointer"
+                            >
+                              <input
+                                class="field__input field__inputt text-right pr-3"
+                                type="text"
+                                [readonly]="true"
+                                placeholder="+1(xxx) xxx xxxx"
+                                (input)="changeNumber($event)"
+                                value="{{
+                                  this.loggedinUser?.user_contact_number
+                                }}"
+                              />
+                              <span class="field__label-wrap">
+                                <span class="field__label field__label2"
+                                  >Phone number</span
+                                >
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-3">
+                  <div class="col-md-7">
+                    <div style="position: absolute; width: 100%">
+                      <div
+                        tabindex="-1"
+                        class="modal fade"
+                        style="position: relative !important"
+                        id="changeAddress"
+                        aria-labelledby="changeAddress"
+                        aria-modal="true"
+                        role="dialog"
+                      >
+                        <div class="modal-dialog margin-auto">
+                          <div class="modal-content modal-bg-white">
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-11 row ml-1 mb-2 pr-0">
+                                  <div class="col-12 text-center">
+                                    <div
+                                      class="heading-5-400 text-color-111727 text-center"
+                                    >
+                                      Add/update address
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-1">
+                                  <button
+                                    type="button"
+                                    data-bs-dismiss="modal"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                    class="my-modal-close border-0 bg-transparent shadow-none"
+                                  >
+                                    <img
+                                      src="./assets/images/cross_2.svg"
+                                      alt="Close"
+                                      style="
+                                        width: 14px;
+                                        height: 14px;
+                                        margin-top: -10px;
+                                        margin-right: -15px;
+                                      "
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row mt-1">
+                                <div class="col-6">
+                                  <span
+                                    *ngIf="streetError != ''"
+                                    class="text-danger"
+                                    >{{ streetError }}</span
+                                  >
+                                  <div class="title-52 text-grey-shade2">
+                                    Street
+                                  </div>
+                                  <div
+                                    class="position-relative required_field11"
+                                  >
+                                    <img
+                                      src="../../assets/icons/pencile.svg"
+                                      alt=""
+                                      width="17px"
+                                      class="top-right-icon2"
+                                    />
+                                    <input
+                                      type="text"
+                                      formControlName="street"
+                                      class="field-input2"
+                                      placeholder="Type here"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col-6">
+                                  <span
+                                    *ngIf="cityError != ''"
+                                    class="text-danger"
+                                    >{{ cityError }}</span
+                                  >
+                                  <div
+                                    class="title-52 text-grey-shade2 text-right"
+                                  >
+                                    City/Town
+                                  </div>
+                                  <div
+                                    class="position-relative required_field12"
+                                  >
+                                    <img
+                                      src="../../assets/icons/pencile.svg"
+                                      alt=""
+                                      width="17px"
+                                      class="top-left-icon2"
+                                    />
+                                    <input
+                                      type="text"
+                                      formControlName="city"
+                                      class="field-input2 text-right"
+                                      placeholder="Type here"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row mt-2">
+                                <div class="col-4">
+                                  <span
+                                    *ngIf="countryError != ''"
+                                    class="text-danger"
+                                    >{{ countryError }}</span
+                                  >
+                                  <div class="title-52 text-grey-shade2">
+                                    Country
+                                  </div>
+                                  <div
+                                    class="position-relative required_field11"
+                                  >
+                                    <select
+                                      formControlName="country"
+                                      (change)="setCountry($event)"
+                                      class="field-input2"
+                                    >
+                                      <option
+                                        value="Canada"
+                                        [selected]="this.country == 'Canada'"
+                                      >
+                                        Canada
+                                      </option>
+                                      <option
+                                        value="USA"
+                                        [selected]="this.country == 'USA'"
+                                      >
+                                        USA
+                                      </option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <span
+                                    *ngIf="provinceError != ''"
+                                    class="text-danger"
+                                    >{{ provinceError }}</span
+                                  >
+                                  <div
+                                    class="title-52 text-grey-shade2 text-center"
+                                  >
+                                    Province/State
+                                  </div>
+                                  <div
+                                    class="position-relative required_field11"
+                                  >
+                                    <select
+                                      type="text"
+                                      class="field-input2"
+                                      [ngModel]="this.province"
+                                      formControlName="province_state"
+                                    >
+                                      <ng-container
+                                        *ngIf="this.country == 'Canada'"
+                                      >
+                                        <option
+                                          *ngFor="
+                                            let pro of this.canada_provinces
+                                          "
+                                          value="{{ pro }}"
+                                          [selected]="pro == this.province"
+                                        >
+                                          {{ pro }}
+                                        </option>
+                                      </ng-container>
+
+                                      <ng-container
+                                        *ngIf="this.country == 'USA'"
+                                      >
+                                        <option
+                                          *ngFor="let pro of this.usa_provinces"
+                                          value="{{ pro }}"
+                                          [selected]="pro == this.province"
+                                        >
+                                          {{ pro }}
+                                        </option>
+                                      </ng-container>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div
+                                    class="title-52 text-grey-shade2 text-right"
+                                  >
+                                    Postal Code
+                                  </div>
+                                  <div class="position-relative">
+                                    <img
+                                      src="../../assets/icons/pencile.svg"
+                                      alt=""
+                                      width="17px"
+                                      class="top-left-icon2"
+                                    />
+                                    <input
+                                      type="text"
+                                      formControlName="postal_code"
+                                      class="field-input2 text-right"
+                                      placeholder="Type here"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row mt-3">
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                  <button
+                                    *ngIf="!update_loading"
+                                    type="submit"
+                                    class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                                  >
+                                    Update
+                                  </button>
+                                  <button
+                                    *ngIf="update_loading"
+                                    type="button"
+                                    disabled
+                                    class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                                  >
+                                    Updating...
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="main3 mb-2 cursor-pointer"
+                      data-target="#changeAddress"
+                      data-toggle="modal"
+                    >
+                      <div class="col-md-12 row p-0">
+                        <div class="col pr-0 cursor-pointer">
+                          <label class="field fieldd">
+                            <input
+                              class="field__input field__inputt cursor-pointer"
+                              type="text"
+                              [readonly]="true"
+                              value="{{ this.full_address }}"
+                            />
+                            <span class="field__label-wrap">
+                              <span class="field__label">Address</span>
+                            </span>
+                            <img
+                              src="../../assets/icons/pencile.svg"
+                              alt=""
+                              width="17px"
+                              class="top-right-icon"
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5"></div>
+            </div>
+            <div class="row mt-20">
+              <div class="col-md-12">
+                <div class="myhr3px"></div>
+              </div>
+            </div>
+            <div class="row mt-20">
+              <div class="col-md-7">
+                <div class="heading_name">Change password</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                <div class="row mt-3">
+                  <div class="col-md-5">
+                    <div style="position: absolute; width: 100%">
+                      <form
+                        [formGroup]="passwordForm"
+                        (ngSubmit)="onPassword()"
+                      >
+                        <div
+                          tabindex="-1"
+                          class="modal fade"
+                          style="position: relative !important"
+                          id="changePassword"
+                          aria-labelledby="changePassword"
+                          aria-modal="true"
+                          role="dialog"
+                        >
+                          <div class="modal-dialog margin-auto">
+                            <div class="modal-content modal-bg-white">
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col-11 row ml-1 mb-2 pr-0">
+                                    <div class="col-12 text-center">
+                                      <div
+                                        class="heading-5-400 text-color-111727 text-center"
+                                      >
+                                        Change password
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-1">
+                                    <button
+                                      type="button"
+                                      data-bs-dismiss="modal"
+                                      data-dismiss="modal"
+                                      aria-label="Close"
+                                      class="my-modal-close border-0 bg-transparent shadow-none"
+                                    >
+                                      <img
+                                        src="./assets/images/cross_2.svg"
+                                        alt="Close"
+                                        style="
+                                          width: 14px;
+                                          height: 14px;
+                                          margin-top: -10px;
+                                          margin-right: -15px;
+                                        "
+                                      />
+                                    </button>
+                                  </div>
+                                </div>
+                                <div class="row mt-1">
+                                  <div class="col-12 mt-1">
+                                    <div
+                                      *ngIf="oldPasswordError != ''"
+                                      class="text-danger col-md-12"
+                                    >
+                                      {{ oldPasswordError }}
+                                    </div>
+                                    <div class="col pl-0 pr-0 main3 mb-2">
+                                      <label
+                                        class="field fieldd pr-0 required_fieldd3"
+                                      >
+                                        <input
+                                          class="field__input field__inputt pr-3"
+                                          type="password"
+                                          placeholder=""
+                                          formControlName="old_password"
+                                        />
+                                        <span class="field__label-wrap">
+                                          <span
+                                            class="field__label field__label"
+                                            >Current password</span
+                                          >
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-12 mt-1">
+                                    <div class="col pl-0 pr-0 main3 mb-2">
+                                      <label
+                                        class="field fieldd pr-0 required_fieldd3"
+                                      >
+                                        <input
+                                          class="field__input field__inputt pr-3"
+                                          type="password"
+                                          placeholder=""
+                                          (input)="checkPassword($event)"
+                                          formControlName="new_password"
+                                        />
+                                        <span class="field__label-wrap">
+                                          <span
+                                            class="field__label field__label"
+                                            >New password</span
+                                          >
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="col-12 mt-1">
+                                    <span
+                                      *ngIf="confirmPasswordError != ''"
+                                      class="text-danger"
+                                      >{{ confirmPasswordError }}</span
+                                    >
+                                    <div class="col pl-0 pr-0 main3 mb-2">
+                                      <label
+                                        class="field fieldd pr-0 required_fieldd3"
+                                      >
+                                        <input
+                                          class="field__input field__inputt pr-3"
+                                          type="password"
+                                          placeholder=""
+                                          formControlName="confirm_password"
+                                        />
+                                        <span class="field__label-wrap">
+                                          <span
+                                            class="field__label field__label"
+                                            >Retype new password</span
+                                          >
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12">
+                                      <div
+                                        [class]="
+                                          atleast_eight === true ||
+                                          upper_lower === true ||
+                                          number_symbol_space === true
+                                            ? 'pt-3'
+                                            : ''
+                                        "
+                                      >
+                                        <div
+                                          class="text-danger d-flex pl-3 pr-3"
+                                          *ngIf="atleast_eight === true"
+                                        >
+                                          <i class="fa fa-circle"></i>
+                                          <div class="desc-2 ml-1">
+                                            Atleast 8 character
+                                          </div>
+                                        </div>
+                                        <div
+                                          class="text-danger d-flex pl-3 pr-3"
+                                          *ngIf="upper_lower === true"
+                                        >
+                                          <i class="fa fa-circle"></i>
+                                          <div class="desc-2 ml-1">
+                                            Atleast one uppercase and one
+                                            lowercase character
+                                          </div>
+                                        </div>
+                                        <div
+                                          class="text-danger d-flex pl-3 pr-3"
+                                          *ngIf="number_symbol_space === true"
+                                        >
+                                          <i class="fa fa-circle"></i>
+                                          <div class="desc-2 ml-1">
+                                            Atleast one number, symbol, or
+                                            whitespace character
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-12 row center mt-1">
+                                    <div
+                                      class="col-6 d-flex align-items-center justify-content-center"
+                                    >
+                                      <button
+                                        *ngIf="!password_loading"
+                                        type="submit"
+                                        class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                                      >
+                                        Change
+                                      </button>
+                                      <button
+                                        *ngIf="password_loading"
+                                        type="button"
+                                        disabled
+                                        class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                                      >
+                                        Changing...
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div
+                      class="main3 mb-2 cursor-pointer"
+                      data-target="#changePassword"
+                      data-toggle="modal"
+                    >
+                      <div class="col-md-12 row p-0">
+                        <div class="col pr-0 cursor-pointer">
+                          <label class="field fieldd required_fieldd">
+                            <input
+                              class="field__input field__inputt cursor-pointer"
+                              type="text"
+                              [readonly]="true"
+                              value="******************"
+                            />
+                            <span class="field__label-wrap">
+                              <span class="field__label">Current password</span>
+                            </span>
+                            <img
+                              _ngcontent-wwp-c122=""
+                              src="../../assets/icons/pencile.svg"
+                              alt=""
+                              width="17px"
+                              class="top-right-icon"
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-20">
+              <div class="col-md-12">
+                <div class="myhr3px"></div>
+              </div>
+            </div>
+            <div class="row mt-20">
+              <div class="col-md-7">
+                <div class="heading_name">Notifications</div>
+              </div>
+            </div>
+          </form>
+
+
+
+          <ng-container *ngIf="showContent">
+
+            <div class="row mt-20">
+              <div class="col-md-12">
+                <div class="myhr3px"></div>
+              </div>
+            </div>
+            <div class="row mt-20">
+              <div class="col-md-12 d-flex align-items-center justify-content-between position-relative">
+                <div class="heading_name">Help - responses</div>
+                <button class="mybtn mybtn-default text-blue btn-nav ml-2 float-right" (click)="showModal('helptopic')"> Help / question </button>
+                 <!-- new help topic -->
+                <div *ngIf="this.current_modal && this.current_modal === 'helptopic'"
+                  class="modal fade show show2 d-flex align-items-center" id="invitePeople3"
+                  style="display: block; padding-right: 17px;" tabindex="-1" role="dialog"
+                  aria-labelledby="myModalLabel">
+                    <div class="modal-dialog modal-dialog-right" role="document">
+                        <div class="modal-content modal-bg-white">
+                            <div class="modal-body p-10px " >
+                              <div class="d-flex align-items-center justify-content-between margin-bottom-15">
+                                  <img src="./assets/images/cross_2.svg" class="float-right top-right-icon2 cursor-pointer" (click)="this.hideModal()">
+                                <div class="">
+                                  <div class="modal-start-text">
+                                    Type your question below
+                                  </div>
+                                  <div class="modal-main-heading mt-1">
+                                    Ask from DispatchProX
+                                  </div>
+                                </div>
+                                <div class="">
+                                  <div class="modal-heading-badge">
+                                    Help / question
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="topic-form-container mt-18">
+                                <form [formGroup]="helpTopicForm" (ngSubmit)="onSaveTopic()" enctype="multipart/form-data" class="mt-15px">
+                                  <!-- Topic Input -->
+                                  <div class="field-container d-flex justify-content-start align-items-center">
+                                    <div class="d-flex align-items-center justify-content-center heading-form">
+                                      Topic :
+                                    </div>
+                                    <div class="ml-3 d-flex align-items-center justify-content-center w-full">
+                                      <span *ngIf="topicError != ''" class="text-danger">{{ topicError }}</span>
+                                      <label class="field text-field required_field w-full mb-0">
+                                        <textarea
+                                          class="field__input"
+                                          placeholder="Enter"
+                                          formControlName="topic_title"
+                                        ></textarea>
+                                        <span class="field__label-wrap">
+                                          <span class="field__label">Topic title</span>  <!-- Updated label -->
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <br />
+                                  <div class="label_text">
+                                    Note: DispatchProX cannot help with questions about the projects, jobs, vendors, or customers. Instead, we can
+                                    help/answer how you can use tragget.com and are happy to hear how to improve this tool to serve you better.
+                                  </div>
+                                  <br />
+
+                                  <!-- Details Input -->
+                                  <div class="field-container d-flex justify-content-start align-items-center">
+                                    <div class="d-flex align-items-center justify-content-center heading-form">
+                                      Details :
+                                    </div>
+                                    <div class="ml-3 d-flex align-items-center justify-content-center w-full">
+                                      <span *ngIf="topicError != ''" class="text-danger">{{ topicError }}</span>
+                                      <label class="field text-field w-full mb-0">
+                                        <textarea
+                                          class="field__input field_input2"
+                                          placeholder="Type here, more details you can share, the better we can respond to you."
+                                          formControlName="detail"
+                                          style="height:max-content"
+                                        ></textarea>
+                                        <span class="field__label-wrap">
+                                          <span class="field__label2"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <!-- Submit Button -->
+                                  <div class="d-flex align-items-center justify-content-center mb-2" style="margin-top: 30px !important;">
+                                    <div class="">
+                                      <button
+                                        class="response-btn d-flex align-items-center justify-content-between"
+                                        type="submit"
+                                        [disabled]="is_loading_topic || !helpTopicForm.valid"
+                                      >
+                                        <span *ngIf="!is_loading_topic">Submit</span>
+                                        <span *ngIf="is_loading_topic">Processing...</span>
+                                        <img src="assets/images/response-add-black.svg" />
+                                      </button>
+
+                                    </div>
+                                  </div>
+                                </form>
+
+                              </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!--closed converstations-->
+            <ng-container *ngFor="let topic of  this.help_topics; let i = index;">
+              <div class="row mt-20">
+                <div class="col-md-7">
+                  <div class="topic-container" [ngClass]="{'has-unread': hasUnreadMessages(topic)}">
+                    <div class="topic-heading conversation-toggle cursor-pointer" (click)="this.toggleConversation(topic.id)" >
+                      Topic: {{ topic.topic_title ? topic.topic_title: (topic?.detail ? topic?.detail:'') }}
+                    </div>
+                    <div class="topic-write-box">
+
+                        <ng-container *ngIf="open_conversation !== topic.id">
+                          <div class="conversation-container conversation-header">
+                            <!-- Check and show the last conversation -->
+                            <ng-container *ngIf="topic.conversations?.length > 0; else noConversations">
+                              <div style="border-radius: 0px 0px 5px 5px;"
+                              [ngClass]="{
+                                'tragget-reply': topic.conversations[0]?.admin_id,
+                                'user-reply': !topic.conversations[0]?.admin_id
+                              }"
+                            >
+                              <span *ngIf="topic.conversations[0]?.admin_id">DispatchProX:</span>
+                              <span *ngIf="!topic.conversations[0]?.admin_id">{{ topic.conversations[0]?.user?.full_name }}:</span>
+                              
+                              {{ topic.conversations[0]?.created_at | date:"Y-M-d"}} 
+                              {{ topic.conversations[0]?.created_at | date:"shortTime"}} :
+                              {{ topic.conversations[0]?.text }}
+                            </div>
+                            
+                            </ng-container>
+                            
+                            <ng-template #noConversations>
+                              <div style="border-radius: 0px 0px 5px 5px;" class="tragget-reply">No conversations available.</div>
+                            </ng-template>
+                          </div>
+                        </ng-container>
+
+                        <div *ngIf="open_conversation === topic.id" class="conversation-container conversation-body">
+                          <div *ngIf="topic.is_closed === 'NO'">
+                            <!-- Display open conversation -->
+                            <div *ngFor="let conversation of topic.conversations">
+                              <div
+                                class="tragget-reply"
+                                *ngIf="conversation.admin_id"
+
+                                [class.unread]="!conversation.is_read">
+                                DispatchProX : {{ conversation.created_at | date:"Y-M-d"}} {{ conversation.created_at | date:"shortTime"}} : {{ conversation.text }} 
+                              </div>
+                              <div
+                                class="user-reply"
+                                *ngIf="!conversation.admin_id"
+
+                                [class.unread]="!conversation.is_read">
+                                {{ conversation.user.full_name }} : {{ conversation.created_at | date:"Y-M-d"}} {{ conversation.created_at | date:"shortTime"}} : {{ conversation.text }} 
+                              </div>
+                            </div>
+                            <div class="label-text mt-1 plr-10">
+                              Write to tragget
+                            </div>
+                            <div class="mt-1">
+                              <div class="write-box position-relative plr-10" >
+                                <textarea class="write-conversation w-100 pr-5"
+                                rows="1"
+                                style="resize: vertical; overflow: hidden; white-space: nowrap;"
+                                [(ngModel)]="responseText">
+                              </textarea>
+                            
+                                <!-- Button positioned over the textarea -->
+                                <button class="response-btn position-absolute d-flex align-items-center top-50 end-0 translate-middle-y" 
+                                style="right: 10px; top: 41%; transform: translateY(-50%); justify-content: space-between;" 
+                                (click)="submitResponse(topic.id)">
+                            <div class="me-2">Response</div>
+                            <img src="../../assets/images/response-add-black.svg" alt="Response Icon">
+                        </button>
+                        
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tragget-reply" *ngIf="topic.is_closed === 'YES'">
+                      
+                            <!-- Message when topic is closed -->
+                            This topic has been closed due to inactivity.
+                          </div>
+                        </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

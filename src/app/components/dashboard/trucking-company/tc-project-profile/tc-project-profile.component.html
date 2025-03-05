@@ -1,0 +1,2177 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="project-profile-header-container">
+        <div class="profile_heading_div1">
+          <div
+            class="project-profile-header-left d-flex align-items-center ml-0"
+          >
+            <img
+              src="./assets/icons/tc-project-icon.svg"
+              alt="project-profile-file-icon"
+            />
+            <div class="heading-1-400 text-color-black">
+              Profile
+              {{
+                this.project && this.project?.project_name != ""
+                  ? " - " + this.project?.project_name
+                  : ""
+              }}
+            </div>
+          </div>
+        </div>
+        <div class="d-flex-center align-items-center">
+          <button
+            class="mybtn bg-blue text-white active btn-nav d-flex justify-content-center align-items-center"
+          >
+            <img src="assets/icons/tc-project-icon-white.svg" />
+            <div class="nav-button-text">Project profile</div>
+          </button>
+          <button
+            class="mybtn mybtn-default text-blue btn-nav ml-2 d-flex justify-content-center align-items-center"
+            [routerLink]="[
+              '/tc-dispatch-new',
+              this.project?.id +
+                '-' +
+                (this.project?.trucking_company_id ? 'YES' : 'NO')
+            ]"
+          >
+            <img src="assets/icons/tc-dispatch-icon.svg" />
+            <div class="nav-button-text">
+              Create<br />
+              Dispatch
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="main-project-setting-container inner_main_shadow">
+        <div class="heading-1-400 text-color-black mb-65px">
+          {{
+            this.cc && this.cc?.company_name != "" ? this.cc?.company_name : ""
+          }}
+          {{
+            this.project && this.project?.project_name != ""
+              ? " - " + this.project?.project_name
+              : ""
+          }}
+        </div>
+
+        <div class="row project-profile">
+          <div class="col-md-9">
+            <!-- Project Update -->
+            <div
+              class="yellow-div project-details cursor-pointer"
+              (click)="toggleEditProject('show')"
+            >
+              <div class="heading-1-400 text-color-black mb-20px">
+                {{
+                  this.cc && this.cc?.company_name != ""
+                    ? this.cc?.company_name
+                    : ""
+                }}
+              </div>
+
+              <div class="row mb-20px">
+                <div class="col-md-3 col-md-3-m pr-5px">
+                  <div class="border-div-input">
+                    <div class="input-label-grey">project name</div>
+                    <div class="input-value">
+                      {{ this.project?.project_name }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-md-2-m pr-5px">
+                  <div class="border-div-input">
+                    <div class="input-label-grey">Job number</div>
+                    <div class="input-value">
+                      {{ this.project?.job_number }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="border-div-input">
+                    <div class="input-label-grey">Project address</div>
+                    <div class="input-value">
+                      {{ this.complete_address }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-20px">
+                <div class="col-lg-3 col-md-4 pr-5px">
+                  <div
+                    class="border-div-input height-35px height-auto d-flex justify-content-between align-items-center"
+                  >
+                    <img src="assets/images/recycle.svg" />
+                    <div class="input-label-grey text-center">
+                      Default number of rounds
+                    </div>
+                    <div class="input-value white-input-round">
+                      {{ this.project?.default_rounds }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-4 pr-5px">
+                  <div
+                    class="border-div-input height-35px height-auto d-flex justify-content-between align-items-center"
+                  >
+                    <img src="assets/images/camera.svg" />
+                    <div class="input-label-grey ml-2 mr-1">
+                      Require a paper ticket with each dispatch
+                    </div>
+                    <input
+                      type="checkbox"
+                      disabled
+                      id="floatingInputValue1"
+                      class="project-profile-input-paperticket"
+                      [checked]="this.project?.require_paper_ticket == 'YES'"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- Dumpsites -->
+              <div class="row mb-20px">
+                <div class="col-md-12">
+                  <div class="input-value mb-20px">Project dump sites</div>
+
+                  <div class="table-responsive">
+                    <table class="projects-list-table2">
+                      <thead class="pp2-table">
+                        <tr class="tab_head_2 bg-blue-final">
+                          <td>
+                            <div class="input-label-grey">Dump site name</div>
+                          </td>
+                          <td>
+                            <div class="input-label-grey">
+                              Dump site address
+                            </div>
+                          </td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let ds of project?.dump_sites">
+                          <tr
+                            class="tab_body_2 bg-light-yellow cursor-pointer"
+                            (click)="showEditDump(ds)"
+                          >
+                            <td>
+                              <div class="input-value">
+                                {{ ds?.dump_site }}
+                              </div>
+                            </td>
+
+                            <td>
+                              <div class="input-value">
+                                {{ ds?.location }}
+                              </div>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Edit project details container   -->
+            <div class="yellow-div edit-project-view">
+              <div class="line-height-24 heading-1-400 text-color-black mb-10">
+                Edit project details
+                <img
+                  src="./assets/images/cross_2.svg"
+                  class="float-right top-right-icon2 cursor-pointer"
+                  (click)="toggleEditProject('hide')"
+                />
+              </div>
+              <form [formGroup]="editProject">
+                <div class="edit-project-details-form-container row">
+                  <div class="col-md-3 col-md-3-m pl-5px pr-5px">
+                    <span
+                      *ngIf="
+                        editProject.get('project_name')?.invalid && form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Project name is required.
+                    </span>
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="Type here"
+                        [value]="this.project?.project_name"
+                        formControlName="project_name"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">Project name</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-2 col-md-2-m pr-5px pl-5px">
+                    <span
+                      *ngIf="
+                        editProject.get('job_number')?.invalid && form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Job number is required.
+                    </span>
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="Type here"
+                        [value]="this.project?.job_number"
+                        formControlName="job_number"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">Job number</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-4 pl-5px">
+                    <span
+                      *ngIf="editProject.get('street')?.invalid && form_clicked"
+                      class="text-danger"
+                    >
+                      Address is required.
+                    </span>
+                    <label
+                      class="field text-field required_field cursor-pointer {{
+                        this.show_edit_cc_address ? 'mb-0' : ''
+                      }}"
+                      (click)="showEditAddress()"
+                    >
+                      <input
+                        class="field__input"
+                        placeholder="Type here"
+                        value="{{
+                          this.complete_address ? this.complete_address : ''
+                        }}"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">Project address</span>
+                      </span>
+                    </label>
+                    <input
+                      type="hidden"
+                      formControlName="street"
+                      [value]="this.project?.project_location"
+                    />
+                    <input type="hidden" formControlName="city" />
+                    <input type="hidden" formControlName="state" />
+                    <input type="hidden" formControlName="country" />
+                    <input type="hidden" formControlName="postcode" />
+                    <div style="position: absolute; width: 100%">
+                      <div
+                        tabindex="-1"
+                        class="modal fade"
+                        *ngIf="this.show_edit_cc_address"
+                        style="position: relative !important; display: block"
+                        id="addNewAddress2"
+                        aria-labelledby="addNewAddress2"
+                        aria-modal="true"
+                        role="dialog"
+                      >
+                        <div
+                          class="modal-dialog margin-auto d-flex justify-content-center"
+                        >
+                          <div class="modal-content borderr2 w_h_modal">
+                            <div
+                              class="modal-body address-modal main_div_address"
+                            >
+                              <div class="row mt-4">
+                                <div class="col-12 ml-1 mb-2 px-0">
+                                  <div
+                                    class="col-12 text-center d-flex justify-content-center align-items-center"
+                                  >
+                                    <div class="heading_7 text-center">
+                                      Add/update address
+                                    </div>
+                                    <div class="float-right">
+                                      <button
+                                        type="button"
+                                        (click)="hideEditAddress()"
+                                        aria-label="Close"
+                                        class="my-modal-close border-0 bg-transparent shadow-none"
+                                      >
+                                        <img
+                                          src="./assets/images/cross_2.svg"
+                                          alt="Close"
+                                          style="
+                                            width: 14px;
+                                            height: 14px;
+                                            margin-top: -10px;
+                                            margin-right: -15px;
+                                            position: absolute;
+                                            right: 24px;
+                                          "
+                                        />
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row mt-1">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <div
+                                      class="d-flex align-items-center required_field3"
+                                    >
+                                      <div class="title_4">Street</div>
+                                    </div>
+                                    <span
+                                      *ngIf="addressError != ''"
+                                      class="text-danger"
+                                      >{{ addressError }}
+                                    </span>
+                                    <div class="position-relative borderr2">
+                                      <input
+                                        type="text"
+                                        class="myinput-new myinput3 px-1 pr-1 font-size-14"
+                                        value="{{ this.project?.street }}"
+                                        id="edit_street"
+                                        placeholder="Type here"
+                                      />
+                                      <img
+                                        src="../../assets/icons/pencil2_0.svg"
+                                        width="21px"
+                                        alt=""
+                                        class="edit-icon-top-right"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <div
+                                      class="d-flex align-items-center justify-content-between h_15"
+                                    >
+                                      <div
+                                        class="required_field_label ml-5px mr-2"
+                                      >
+                                        *
+                                      </div>
+                                      <div class="title_4 text-left">
+                                        City/Town
+                                      </div>
+                                    </div>
+                                    <span
+                                      *ngIf="cityError != ''"
+                                      class="text-danger"
+                                      >{{ cityError }}
+                                    </span>
+                                    <div class="position-relative borderr2">
+                                      <img
+                                        src="../../assets/icons/pencil2_0.svg"
+                                        width="21px"
+                                        alt=""
+                                        class="edit-icon-top-right edit-icon-top-right2"
+                                      />
+                                      <input
+                                        type="text"
+                                        class="myinput-new myinput3 text-right font-size-14"
+                                        value="{{ this.project?.city }}"
+                                        id="edit_city"
+                                        placeholder="Type here"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row mt-2">
+                                <div class="col-4">
+                                  <span
+                                    *ngIf="countryError != ''"
+                                    class="text-danger"
+                                    >{{ countryError }}</span
+                                  >
+                                  <div class="title_4 text-left">Country</div>
+                                  <div
+                                    class="position-relative required_field11"
+                                  >
+                                    <select
+                                      id="edit_country"
+                                      (change)="setCCCountry($event)"
+                                      class="field-input2 color-grey font-size-14"
+                                    >
+                                      <option
+                                        value="Canada"
+                                        [selected]="
+                                          this.project_country == 'Canada'
+                                        "
+                                      >
+                                        Canada
+                                      </option>
+                                      <option
+                                        value="USA"
+                                        [selected]="
+                                          this.project_country == 'USA'
+                                        "
+                                      >
+                                        USA
+                                      </option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <span
+                                    *ngIf="provinceError != ''"
+                                    class="text-danger"
+                                    >{{ provinceError }}</span
+                                  >
+                                  <div class="title_4 text-center">
+                                    Province/State
+                                  </div>
+                                  <div
+                                    class="position-relative required_field11"
+                                  >
+                                    <select
+                                      type="text"
+                                      class="field-input2 color-grey font-size-14"
+                                      id="edit_province"
+                                      (change)="setCCProvince($event)"
+                                    >
+                                      <ng-container
+                                        *ngIf="this.project_country == 'Canada'"
+                                      >
+                                        <option
+                                          value=""
+                                          [selected]="!this.project_province"
+                                        >
+                                          Select
+                                        </option>
+                                        <option
+                                          *ngFor="
+                                            let pro of this.canada_provinces
+                                          "
+                                          value="{{ pro }}"
+                                          [selected]="
+                                            pro == this.project_province
+                                          "
+                                        >
+                                          {{ pro }}
+                                        </option>
+                                      </ng-container>
+
+                                      <ng-container
+                                        *ngIf="this.project_country == 'USA'"
+                                      >
+                                        <option
+                                          value=""
+                                          [selected]="!this.project_province"
+                                        >
+                                          Select
+                                        </option>
+                                        <option
+                                          *ngFor="let pro of this.usa_provinces"
+                                          value="{{ pro }}"
+                                          [selected]="
+                                            pro == this.project_province
+                                          "
+                                        >
+                                          {{ pro }}
+                                        </option>
+                                      </ng-container>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="title_4 text-right">
+                                    Postal Code
+                                  </div>
+                                  <div class="position-relative">
+                                    <img
+                                      src="../../assets/icons/pencil2_0.svg"
+                                      alt=""
+                                      width="21px"
+                                      class="top-left-icon2 edit-icon-top-right2 color-grey"
+                                    />
+                                    <input
+                                      type="text"
+                                      placeholder="Type here"
+                                      value="{{ this.project?.post_code }}"
+                                      id="edit_postcode"
+                                      class="field-input2 text-right color-grey font-size-14"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row w_428">
+                                <div class="col-4"></div>
+                                <div
+                                  class="col-4 d-flex justify-content-center"
+                                >
+                                  <button
+                                    type="button"
+                                    class="mybtn mybtn-padding update_btn"
+                                    (click)="updateAddress()"
+                                  >
+                                    Update
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input
+                    type="hidden"
+                    formControlName="project_id"
+                    value="{{ this.project?.id }}"
+                  />
+                </div>
+
+                <div class="row mb-20px">
+                  <div class="col-lg-3 col-md-4 pr-5px">
+                    <div
+                      class="border-div-input height-35px height-auto d-flex justify-content-between align-items-center"
+                    >
+                      <img src="assets/images/recycle.svg" />
+                      <div class="input-label-grey text-center">
+                        Default number of rounds
+                      </div>
+                      <input
+                        type="number"
+                        formControlName="default_rounds"
+                        value="{{ this.project?.default_rounds }}"
+                        class="input-value input-rounds white-input-round w-30px"
+                        min="0"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-4 pr-5px">
+                    <div
+                      class="border-div-input height-35px height-auto d-flex justify-content-between align-items-center"
+                    >
+                      <img src="assets/images/camera.svg" />
+                      <div class="input-label-grey ml-2 mr-1">
+                        Require a paper ticket with each dispatch
+                      </div>
+                      <input
+                        type="checkbox"
+                        (change)="changeRP($event)"
+                        id="floatingInputValue1"
+                        class="project-profile-input-paperticket"
+                        [checked]="this.require_paper_ticket == 'YES'"
+                      />
+                      <input
+                        type="hidden"
+                        value="{{ this.require_paper_ticket }}"
+                        formControlName="require_paper_ticket"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <!-- Dumpsites -->
+              <div class="row mb-20px">
+                <div class="col-md-12">
+                  <div class="input-value mb-20px">Project dump sites</div>
+                  <ng-container *ngIf="this.show_add_ds">
+                    <!-- Add new dumpsite -->
+                    <div class="table-responsive">
+                      <form
+                        [formGroup]="addDumpSite"
+                        (ngSubmit)="onAddDumpsite()"
+                      >
+                        <table class="projects-list-table2">
+                          <thead class="pp2-table">
+                            <tr class="tab_head_2 bg-blue-final">
+                              <td class="min-width-30">
+                                <div
+                                  class="d-flex align-items-center justify-content-between"
+                                >
+                                  <div class="input-label-grey">
+                                    Dump site name
+                                  </div>
+                                  <div
+                                    class="float-right font-size-24 text-red mr-20px"
+                                  >
+                                    *
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="min-width-40">
+                                <div
+                                  class="d-flex align-items-center justify-content-between"
+                                >
+                                  <div class="input-label-grey">
+                                    Dump site address
+                                  </div>
+
+                                  <div
+                                    class="float-right font-size-24 text-red mr-20px"
+                                  >
+                                    *
+                                  </div>
+                                </div>
+                              </td>
+                              <td class="min-width-30">
+                                <div class="float-right">
+                                  <button
+                                    type="button"
+                                    (click)="hideAddDump()"
+                                    aria-label="Close"
+                                    class="border-0 bg-transparent shadow-none"
+                                  >
+                                    <img
+                                      src="./assets/images/cross_2.svg"
+                                      alt="Close"
+                                      style="width: 14px; height: 14px"
+                                    />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="tab_body_2 bg-white">
+                              <td>
+                                <div class="input-value">
+                                  <input
+                                    type="text"
+                                    id="add_ds_dumpsite"
+                                    formControlName="name"
+                                    class="no-border-input input-value w-100"
+                                  />
+                                </div>
+                              </td>
+
+                              <td>
+                                <div class="input-value">
+                                  <input
+                                    type="text"
+                                    id="add_ds_location"
+                                    formControlName="address"
+                                    class="no-border-input input-value w-100"
+                                  />
+                                </div>
+                              </td>
+                              <td class="min-width-30"></td>
+                            </tr>
+                            <tr class="row-dumpsite">
+                              <td colspan="3">
+                                <div class="d-flex align-items-center">
+                                  <button
+                                    type="submit"
+                                    class="mybtn2 bg-medium-blue cp-4 br-5 text-white"
+                                    *ngIf="
+                                      this.is_loading_add == '' &&
+                                      this.is_loading_add != 'add_ds'
+                                    "
+                                  >
+                                    Add
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="mybtn2 bg-medium-blue cp-4 br-5 text-white"
+                                    disabled
+                                    *ngIf="
+                                      this.is_loading_add != '' &&
+                                      this.is_loading_add == 'add_ds'
+                                    "
+                                  >
+                                    Processing..
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </form>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="!this.show_add_ds">
+                    <!-- Edit dumpsite -->
+                    <div class="table-responsive" *ngIf="this.edit_ds">
+                      <table class="projects-list-table2">
+                        <thead class="pp2-table">
+                          <tr class="tab_head_2 bg-blue-final">
+                            <td class="min-width-30">
+                              <div
+                                class="d-flex align-items-center justify-content-between"
+                              >
+                                <div class="input-label-grey">
+                                  Dump site name
+                                </div>
+                                <div
+                                  class="float-right font-size-24 text-red mr-20px"
+                                >
+                                  *
+                                </div>
+                              </div>
+                            </td>
+                            <td class="min-width-40">
+                              <div
+                                class="d-flex align-items-center justify-content-between"
+                              >
+                                <div class="input-label-grey">
+                                  Dump site address
+                                </div>
+
+                                <div
+                                  class="float-right font-size-24 text-red mr-20px"
+                                >
+                                  *
+                                </div>
+                              </div>
+                            </td>
+                            <td class="min-width-30">
+                              <div class="float-right">
+                                <button
+                                  type="button"
+                                  (click)="hideEditDump()"
+                                  aria-label="Close"
+                                  class="border-0 bg-transparent shadow-none"
+                                >
+                                  <img
+                                    src="./assets/images/cross_2.svg"
+                                    alt="Close"
+                                    style="width: 14px; height: 14px"
+                                  />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="tab_body_2 bg-white">
+                            <td>
+                              <div class="input-value">
+                                <input
+                                  type="text"
+                                  id="edit_ds_dumpsite"
+                                  class="no-border-input input-value w-100"
+                                  value="{{ this.edit_ds?.dump_site }}"
+                                />
+                              </div>
+                            </td>
+
+                            <td>
+                              <div class="input-value">
+                                <input
+                                  type="text"
+                                  id="edit_ds_location"
+                                  class="no-border-input input-value w-100"
+                                  value="{{ this.edit_ds?.location }}"
+                                />
+                              </div>
+                            </td>
+                            <td class="min-width-30"></td>
+                          </tr>
+                          <tr class="row-dumpsite">
+                            <td colspan="3">
+                              <div class="d-flex align-items-center">
+                                <button
+                                  type="button"
+                                  class="mybtn2 bg-medium-blue cp-4 br-5 text-white"
+                                  (click)="handleEditDS()"
+                                  *ngIf="
+                                    this.is_loading_add == '' &&
+                                    this.is_loading_add != 'edit_ds'
+                                  "
+                                >
+                                  Update
+                                </button>
+                                <button
+                                  type="button"
+                                  class="mybtn2 bg-medium-blue cp-4 br-5 text-white"
+                                  disabled
+                                  *ngIf="
+                                    this.is_loading_add != '' &&
+                                    this.is_loading_add == 'edit_ds'
+                                  "
+                                >
+                                  Processing..
+                                </button>
+
+                                <div class="position-relative getinputfield">
+                                  <button
+                                    class="mybtn2 bg-white btn-blue-border cp-4 ml-10px text-blue"
+                                    *ngIf="
+                                      is_loading_add == '' ||
+                                      is_loading_add != 'delete_ds'
+                                    "
+                                  >
+                                    Remove
+                                  </button>
+                                  <button
+                                    class="mybtn2 bg-white btn-blue-border cp-4 ml-10px text-blue"
+                                    *ngIf="
+                                      is_loading_add != '' &&
+                                      is_loading_add == 'delete_ds'
+                                    "
+                                  >
+                                    Processing..
+                                  </button>
+                                  <div class="input-popup-div confirm">
+                                    <div class="welcome-desc text-black mb-16">
+                                      Confirmation
+                                    </div>
+                                    <div class="desc-2 text-color-grey mb-8">
+                                      Remove {{ this.edit_ds?.dump_site }} from
+                                      the list?
+                                    </div>
+                                    <div
+                                      align="center"
+                                      class="d-flex justify-content-center"
+                                    >
+                                      <button
+                                        class="mybtn2 bg-medium-blue cp-4 text-white br-5"
+                                        (click)="
+                                          handleDeleteDS(
+                                            this.edit_ds?.id,
+                                            this.edit_ds?.tc_project_id
+                                              ? 'YES'
+                                              : 'NO',
+                                            this.edit_ds
+                                          )
+                                        "
+                                      >
+                                        Yes
+                                      </button>
+
+                                      <button
+                                        class="mybtn-default ml-10 cancel-delete"
+                                        (click)="hideDSButton()"
+                                      >
+                                        No
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="table-responsive" *ngIf="!this.edit_ds">
+                      <table class="projects-list-table2">
+                        <thead class="pp2-table">
+                          <tr class="tab_head_2 bg-blue-final">
+                            <td class="min-width-30">
+                              <div class="input-label-grey">Dump site name</div>
+                            </td>
+                            <td class="min-width-40">
+                              <div class="input-label-grey">
+                                Dump site address
+                              </div>
+                            </td>
+                            <td class="min-width-30"></td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngFor="let ds of project?.dump_sites">
+                            <tr
+                              class="tab_body_2 bg-light-yellow cursor-pointer"
+                              (click)="showEditDump(ds)"
+                            >
+                              <td class="min-width-40">
+                                <div class="input-value">
+                                  {{ ds?.dump_site }}
+                                </div>
+                              </td>
+
+                              <td class="min-width-40">
+                                <div class="input-value">
+                                  {{ ds?.location }}
+                                </div>
+                              </td>
+                              <td class="min-width-30"></td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </div>
+                  </ng-container>
+                  <div class="d-flex align-items-center mt-5px mb-20px">
+                    <div
+                      class="add-light-blue cursor-pointer"
+                      (click)="showAddDump()"
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <mask
+                          id="mask0_19855_13325"
+                          style="mask-type: alpha"
+                          maskUnits="userSpaceOnUse"
+                          x="0"
+                          y="0"
+                          width="24"
+                          height="24"
+                        >
+                          <rect width="24" height="24" fill="#D9D9D9" />
+                        </mask>
+                        <g mask="url(#mask0_19855_13325)">
+                          <path
+                            d="M11 19V13H5V11H11V5H13V11H19V13H13V19H11Z"
+                            fill="black"
+                          />
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="ml-3 input-label-grey font-size-13">
+                      Add new
+                    </div>
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-between mt-5px"
+                  >
+                    <button
+                      type="button"
+                      class="mybtn2 bg-medium-blue cp-4 text-white"
+                      (click)="onEditProject()"
+                      *ngIf="
+                        this.is_loading_add == '' &&
+                        this.is_loading_add != 'edit_project'
+                      "
+                    >
+                      Update all
+                    </button>
+                    <button
+                      type="button"
+                      class="mybtn2 bg-medium-blue cp-4 text-white"
+                      disabled
+                      *ngIf="
+                        this.is_loading_add != '' &&
+                        this.is_loading_add == 'edit_project'
+                      "
+                    >
+                      Update all
+                    </button>
+
+                    <div class="div-project-warning p-2">
+                      <div
+                        class="d-flex align-items-center justify-content-between input-label-grey mr-1"
+                      >
+                        Remove project? To remove a project, All tickets need to
+                        be closed.
+                      </div>
+                      <div class="position-relative getinputfield">
+                        <button
+                          type="button"
+                          class="button-warning text-blue font-bold font-size-15"
+                        >
+                          Remove
+                        </button>
+                        <div class="input-popup-div confirm confirm-project">
+                          <div class="welcome-desc text-black mb-16">
+                            Remove project
+                          </div>
+                          <div class="desc-2 text-color-grey mb-8">
+                            Are sure to remove the
+                            {{ this.project?.project_name }} project?
+                          </div>
+                          <div
+                            align="center"
+                            class="d-flex justify-content-center mt-5px"
+                          >
+                            <button
+                              class="mybtn2 bg-medium-blue cp-4 text-white br-5 width-75px"
+                              (click)="handleDelete(this.project)"
+                            >
+                              Yes
+                            </button>
+
+                            <button
+                              class="mybtn-default ml-10 cancel-delete width-75px"
+                              (click)="hideDSButton()"
+                            >
+                              No
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="myhr mt-15px mb-15px"></div>
+          </div>
+
+          <!-- Team -->
+          <div class="col-md-9 project-profile">
+            <div class="d-flex align-items-center mb-20px">
+              <div class="heading-1-400 text-color-black">Team</div>
+              <div
+                class="input-label-grey font-size-12 ml-3 mt-1 d-flex align-items-center"
+              >
+                Who from your company makes things happen or approvers from
+                external companies
+              </div>
+            </div>
+
+            <div class="row mb-20px">
+              <div class="col-md-12">
+                <div class=" {{ this.edit_team_user ? 'edit-team-div' : '' }}">
+                  <ng-container *ngIf="this.edit_team_user">
+                    <div
+                      class="d-flex align-items-center justify-content-between pl-5px pr-5px mb-5px"
+                    >
+                      <div
+                        class="font-gilory font-weight-600 text-black font-size-13 pl-5px"
+                      >
+                        Edit details
+                      </div>
+                      <div
+                        class="cursor-pointer pr-5px"
+                        (click)="hideEditTeamUser()"
+                      >
+                        <svg
+                          width="21"
+                          height="21"
+                          viewBox="0 0 21 21"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <mask
+                            id="mask0_17827_2721"
+                            style="mask-type: alpha"
+                            maskUnits="userSpaceOnUse"
+                            x="0"
+                            y="0"
+                            width="21"
+                            height="21"
+                          >
+                            <rect width="21" height="21" fill="#D9D9D9" />
+                          </mask>
+                          <g mask="url(#mask0_17827_2721)">
+                            <path
+                              d="M4.375 16.6245H5.6L13.1469 9.07764L11.9219 7.85264L4.375 15.3995V16.6245ZM16.8875 7.80889L13.1687 4.13389L14.3938 2.90889C14.7292 2.57347 15.1413 2.40576 15.6301 2.40576C16.1184 2.40576 16.5302 2.57347 16.8656 2.90889L18.0906 4.13389C18.426 4.4693 18.601 4.87414 18.6156 5.34839C18.6302 5.82205 18.4698 6.2266 18.1344 6.56201L16.8875 7.80889ZM15.6188 9.09951L6.34375 18.3745H2.625V14.6558L11.9 5.38076L15.6188 9.09951Z"
+                              fill="#88898B"
+                            />
+                          </g>
+                        </svg>
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <div class="table-responsive overflow-x">
+                    <table class="projects-list-table2">
+                      <thead class="pp2-table">
+                        <tr class="tab_head_2 bg-blue-final">
+                          <td>
+                            <div class="input-label-grey">Name</div>
+                          </td>
+                          <td>
+                            <div class="input-label-grey">Email</div>
+                          </td>
+                          <td>
+                            <div class="input-label-grey">Phone number</div>
+                          </td>
+                          <td>
+                            <div class="input-label-grey">Role</div>
+                          </td>
+                          <td>
+                            <div class="input-label-grey">Default</div>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngIf="this.edit_team_user">
+                          <tr class="tab_body_22">
+                            <td>
+                              <input
+                                type="text"
+                                id="edit_team_fullname"
+                                value="{{ this.edit_team_user?.full_name }}"
+                                class="myinput-user input-value text-color-grey font-size-14"
+                              />
+                            </td>
+
+                            <td>
+                              <input
+                                type="text"
+                                id="edit_team_email"
+                                value="{{ this.edit_team_user?.email }}"
+                                class="myinput-user input-value text-color-grey font-size-14"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                id="edit_team_contact_number"
+                                value="{{
+                                  this.edit_team_user?.contact_number
+                                }}"
+                                class="myinput-user input-value text-color-grey font-size-14"
+                              />
+                            </td>
+                            <td>
+                              <div
+                                class="my-input input-right height-max-content width-150px input-div getinputfield position-relative"
+                              >
+                                <div
+                                  class="d-flex align-items-center justify-content-between cursor-pointer p-5px"
+                                >
+                                  <div
+                                    class="cursor-pointer heading-400-regular text-color-grey text-left pl-1"
+                                  >
+                                    <ng-container
+                                      *ngFor="
+                                        let userrole of edit_team_user?.roles
+                                      "
+                                    >
+                                      <div
+                                        class="font-gilory font-size-14 text-black"
+                                      >
+                                        {{ userrole?.role?.role_name }}
+                                      </div>
+                                    </ng-container>
+                                  </div>
+                                  <img
+                                    src="../../assets/images/dropdown.svg"
+                                    class="cursor-pointer"
+                                  />
+                                </div>
+                                <div
+                                  class="input-popup-div br-5 edit-roles-popup p-5p"
+                                  style="display: none"
+                                >
+                                  <div
+                                    class="title-400-regular font-size-13 mb-5px text-left pl-5px"
+                                  >
+                                    Set role
+                                    <span class="float-right"> Default</span>
+                                  </div>
+                                  <div
+                                    class="title-5-new4 bg-white w-100 cursor-pointer"
+                                  >
+                                    <div
+                                      class="d-flex align-items-center w-100 border-1px-grey pl-1"
+                                    >
+                                      <input
+                                        type="text"
+                                        readonly
+                                        (click)="setEditRole('Admin')"
+                                        class="custom-button-radio w-15px {{
+                                          checkrole('Admin', this.edit_roles) ==
+                                          'YES'
+                                            ? ' '
+                                            : ' bg-white'
+                                        }}"
+                                      />
+                                      <div class="ml-2">Admin</div>
+                                      <input
+                                        type="checkbox"
+                                        [checked]="
+                                          this.default_roles == 'Admin'
+                                        "
+                                        (change)="
+                                          setDefaultRole($event, 'Admin')
+                                        "
+                                        class="custom-button-radio bg-white position-right default_checkbox w-15px"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="title-5-new4 bg-white w-100 cursor-pointer"
+                                  >
+                                    <div
+                                      class="d-flex align-items-center w-100 border-1px-grey pl-1"
+                                    >
+                                      <input
+                                        type="text"
+                                        readonly
+                                        (click)="setEditRole('Approver')"
+                                        class="custom-button-radio w-15px  {{
+                                          checkrole(
+                                            'Approver',
+                                            this.edit_roles
+                                          ) == 'YES'
+                                            ? ''
+                                            : ' bg-white'
+                                        }}"
+                                      />
+                                      <div class="ml-2">Approver</div>
+                                      <input
+                                        type="checkbox"
+                                        [checked]="
+                                          this.default_roles == 'Approver'
+                                        "
+                                        (change)="
+                                          setDefaultRole($event, 'Approver')
+                                        "
+                                        class="custom-button-radio bg-white position-right default_checkbox w-15px"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="title-5-new4 bg-white w-100 cursor-pointer"
+                                  >
+                                    <div
+                                      class="d-flex align-items-center w-100 border-1px-grey pl-1"
+                                    >
+                                      <input
+                                        type="text"
+                                        readonly
+                                        (click)="setEditRole('Dispatcher')"
+                                        class="custom-button-radio w-15px {{
+                                          checkrole(
+                                            'Dispatcher',
+                                            this.edit_roles
+                                          ) == 'YES'
+                                            ? ' '
+                                            : '  bg-white'
+                                        }}"
+                                      />
+                                      <div class="ml-2">Dispatcher</div>
+                                      <input
+                                        type="checkbox"
+                                        [checked]="
+                                          this.default_roles == 'Dispatcher'
+                                        "
+                                        (change)="
+                                          setDefaultRole($event, 'Dispatcher')
+                                        "
+                                        class="custom-button-radio bg-white position-right w-15px default_checkbox"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="title-5-new4 bg-white w-100 cursor-pointer"
+                                  >
+                                    <div
+                                      class="d-flex align-items-center w-100 border-1px-grey pl-1"
+                                    >
+                                      <input
+                                        type="text"
+                                        readonly
+                                        (click)="setEditRole('Bookkeeper')"
+                                        class="custom-button-radio   w-15px {{
+                                          checkrole(
+                                            'Bookkeeper',
+                                            this.edit_roles
+                                          ) == 'YES'
+                                            ? ' '
+                                            : '  bg-white'
+                                        }}"
+                                      />
+                                      <div class="ml-2">Bookkeeper</div>
+                                      <input
+                                        type="checkbox"
+                                        [checked]="
+                                          this.default_roles == 'Bookkeeper'
+                                        "
+                                        (change)="
+                                          setDefaultRole($event, 'Bookkeeper')
+                                        "
+                                        class="custom-button-radio bg-white position-right default_checkbox w-15px"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex align-items-center justify-content-center mt-10px"
+                                  >
+                                    <button
+                                      class="mybtn2 bg-medium-blue cp-4 text-white br-5 width-75px"
+                                      type="button"
+                                      (click)="closerolesdiv()"
+                                    >
+                                      Set
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="input-value">
+                                <ng-container
+                                  *ngFor="let role of edit_team_user?.roles"
+                                >
+                                  <div>
+                                    <input
+                                      type="text"
+                                      readonly
+                                      class="custom-button-radio {{
+                                        role?.is_default ? '' : 'bg-white2'
+                                      }}"
+                                    />
+                                  </div>
+                                </ng-container>
+                              </div>
+                            </td>
+                            <td>
+                              <button
+                                class="mybtn2 bg-medium-blue cp-4 text-white br-5"
+                                type="button"
+                                (click)="handleRolesSet()"
+                              >
+                                Update
+                              </button>
+                            </td>
+                          </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!this.edit_team_user">
+                          <ng-container>
+                            <tr class="tab_body_22 bg-light-grey">
+                              <td>
+                                <div class="input-value">
+                                  {{ this.loggedinUser?.full_name }}
+                                </div>
+                              </td>
+                              <td>
+                                <div class="input-value">
+                                  {{ this.loggedinUser?.email }}
+                                </div>
+                              </td>
+                              <td>
+                                <div class="input-value">
+                                  {{ this.loggedinUser?.contact_number }}
+                                </div>
+                              </td>
+                              <td>
+                                <div
+                                  class="input-value font-gilory font-size-14 text-black"
+                                >
+                                  Approver
+                                </div>
+                                <div
+                                  class="input-value font-gilory font-size-14 text-black"
+                                >
+                                  Dispatcher
+                                </div>
+                              </td>
+                              <td>
+                                <div class="input-value">
+                                  <input
+                                    type="text"
+                                    readonly
+                                    class="custom-button-radio"
+                                  />
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                          <ng-container
+                            *ngFor="let user of project?.project_users"
+                          >
+                            <tr
+                              class="tab_body_22 bg-light-grey cursor-pointer"
+                              (click)="showEditTeamUser(user)"
+                            >
+                              <td>
+                                <div class="input-value">
+                                  {{ user?.full_name }}
+                                </div>
+                              </td>
+
+                              <td>
+                                <div class="input-value">
+                                  {{ user?.email }}
+                                </div>
+                              </td>
+                              <td>
+                                <div class="input-value">
+                                  {{ user?.contact_number }}
+                                </div>
+                              </td>
+                              <td>
+                                <div class="input-value">
+                                  <ng-container
+                                    *ngFor="let userrole of user?.roles"
+                                  >
+                                    <div
+                                      class="font-gilory font-size-14 text-black"
+                                    >
+                                      {{ userrole?.role?.role_name }}
+                                    </div>
+                                  </ng-container>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="input-value">
+                                  <ng-container
+                                    *ngFor="let role of user?.roles"
+                                  >
+                                    <div>
+                                      <input
+                                        type="text"
+                                        readonly
+                                        class="custom-button-radio {{
+                                          role?.is_default ? '' : 'bg-white2'
+                                        }}"
+                                      />
+                                    </div>
+                                  </ng-container>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </ng-container>
+
+                        <tr
+                          class="tab_body_22 custom-padding-row bg-light-grey"
+                          *ngIf="!this.edit_team_user"
+                        >
+                          <td>
+                            <div
+                              class="input-value getinputfield position-relative"
+                            >
+                              <div class="d-flex align-items-center">
+                                <div class="add-button">
+                                  <img src="./assets/icons/plus-icon.svg" />
+                                </div>
+                                <div class="font-semibold ml-3">Add new</div>
+                              </div>
+                              <div
+                                class="input-popup-div br-5 add-contact"
+                                style="display: none"
+                              >
+                                <div
+                                  class="title-400-regular font-size-14 mb-5px text-left"
+                                >
+                                  Job approver
+                                </div>
+                                <ng-container *ngFor="let u of this.users_list">
+                                  <div
+                                    class="title-5-new4 w-100 cursor-pointer"
+                                    *ngIf="this.loggedinUser?.id != u?.id"
+                                    (click)="setProjectUser(u)"
+                                  >
+                                    {{ u?.full_name }}
+                                  </div>
+                                </ng-container>
+                                <div
+                                  class="title-5-new4 w-100 cursor-pointer bg-white mb-20px"
+                                  [routerLink]="'/tc-manage-users'"
+                                >
+                                  <div
+                                    class="d-flex align-items-center justify-content-between w-100 border-1px-grey pl-0"
+                                  >
+                                    <div class="font-semibold font-size-14">
+                                      Add
+                                    </div>
+                                    <svg
+                                      class="float-right"
+                                      width="21"
+                                      height="21"
+                                      viewBox="0 0 21 21"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <mask
+                                        id="mask0_17827_2721"
+                                        style="mask-type: alpha"
+                                        maskUnits="userSpaceOnUse"
+                                        x="0"
+                                        y="0"
+                                        width="21"
+                                        height="21"
+                                      >
+                                        <rect
+                                          width="21"
+                                          height="21"
+                                          fill="#D9D9D9"
+                                        />
+                                      </mask>
+                                      <g mask="url(#mask0_17827_2721)">
+                                        <path
+                                          d="M4.375 16.6245H5.6L13.1469 9.07764L11.9219 7.85264L4.375 15.3995V16.6245ZM16.8875 7.80889L13.1687 4.13389L14.3938 2.90889C14.7292 2.57347 15.1413 2.40576 15.6301 2.40576C16.1184 2.40576 16.5302 2.57347 16.8656 2.90889L18.0906 4.13389C18.426 4.4693 18.601 4.87414 18.6156 5.34839C18.6302 5.82205 18.4698 6.2266 18.1344 6.56201L16.8875 7.80889ZM15.6188 9.09951L6.34375 18.3745H2.625V14.6558L11.9 5.38076L15.6188 9.09951Z"
+                                          fill="#88898B"
+                                        />
+                                      </g>
+                                    </svg>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex justify-content-center align-items-center"
+                                >
+                                  <button
+                                    class="mybtn2 bg-medium-blue cp-4 text-white br-5 width-75px"
+                                  >
+                                    Add
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-value">...</div>
+                          </td>
+                          <td>
+                            <div class="input-value">...</div>
+                          </td>
+                          <td>
+                            <div class="input-value">...</div>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="table-responsive overflow-x">
+                  <table class="projects-list-table2">
+                    <thead class="pp2-table">
+                      <tr class="tab_head_2 bg-blue-final">
+                        <td>
+                          <div class="input-label-grey">External Approvers</div>
+                        </td>
+                        <td>
+                          <div class="input-label-grey">Email</div>
+                        </td>
+                        <td>
+                          <div class="input-label-grey">Phone number</div>
+                        </td>
+                        <td>
+                          <div class="input-label-grey">Role</div>
+                        </td>
+                        <td>
+                          <div class="input-label-grey">Default</div>
+                        </td>
+                      </tr>
+                      <ng-container *ngFor="let user of project?.tc_approvers">
+                        <tr
+                          class="tab_body_22 bg-light-grey cursor-pointer"
+                          (click)="showEditTeamUser(user)"
+                        >
+                          <td>
+                            <div class="input-value">
+                              {{ user?.full_name }}
+                            </div>
+                          </td>
+
+                          <td>
+                            <div class="input-value">
+                              {{ user?.email }}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-value">
+                              {{ user?.contact_number }}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-value">
+                              <div class="font-gilory font-size-14 text-black">
+                                Approver
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-value"></div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <tr class="tab_body_22 add-row bg-light-grey">
+                        <td>
+                          <div class="input-value">
+                            <div class="d-flex align-items-center">
+                              <div
+                                class="add-button"
+                                [routerLink]="'/tc-manage-users'"
+                              >
+                                <img src="./assets/icons/plus-icon.svg" />
+                              </div>
+                              <div class="font-semibold ml-3">Add new</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-value">...</div>
+                        </td>
+                        <td>
+                          <div class="input-value">...</div>
+                        </td>
+                        <td>
+                          <div class="input-value">...</div>
+                        </td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="myhr mt-15px mb-15px"></div>
+          </div>
+          <div class="col-md-9 project-profile">
+            <div class="d-flex align-items-center mb-20px">
+              <div class="heading-1-400 text-color-black">Customer</div>
+              <div
+                class="input-label-grey font-size-12 ml-3 mt-1 d-flex align-items-center"
+              >
+                Who pays you
+              </div>
+            </div>
+            <div class="row mb-15px">
+              <div class="col-md-3">
+                <div
+                  class="my-input input-right height-55 pr-20px input-div getinputfield position-relative"
+                >
+                  <div class="input-label-grey pl-1 mb-5px cursor-pointer">
+                    Customer name
+                    <span
+                      class="text-red float-right text-right mt-1 font-size-24"
+                      >*</span
+                    >
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-between cursor-pointer"
+                  >
+                    <div
+                      class="cursor-pointer heading-400-regular text-color-grey text-left pl-1"
+                      *ngIf="
+                        !this.customer_contact?.customer_id &&
+                        !this.customer_contact?.tc_customer_id
+                      "
+                    >
+                      Select
+                    </div>
+                    <div
+                      class="cursor-pointer font-bold text-black text-left pl-1"
+                      *ngIf="
+                        this.customer_contact?.customer_id ||
+                        this.customer_contact?.tc_customer_id
+                      "
+                    >
+                      {{
+                        this.customer_contact?.customer
+                          ? this.customer_contact?.customer?.company_name
+                          : this.customer_contact?.tc_customer
+                          ? this.customer_contact?.tc_customer?.company_name
+                          : ""
+                      }}
+                    </div>
+                    <img
+                      src="../../assets/images/dropdown.svg"
+                      class="cursor-pointer"
+                    />
+                  </div>
+                  <div
+                    class="input-popup-div br-5 add-contact"
+                    style="display: none"
+                  >
+                    <div
+                      class="title-400-regular font-size-14 mb-5px text-left"
+                    >
+                      Customer
+                    </div>
+                    <ng-container *ngFor="let cc of this.customers_list">
+                      <div
+                        class="title-5-new4 w-100 cursor-pointer"
+                        (click)="setTCCustomer(cc)"
+                      >
+                        {{ cc?.company_name }}
+                      </div>
+                    </ng-container>
+                    <ng-container *ngFor="let cc of this.companies_list">
+                      <div
+                        class="title-5-new4 w-100 cursor-pointer"
+                        (click)="setTCCustomer(cc)"
+                      >
+                        {{ cc?.company_name }}
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div
+                  class="my-input input-right height-55 pr-20px input-div getinputfield position-relative"
+                >
+                  <div class="input-label-grey pl-1 mb-5px cursor-pointer">
+                    Primary contact
+                  </div>
+                  <div
+                    class="d-flex align-items-center justify-content-between cursor-pointer"
+                  >
+                    <div
+                      class="cursor-pointer heading-400-regular text-color-grey text-left pl-1"
+                      *ngIf="!this.customer_contact?.contact_id"
+                    >
+                      Select
+                    </div>
+                    <div
+                      class="cursor-pointer font-bold text-left pl-1 text-black"
+                      *ngIf="this.customer_contact?.contact_id"
+                    >
+                      {{ this.customer_contact?.contact?.name }}
+                    </div>
+                    <img
+                      src="../../assets/images/dropdown.svg"
+                      class="cursor-pointer"
+                    />
+                  </div>
+
+                  <div
+                    class="input-popup-div br-5 add-contact"
+                    style="display: none"
+                  >
+                    <div
+                      class="title-400-regular font-size-14 mb-5px text-left"
+                    >
+                      Customer contacts
+                    </div>
+                    <ng-container *ngFor="let cc of this.cc_lists">
+                      <ng-container *ngFor="let contact of cc.contacts">
+                        <div
+                          class="title-5-new4 w-100 cursor-pointer {{
+                            this.customer_contact?.contact_id == contact?.id
+                              ? 'text-black'
+                              : ''
+                          }}"
+                          (click)="setTCCustomerContact(contact)"
+                        >
+                          {{ contact?.name }}
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Set rates -->
+          <div class="col-md-12">
+            <div class="myhr mt-15px mb-15px"></div>
+          </div>
+          <div class="col-md-9 project-profile">
+            <div class="d-flex align-items-center mb-20px">
+              <div class="heading-1-400 text-color-black">
+                Set trucks & rates
+              </div>
+              <div
+                class="input-label-grey font-size-12 ml-3 mt-1 d-flex align-items-center"
+              >
+                Rates per truck/trailer types and customer combinations
+              </div>
+            </div>
+            <div class="font-semibold mb-20px text-dark">
+              Tip: Set the rate for each type of Truck that are planned to use
+              on the project.<br />
+              When dispatching, these costs are used each dispatch
+              automatically.
+            </div>
+
+            <div class="font-semibold text-black mb-15px">
+              Rates your Customer pays to you
+            </div>
+            <table class="table table-responsive no-border mb-15px" border="0">
+              <tbody>
+                <tr>
+                  <td class="w-125px text-left bt-0">
+                    <svg
+                      width="125"
+                      height="93"
+                      viewBox="0 0 125 93"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 16.7548C0 15.6502 0.895431 14.7548 2 14.7548H93.4755C94.58 14.7548 95.4755 13.8594 95.4755 12.7548V6.88114C95.4755 4.87918 98.0908 4.11904 99.1639 5.80911L124.319 45.428C124.735 46.0823 124.735 46.9177 124.319 47.572L99.1639 87.1909C98.0908 88.881 95.4755 88.1208 95.4755 86.1189V81.1394C95.4755 80.0349 94.58 79.1394 93.4755 79.1394H2C0.895427 79.1394 0 78.244 0 77.1394V16.7548Z"
+                        fill="#43ABDB"
+                      />
+                      <path
+                        d="M28.88 52.9995L25.92 47.8995H23.2V52.9995H20.9V38.9995H26.5C27.7533 38.9995 28.8133 39.4395 29.68 40.3195C30.56 41.1862 31 42.2462 31 43.4995C31 44.3928 30.74 45.2128 30.22 45.9595C29.7133 46.6928 29.0467 47.2262 28.22 47.5595L31.4 52.9995H28.88ZM23.2 41.1595V45.8395H26.5C27.1133 45.8395 27.6333 45.6128 28.06 45.1595C28.4867 44.7062 28.7 44.1528 28.7 43.4995C28.7 42.8462 28.4867 42.2928 28.06 41.8395C27.6333 41.3862 27.1133 41.1595 26.5 41.1595H23.2ZM40.4183 42.9995H42.5783V52.9995H40.4183V51.5595C39.6049 52.6928 38.4383 53.2595 36.9183 53.2595C35.5449 53.2595 34.3716 52.7528 33.3983 51.7395C32.4249 50.7128 31.9383 49.4662 31.9383 47.9995C31.9383 46.5195 32.4249 45.2728 33.3983 44.2595C34.3716 43.2462 35.5449 42.7395 36.9183 42.7395C38.4383 42.7395 39.6049 43.2995 40.4183 44.4195V42.9995ZM34.9983 50.2995C35.5983 50.8995 36.3516 51.1995 37.2583 51.1995C38.1649 51.1995 38.9183 50.8995 39.5183 50.2995C40.1183 49.6862 40.4183 48.9195 40.4183 47.9995C40.4183 47.0795 40.1183 46.3195 39.5183 45.7195C38.9183 45.1062 38.1649 44.7995 37.2583 44.7995C36.3516 44.7995 35.5983 45.1062 34.9983 45.7195C34.3983 46.3195 34.0983 47.0795 34.0983 47.9995C34.0983 48.9195 34.3983 49.6862 34.9983 50.2995ZM50.6759 45.0795H48.1959V49.8795C48.1959 50.2928 48.2893 50.5928 48.4759 50.7795C48.6626 50.9528 48.9359 51.0528 49.2959 51.0795C49.6693 51.0928 50.1293 51.0862 50.6759 51.0595V52.9995C49.0226 53.1995 47.8359 53.0595 47.1159 52.5795C46.3959 52.0862 46.0359 51.1862 46.0359 49.8795V45.0795H44.1959V42.9995H46.0359V40.8395L48.1959 40.1995V42.9995H50.6759V45.0795ZM53.9248 48.9195C54.0848 49.6795 54.4515 50.2662 55.0248 50.6795C55.5982 51.0795 56.2982 51.2795 57.1248 51.2795C58.2715 51.2795 59.1315 50.8662 59.7048 50.0395L61.4848 51.0795C60.4982 52.5328 59.0382 53.2595 57.1048 53.2595C55.4782 53.2595 54.1648 52.7662 53.1648 51.7795C52.1648 50.7795 51.6648 49.5195 51.6648 47.9995C51.6648 46.5062 52.1582 45.2595 53.1448 44.2595C54.1315 43.2462 55.3982 42.7395 56.9448 42.7395C58.4115 42.7395 59.6115 43.2528 60.5448 44.2795C61.4915 45.3062 61.9648 46.5528 61.9648 48.0195C61.9648 48.2462 61.9382 48.5462 61.8848 48.9195H53.9248ZM53.9048 47.1595H59.7848C59.6382 46.3462 59.2982 45.7328 58.7648 45.3195C58.2448 44.9062 57.6315 44.6995 56.9248 44.6995C56.1248 44.6995 55.4582 44.9195 54.9248 45.3595C54.3915 45.7995 54.0515 46.3995 53.9048 47.1595ZM65.4148 45.7595C65.4148 46.0928 65.5948 46.3595 65.9548 46.5595C66.3282 46.7462 66.7748 46.9128 67.2948 47.0595C67.8282 47.1928 68.3615 47.3528 68.8948 47.5395C69.4282 47.7262 69.8748 48.0462 70.2348 48.4995C70.6082 48.9395 70.7948 49.4995 70.7948 50.1795C70.7948 51.1395 70.4215 51.8928 69.6748 52.4395C68.9415 52.9862 68.0148 53.2595 66.8948 53.2595C65.9082 53.2595 65.0615 53.0528 64.3548 52.6395C63.6482 52.2262 63.1348 51.6528 62.8148 50.9195L64.6748 49.8395C65.0215 50.7995 65.7615 51.2795 66.8948 51.2795C68.0282 51.2795 68.5948 50.9062 68.5948 50.1595C68.5948 49.8395 68.4082 49.5795 68.0348 49.3795C67.6748 49.1795 67.2282 49.0128 66.6948 48.8795C66.1748 48.7328 65.6482 48.5662 65.1148 48.3795C64.5815 48.1928 64.1282 47.8862 63.7548 47.4595C63.3948 47.0195 63.2148 46.4662 63.2148 45.7995C63.2148 44.8795 63.5615 44.1395 64.2548 43.5795C64.9615 43.0195 65.8348 42.7395 66.8748 42.7395C67.7015 42.7395 68.4348 42.9262 69.0748 43.2995C69.7282 43.6595 70.2282 44.1662 70.5748 44.8195L68.7548 45.8395C68.4082 45.0795 67.7815 44.6995 66.8748 44.6995C66.4615 44.6995 66.1148 44.7928 65.8348 44.9795C65.5548 45.1528 65.4148 45.4128 65.4148 45.7595ZM79.7336 41.0995C79.4669 41.3662 79.1469 41.4995 78.7736 41.4995C78.4003 41.4995 78.0736 41.3662 77.7936 41.0995C77.5269 40.8195 77.3936 40.4928 77.3936 40.1195C77.3936 39.7462 77.5269 39.4262 77.7936 39.1595C78.0603 38.8795 78.3869 38.7395 78.7736 38.7395C79.1603 38.7395 79.4869 38.8795 79.7536 39.1595C80.0203 39.4262 80.1536 39.7462 80.1536 40.1195C80.1536 40.4928 80.0136 40.8195 79.7336 41.0995ZM77.6936 52.9995V42.9995H79.8536V52.9995H77.6936ZM87.6216 42.7395C88.7682 42.7395 89.6949 43.1062 90.4016 43.8395C91.1082 44.5728 91.4616 45.5795 91.4616 46.8595V52.9995H89.3016V47.0795C89.3016 46.3328 89.1016 45.7595 88.7016 45.3595C88.3016 44.9595 87.7549 44.7595 87.0616 44.7595C86.3016 44.7595 85.6882 44.9995 85.2216 45.4795C84.7549 45.9462 84.5216 46.6662 84.5216 47.6395V52.9995H82.3616V42.9995H84.5216V44.2795C85.1749 43.2528 86.2082 42.7395 87.6216 42.7395Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </td>
+                  <td class="w-max-content bt-0">
+                    <form [formGroup]="editCustomerRate">
+                      <input
+                        type="hidden"
+                        formControlName="Custom_truck_trailer_rates_list"
+                      />
+
+                      <table
+                        class="table no-border {{
+                          !this.edit_cc_rates ? 'cursor-pointer' : ''
+                        }}"
+                        border="0"
+                      >
+                        <tbody (click)="showEditCCRates()">
+                          <tr>
+                            <td
+                              class="rate-col text-left bg-blue font-bold font-size-14 text-white"
+                            >
+                              Truck
+                            </td>
+                            <td
+                              class="rate-col text-left bg-blue font-bold font-size-14 text-white"
+                            >
+                              Rate
+                            </td>
+                            <td
+                              class="rate-col text-left bg-blue font-bold font-size-14 text-white"
+                            >
+                              Trailer
+                            </td>
+                            <td
+                              class="rate-col text-left bg-blue font-bold font-size-14 text-white"
+                            >
+                              Rate
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td
+                              class="rate-col2 text-left bg-grey font-bold font-size-14 text-black"
+                            >
+                              Single
+                            </td>
+                            <td
+                              class="rate-col2 text-center font-bold font-size-14 text-black p-05px"
+                            >
+                              <div class="border-grey br-3 p-2-7">
+                                <div class="d-flex align-items-center">
+                                  <div
+                                    class="d-flex align-items-center justify-content-center w-50px text-dark"
+                                  >
+                                    <div class="font-size-14 font-bold w-5px">
+                                      $
+                                    </div>
+                                    <input
+                                      type="number"
+                                      class="no-border-input w-40px input-rounds {{
+                                        editCustomerRate.get('Single')?.value !=
+                                        100
+                                          ? 'bold-text'
+                                          : 'normal_text'
+                                      }}"
+                                      autofocus="false"
+                                      placeholder="___"
+                                      formControlName="Single"
+                                      [readonly]="!this.edit_cc_rates"
+                                    />
+                                  </div>
+                                  <div
+                                    class="font-size-14 font-bold text-dark ml-2"
+                                  >
+                                    $/hr
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td
+                              class="rate-col2 text-left bg-grey font-bold font-size-14 text-black"
+                            >
+                              Pony
+                            </td>
+                            <td
+                              class="rate-col2 text-center font-bold font-size-14 text-black p-05px"
+                            >
+                              <div class="border-grey br-3 p-2-7">
+                                <div class="d-flex align-items-center">
+                                  <div
+                                    class="d-flex align-items-center justify-content-center w-50px text-dark"
+                                  >
+                                    <div class="font-size-14 font-bold w-5px">
+                                      $
+                                    </div>
+                                    <input
+                                      type="number"
+                                      class="no-border-input w-40px input-rounds {{
+                                        editCustomerRate.get('Pony')?.value !=
+                                        100
+                                          ? 'bold-text'
+                                          : 'normal_text'
+                                      }}"
+                                      autofocus="false"
+                                      formControlName="Pony"
+                                      [readonly]="!this.edit_cc_rates"
+                                      placeholder="___"
+                                    />
+                                  </div>
+                                  <div
+                                    class="font-size-14 font-bold text-dark ml-2"
+                                  >
+                                    $/hr
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td
+                              class="rate-col2 text-left bg-grey font-bold font-size-14 text-black"
+                            >
+                              Tandeem
+                            </td>
+                            <td
+                              class="rate-col2 text-center font-bold font-size-14 text-black p-05px"
+                            >
+                              <div class="border-grey br-3 p-2-7">
+                                <div class="d-flex align-items-center">
+                                  <div
+                                    class="d-flex align-items-center justify-content-center w-50px text-dark"
+                                  >
+                                    <div class="font-size-14 font-bold w-5px">
+                                      $
+                                    </div>
+                                    <input
+                                      type="number"
+                                      class="no-border-input w-40px input-rounds {{
+                                        editCustomerRate.get('Tandem')?.value !=
+                                        110
+                                          ? 'bold-text'
+                                          : 'normal_text'
+                                      }}"
+                                      autofocus="false"
+                                      formControlName="Tandem"
+                                      [readonly]="!this.edit_cc_rates"
+                                      placeholder="___"
+                                    />
+                                  </div>
+                                  <div
+                                    class="font-size-14 font-bold text-dark ml-2"
+                                  >
+                                    $/hr
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td
+                              class="rate-col2 text-left bg-grey font-bold font-size-14 text-black"
+                            >
+                              Tri Pony
+                            </td>
+                            <td
+                              class="rate-col2 text-center font-bold font-size-14 text-black p-05px"
+                            >
+                              <div class="border-grey br-3 p-2-7">
+                                <div class="d-flex align-items-center">
+                                  <div
+                                    class="d-flex align-items-center justify-content-center w-50px text-dark"
+                                  >
+                                    <div class="font-size-14 font-bold w-5px">
+                                      $
+                                    </div>
+                                    <input
+                                      type="number"
+                                      class="no-border-input w-40px input-rounds {{
+                                        editCustomerRate.get('tri_pony')
+                                          ?.value != 110
+                                          ? 'bold-text'
+                                          : 'normal_text'
+                                      }}"
+                                      autofocus="false"
+                                      formControlName="tri_pony"
+                                      [readonly]="!this.edit_cc_rates"
+                                      placeholder="___"
+                                    />
+                                  </div>
+                                  <div
+                                    class="font-size-14 font-bold text-dark ml-2"
+                                  >
+                                    $/hr
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td
+                              class="rate-col2 text-left bg-grey font-bold font-size-14 text-black"
+                            >
+                              Tridem
+                            </td>
+                            <td
+                              class="rate-col2 text-center font-bold font-size-14 text-black p-05px"
+                            >
+                              <div class="border-grey br-3 p-2-7">
+                                <div class="d-flex align-items-center">
+                                  <div
+                                    class="d-flex align-items-center justify-content-center w-50px text-dark"
+                                  >
+                                    <div class="font-size-14 font-bold w-5px">
+                                      $
+                                    </div>
+                                    <input
+                                      type="number"
+                                      class="no-border-input w-40px input-rounds {{
+                                        editCustomerRate.get('Tridem')?.value !=
+                                        120
+                                          ? 'bold-text'
+                                          : 'normal_text'
+                                      }}"
+                                      autofocus="false"
+                                      placeholder="___"
+                                      formControlName="Tridem"
+                                      [readonly]="!this.edit_cc_rates"
+                                    />
+                                  </div>
+                                  <div
+                                    class="font-size-14 font-bold text-dark ml-2"
+                                  >
+                                    $/hr
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td
+                              class="rate-col2 text-left bg-grey font-bold font-size-14 text-black"
+                            >
+                              Quard(Wagon)
+                            </td>
+                            <td
+                              class="rate-col2 text-center font-bold font-size-14 text-black p-05px"
+                            >
+                              <div class="border-grey br-3 p-2-7">
+                                <div class="d-flex align-items-center">
+                                  <div
+                                    class="d-flex align-items-center justify-content-center w-50px text-dark"
+                                  >
+                                    <div class="font-size-14 font-bold w-5px">
+                                      $
+                                    </div>
+                                    <input
+                                      type="number"
+                                      class="no-border-input w-40px input-rounds {{
+                                        editCustomerRate.get('quard_wag')
+                                          ?.value != 120
+                                          ? 'bold-text'
+                                          : 'normal_text'
+                                      }}"
+                                      autofocus="false"
+                                      formControlName="quard_wag"
+                                      [readonly]="!this.edit_cc_rates"
+                                      placeholder="___"
+                                    />
+                                  </div>
+                                  <div
+                                    class="font-size-14 font-bold text-dark ml-2"
+                                  >
+                                    $/hr
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td
+                              class="rate-col2 text-left bg-grey font-bold font-size-14 text-black"
+                            >
+                              Quad_Axle
+                            </td>
+                            <td
+                              class="rate-col2 text-center font-bold font-size-14 text-black p-05px"
+                            >
+                              <div class="border-grey br-3 p-2-7">
+                                <div class="d-flex align-items-center">
+                                  <div
+                                    class="d-flex align-items-center justify-content-center w-50px text-dark"
+                                  >
+                                    <div class="font-size-14 font-bold w-5px">
+                                      $
+                                    </div>
+                                    <input
+                                      type="number"
+                                      class="no-border-input w-40px input-rounds {{
+                                        editCustomerRate.get('quard')?.value !=
+                                        140
+                                          ? 'bold-text'
+                                          : 'normal_text'
+                                      }}"
+                                      autofocus="false"
+                                      placeholder="___"
+                                      [readonly]="!this.edit_cc_rates"
+                                      formControlName="quard"
+                                    />
+                                  </div>
+                                  <div
+                                    class="font-size-14 font-bold text-dark ml-2"
+                                  >
+                                    $/hr
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+
+                            <td
+                              class="rate-col2 text-left bg-grey font-bold font-size-14 text-black"
+                            >
+                              Transfer
+                            </td>
+                            <td
+                              class="rate-col2 text-center font-bold font-size-14 text-black p-05px"
+                            >
+                              <div class="border-grey br-3 p-2-7">
+                                <div class="d-flex align-items-center">
+                                  <div
+                                    class="d-flex align-items-center justify-content-center w-50px text-dark"
+                                  >
+                                    <div class="font-size-14 font-bold w-5px">
+                                      $
+                                    </div>
+                                    <input
+                                      type="number"
+                                      class="no-border-input w-40px input-rounds {{
+                                        editCustomerRate.get('Transfer')
+                                          ?.value != 120
+                                          ? 'bold-text'
+                                          : 'normal_text'
+                                      }}"
+                                      autofocus="false"
+                                      formControlName="Transfer"
+                                      [readonly]="!this.edit_cc_rates"
+                                      placeholder="___"
+                                    />
+                                  </div>
+                                  <div
+                                    class="font-size-14 font-bold text-dark ml-2"
+                                  >
+                                    $/hr
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </form>
+                  </td>
+                  <td class="border-0">
+                    <div *ngIf="this.edit_cc_rates">
+                      <button
+                        class="mybtn2 bg-medium-blue cp-4 text-white br-5"
+                        type="button"
+                        (click)="handleCCRates()"
+                      >
+                        Update
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <app-set-tc-rates></app-set-tc-rates>
+      </div>
+    </div>
+  </div>
+</div>

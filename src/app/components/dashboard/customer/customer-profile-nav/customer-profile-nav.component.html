@@ -1,0 +1,96 @@
+  <!-- Tabs -->
+  <ul class="nav nav-tabs my-nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item"  role="presentation">
+        <button class="nav-link active" [class.active]="isActive('company_profile')"  [routerLink]="'/customer-company-profile'" >
+            <div class="d-flex align-items-center" [ngClass]="{'w-118': isActive('company_profile'), 'w-117': !isActive('company_profile')}">
+                <img
+                    src="./assets/images/cust-settings-icon.svg" width="20px"
+                    alt="project-profile-file-icon"
+                />
+                <div class="heading-5-400 text-color-black ml-8px">
+                    Company settings
+                </div>
+            </div>
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" [class.active]="isActive('manage_users')" (click)="setActiveTab('manage_users')"  [routerLink]="'/cust-manage-users'" >
+            <div class="d-flex align-items-cente" [ngClass]="{'w-117': isActive('manage_users'), 'w-116': !isActive('manage_users')}">
+                <img
+                src="./assets/images/cust-manage-users-icon.svg" width="20px"
+                alt="project-profile-tracker-icon"
+                />
+                <div class="heading-5-400 text-color-black ml-8px col text-center">Manage users</div>
+            </div>
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" [class.active]="isActive('tragget-ticket-profile')" (click)="setActiveTab('tragget-ticket-profile')" [routerLink]="'/cust-profile-tragget-tickets'" >
+            <div class="d-flex align-items-cente" [ngClass]="{'w-117': isActive('tragget-ticket-profile'), 'w-116': !isActive('tragget-ticket-profile')}">
+                <img
+                src="./assets/images/cust-tragget-tickets-icon.svg" width="20px"
+                alt="project-profile-tracker-icon"
+                />
+                <div class="heading-5-400 text-color-black ml-8px col text-center">DispatchProX tickets</div>
+            </div>
+        </button>
+    </li>
+</ul>
+
+<div class="sub-menu border-div d-none">
+    <div class="sub-menu-profile-div">
+        <div class="sub-menu-icon-div">
+            <img src="../assets/icons/user-icon.svg" style="width: 55px" *ngIf="!this.customer_details?.company_profile_image || this.customer_details?.company_profile_image  == ''">
+            <img class="user-profile-pic" style="width: 55px" [src]="backendAPIURL+this.customer_details?.company_profile_image" *ngIf="this.customer_details?.company_profile_image !='' && this.customer_details?.company_profile_image!==undefined && this.customer_details?.company_profile_image !==null">
+        </div>
+        
+        <div class="sub-menu-content">
+            {{this.company_details?.company_name}}
+        </div>
+    </div>
+    <div class="myhr mt-20 mb-19"></div>
+    <ul class="sub-menu-ul" >
+        <!-- <li>
+            <a [routerLink]="'/cust-notification-settings'">
+                <div [ngClass]="current_nav == 'notifications' ? 'sub-menu-link active': 'sub-menu-link'">
+                    
+                    <img src="../../assets/icons/dark-icon-bell.svg">
+                    <span>Notifications</span>
+                </div>
+            </a>
+        </li> -->
+        <li >
+            <a [routerLink]="'/customer-company-profile'">
+                <div [ngClass]="current_nav == 'customer-company-profile' ? 'sub-menu-link active': 'sub-menu-link'">
+                    <img src="../../assets/icons/dark-profile-icon.svg">
+                    <span>Company profile</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/cust-manage-users'">
+                <div [ngClass]="current_nav == 'add-users' ? 'sub-menu-link active': 'sub-menu-link'">
+                    <img src="../../assets/icons/cust-setting-add-users.svg">
+                    <span>Add/Manage users</span>
+                </div>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/cust-profile-tragget-tickets'">
+                <div [ngClass]="current_nav == 'tragget-ticket-profile' ? 'sub-menu-link active': 'sub-menu-link'" >
+                    <img src="../assets/icons/tragget-tickets-icon.svg"> 
+
+                    <span>DispatchProX tickets</span>
+                </div>
+            </a>
+        </li> 
+        <li>
+            <a [routerLink]="'/customer-setup'">
+                <div [ngClass]="current_nav == 'setup' ? 'sub-menu-link active': 'sub-menu-link'">
+                    <img src="../../assets/icons/setting-icon-menu-dark.svg">
+                    <span>Setup</span>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>

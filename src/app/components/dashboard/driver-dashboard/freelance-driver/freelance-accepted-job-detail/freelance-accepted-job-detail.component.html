@@ -1,0 +1,336 @@
+<app-dashboard-top-header-driver *ngIf="!this.from_list" [is_dashboard]="false" [header_text]="'Accepted Job'"></app-dashboard-top-header-driver>
+<div class="ticket-div" *ngIf="!loading_details && (!this.ticket_detail || !this.ticket_detail?.id)">
+    <div class="d-flex justify-content-center mb-23"  *ngIf="!this.from_list">
+        Tickets details not found
+    </div>
+</div>
+
+<div class="ticket-div" *ngIf="loading_details && (!this.ticket_detail || !this.ticket_detail?.id)">
+    <div class="d-flex justify-content-center mb-23" *ngIf="!this.from_list">
+       <h4>
+        Fetching details...
+       </h4>
+    </div>
+</div>
+<div class="ticket-div" *ngIf="this.ticket_detail && this.ticket_detail?.id">
+    <div class="d-flex justify-content-center border-div mb-23">
+        <div class="title-72">Ticket ID</div>
+        <div class="title-82 ml-7">{{this.ticket_detail?.ticket_no}}</div>
+    </div>
+    <ul style="margin-left:1px;padding-left: 15px;"  class="nav row nav-tabs justify-content-between ticket-tabs mb-36 ">
+        <li class="col-xs-6 col-6 {{this.active_tab=='ticket-detail'? 'active':''}}">
+            <a data-toggle="tab" href="#ticketdetails" (click)="setActiveTab('ticket-detail')">
+                <img src="../assets/driver-images-mobile/confirmation_number.png" alt="">
+                <div class="ml-17">Ticket details</div>
+            </a>
+        </li>
+        <li class="col-xs-5 col-5 {{this.active_tab=='rounds-detail'? 'active':''}}" style="margin-right:0.5rem">
+            <a data-toggle="tab" href="#jobdetails" (click)="setActiveTab('rounds-detail')">
+                <img src="../assets/driver-images-mobile/restart_alt.png" alt="">
+                <div class="ml-17">Job details</div>
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="ticketdetails" class="tab-pane fade show  {{this.active_tab=='ticket-detail'? 'in active':''}}">
+            <div class="">
+                                
+                <div  class="ticket-datetime mb-14 bg-yellow2" >
+                    <!-- {{this.ticket_detail?.ticket_date | date:'EEEE d'}} -- {{this.ticket_detail?.ticket_time }} -->
+                    {{ this.time_conversion(this.ticket_detail, 1).convertedDate | date:'dd MMM, yyyy' }} -- {{this.time_conversion(this.ticket_detail, 1).convertedTime }}
+
+                </div>
+                <!-- <div *ngIf="this.more_tickets && this.more_tickets?.id" class="ticket-datetime mb-14 bg-yellow2" (click)="moveToStatus(this.more_tickets?.ticket?.status, this.more_tickets?.id)">  {{this.more_tickets?.ticket?.ticket_date | date:'EEEE d'}} -- {{this.more_tickets?.ticket?.ticket_time }}</div> -->
+             
+                <div class="ticket-datetime mb-14" (click)="moveToStatus(this.more_tickets?.status, this.more_tickets?.id)" *ngIf="this.more_tickets && this.more_tickets?.id">
+                    <div class="counter">{{this.more_tickets?.rounds?.length}}</div>  {{this.more_tickets?.ticket_date | date:'EEEE d'}} -- {{this.more_tickets?.ticket_time |date:"h:mm a"}}
+                </div>
+                <div class="title-9 text-center mb-10">Job</div>
+                <div class="border-div">
+                    <div class="title-9 text-center mb-24 text-black-shade3">
+                        {{this.ticket_detail?.construction_company?.company_name}} - {{this.ticket_detail?.project?.project_name}} - {{this.ticket_detail?.project?.job_number}}
+                    </div>
+                    <div class="myhr"></div>
+                    <div class="custom-padding15">
+                        <div class="d-flex justify-content-between align-items-center ">
+                        
+                            <div class="title-7">Approver</div>
+                        
+                            <div class="title-7">Rounds</div>
+                            
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-6">
+                            <div class="title-5">
+                                <span class="red-circle" *ngIf="this.notification_type && this.notification_type=='Approver Changed'"></span>  {{this.approver?.name}}
+                              </div>
+                            <div class="title-5">{{ this.rounds?.length}}</div>
+                        </div>
+                    </div>
+                  
+                    <div class="myhr"></div>
+                    <div class="title-desc custom-padding15 mb-22">
+                        {{this.ticket_detail?.description}}
+                    </div>
+                </div>
+                <br/>
+                <div class="hr-dash mb-16"></div>
+                <div class="title-9 mb-11" align="center">Trucking Company</div>
+                <div class="border-div">
+                    <div class="custom-padding15">
+                        <div class="d-flex justify-content-between align-items-center ">
+                        
+                            <div class="title-7">Company name</div>
+                        
+                            <div class="title-7">Hour rate</div>
+                            
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-6">
+                            <div class="title-5 text-left">
+                                {{this.ticket_detail?.trucking_company?.company_name}}
+                              </div>
+                            <div class="title-5">
+                                <div class="border-pink" style="border-radius: 5px;
+                                text-align: right;
+                                width: 90px;">
+                                    ${{this.ticket_detail?.trucking_company?.hour_rate}}/hr
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr"></div>
+                    <div class="custom-padding15">
+                        <div class="d-flex justify-content-between align-items-center ">
+                        
+                            <div class="title-7">Dispatcher</div>
+                        
+                            <div class="title-7">Phone number</div>
+                            
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-6">
+                            <div class="title-5 text-left">
+                                {{this.dispatcher?.name ? this.dispatcher?.name: this.ticket_detail?.trucking_company?.company_name}}
+                              </div>
+                            <div class="title-5">
+                                {{this.dispatcher?.contact_number}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr"></div>
+                    <div class="d-flex justify-content-between align-items-center border-pink br-5 custom-padding14">
+                        <div class="title-9">Paper ticket ID:</div>
+                        <div>
+                            <img src="../assets/icons/pencile.svg" alt="" (click)="setHidePaperTicketModal()">
+                        </div>
+                        <div class="title-9 text-black-shade3">{{this.ticket_detail?.paper_ticket_id}}</div>
+                    </div>
+                </div>
+            </div>           
+            <div class="">
+               <br/>
+                <div class="row mb-46">
+                    <div class="col-6 pr-1">
+                        <div class="border-div">
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 mb-7">Truck name</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.truck?.name
+                                }}</div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 mb-7">Type</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.truck?.type
+                                }}</div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 mb-7">License plate</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.truck?.license_plate
+                                }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 pl-1">
+                        <div class="border-div text-right">
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 mb-7">Trailer name</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.trailer?.name
+                                }}</div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 mb-7">Type</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.trailer?.type
+                                }}</div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 mb-7">License plate</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.trailer?.license_plate
+                                }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/> <br/>  <br/> <br/> <br/> <br/>
+                <div align="center" [ngClass]="this.from_list?'':'fix-button'">
+                    
+                    <button type="button" class="btn bg-pink width-200 mb-28" *ngIf="!this.loading_start" (click)="handleStartJob()">Start Job <img src="../assets/driver-images-mobile/restart_alt.png" alt="" class="btn-icon">
+                        
+                    </button>
+                    <button type="button" class="btn bg-pink width-200 mb-28" *ngIf="this.loading_start" disabled>
+                        Starting...                        
+                    </button>
+                    
+                    <button type="button" class="btn bg-pink width-200 "  (click)="handleDecline(this.ticket_detail)">Decline Job <img src="../assets/icons/cross-black.svg" alt="" class="btn-icon"></button>
+                </div>
+            </div>
+          
+        </div>
+        <div id="jobdetails" class="tab-pane fade show {{this.active_tab=='rounds-detail'? ' in active':''}}" >
+            
+            <ng-container *ngIf="this.rounds && this.rounds.length<1">
+                <div class="ticket-datetime mb-14   bg-yellow2">
+                    Start time {{this.ticket_detail?.ticket?.ticket_time }}
+                </div>
+                <textarea class="form-control br-10 mb-22" style="color: #68696D;" rows="6" placeholder="Description" readonly>{{this.ticket_detail?.description}}</textarea>
+            </ng-container>
+
+            <ng-container *ngFor="let round of this.rounds;let i=index">
+                <div class="rounds">Round {{round.round_no}}</div>
+                <div class="border-div mb-1">
+                    <div class="custom-padding15">
+                        <div class="d-flex justify-content-between align-items-center ">
+                        
+                            <div class="title-7">Pickup site</div>
+                        
+                            <div class="title-7"></div>
+                            
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-6">
+                            <div class="title-5 text-left">
+                                {{this.ticket_detail?.ticket?.project?.project_location}}
+                              </div>
+                            <div class="title-5">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr"></div>
+                    <div class="custom-padding15">
+                        <div class="d-flex justify-content-between align-items-center ">
+                        
+                            <div class="title-7">Material out</div>
+                        
+                            <div class="title-7">Dump site</div>
+                            
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-6">
+                            <div class="title-5 text-left">
+                                {{round.material_taken_out}}
+                              </div>
+                            <div class="title-5">
+                                   {{round.dump_site}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr"></div>
+                    <div class="custom-padding15">
+                        <div class="d-flex justify-content-between align-items-center ">
+                        
+                            <div class="title-7">Round notes</div>
+                        
+                            <div class="title-7"></div>
+                            
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-6">
+                            <div class="title-5 text-left">
+                                
+                              </div>
+                            <div class="title-5">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+                <div class="hr-dash mt-3 mb-3" *ngIf="this.ticket_detail?.ticket?.ticket_truck_type_rounds?.length!=(i+1)"></div>
+                
+            </ng-container>    
+           
+            <br/> <br/>  <br/> <br/> <br/> <br/>
+            <div align="center" [ngClass]="this.from_list?'':'fix-button'">
+                    <button type="button" class="btn bg-pink width-200 mb-28" *ngIf="!this.loading_start" (click)="handleStartJob()">Start Job <img src="../assets/driver-images-mobile/restart_alt.png" alt="" style="margin: 8px" class="btn-icon">
+                        
+                    </button>
+                    <button type="button" class="btn bg-pink width-200 mb-28" *ngIf="this.loading_start" disabled>
+                        Starting...                        
+                    </button>
+                
+                <button type="button" class="btn bg-pink width-200"  (click)="handleDecline(this.ticket_detail)">Decline Job <img src="../assets/icons/cross-black.svg" alt="" style="margin: 8px" class="btn-icon"></button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade show" id="materialout" *ngIf="this.hide_modal_paper_ticket" role="dialog" style="display: block;padding-top: 0%;background: #0000005c;">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="float-right" src="assets/driver-images-mobile/close.png" (click)="setHidePaperTicketModal()" />
+                    <div class="title-9 mb-19 text-center"> Paper ticket ID</div>
+                    <div class="text-danger" *ngIf="paper_ticket_id_error!==''">{{paper_ticket_id_error}}</div>
+                    <div class="title-9 mb-19 text-center"></div>
+                    <input type="text" class="form-control br-5 mb-19" [value]="this.new_paper_ticket_id"  (input)="this.setNewTicketId($event)" placeholder="Type here ...">
+                    <div align="center">
+                        <div class="">
+                            <button *ngIf="!this.loading_update" (click)="this.handlePaperTicketId()" type="button" class="btn-accept btn-padding no-filter">Change</button>
+                            <button *ngIf="this.loading_update" type="button" class="btn-accept btn-padding no-filter" disabled>Processing..</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" id="declineModal" role="dialog" 
+*ngIf="!this.show_reason && this.ticket_to_decline && this.ticket_to_decline?.id!='' && this.ticket_to_decline !=null" style="display: block;padding-top: 0%;background: #0000005c;"
+>
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="title-11 mb-19 text-center">Are you sure that you want to<br>decline this job?</div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <!-- data-toggle="modal" data-target="#declinereasonModal" -->
+                      
+                        <div class=""><button type="button" class="btn-accept btn-padding" (click)="getReason(this.ticket_to_decline)"
+                            >Yes</button></div>
+
+                        <div class=""><button type="button"  (click)="cancelDecline()" class="btn-decline ml-46 btn-padding">No</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade show" id="declinereasonModal" role="dialog"  *ngIf="this.show_reason && this.ticket_to_decline && this.ticket_to_decline?.id!='' && this.ticket_to_decline !=null" style="display: block;padding-top: 0%;background: #0000002c;">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="title-11 mb-31 text-center">Reason for declining the job?</div>
+                    <span class="text-danger" *ngIf="reason_error!=''">{{reason_error}}</span>
+                    <textarea class="form-control br-10 mb-16" rows="3" placeholder="Description" (change)="setReason($event)"></textarea>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class=""><button type="button" *ngIf="!loading_reject" class="btn-accept btn-padding" (click)="declineHandler()" >Done</button></div>
+                        <div class=""><button type="button" *ngIf="loading_reject" class="btn-accept btn-padding" disabled>Processing..</button></div>
+                        <div class=""><button type="button"  (click)="cancelDecline()"  class="btn-decline ml-46 btn-padding">Cancel</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

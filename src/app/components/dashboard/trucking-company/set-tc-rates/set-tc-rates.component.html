@@ -1,0 +1,263 @@
+<div class="row project-profile  " >
+   
+    <div class="col-md-9 project-profile">
+        
+        <div class="project-profile-trucks-container">
+           
+            <form [formGroup]="setTruckRates" (ngSubmit)="onSetTruckRate()" enctype="multipart/form-data">
+        
+                <div class="row my-row2 ml-0">
+                    <div class="col-md-7 col-sm-12 p-0">
+                        <div class="font-semibold text-black mb-15px">
+                            Rates your Customer pays to you
+                          </div>    
+                                                              
+                        <div class="row ml-0">
+                            <div class=" col-md-12 table my-table">
+                                <div class="row {{!this.show_edit_rate ? 'cursor-pointer':''}} p-0" (click)="showEditRate()">
+                                    <div class="col-5 pr-1">
+                                        <div class="row">
+                                            <div class="col-6 pr-1 pl-1 ">
+                                                <div class="profile-trucks-col-header bg-17A1FA border-bottom-1px">
+                                                    <div class="heading-5-400 text-white">
+                                                        Truck
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6  pr-1 pl-1">
+                                                <div class="profile-trucks-col-header bg-17A1FA border-bottom-1px">
+                                                    <div class="heading-5-400 text-white">
+                                                        Rate
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-5 pr-1">
+                                        <div class="row">
+                                            <div class="col-6 pr-1 ">
+                                                <div class="profile-trucks-col-header bg-17A1FA border-bottom-1px">
+                                                    <div class="heading-5-400 text-white">
+                                                        Trailer
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 pl-1 pr-1">
+                                                <div class="profile-trucks-col-header bg-17A1FA border-bottom-1px">
+                                                    <div class="heading-5-400 text-white">
+                                                        Rate
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="row {{!this.show_edit_rate ? 'cursor-pointer':''}} p-0" (click)="showEditRate()">
+                                   
+                                    <div class="col-5 pr-1" formArrayName="project_trucks">
+                                        <div class="row "  *ngFor="let formItem of project_trucks.controls; let idx = index">
+                                            <ng-container [formGroupName]="idx">
+                                                <div class="col-6 pr-1 pl-1 height-38 border-bottom-1px ">
+                                                    <div class="heading-5-400 height-38 text-color-black bg-color-D9D9D9 cp-111 p-5-10">{{this.trucks_data[idx].name}}</div>
+                                                </div>
+                                                <div class="col-6 pr-1 pl-1 height-38 ">
+                                                    <input type="hidden" formControlName="id" [(ngModel)]="this.trucks_data[idx].id">
+                                                    <input type="hidden" formControlName="name" [(ngModel)]="this.trucks_data[idx].name">
+                                                    <div  class="border-grey br-3 p-2-7">
+                                                        <div  class="d-flex align-items-center">
+                                                            <div  class="d-flex align-items-center justify-content-center w-50px text-dark">
+                                                                <div  class="font-size-14 font-bold w-5px"> $ </div><input 
+                                                                    type="number"   placeholder="___" [(ngModel)]="this.trucks_data[idx].rate" formControlName="rate"
+                                                                    class="input-rounds no-border-input w-40px  bold-text ">
+                                                            </div>
+                                                            <div  class="font-size-14 font-bold text-dark ml-2"> $/hr </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                    
+                                    <div class="col-5 pr-1" formArrayName="project_trailers">
+                                        <div class="row"  *ngFor="let formItem of project_trailers.controls; let idx = index">
+                                            <ng-container [formGroupName]="idx">
+                                                <div class="col-6 pr-1 height-38 border-bottom-1px">
+                                                    <div class="heading-5-400 height-38 text-color-black bg-color-D9D9D9 cp-111 p-5-10">{{this.trailers_data[idx].name == 'Quad (wagon)' ? 'Quad(wagon)':this.trailers_data[idx].name }}</div>
+                                                </div>
+                                                <div class="col-6 pr-1 pl-1 height-38">
+                                                   
+                                                    <input type="hidden" formControlName="id" [(ngModel)]="this.trailers_data[idx].id">
+                                                    <input type="hidden" formControlName="name" [(ngModel)]="this.trailers_data[idx].name">
+                                                    <div  class="border-grey br-3 p-2-7">
+                                                        <div  class="d-flex align-items-center">
+                                                            <div  class="d-flex align-items-center justify-content-center w-50px text-dark">
+                                                                <div  class="font-size-14 font-bold w-5px"> $ </div><input 
+                                                                    type="number" autofocus="false" placeholder="___" [(ngModel)]="this.trailers_data[idx].rate" formControlName="rate"
+                                                                    class="input-rounds no-border-input w-40px  bold-text ">
+                                                            </div>
+                                                            <div  class="font-size-14 font-bold text-dark ml-2"> $/hr </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                        
+                                </div>
+                                <input type="hidden" formControlName="project_id" value="{{this.project_id}}">
+                                <div class="out-btn {{!this.show_edit_rate? '':'btn-out-show'}}">
+                                    <svg *ngIf="!this.show_edit_rate" width="125" height="93" viewBox="0 0 125 93" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 16.7548C0 15.6502 0.895431 14.7548 2 14.7548H93.4755C94.58 14.7548 95.4755 13.8594 95.4755 12.7548V6.88114C95.4755 4.87918 98.0908 4.11904 99.1639 5.80911L124.319 45.428C124.735 46.0823 124.735 46.9177 124.319 47.572L99.1639 87.1909C98.0908 88.881 95.4755 88.1208 95.4755 86.1189V81.1394C95.4755 80.0349 94.58 79.1394 93.4755 79.1394H2C0.895427 79.1394 0 78.244 0 77.1394V16.7548Z" fill="#43ABDB"/>
+                                        <path d="M21.88 52.9995L18.92 47.8995H16.2V52.9995H13.9V38.9995H19.5C20.7533 38.9995 21.8133 39.4395 22.68 40.3195C23.56 41.1862 24 42.2462 24 43.4995C24 44.3928 23.74 45.2128 23.22 45.9595C22.7133 46.6928 22.0467 47.2262 21.22 47.5595L24.4 52.9995H21.88ZM16.2 41.1595V45.8395H19.5C20.1133 45.8395 20.6333 45.6128 21.06 45.1595C21.4867 44.7062 21.7 44.1528 21.7 43.4995C21.7 42.8462 21.4867 42.2928 21.06 41.8395C20.6333 41.3862 20.1133 41.1595 19.5 41.1595H16.2ZM33.4183 42.9995H35.5783V52.9995H33.4183V51.5595C32.6049 52.6928 31.4383 53.2595 29.9183 53.2595C28.5449 53.2595 27.3716 52.7528 26.3983 51.7395C25.4249 50.7128 24.9383 49.4662 24.9383 47.9995C24.9383 46.5195 25.4249 45.2728 26.3983 44.2595C27.3716 43.2462 28.5449 42.7395 29.9183 42.7395C31.4383 42.7395 32.6049 43.2995 33.4183 44.4195V42.9995ZM27.9983 50.2995C28.5983 50.8995 29.3516 51.1995 30.2583 51.1995C31.1649 51.1995 31.9183 50.8995 32.5183 50.2995C33.1183 49.6862 33.4183 48.9195 33.4183 47.9995C33.4183 47.0795 33.1183 46.3195 32.5183 45.7195C31.9183 45.1062 31.1649 44.7995 30.2583 44.7995C29.3516 44.7995 28.5983 45.1062 27.9983 45.7195C27.3983 46.3195 27.0983 47.0795 27.0983 47.9995C27.0983 48.9195 27.3983 49.6862 27.9983 50.2995ZM43.6759 45.0795H41.1959V49.8795C41.1959 50.2928 41.2893 50.5928 41.4759 50.7795C41.6626 50.9528 41.9359 51.0528 42.2959 51.0795C42.6693 51.0928 43.1293 51.0862 43.6759 51.0595V52.9995C42.0226 53.1995 40.8359 53.0595 40.1159 52.5795C39.3959 52.0862 39.0359 51.1862 39.0359 49.8795V45.0795H37.1959V42.9995H39.0359V40.8395L41.1959 40.1995V42.9995H43.6759V45.0795ZM46.9248 48.9195C47.0848 49.6795 47.4515 50.2662 48.0248 50.6795C48.5982 51.0795 49.2982 51.2795 50.1248 51.2795C51.2715 51.2795 52.1315 50.8662 52.7048 50.0395L54.4848 51.0795C53.4982 52.5328 52.0382 53.2595 50.1048 53.2595C48.4782 53.2595 47.1648 52.7662 46.1648 51.7795C45.1648 50.7795 44.6648 49.5195 44.6648 47.9995C44.6648 46.5062 45.1582 45.2595 46.1448 44.2595C47.1315 43.2462 48.3982 42.7395 49.9448 42.7395C51.4115 42.7395 52.6115 43.2528 53.5448 44.2795C54.4915 45.3062 54.9648 46.5528 54.9648 48.0195C54.9648 48.2462 54.9382 48.5462 54.8848 48.9195H46.9248ZM46.9048 47.1595H52.7848C52.6382 46.3462 52.2982 45.7328 51.7648 45.3195C51.2448 44.9062 50.6315 44.6995 49.9248 44.6995C49.1248 44.6995 48.4582 44.9195 47.9248 45.3595C47.3915 45.7995 47.0515 46.3995 46.9048 47.1595ZM58.4148 45.7595C58.4148 46.0928 58.5948 46.3595 58.9548 46.5595C59.3282 46.7462 59.7748 46.9128 60.2948 47.0595C60.8282 47.1928 61.3615 47.3528 61.8948 47.5395C62.4282 47.7262 62.8748 48.0462 63.2348 48.4995C63.6082 48.9395 63.7948 49.4995 63.7948 50.1795C63.7948 51.1395 63.4215 51.8928 62.6748 52.4395C61.9415 52.9862 61.0148 53.2595 59.8948 53.2595C58.9082 53.2595 58.0615 53.0528 57.3548 52.6395C56.6482 52.2262 56.1348 51.6528 55.8148 50.9195L57.6748 49.8395C58.0215 50.7995 58.7615 51.2795 59.8948 51.2795C61.0282 51.2795 61.5948 50.9062 61.5948 50.1595C61.5948 49.8395 61.4082 49.5795 61.0348 49.3795C60.6748 49.1795 60.2282 49.0128 59.6948 48.8795C59.1748 48.7328 58.6482 48.5662 58.1148 48.3795C57.5815 48.1928 57.1282 47.8862 56.7548 47.4595C56.3948 47.0195 56.2148 46.4662 56.2148 45.7995C56.2148 44.8795 56.5615 44.1395 57.2548 43.5795C57.9615 43.0195 58.8348 42.7395 59.8748 42.7395C60.7015 42.7395 61.4348 42.9262 62.0748 43.2995C62.7282 43.6595 63.2282 44.1662 63.5748 44.8195L61.7548 45.8395C61.4082 45.0795 60.7815 44.6995 59.8748 44.6995C59.4615 44.6995 59.1148 44.7928 58.8348 44.9795C58.5548 45.1528 58.4148 45.4128 58.4148 45.7595ZM75.4136 53.2595C73.9469 53.2595 72.7003 52.7528 71.6736 51.7395C70.6469 50.7262 70.1336 49.4795 70.1336 47.9995C70.1336 46.5195 70.6469 45.2728 71.6736 44.2595C72.7003 43.2462 73.9469 42.7395 75.4136 42.7395C76.8936 42.7395 78.1403 43.2462 79.1536 44.2595C80.1803 45.2728 80.6936 46.5195 80.6936 47.9995C80.6936 49.4795 80.1803 50.7262 79.1536 51.7395C78.1403 52.7528 76.8936 53.2595 75.4136 53.2595ZM73.1936 50.2595C73.7936 50.8595 74.5336 51.1595 75.4136 51.1595C76.2936 51.1595 77.0336 50.8595 77.6336 50.2595C78.2336 49.6595 78.5336 48.9062 78.5336 47.9995C78.5336 47.0928 78.2336 46.3395 77.6336 45.7395C77.0336 45.1395 76.2936 44.8395 75.4136 44.8395C74.5336 44.8395 73.7936 45.1395 73.1936 45.7395C72.5936 46.3395 72.2936 47.0928 72.2936 47.9995C72.2936 48.9062 72.5936 49.6595 73.1936 50.2595ZM89.3867 42.9995H91.5467V52.9995H89.3867V51.7195C88.7334 52.7462 87.7001 53.2595 86.2867 53.2595C85.1401 53.2595 84.2134 52.8928 83.5067 52.1595C82.8001 51.4262 82.4467 50.4195 82.4467 49.1395V42.9995H84.6067V48.9195C84.6067 49.6662 84.8067 50.2395 85.2067 50.6395C85.6067 51.0395 86.1534 51.2395 86.8467 51.2395C87.6067 51.2395 88.2201 51.0062 88.6867 50.5395C89.1534 50.0595 89.3867 49.3328 89.3867 48.3595V42.9995ZM99.6525 45.0795H97.1725V49.8795C97.1725 50.2928 97.2658 50.5928 97.4525 50.7795C97.6392 50.9528 97.9125 51.0528 98.2725 51.0795C98.6458 51.0928 99.1058 51.0862 99.6525 51.0595V52.9995C97.9992 53.1995 96.8125 53.0595 96.0925 52.5795C95.3725 52.0862 95.0125 51.1862 95.0125 49.8795V45.0795H93.1725V42.9995H95.0125V40.8395L97.1725 40.1995V42.9995H99.6525V45.0795Z" fill="white"/>
+                                    </svg>
+                                    <div class="btn-cont "  *ngIf="this.show_edit_rate" >
+                                        <button class="mybtn2 bg-medium-blue cp-4 text-white br-5 " type="submit" *ngIf="!is_loading_rates" >Update</button>
+                                        <button class="mybtn2 bg-medium-blue cp-4 text-white br-5 " type="button" disabled *ngIf="is_loading_rates" >Processing..</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+
+                      
+                    </div>
+
+                   
+
+
+                </div>
+                 <!-- Nickname combination -->
+                 <div class="row my-row2 ml-0">
+                    <div class="col-md-7 col-sm-12 p-0">
+                        <div class="heading-12-400-normal text-color-88898B pl-8px mb-2">
+                            <span class="ff-gilory-bold">Tip:</span> Set nicknames to your Truck combinations.<br><span class="ff-gilory-bold">As</span> an example <span class="ff-gilory-bold">Tri Tri = 3-axle Truck + 3- axle Trailer</span>
+                        </div>
+                   
+                        <table class="table no-border " border="0">
+                            <tbody  >
+                                <tr>
+                                    <td
+                                    class="rate-col w-122 text-left bg-blue font-bold font-size-14 text-white"
+                                    >
+                                    Nickname
+                                    </td>
+                                    <td
+                                    class="rate-col w-122 text-left bg-blue font-bold font-size-14 text-white"
+                                    >
+                                    Truck
+                                    </td>
+                                    <td
+                                    class="rate-col w-122 text-left bg-blue font-bold font-size-14 text-white"
+                                    >
+                                    Trailer
+                                    </td>
+                                    <td
+                                    class="rate-col w-122 text-left bg-blue font-bold font-size-14 text-white"
+                                    >
+                                    Rate
+                                    </td>
+                                    <td class="border-0"></td>
+                                </tr>
+                              
+                                <ng-container *ngIf="this.show_add_comb">
+                                    <tr class="input-comb">
+                                        <td class="p-1 height-38">
+                                            <input type="text"  class="input-rounds w-40px border-0  font-size-14 font-bold bold-text height-38 w-100 text-left" name="new_comb_name" id="new_comb_name" placeholder="Type here.">
+                                        </td>
+                                        <td class="p-1 height-38">
+                                            <select class="font-size-14 font-bold border-0  height-38 w-100" name="new_comb_truck_type" id="new_comb_truck_type">
+                                                <option *ngFor="let item of this.project.project_trucks"  [value]="item.id" >{{item.name}}</option>
+                                            </select>
+                                        </td>
+                                        <td class="p-1 height-38">
+                                                <select class="font-size-14 font-bold border-0  height-38 w-100" name="new_comb_trailer_type" id="new_comb_trailer_type">
+                                                    <option *ngFor="let item of this.project.project_trailers"  [value]="item.id">{{item.name}}</option>
+                                                </select>
+                                        </td>
+                                        <td class="p-1 height-38">
+                                            <div  class="d-flex align-items-center input-t justify-content-center">
+                                                <div  class="d-flex align-items-center justify-content-center w-50px text-dark">
+                                                    <div  class="font-size-14 font-bold w-5px"> $ </div><input 
+                                                        type="number" autofocus="false" placeholder="___" id="new_comb_cost"
+                                                        class="input-rounds no-border-input border-0 w-50px   bold-text ">
+                                                </div>
+                                                <div  class="font-size-14 font-bold text-dark ml-2"> $/hr </div>
+                                            </div>
+                                        </td>
+                                        <td class="p-1 height-38 border-0">
+                                            <button class="mybtn2 bg-medium-blue cp-4 text-white br-5" (click)="addComb()">
+                                                <div class="heading-15-400-bold text-white">
+                                                    Add  
+                                                </div>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                                <ng-container *ngIf="!this.show_add_comb">
+
+                                    <ng-container formArrayName="project_combinations">
+                                      
+                                        <tr class="input-comb" *ngFor="let formItem of project_combinations.controls; let idx = index" >
+
+                                            <ng-container [formGroupName]="idx">
+                                                <td class="p-1 height-38 {{this.edit_comb == idx ? '':'cursor-pointer'}}"   (click)="setEditComb(idx)">
+                                                    <input type="text"  class="input-rounds w-40px border-0  font-size-14 font-bold bold-text height-38 w-100 text-left" formControlName="nickname" [(ngModel)]="this.project_combinations_data[idx] && this.project_combinations_data[idx].nickname" placeholder="Type here.">
+                                                </td>
+                                                <td class="p-1 height-38 {{this.edit_comb == idx ? '':'cursor-pointer'}}"   (click)="setEditComb(idx)">
+                                                    <select class="font-size-14 font-bold border-0  height-38 w-100" formControlName="project_truck_id" [(ngModel)]="this.project_combinations_data[idx] &&  this.project_combinations_data[idx].project_truck_id">
+                                                        <option *ngFor="let item of this.project.project_trucks"  [value]="item.id" [selected]="this.project_combinations_data[idx] && item.id === this.project_combinations_data[idx].project_truck_id">{{item.name}}</option>
+                                                    </select>
+                                                </td>
+                                                <td class="p-1 height-38 {{this.edit_comb == idx ? '':'cursor-pointer'}}"   (click)="setEditComb(idx)">
+                                                        <select class="font-size-14 font-bold border-0  height-38 w-100"  formControlName="project_trailer_id"  [(ngModel)]="this.project_combinations_data[idx] && this.project_combinations_data[idx].project_trailer_id">
+                                                            <option *ngFor="let item of this.project.project_trailers" [selected]="this.project_combinations_data[idx] && item.id === this.project_combinations_data[idx].project_trailer_id" [value]="item.id">{{item.name}}</option>
+                                                        </select>
+                                                </td>
+                                                <td class="p-1 height-38 {{this.edit_comb == idx ? '':'cursor-pointer'}}"   (click)="setEditComb(idx)">
+                                                    <div  class="d-flex align-items-center input-t justify-content-center height-38">
+                                                        <div  class="d-flex align-items-center justify-content-center w-50px text-dark">
+                                                            <div  class="font-size-14 font-bold w-5px"> $ </div><input 
+                                                                type="number" autofocus="false" placeholder="___" formControlName="cost" [(ngModel)]="this.project_combinations_data[idx] && this.project_combinations_data[idx].cost"
+                                                                class="input-rounds no-border-input border-0 w-50px   bold-text ">
+                                                        </div>
+                                                        <div  class="font-size-14 font-bold text-dark ml-2"> $/hr </div>
+                                                    </div>
+                                                </td>
+                                                <td class="p-1 height-38 border-0">
+                                                    <button class="mybtn2 bg-medium-blue cp-4 text-white br-5" (click)="updateComb()" *ngIf="edit_comb == idx">
+                                                        <div class="heading-15-400-bold text-white">
+                                                            Update  
+                                                        </div>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+                                          
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                          </tbody>
+                        </table>    
+                        <div class="ml-30 d-flex align-items-center mt-5px mb-20px" align="center">
+                            <div class="add-button cursor-pointer" (click)="showAddComb()">
+                                <img src="./assets/icons/plus-icon.svg" />
+                                    
+                            </div>
+                            <div class="ml-2 input-label-grey font-size-13">
+                                Add new combo
+                            </div>
+                        </div>
+                        
+                       
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

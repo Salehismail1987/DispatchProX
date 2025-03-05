@@ -1,0 +1,1367 @@
+<!-- <div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content">
+            <div class="title-12 text-color-black-shade drivertc-head">Set companies, projects, and trucks ready for easy dispatch</div>
+
+            <div class="setting-content-page p-0">
+                <div class="row m-0">
+                    <div class="col-lg-4 p-0">
+                        <app-freelance-driver-settings-nav
+                        [active_link]="'trucking_company'"
+                        ></app-freelance-driver-settings-nav>
+                    </div>
+                    <div class="col-lg-8">
+
+                            <div class="dashboard-body-stats custom-padding9 inner_main_shadow">
+                                <div class="title-12 text-color-black-shade mb-15">Trucking companies</div>
+                                <ng-container *ngIf="this.trucking_companies && this.trucking_companies?.length>0">
+                                    <div class="dashboard-body-stats custom-padding11 mb-201">
+                                        <div class="table-responsive">
+                                            <table class="trucking-companies-table">
+                                                <thead>
+                                                    <th>Name</th>
+                                                    <th>Dispatcher</th>
+                                                    <th>Next job</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr *ngFor="let company of this.trucking_companies" (click)="setDetail(company)" data-toggle="modal" data-target="#myModalEditCompany">
+                                                        <td>{{company?.company_name}}</td>
+                                                        <td>
+                                                            <span *ngIf="company?.dispatcher && company?.dispatcher.name;else elseBlock">
+                                                                {{company?.dispatcher?.name}}
+                                                            </span>
+                                                            <ng-template #elseBlock>
+                                                                {{company?.full_name}}
+                                                            </ng-template>
+                                                        </td>
+                                                        <td>{{company?.next_job?.ticket_datetime| date:"MMM d"}} - {{company?.next_job?.ticket_datetime| date:"h:mm a"}}</td>
+                                                        <td>
+                                                            <button *ngIf="this.company?.is_accepted" class="mybtn bg-light-yellow2 width-fit-content btn-text-very-small mb-0">Accepted</button>
+                                                        </td>
+                                                        <td><img src="../../assets/icons/pencile.svg" alt=""></td>
+                                                    </tr>
+
+
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <div class="btn-plus p-8" data-toggle="modal" data-target="#myModalAddCompany">
+                                                                <img src="../../assets/icons/plus.svg" alt="" width="14px" >
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="!this.trucking_companies || this.trucking_companies?.length<1">
+                                    <div class="dashboard-body-stats custom-padding10 mb-201">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="title-3 text-color-black-shade7">Trucking companies added here will show up for quick<br>dispatch when you create tickets for yourself.</div>
+                                            <div class="btn-plus"  data-toggle="modal" data-target="#myModalAddCompany">
+                                                <img src="../../assets/icons/plus.svg" alt="" width="47px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="title-3 text-color-black-shade7 mb-21">Invite trucking companies to start dispatching tickets to you</div>
+                                <form  [formGroup]="inviteTC" (ngSubmit)="onSaveInvite()">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span *ngIf="inviteTC.get('contact_name')?.invalid && (form_clicked)"
+                                            class="text-danger">
+                                                Contact name is required.
+                                            </span>
+                                            <div class="title-5-new2 mb-2px">Trucking company contact name</div>
+                                            <div class="position-relative mb-13">
+                                                <input type="text" class="myinput4" placeholder="John Doe" formControlName="contact_name">
+                                                <div class="required top-right-icon2">*</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span *ngIf="inviteTC.get('contact_email')?.invalid && (form_clicked)"
+                                            class="text-danger">
+                                                Contact email is required.
+                                            </span>
+                                            <div class="title-5-new2 mb-2px">Contact email</div>
+                                            <div class="position-relative mb-13">
+                                                <input type="text" class="myinput4" placeholder="john@doe.com" formControlName="contact_email">
+                                                <div class="required top-right-icon2">*</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div class="title-5-new2 mb-2px">Phone number</div>
+                                            <div class="position-relative mb-13">
+                                                <input type="text" class="myinput4" placeholder="(---) --- ----" formControlName="contact_number"
+                                                (input)="changeNumber($event)"
+                                                >
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pt-2" align="right">
+                                            <button class="mybtn4 mybtn-back-pink title-17 w-auto" *ngIf="this.is_loading==''">Send invite</button>
+                                            <button class="mybtn4 mybtn-back-pink title-17 w-auto" disabled type="button" *ngIf="this.is_loading=='invite_tc'">Processing...</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+      <app-dashboard-top-header></app-dashboard-top-header>
+      <div class="body-content">
+        <div class="main-inner-body-container mt-15px">
+          <div class="project-profile-header-container">
+            <div class="profile_heading_div1">
+              <div class="project-profile-header-left d-flex align-items-center">
+                <img
+                  src="./assets/images/cust-settings-icon.svg"
+                  alt="project-profile-file-icon"
+                />
+                <div class="heading-1-400 text-color-black">
+                    Companies, trucks
+                </div>
+              </div>
+            </div>
+            <app-freelance-driver-settings-nav
+            [active_link]="'trucking_company'"
+            ></app-freelance-driver-settings-nav>
+          </div>
+            <div class="dashboard-body-stats custom-padding9 inner_main_shadow">
+                <div class="row mb-95">
+                    <div class="col-md-7"style="display:flex; align-items:center">
+                      <div class="page-heading-title">Manage trucking companies</div>
+                    </div>
+                    <div
+                      class="col-md-5 d-flex justify-content-end"
+                      style="height: 45px !important"
+                    >
+                      <button
+                        class="title-14 styled-button openOptionModal"
+                        style="margin-right: 10px !important"
+                        data-toggle="modal" data-target="#myModalAddCompany"
+                        
+                        
+                      >
+                        <!-- <button class="title-14 styled-button openOptionModal" style="border-radius: 5px !important;" (click)="showMore()" > -->
+                        <div class="d-flex align-items-center">
+                          <div
+                            class="heading-5-400 text-color-black ml-8px col text-center"
+                          >
+                          Add company
+                          </div>
+                        </div>
+                      </button>
+
+                      <button
+                      class="title-14 styled-button openOptionModal"
+                      data-toggle="modal" data-target="#invitePeople"
+                      
+                    >
+                      <!-- <button class="title-14 styled-button openOptionModal" style="border-radius: 5px !important;" (click)="showMore()" > -->
+                      <div class="d-flex align-items-center">
+                        <div
+                          class="heading-5-400 text-color-black ml-8px col text-center"
+                        >
+                        Invite Trucking<br> company
+                        </div>
+                      </div>
+                    </button>
+
+                    </div>
+                  </div>
+
+                <ng-container *ngIf="this.trucking_companies && this.trucking_companies?.length>0">
+                    <div class="dashboard-body-stats custom-padding11 mb-201">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="table-light project-setting-table-header">
+                                  <tr>
+                                    <th
+                                      class="project-settings-table-header usertablemain"
+                                      style="width: 17%"
+                                    >
+                                      <div class="heading-8-400 text-color-grey text-left">
+                                        Name
+                                      </div></th>
+                                      <th
+                                      class="project-settings-table-header usertablemain"
+                                      style="width: 17%"
+                                    >
+                                      <div class="heading-8-400 text-color-grey text-left">
+                                        Dispatcher
+                                      </div></th>
+                                      <th
+                                      class="project-settings-table-header usertablemain"
+                                      style="width: 17%"
+                                    >
+                                      <div class="heading-8-400 text-color-grey text-left">
+                                        Next Job
+                                      </div></th>
+                                      <th
+                                      class="project-settings-table-header usertablemain"
+                                      style="width: 17%"
+                                    >
+                                      <div class="heading-8-400 text-color-grey text-left">
+                                        Closed tickets<br>last 30 days
+                                      </div></th>
+                                      <th
+                                      class="project-settings-table-header usertablemain"
+                                      style="width: 17%"
+                                    >
+                                     </th>
+                                      <th
+                                      class="project-settings-table-header usertablemain"
+                                      style="width: 17%"
+                                    >
+                                    </th>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let company of this.trucking_companies" (click)="setDetail(company)" data-toggle="modal" data-target="#myModalEditCompany">
+                                        <td class="project-setting-table-body-data">
+                                            <div
+                                              class="heading-14-700-normal text-color-grey text-left"
+                                            >
+                                            {{company?.company_name}}
+                                            </div>
+                                          </td>
+                                        <td class="project-setting-table-body-data" >
+                                            <div
+                                              class="heading-14-700-normal text-color-grey text-left"
+                                            >
+                                            <span *ngIf="company?.dispatcher && company?.dispatcher.name;else elseBlock">
+                                                {{company?.dispatcher?.name}}
+                                            </span></div>
+                                            <ng-template #elseBlock>
+                                                <div
+                                              class="heading-14-700-normal text-color-grey text-left"
+                                            >
+                                                {{company?.full_name}}</div>
+                                            </ng-template>
+                                        </td>
+
+                                     <td class="project-setting-table-body-data">
+                                            <div
+                                              class="heading-14-700-normal text-color-grey text-left"
+                                            >{{company?.next_job?.ticket_datetime| date:"MMM d"}} - {{company?.next_job?.ticket_datetime| date:"h:mm a"}}</div></td>
+
+                                         <td class="project-setting-table-body-data">
+                                            <div
+                                              class="heading-14-700-normal text-color-grey text-left">
+                                            <!-- <button *ngIf="this.company?.is_accepted" class="mybtn bg-light-yellow2 width-fit-content btn-text-very-small mb-0">Accepted</button></div> -->
+                                            {{company?.total_approved_ticket_count}}
+                                        </div>
+                                        </td>
+
+                                        <td class="project-setting-table-body-data">
+                                            <div
+                                              class="heading-14-700-normal text-color-grey text-left">
+                                            <!-- <img src="../../assets/icons/pencile.svg" alt=""> --></div>
+                                        </td>
+                                        <td class="project-setting-table-body-data">
+                                            <div
+                                              class="heading-14-700-normal text-color-grey text-left">
+                                           </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <!-- <td>
+                                            <div class="btn-plus p-8" data-toggle="modal" data-target="#myModalAddCompany">
+                                                <img src="../../assets/icons/plus.svg" alt="" width="14px" >
+                                            </div>
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!this.trucking_companies || this.trucking_companies?.length<1">
+                    <div class="dashboard-body-stats custom-padding10 mb-201">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="title-3 text-color-black-shade7">Trucking companies added here will show up for quick<br>dispatch when you create tickets for yourself.</div>
+                            <div class="btn-plus"  data-toggle="modal" data-target="#myModalAddCompany">
+                                <img src="../../assets/icons/plus.svg" alt="" width="47px">
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                
+                <!-- <div class="title-3 text-color-black-shade7 mb-21">Invite trucking companies to start dispatching tickets to you</div>
+                <form  [formGroup]="inviteTC" (ngSubmit)="onSaveInvite()">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span *ngIf="inviteTC.get('contact_name')?.invalid && (form_clicked)"
+                            class="text-danger">
+                                Contact name is required.
+                            </span>
+                            <div class="title-5-new2 mb-2px">Trucking company contact name</div>
+                            <div class="position-relative mb-13">
+                                <input type="text" class="myinput4" placeholder="John Doe" formControlName="contact_name">
+                                <div class="required top-right-icon2">*</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <span *ngIf="inviteTC.get('contact_email')?.invalid && (form_clicked)"
+                            class="text-danger">
+                                Contact email is required.
+                            </span>
+                            <div class="title-5-new2 mb-2px">Contact email</div>
+                            <div class="position-relative mb-13">
+                                <input type="text" class="myinput4" placeholder="john@doe.com" formControlName="contact_email">
+                                <div class="required top-right-icon2">*</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="title-5-new2 mb-2px">Phone number</div>
+                            <div class="position-relative mb-13">
+                                <input type="text" class="myinput4" placeholder="(---) --- ----" formControlName="contact_number"
+                                (input)="changeNumber($event)"
+                                >
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 pt-2" align="right">
+                            <button class="mybtn4 mybtn-back-pink title-17 w-auto" *ngIf="this.is_loading==''">Send invite</button>
+                            <button class="mybtn4 mybtn-back-pink title-17 w-auto" disabled type="button" *ngIf="this.is_loading=='invite_tc'">Processing...</button>
+                        </div>
+                    </div>
+                </form> -->
+        
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade  come-from-modal right"  id="myModalAddCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="height: 100% !important; margin-top: 1px !important;" role="document">
+        <div class="modal-content" style="height: 100% !important; background: #FAFAFA !important;" >
+            <form  [formGroup]="addTC" (ngSubmit)="onAddTC()">
+                <div class="modal-body modal-body-padding">
+                    <div class="title-4 mb-18">Add new trucking company</div>
+                    <div class="d-flex align-items-center mb-42">
+                        <div>
+                            <img src="../../assets/images/cc-icon.svg" alt="">
+                        </div>
+
+                        <div class="ml-24" style="border: 2px solid #FDD7E4 !important; padding:3px; border-radius: 5px !important;">
+                            <div class="d-flex ">
+                                <div class="title-4 text-color-black-shade7 mb-7 no-wrap">Company name </div>
+                                <div class="required ml-1">*</div>
+                            </div>
+                            <span *ngIf="addTC.get('company_name')?.invalid && (form_clicked)"
+                            class="text-danger">
+                                Company name is required.
+                            </span>
+                            <div class="position-relative">
+                                <input type="text" style="border: 0px !important;" class="myinput4" placeholder="Enter..." formControlName="company_name">
+                                <!-- <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px"> -->
+                            </div>
+                        </div>
+                        <div class="title-14 text-color-black-shade ml-24">
+                            The more accurate details you can provide, better tickets we can make.
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-9">
+                        <div class="d-flex" style=" background:white; border:1px solid #E1E1E1 !important; padding:2px; border-radius: 5px !important;">
+                            <div class="title-6-new no-wrap">Default company</div>
+                            <input type="checkbox" value="1" formControlName="is_default" class="mycheckbox3 ml-18">
+                        </div>
+                        <div class="title-14 ml-36">If set as a default company, when you create a ticket, the company is set as the trucking company.</div>
+                    </div>
+                 
+                    <div class="border-div br-5 custom-padding13 mb-26">
+                        <div class="custom-padding14">
+                            <div class="title-6-new mb-8">Address</div>
+                        </div>
+                        <div class="myhr3 mb-10"></div>
+                        <div class="custom-padding14">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="title-5-new2 mb-2px">Street</div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="street">
+                                        <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="title-5-new2 mb-2px">City</div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="city">
+                                        <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="myhr3 mb-10"></div>
+                        <div class="custom-padding14">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="title-5-new2 mb-2px">Province/ State</div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="province">
+                                        <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="title-5-new2 mb-2px">Postal code</div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="postal_code">
+                                        <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-10 mr-10 mb-30">
+                        <div class="title-14 mb-12">
+                            If you are driving the truck as your company, also known as a freelancer, you can utilize DispatchProX’s invoicing. Set your hourly rate below, it will be used on the invoices you send to the company.
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="title-6-new">Your hour rate</div>
+                            <input type="text" class="myinput5 ml-14 w-92px" formControlName="hour_rate" placeholder="$ ___,__">
+                        </div>
+                    </div>
+                    <div class="title-6-new mb-18">Add contact</div>
+                    <div class="border-div br-5 custom-padding13  mb-38">
+                        <div class="custom-padding15">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span *ngIf="addTC.get('contact_name')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Name is required.
+                                    </span>
+                                    <div class="d-flex ">
+                                        <div class="title-5-new2 mb-2px">Name</div>
+                                        <div class="required ml-1">*</div>
+                                    </div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="contact_name">
+                                        <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <span *ngIf="addTC.get('contact_phone')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Contact number is required.
+                                    </span>
+                                    <div class="d-flex ">
+                                        <div class="title-5-new2 mb-2px">Phone number </div>
+                                        <div class="required ml-1">*</div>
+                                    </div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" formControlName="contact_phone" (input)="changeNumberContact($event,'add-tc')" placeholder="(---) --- ----">
+                                        <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="hidden" formControlName="role" >
+                                    <div class="title-5-new2 mb-2px">Role</div>
+                                    <div class="position-relative mb-13 selectdiv">
+                                        <div class="myinput4 btnselectlist selectlistname">Dispatcher</div>
+                                        <i class="fa fa-caret-down input-icon-right btnselectlist" aria-hidden="true"></i>
+                                        <div class="selectlistdiv">
+                                            <div class="title-5-new2 mb-14">Role</div>
+                                            <ul class="selectlistitems">
+                                                <li (click)="setAddTCRole('Dispatcher')">Dispatcher</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="myhr3 mb-6"></div>
+                        <div class="custom-padding15">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="title-5-new2 mb-2px">Email </div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="contact_email">
+                                        <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 display-table">
+                                    <div class="vertical-middle">
+                                        <div class="title-14">Email used for sending invoices</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div align="center">
+                        <button  class="mybtn4 mybtn-back-pink title-17 w-auto" style="
+                        line-height: 18px  !important;  
+                        border-radius: 5px !important; 
+                        padding: 14px 30px  !important;
+                        box-shadow: 0px 4px 4px 0px #00000040;"*ngIf="this.is_loading!='adding_tc'">Add Company</button>
+                      
+                        <button  class="mybtn4 mybtn-back-pink title-17 w-auto" style="
+                        line-height: 18px  !important;  
+                        border-radius: 5px !important; 
+                        padding: 14px 30px  !important;
+                        box-shadow: 0px 4px 4px 0px #00000040;"class="mybtn4 mybtn-back-pink title-17 w-auto mybtn-box-shadow" disabled type="button" *ngIf="this.is_loading=='adding_tc'">Processing..</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade  come-from-modal right" *ngIf="this.company_detail && this.company_detail?.full_name && company_detail?.full_name !=undefined" id="myModalEditCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog"  style="height: fit-content !important;" role="document">
+        <div class="modal-content">
+            <div class="modal-body modal-body-padding">
+                <div class="d-flex align-items-center mb-22">
+                    <img src="../../assets/icons/truck-ico.svg" alt="">
+                    <div class="title-4 ml-11">{{this.company_detail?.company_name}}</div>
+                </div>
+
+                <div class="row mb-6">
+                    <div class="col-md-9">
+                        <nav>
+                            <div class="nav nav-pills nav-fill ticket-tabs mb-20" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#company" role="tab" aria-controls="nav-home" aria-selected="true">Company</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#contacts" role="tab" aria-controls="nav-profile" aria-selected="false">Contacts</a>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="nav-home-tab">
+                  
+                        <div class="border-div br-5 custom-padding13 mb-26">
+                            <div class="custom-padding14 d-flex justify-content-between align-items-center">
+                                <div class="title-6-new mb-8">Address</div>
+                                <img src="../../assets/icons/pencile.svg" alt="" width="15px">
+                            </div>
+                            <div class="myhr3 mb-10"></div>
+                            <div class="custom-padding14">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="title-5-new2 mb-2px">Street</div>
+                                        <div class="title-7 text-color-black-shade7 mb-9">{{this.company_detail?.address}}</div>
+                                    </div>
+                                    <div class="col-md-6" align="right">
+                                        <div class="title-5-new2 mb-2px">City</div>
+                                        <div class="title-7 text-color-black-shade7 mb-9">{{this.company_detail?.city}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr3 mb-10"></div>
+                            <div class="custom-padding14">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="title-5-new2 mb-2px">Province/ State</div>
+                                        <div class="title-7 text-color-black-shade7 mb-9">{{this.company_detail?.province}}</div>
+                                    </div>
+                                    <div class="col-md-6" align="right">
+                                        <div class="title-5-new2 mb-2px">Postal code</div>
+                                        <div class="title-7 text-color-black-shade7 mb-9">{{this.company_detail?.post_code}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ml-10 mr-10 mb-30">
+                            <div class="title-14 mb-12">
+                                If you are driving the truck as your company, also known as a freelancer, you can utilize DispatchProX’s invoicing. Set your hourly rate below, it will be used on the invoices you send to the company.
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="title-6-new">Your hour rate</div>
+                                <input type="text" class="myinput5 ml-14 w-92px" readonly [value]="company_detail.hour_rate" placeholder="$ ___,__">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                        <div class="title-6-new mb-8" *ngIf="company_detail.full_name">Primary</div>
+                        <div class="border-div br-5 custom-padding13  mb-16" >
+                            <div class="custom-padding15">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="d-flex ">
+                                            <div class="title-5-new2 mb-2px">Name</div>
+                                            <div class="required ml-1">*</div>
+                                        </div>
+                                        <div class="title-7 text-color-black-shade7 mb-9">{{company_detail?.full_name}}</div>
+                                    </div>
+                                    <div class="col-md-4" align="center">
+                                        <div class="d-flex ">
+                                            <div class="title-5-new2 mb-2px">Phone number </div>
+                                            <div class="required ml-1">*</div>
+                                        </div>
+                                        <div class="title-7 text-color-black-shade7 mb-9">{{company_detail?.contact_number}}</div>
+                                    </div>
+                                    <div class="col-md-4" align="right">
+                                        <div class="title-5-new2 mb-2px">Role</div>
+                                        <div class="title-7 text-color-black-shade7 mb-9"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr3 mb-6"></div>
+                            <div class="custom-padding15">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="title-5-new2 mb-2px">Email</div>
+                                        <div class="title-7 text-color-black-shade7 mb-9">{{company_detail?.email}}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade  come-from-modal right" *ngIf="this.company_detail && this.company_detail?.freelance_driver_id && company_detail?.freelance_driver_id !=undefined" id="myModalEditCompany" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content" style="background: #FAFAFA
+">
+            <div class="modal-body modal-body-padding">
+
+
+                <div class="row pb-3 mb-22">
+                    <div class="col-md-6">
+                      <div
+                        style="font-family: Gilroy-SemiBold;
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 17.15px; 
+                        margin-bottom:2px;
+                        ">
+                        Company name
+                    </div>
+                    
+                      <div class="page-heading-title">
+                        {{this.company_detail?.company_name}}
+                      </div></div>
+                    
+  
+                    <div
+                      class="col-md-6 d-flex justify-content-end"
+                    >
+                        <div
+                          class="heading-5-400 text-color-black ml-8px col" style="text-align:end"
+                        >
+                        <img src="../../assets/icons/truck-gray-updated.svg" alt="">
+                        </div>
+                      
+                    </div>
+                  </div>
+
+
+                <!-- <div class="d-flex align-items-center mb-22">
+                    <img src="../../assets/icons/truck-ico.svg" alt="">
+                    <div class="title-4 ml-11">{{this.company_detail?.company_name}}</div>
+                </div> -->
+
+                <div class="row mb-6">
+                    <div class="col-md-9">
+                        <nav>
+                            <div class="nav nav-pills nav-fill ticket-tabs mb-20" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#company" role="tab" aria-controls="nav-home" aria-selected="true">Company</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#contacts" role="tab" aria-controls="nav-profile" aria-selected="false">Contacts</a>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="d-flex align-items-center mb-9">
+                            <div class="d-flex" style="background: #ffff;
+                            padding: 5px;
+                            border: 1px solid #E1E1E1;
+                            border-radius: 5px;
+                            align-items: center;
+                            ">
+                                <div class="title-6-new no-wrap">Default company</div>
+                                <input type="checkbox" value="1" (change)="changeIsDefault($event)"  [checked]="this.is_default" class="mycheckbox3 ml-18">
+                            </div>
+                            <div class="title-14 ml-36">If set as a default company, when you create a ticket, the company is set as the trucking company.</div>
+                        </div>
+
+                        <div class="position-relative modal-div1"  data-toggle="modal" data-target="#myModalEditAddress" >
+                          
+
+                            <div class="border-div br-5 custom-padding13 mb-26 btnremove1" style="box-shadow: 0px 4px 4px 0px #00000040;background: white;">
+                                <div class="custom-padding14 d-flex justify-content-between align-items-center">
+                                    <div class="title-6-new mb-8">{{this.company_detail?.company_name}} Address</div>
+                                    <img src="../../assets/icons/pencile.svg" alt="" width="15px">
+                                </div>
+                                <div class="myhr3 mb-10"></div>
+                                <div class="custom-padding14">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="title-5-new2 mb-2px">Street</div>
+                                            <div class="title-7 text-color-black-shade7 mb-9">{{this.company_detail?.street}}</div>
+                                        </div>
+                                        <div class="col-md-6" align="right">
+                                            <div class="title-5-new2 mb-2px">City</div>
+                                            <div class="title-7 text-color-black-shade7 mb-9">{{this.company_detail?.city}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr3 mb-10"></div>
+                                <div class="custom-padding14">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="title-5-new2 mb-2px">Country</div>
+                                            <div class="title-7 text-color-black-shade7 mb-9">{{this.company_detail?.country}}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="title-5-new2 mb-2px">Province/ State</div>
+                                            <div class="title-7 text-color-black-shade7 mb-9">{{this.company_detail?.province}}</div>
+                                        </div>
+                                        <div class="col-md-4" align="right">
+                                            <div class="title-5-new2 mb-2px">Postal code</div>
+                                            <div class="title-7 text-color-black-shade7 mb-9">{{this.company_detail?.postal_code}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                             
+                        </div> 
+
+                        <div class="ml-10 mr-10 mb-30">
+                            <div class="title-14 mb-12">
+                                If you are driving the truck as your company, also known as a freelancer, you can utilize DispatchProX’s invoicing. Set your hourly rate below, it will be used on the invoices you send to the company.
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="title-6-new">Your hour rate</div>
+                                <input type="text" class="myinput5 ml-14 w-92px" (change)="setHourRate($event)" [value]="this.hour_rate" placeholder="$ ___,__">
+                            </div>
+                        </div>
+                        <div class="row mb-15">
+                            <div class="col-2">
+                            </div>
+                            <div class="col-3">
+                                <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow" (click)="handleUpdateCompany()" *ngIf="this.is_loading!='updating_company'">Update</button>
+                                <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow" disabled *ngIf="this.is_loading=='updating_company'">Processing...</button>
+                            </div>
+                            <div class="col-1">
+                            </div>
+                            <div class="col-3">
+                                <div class="position-relative modal-div">
+                                    <button class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow btnremove" *ngIf="this.is_loading!='deleting_company'">Remove</button>
+                                    <button class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow " disabled *ngIf="this.is_loading=='deleting_company'">Removing...</button>
+                                    <div class="delete-modal">
+                                        <div class="title-3 mb-12 text-center">Deleting company ...</div>
+                                        <div class="title-5-new2 mb-17 text-center">Are you sure?</div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <button class="mybtn5 mybtn-back-pink title-17 w-auto btnaction" (click)="deleteCompany(this.company_detail?.id)">Yes</button>
+                                            <button class="mybtn5 mybtn-default title-17 w-auto btnaction">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                        <ng-container *ngIf="this.company_detail?.contacts && this.company_detail?.contacts.length>0">
+                            <ng-container *ngFor="let contact of this.company_detail?.contacts; let index=index">
+
+                                <div class="title-6-new mb-8" *ngIf="contact.is_default==true">Primary</div>
+                                <div class="border-div br-5 custom-padding13  mb-16"  data-toggle="modal" (click)="setContact(contact)" data-target="#myModalEditContact" >
+                                    <div class="custom-padding15">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="d-flex ">
+                                                    <div class="title-5-new2 mb-2px">Name</div>
+                                                    <div class="required ml-1">*</div>
+                                                </div>
+                                                <div class="title-7 text-color-black-shade7 mb-9">{{contact?.name}}</div>
+                                            </div>
+                                            <div class="col-md-4" align="center">
+                                                <div class="d-flex ">
+                                                    <div class="title-5-new2 mb-2px">Phone number </div>
+                                                    <div class="required ml-1">*</div>
+                                                </div>
+                                                <div class="title-7 text-color-black-shade7 mb-9">{{contact?.contact_number}}</div>
+                                            </div>
+                                            <div class="col-md-4" align="right">
+                                                <div class="title-5-new2 mb-2px">Role</div>
+                                                <div class="title-7 text-color-black-shade7 mb-9">{{contact?.role}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="myhr3 mb-6"></div>
+                                    <div class="custom-padding15">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="title-5-new2 mb-2px">Email</div>
+                                                <input type="text" class="myinput4" placeholder="..." [value]="contact?.email" (change)="setContactData($event,'email',index)" readonly>
+                                            </div>
+                                            <div class="col-md-6" align="center">
+                                                <div class="title-5-new2 mb-2px">Send invoice to</div>
+                                                <input type="checkbox" value="1" [checked]="contact?.send_invoices ==true" (change)="setContactData($event,'send_invoices',index)" class="mycheckbox3" readonly>
+                                            </div>
+                                            <!-- <div class="col-md-4" align="right">
+                                                <div class="title-5-new2 mb-2px">Modify </div>
+                                                <img src="../../assets/icons/pencile.svg" alt="" width="16px" data-toggle="modal" (click)="setContact(contact)" data-target="#myModalEditContact">
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+
+                        <div align="right">
+                             
+                                <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"  data-toggle="modal" data-target="#myModalAddContact" type="button">Add New</button>
+                     
+                        </div>
+                        <div class="mt-10" align="center">
+                            <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow" *ngIf="this.is_loading!='update_contacts'" (click)="updateContacts()" type="button">Done</button>
+                            <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow" *ngIf="this.is_loading=='update_contacts'" disabled type="button">Processing..</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade  come-from-modal right" id="myModalAddContact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-contact" role="document">
+        <div class="modal-content">
+
+            <form  [formGroup]="addContact" (ngSubmit)="onAddContact()">
+                <div class="modal-body modal-body-padding">
+                    <div class="title-6-new mb-18 text-center">Add contact for {{this.company_detail?.company_name}}</div>
+                    <div class="border-div br-5 custom-padding13  mb-38">
+                        <div class="custom-padding15">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span *ngIf="addContact.get('name')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Name is required.
+                                    </span>
+                                    <div class="d-flex ">
+                                        <div class="title-5-new2 mb-2px">Name</div>
+                                        <div class="required ml-1">*</div>
+                                    </div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="name">
+                                        <img src="../../assets/icons/pencile.svg"  alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <span *ngIf="addContact.get('contact_number')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Contact number is required.
+                                    </span>
+                                    <div class="d-flex ">
+                                        <div class="title-5-new2 mb-2px">Phone number </div>
+                                        <div class="required ml-1">*</div>
+                                    </div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="(---) --- ----" formControlName="contact_number" (input)="changeNumberContact($event,'add-contact')">
+                                        <img src="../../assets/icons/pencile.svg" alt=""   class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="hidden" formControlName="role">
+                                    <div class="title-5-new2 mb-2px">Role</div>
+                                    <div class="position-relative mb-13 selectdiv">
+                                        <div class="myinput4 btnselectlist selectlistname">Dispatcher</div>
+                                        <i class="fa fa-caret-down input-icon-right btnselectlist" aria-hidden="true"></i>
+                                        <div class="selectlistdiv">
+                                            <div class="title-5-new2 mb-14">Role</div>
+                                            <ul class="selectlistitems">
+                                                <li (click)="setRoleAdd('Dispatcher')">Dispatcher</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="myhr3 mb-6"></div>
+                        <div class="custom-padding15">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="title-5-new2 mb-2px">Email </div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="email">
+                                        <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 display-table">
+                                    <div class="vertical-middle">
+                                        <div class="title-14">Email used for sending invoices</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="" align="center">
+                        <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow" *ngIf="this.is_loading!='adding-contact'">Add</button>
+                        <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow" disabled *ngIf="this.is_loading=='adding-contact'" type="button">Processing..</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade  come-from-modal right"  id="invitePeople" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  
+        <div class="modal-dialog"  style="height: fit-content !important;" role="document">
+            <div class="modal-content" style="background: #FAFAFA">
+            <div class="modal-body" style="padding :20px; ">
+
+                <div class="row align-items-center justify-content-center mb-50">
+                    <div class="" style="width: 282px; height: 187px;" >
+                        <img [src]="'assets/icons/blueinvite.png'" class="img ">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-25px">
+                    <div>
+
+                        <div class=" justify-content-between ">
+                            <div class="page-heading-title mb-15px">Invite trucking company / broker </div>
+
+                        </div>
+                    </div>
+                </div>
+                <form  [formGroup]="inviteTC" (ngSubmit)="onSaveInvite()">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span *ngIf="inviteTC.get('contact_name')?.invalid && (form_clicked)"
+                            class="text-danger">
+                                Company name is required.
+                            </span>
+                            <label class="field text-field required_field">
+                                <input class="field__input" placeholder="Enter" formControlName="company_name">
+                                <span class="field__label-wrap">
+                                    <span class="field__label">Company Name</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-12">
+                            <span *ngIf="inviteTC.get('contact_name')?.invalid && (form_clicked)"
+                            class="text-danger">
+                                Contact name is required.
+                            </span>
+                            <label class="field text-field required_field">
+                                <input class="field__input" placeholder="Enter" formControlName="contact_name">
+                                <span class="field__label-wrap">
+                                    <span class="field__label">Trucking company contact name</span>
+                                </span>
+                            </label>
+
+                        </div>
+                        <div class="col-md-12">
+                            <span *ngIf="inviteTC.get('contact_email')?.invalid && (form_clicked)"
+                            class="text-danger">
+                                Contact email is required.
+                            </span>
+                            <label class="field text-field required_field">
+                                <input class="field__input" placeholder="Enter"  formControlName="contact_email">
+                                <span class="field__label-wrap">
+                                    <span class="field__label">Contact email</span>
+                                </span>
+                            </label>
+                        </div>
+                        <!-- <div class="col-md-12">
+
+                            <div class="title-5-new2 mb-2px">Phone number</div>
+                            <div class="position-relative mb-13">
+                                <input type="text" class="myinput4" placeholder="(---) --- ----" formControlName="contact_number"
+                                (input)="changeNumber($event)"
+                                >
+
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="row m-0 mt-25px justify-content-center">
+                    <div class="col-md-6" style="
+                    display:flex;
+                    justify-content:center;
+                        
+                        ">
+                   <button type="button" data-bs-dismiss="modal" class="mybtn5 mybtn-default title-17 w-auto" 
+                   (click)="closeModal()"
+                   style="line-height: 18px !important;  
+                          border-radius: 5px !important; 
+                          padding: 14px 30px !important;
+                          border: 1px solid #FDD7E4 !important;
+                          background: white !important;
+                          box-shadow: 0px 4px 4px 0px #00000040;">
+                   Back
+               </button>
+               
+                    </div>
+                    <div class="col-md-6">
+                        <button class="mybtn4 mybtn-back-pink title-17 w-auto" style="
+                           line-height: 18px  !important;  
+                           border-radius: 5px !important; 
+                           padding: 14px 30px  !important;
+                           box-shadow: 0px 4px 4px 0px #00000040;
+                        " *ngIf="this.is_loading==''">Send invite</button>
+                        <button class="mybtn4 mybtn-back-pink title-17 w-auto"
+                        style="
+                           line-height: 18px  !important;  
+                           border-radius: 5px !important; 
+                           padding: 14px 30px  !important;"
+                         disabled type="button" *ngIf="this.is_loading=='invite_tc'">Processing...</button>
+                    </div></div>
+
+                </form>
+
+                <!-- <form [formGroup]="inviteTCForm" (ngSubmit)="onInviteTC()" enctype="multipart/form-data" class="mt-15px">
+
+                            <span *ngIf="inviteTCcompany_nameError != ''" class="text-danger">{{
+                                inviteTCcompany_nameError
+                            }}</span>
+                            <label class="field text-field required_field">
+                                <input class="field__input" placeholder="Enter" value="" formControlName="company_name">
+                                <span class="field__label-wrap">
+                                <span class="field__label">Company name</span>
+                                </span>
+                            </label>
+                        <br>
+                            <span *ngIf="inviteTCfull_nameError != ''" class="text-danger">{{
+                                inviteTCfull_nameError
+                            }}</span>
+                            <label class="field text-field required_field">
+                                <input class="field__input" placeholder="Enter" value="" formControlName="full_name">
+                                <span class="field__label-wrap">
+                                <span class="field__label">Contact person: Full name</span>
+                                </span>
+                            </label>
+                        <br>
+
+                    <span *ngIf="inviteTCEmailError != ''" class="text-danger">{{
+                        inviteTCEmailError
+                    }}</span>
+                    <label class="field text-field required_field">
+                        <input class="field__input"  type="email" placeholder="example@mail.com" formControlName="email">
+                        <span class="field__label-wrap">
+                        <span class="field__label">Email</span>
+                        </span>
+                    </label>
+
+                    <div class="row m-0 mt-25px justify-content-center ">
+                        <div class="col-md-5 px-0 pr-2">
+                            <button class="btn-back goto-dashboard-setup-1" (click)="showModal('')">Back</button>
+                        </div>
+                        <div class="col-md-5 px-0 pl-2">
+                            <button class="mybtn mybtnn2 mybtn-back-yellow " type="submit" *ngIf="!is_loading">Send invite</button>
+                            <button class="mybtn mybtnn2 mybtn-back-yellow " type="button" *ngIf="is_loading" disabled >Processing..</button>
+                        </div>
+                    </div>
+                </form> -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade  come-from-modal right" id="myModalEditContact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-contact" role="document">
+        <div class="modal-content">
+            <form  [formGroup]="editContact" (ngSubmit)="onEditContact()">
+                <div class="modal-body modal-body-padding">
+                    <div class="title-6-new mb-18 text-center">Edit contact for {{this.company_detail?.company_name}}</div>
+                    <div class="border-div br-5 custom-padding13  mb-38">
+                        <div class="custom-padding15">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span *ngIf="editContact.get('name')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Name is required.
+                                    </span>
+                                    <div class="d-flex ">
+                                        <div class="title-5-new2 mb-2px">Name</div>
+                                        <div class="required ml-1">*</div>
+                                    </div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="name" (ngModel)="this.contact_detail?.name" >
+                                        <img src="../../assets/icons/pencile.svg"  alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <span *ngIf="editContact.get('contact_number')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Contact number is required.
+                                    </span>
+                                    <div class="d-flex ">
+                                        <div class="title-5-new2 mb-2px">Phone number </div>
+                                        <div class="required ml-1">*</div>
+                                    </div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" formControlName="contact_number" (input)="changeNumberContact($event,'edit-contact')" placeholder="(---) --- ----" (ngModel)="this.contact_detail?.contact_number">
+                                        <img src="../../assets/icons/pencile.svg" alt=""   class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="hidden" formControlName="role">
+                                    <div class="title-5-new2 mb-2px">Role</div>
+                                    <div class="position-relative mb-13 selectdiv">
+                                        <div class="myinput4 btnselectlist selectlistname">Dispatcher</div>
+                                        <i class="fa fa-caret-down input-icon-right btnselectlist" aria-hidden="true"></i>
+                                        <div class="selectlistdiv">
+                                            <div class="title-5-new2 mb-14">Role</div>
+                                            <ul class="selectlistitems" >
+                                                <li (click)="setContactRole('Dispatcher')">Dispatcher</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="myhr3 mb-6"></div>
+                        <div class="custom-padding15">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="title-5-new2 mb-2px">Email </div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="..." formControlName="email" (ngModel)="this.contact_detail?.email">
+                                        <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 display-table">
+                                    <div class="vertical-middle">
+                                        <div class="title-14">Email used for sending invoices</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                        </div>
+                        <div class="col-3">
+                            <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow" *ngIf="this.is_loading!='editing_contact'"> Update</button>
+                            <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow" type="button" disabled *ngIf="this.is_loading=='editing_contact'"> Processing..</button>
+                        </div>
+                        <div class="col-1">
+                        </div>
+                        <div class="col-3">
+                            <div class="position-relative modal-div">
+                                <button class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow btnremove" type="button" *ngIf="this.is_loading!='deleting_contact'">Remove</button>
+                                <button class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow " disabled type="button" *ngIf="this.is_loading=='deleting_contact'">Removing...</button>
+                                <div class="delete-modal">
+                                    <div class="title-3 mb-12 text-center">Deleting contact ...</div>
+                                    <div class="title-5-new2 mb-17 text-center">Are you sure?</div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button class="mybtn5 mybtn-back-pink title-17 w-auto btnaction" type="button" (click)="deleteContact(this.contact_detail?.id)">Yes</button>
+                                        <button class="mybtn5 mybtn-default title-17 w-auto btnaction" type="button">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade  come-from-modal right" id="myModalEditAddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog modal-dialog-contact" role="document">
+<div class="modal-content">
+    <div class="modal-body modal-body-padding">
+<form [formGroup]="editAddress" (ngSubmit)="onEditAddress()">
+    <div class="br-5 custom-padding13 mb-26 address-div">
+        <div class="custom-padding14 d-flex justify-content-between align-items-center edit-address">
+            <div class="title-6-new mb-8">Edit address</div>
+        </div>
+
+        <div class="mb-10"></div>
+        <div class="custom-padding14">
+            <div class="row mt-1">
+                <div class="col-6">
+                  <div class="title-52 text-grey-shade2">Street</div>
+                  <div class="position-relative">
+                   
+                    <input
+                      type="text"
+                      formControlName="street"
+                      class="field-input2"
+                      [ngModel]="this.company_detail?.street"
+                      placeholder="Type here"
+                    >
+                    <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="title-52 text-grey-shade2 text-right">
+                    City/Town
+                  </div>
+                  <div class="position-relative required_field12">
+                    <img src="../../assets/icons/pencile.svg" alt=""  class="top-left-icon2" width="17px">
+                    <input
+                      type="text"
+                      formControlName="city"
+                      class="field-input2 text-right"
+                      [ngModel]="this.company_detail?.city"
+                      placeholder="Type here"
+                    >
+                   </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="mb-10"></div>
+        <div class="custom-padding14">
+            <div class="row mt-2">
+                <div class="col-4 pr-0">
+                  <div class="title-5-new2 mb-2px">Country</div>
+                  <div class="position-relative required_field11">
+                    <select
+                      class="icon-none select-no-icon field-input2"
+                      formControlName="country"
+                      (change)="setCountry($event)"
+                      [ngModel]="this.country"
+                      [value]="
+                        this.country &&
+                        this.country !== null &&
+                        this.country != 'null'
+                          ? this.country
+                          : ''
+                      "
+                    >
+                      <option value="Canada" [selected]="this.country == 'Canada'">
+                        Canada
+                      </option>
+                      <option value="USA" [selected]="this.country == 'USA'">USA</option>
+                    </select>
+                    <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-4 pr-0">
+                  <div class="title-5-new2 mb-2px">
+                    Province/State
+                  </div>
+                  <div class="position-relative required_field11">
+                    <select
+                      type="text"
+                      class="field-input2"
+                      [ngModel]="this.province"
+                      formControlName="province"
+                    >
+                      <ng-container *ngIf="this.country == 'Canada'">
+                        <option
+                          *ngFor="let pro of this.canada_provinces"
+                          value="{{ pro }}"
+                          [selected]="pro == this.province"
+                        >
+                          {{ pro }}
+                        </option>
+                      </ng-container>
+          
+                      <ng-container *ngIf="this.country == 'USA'">
+                        <option
+                          *ngFor="let pro of this.usa_provinces"
+                          value="{{ pro }}"
+                          [selected]="pro == this.province"
+                        >
+                          {{ pro }}
+                        </option>
+                      </ng-container>
+                    </select>
+                    <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="title-5-new2 mb-2px text-right">Postal Code</div>
+                  <div class="position-relative">
+                    <img src="../../assets/icons/pencile.svg" alt=""  class="top-left-icon2" width="17px">
+                    <input
+                      type="text"
+                      placeholder="V8K K0L"
+                      [ngModel]="this.company_detail?.postal_code"
+                      formControlName="postal_code"
+                      class="myinput4 field-input2 text-right"
+                    >
+                  </div>
+                </div>
+              </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-2">
+            </div>
+            <div class="col-3">
+                <button class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow" type="submit" > Update</button>
+            </div>
+            <div class="col-1">
+            </div>
+            <div class="col-3">
+                <div class="position-relative modal-div">
+                    <button class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow btnremove" type="button" >Remove</button>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="custom-padding14">
+            <div class="row mt-10 justify-content-center">
+                <button type="submit"   class="mybtn4 mybtn-back-pink title-17 w-auto" style="
+                line-height: 18px  !important;  
+                border-radius: 5px !important; 
+                padding: 14px 30px  !important;
+                box-shadow: 0px 4px 4px 0px #00000040;">Save</button>
+                 <button type="button" class="mybtn4 mybtn-back-pink title-17 w-auto" style="
+                 margin-left: 20px;
+                 line-height: 18px  !important;  
+                 border-radius: 5px !important; 
+                 padding: 14px 30px  !important;
+                 background: white !important;
+                 box-shadow: 0px 4px 4px 0px #00000040;"    (click)="closeModal1()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>   
+</div>
+</div>
+</div>
+</div>
+
+  

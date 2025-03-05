@@ -1,0 +1,3402 @@
+<app-dashboard-top-header-driver
+  *ngIf="!this.from_list"
+  [is_dashboard]="false"
+  [header_text]="'Driving'"
+></app-dashboard-top-header-driver>
+<div class="bg-white">
+  <div
+    class=""
+    *ngIf="!loading_details && (!this.ticket_detail || !this.ticket_detail?.id)"
+  >
+    <div class="d-flex justify-content-center mb-23" *ngIf="!this.from_list">
+      Tickets details not found
+    </div>
+  </div>
+
+  <div
+    class=""
+    *ngIf="loading_details && (!this.ticket_detail || !this.ticket_detail?.id)"
+  >
+    <div class="d-flex justify-content-center mb-23" *ngIf="!this.from_list">
+      <h4>Fetching details...</h4>
+    </div>
+  </div>
+  <div class="" *ngIf="this.ticket_detail && this.ticket_detail?.id">
+    <div class="d-flex justify-content-center border-div mb-23">
+      <div class="title-72">Ticket ID</div>
+      <div class="title-82 ml-7">
+        {{ this.ticket_detail?.ticket?.ticket_no }}
+      </div>
+    </div>
+    <ul
+      style="margin-left: 1px; padding-left: 15px"
+      class="nav d-flex align-items-center justify-content-center nav-tabs justify-content-between ticket-tabs mb-36"
+    >
+      <li
+        class=" btn-details {{
+          this.active_tab == 'ticket-detail' ? 'active' : ''
+        }}"
+      >
+        <a
+          data-toggle="tab"
+          href="#ticketdetails"
+          (click)="setActiveTab('ticket-detail')"
+        >
+          <img
+            src="../assets/driver-images-mobile/confirmation_number.svg"
+            alt=""
+          />
+          <div class="ml-17 font-size-18 font-semibold text-black">
+            Ticket details
+          </div>
+        </a>
+      </li>
+      <li
+        class="btn-details {{
+          this.active_tab == 'rounds-detail' ? 'active' : ''
+        }}"
+        style="margin-right: 0.5rem"
+      >
+        <a
+          data-toggle="tab"
+          href="#jobdetails"
+          (click)="setActiveTab('rounds-detail')"
+        >
+          <img src="../assets/driver-images-mobile/restart_alt.svg" alt="" />
+          <div class="ml-17 font-size-18 font-semibold text-black">
+            Job details
+          </div>
+        </a>
+      </li>
+    </ul>
+    <div style="position: absolute; top: 220px; width: 100%">
+      <div
+        class="modal fade show"
+        *ngIf="this.show_time_edit_popup"
+        id="edithours"
+        role="dialog"
+        style="
+          display: block;
+          padding-top: 0%;
+          background: #00000000;
+          position: relative !important;
+        "
+      >
+        <div class="vertical-alignment-helper">
+          <div class="modal-dialog modal-dialog2 vertical-align-center">
+            <div class="modal-content modal-content2">
+              <div class="modal-body">
+                <div class="time-div total-time-div mb-20" style="width: 100%">
+                  <div class="title1-time-div mb-3">Driver total:</div>
+                  <div class="title2-time-div mb-3">
+                    {{ this.edited_hours }} hr : {{ this.edited_mints }} min
+                  </div>
+                </div>
+                <div
+                  class="d-flex justify-content-between align-items-center mb-16"
+                >
+                  <div class="time-div time-div2 width-35pc p-0">
+                    <div class="title-12 mb-15 hour_head mt-2">Hours</div>
+                    <!-- <div class=" py-2 mb-2 up_arrow" >
+                                            <img src="../assets/driver-images-mobile/arrow_drop_up.png" alt="" class="upClick2 mb-1">
+                                        </div> -->
+                    <div
+                      class=" py-2 mb-2 up_arrow_a upClick2 {{
+                        this.edited_hours == 0 || this.edited_hours == '0'
+                          ? ''
+                          : ''
+                      }}"
+                    >
+                      <img
+                        src="../assets/driver-images-mobile/arrow_drop_up.png"
+                        alt=""
+                        class="mb-1"
+                      />
+                    </div>
+                    <!-- <img src="../assets/driver-images-mobile/arrow_drop_up.png" alt="" class=" mb-1"> -->
+                    <ul class="time-hours mb-0">
+                      <ng-container *ngFor="let hour of hours">
+                        <ng-container *ngIf="hour < 0">
+                          <li></li>
+                        </ng-container>
+                        <ng-container
+                          *ngIf="hour == this.edited_hours && hour > -1"
+                        >
+                          <li
+                            #el
+                            (click)="setHours(hour)"
+                            class="{{
+                              hour == this.edited_hours ? 'active' : ''
+                            }} "
+                            onload="focusTo(this.id)"
+                            id="{{
+                              hour == this.edited_hours ? 'hour-active' : ''
+                            }}"
+                          >
+                            {{ hour }}
+                          </li>
+                        </ng-container>
+                        <ng-container
+                          *ngIf="hour != this.edited_hours && hour > -1"
+                        >
+                          <li (click)="setHours(hour)">{{ hour }}</li>
+                        </ng-container>
+                      </ng-container>
+                    </ul>
+                    <div class="py-2 mb-2 up_arrow_a mt-2 downClick2">
+                      <img
+                        src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                        alt=""
+                      />
+                    </div>
+                    <!-- <img src="../assets/driver-images-mobile/arrow_drop_down2.png" class="" alt=""> -->
+                  </div>
+                  <div class="title-12 bg-pink borderr">:</div>
+                  <div
+                    class="time-div time-div2 text-left width-200px pr-0 pt-0 mt-0"
+                  >
+                    <div class="title-12 ml-0 text-center mb-1 hour_head mb_86">
+                      Hour = min
+                    </div>
+                    <ul class="time-hours mb-38">
+                      <li
+                        (click)="setMinutes(0)"
+                        class="{{ 0 == this.edited_mints ? 'active' : '' }}"
+                      >
+                        0.00 = 00 min
+                      </li>
+                      <li
+                        (click)="setMinutes(15)"
+                        class="{{ 15 == this.edited_mints ? 'active' : '' }}"
+                      >
+                        0.25 = 15 min
+                      </li>
+                      <li
+                        (click)="setMinutes(30)"
+                        class="{{ 30 == this.edited_mints ? 'active' : '' }}"
+                      >
+                        0.50 = 30 min
+                      </li>
+                      <li
+                        (click)="setMinutes(45)"
+                        class="{{ 45 == this.edited_mints ? 'active' : '' }}"
+                      >
+                        0.75 = 45 min
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div align="center" class="mb-15px">
+                  <div class="">
+                    <button
+                      type="button"
+                      (click)="showEditTimePopup()"
+                      class="btn-accept upd_btn btn-padding no-filter"
+                    >
+                      Update
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content">
+      <div
+        id="ticketdetails"
+        class="tab-pane fade show  {{
+          this.active_tab == 'ticket-detail' ? 'in active' : ''
+        }}"
+      >
+        <div class="">
+          <div
+            class="ticket-datetime mb-14 bg-yellow text-white"
+            *ngIf="
+              this.ticket_detail?.ticket?.ticket_truck_type_rounds.length < 1 ||
+              ((!this.round_in_progress || this.round_in_progress == null) &&
+                !this.all_rounds_done)
+            "
+          >
+            Job started {{ this.ticket_detail?.started_at | date : "h:mm a" }}
+          </div>
+          <ng-container
+            *ngIf="
+              this.ticket_detail.ticket?.status == 'Driving' &&
+              round_in_progress
+            "
+          >
+            <ng-container
+              *ngFor="
+                let round of this.ticket_detail?.ticket
+                  ?.ticket_truck_type_rounds
+              "
+            >
+              <ng-container *ngIf="this.round_in_progress?.id === round.id">
+                <div class="ticket-datetime mb-14 bg-yellow text-white">
+                  Round {{ round.round_no }} started
+                  {{ round.driver_start_time | date : "h:mm a" }}
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <div class="title-9 text-center mb-10 mt-2">Job</div>
+          <div class="border-div">
+            <div class="title-9 text-center text-black-shade3 min-height-65px">
+              <div class="label-regular mb-5px">
+                Construction site - Project - Job number
+              </div>
+              <div class="mb-10px">
+                {{ this.ticket_detail?.ticket?.user?.company_name }} -
+                {{ this.ticket_detail?.ticket?.project?.project_name }} -
+                {{ this.ticket_detail?.ticket?.project?.job_number }}
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="custom-padding15 min-height-65px">
+              <div class="row">
+                <div class="col-6 br-1px p-left">
+                  <div class="title-7 mb-5px">Approver</div>
+                  <div class="title-5 text-left">
+                    <span
+                      class="red-circle"
+                      *ngIf="
+                        this.notification_type &&
+                        this.notification_type == 'Approver Changed'
+                      "
+                    ></span>
+                    {{ this.ticket_detail?.ticket?.approver?.full_name }}
+                  </div>
+                </div>
+
+                <div class="col-6 text-right p-right">
+                  <div class="title-7 mb-5px">Rounds</div>
+
+                  <div class="title-5">
+                    {{
+                      this.ticket_detail?.ticket?.ticket_truck_type_rounds
+                        ?.length
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="myhr"></div>
+            <div class="title-desc custom-padding15 min-height-65px">
+              {{ this.ticket_detail?.ticket?.description }}
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="hr-dash mb-16"></div>
+        <div class="">
+          <div class="title-9 mb-11" align="center">Trucking Company</div>
+
+          <div class="border-div">
+            <div class="custom-padding15 min-height-65px">
+              <div class="row">
+                <div class="col-6 p-left br-1px">
+                  <div class="title-7 mb-5px">Company name</div>
+                  <div class="title-5 text-left">
+                    {{ this.ticket_detail?.trucking_company?.company_name }}
+                  </div>
+                </div>
+
+                <div class="col-6 p-right text-right">
+                  <div class="title-7 mb-5px">Hour rate</div>
+                  <div class="title-5">
+                    <div
+                      class="border-pink float-right"
+                      style="border-radius: 5px; text-align: right; width: 90px"
+                    >
+                      ${{ this.ticket_detail?.rate_per_hour }}/hr
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="custom-padding15 min-height-65px">
+              <div class="row">
+                <div class="p-left col-6 text-left br-1px">
+                  <div class="title-7 mb-5px">Dispatcher</div>
+
+                  <div class="title-5 text-left">
+                    {{ this.ticket_detail?.trucking_company?.full_name }}
+                  </div>
+                </div>
+
+                <div class="p-right col-6 text-right">
+                  <div class="title-7 mb-5px">Phone number</div>
+                  <div class="title-5 text-right">
+                    {{ this.ticket_detail?.trucking_company?.contact_number }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="row min-height-65px">
+              <div class="col-6 text-left">
+                <div class="title-7 mt-1 mb-5px">
+                  Paper ticket
+                  {{
+                    this.ticket_detail?.ticket?.required_paper_ticket_id
+                      ? "required"
+                      : "ID"
+                  }}
+                </div>
+                <div
+                  class="title-5 mt-1 text-left"
+                  *ngIf="this.ticket_detail?.ticket?.required_paper_ticket_id"
+                >
+                  <input
+                    type="text"
+                    id="paper_ticket_id"
+                    placeholder="Type here the ID"
+                    (input)="setNewTicketId($event)"
+                    class="input-paper-ticket"
+                    value="{{ this.new_paper_ticket_id }}"
+                  />
+                </div>
+                <div
+                  class="title-5 mt-1 text-left"
+                  *ngIf="!this.ticket_detail?.ticket?.required_paper_ticket_id"
+                >
+                  No
+                </div>
+              </div>
+              <div
+                class="p-right col-6 d-flex justify-content-center align-items-center"
+              >
+                <div class="">
+                  <img
+                    src="../assets/driver-images-mobile/camera-pink.svg"
+                    class=""
+                    width="43px"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row mb-46">
+            <div class="col-6 pr-1">
+              <div class="border-div p-0">
+                <div class="custom-padding15 min-height-65px">
+                  <div class="title-8 text-black-shade3 mt-1 mb-5px">
+                    Truck name
+                  </div>
+                  <div class="title-9 text-black-shade4">
+                    {{ this.ticket_detail?.truck?.truck_nickname }}
+                  </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="custom-padding15 min-height-65px">
+                  <div class="title-8 text-black-shade3 mt-1 mb-5px">Type</div>
+                  <div class="title-9 text-black-shade4">
+                    {{ this.ticket_detail?.truck?.truck_type }}
+                  </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="custom-padding15 min-height-65px">
+                  <div class="title-8 text-black-shade3 mt-1 mb-5px">
+                    License plate
+                  </div>
+                  <div class="title-9 text-black-shade4">
+                    {{ this.ticket_detail?.truck?.truck_license_plate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 pl-1">
+              <div class="border-div text-right p-0">
+                <div class="custom-padding15 min-height-65px">
+                  <div class="title-8 text-black-shade3 mt-1 mb-5px">
+                    Trailer name
+                  </div>
+                  <div class="title-9 text-black-shade4">
+                    {{ this.ticket_detail?.trailer?.trailer_nickname }}
+                  </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="custom-padding15 min-height-65px">
+                  <div class="title-8 text-black-shade3 mt-1 mb-5px">Type</div>
+                  <div class="title-9 text-black-shade4">
+                    {{ this.ticket_detail?.trailer?.trailer_type }}
+                  </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="custom-padding15 min-height-65px">
+                  <div class="title-8 text-black-shade3 mt-1 mb-5px">
+                    License plate
+                  </div>
+                  <div class="title-9 text-black-shade4">
+                    {{ this.ticket_detail?.trailer?.trailer_license_plate }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br />
+        </div>
+      </div>
+      <div
+        id="jobdetails"
+        class="tab-pane fade show {{
+          this.active_tab == 'rounds-detail' ? ' in active' : ''
+        }}"
+      >
+        <div
+          style="
+            position: absolute;
+            position: absolute;
+            top: 28%;
+            right: 0%;
+            width: max-content;
+          "
+          class="absolute-popup"
+        >
+          <div
+            class="modal fade show"
+            id="takepicupload"
+            role="dialog"
+            *ngIf="this.hide_modal_paper_ticket_photo"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2 modal-content-ptp">
+                  <div class="modal-body">
+                    <img
+                      class="float-right"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="setHidePaperTicketPhotoModal()"
+                    />
+                    <div class="title-11 mb-22 text-center">Paper ticket</div>
+
+                    <div
+                      class="text-danger"
+                      *ngIf="this.paper_ticket_photo_error !== ''"
+                    >
+                      {{ this.paper_ticket_photo_error }}
+                    </div>
+                    <div align="center" *ngIf="!this.loading_paper_ticket">
+                      <div class="title-21 text-black-shade8 mb-13">
+                        Take a picture
+                      </div>
+                      <img
+                        src="../assets/driver-images-mobile/take-pic.png"
+                        class="mb-32"
+                        width="54px"
+                        (click)="logoFileInput.click()"
+                      />
+                      <div class="title-21 text-black-shade8 mb-13">
+                        Upload the picture
+                      </div>
+                      <img
+                        src="../assets/driver-images-mobile/upload-pic.png"
+                        class=""
+                        width="54px"
+                        (click)="logoFileInput2.click()"
+                      />
+                    </div>
+                    <div align="center" *ngIf="this.loading_paper_ticket">
+                      <h2 class="title-9">Uploading...</h2>
+                    </div>
+                    <input
+                      id="logo-file-input"
+                      hidden
+                      type="file"
+                      [multiple]="false"
+                      [accept]="'image/jpeg, image/png'"
+                      (change)="onFileSelected($event)"
+                      #logoFileInput2
+                    />
+                    <input
+                      id="logo-file-input"
+                      capture="camera"
+                      hidden
+                      type="file"
+                      [multiple]="false"
+                      [accept]="'image/jpeg, image/png'"
+                      (change)="onFileSelected($event)"
+                      #logoFileInput
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade show"
+            *ngIf="
+              this.update_round_id != '' &&
+              this.edit_haulback &&
+              this.show_round_update_popup == 'droplocation-popup' &&
+              this.show_add_droplocation != true
+            "
+            id="changedumpsite"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                  <div class="modal-body sa_modal p-5px">
+                    <img
+                      class="float-right mr-1 mt-1"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="closeRoundPopup()"
+                    />
+                    <div
+                      class="title-9 font-semibold font-size-18 text-black mb-15px mt-15px text-center"
+                    >
+                      Drop location
+                    </div>
+
+                    <div class="p-10-15 b-grey-1px br-5">
+                      <ul class="dumpsites dumpsites2">
+                        <li
+                          class="single-item-grey font-size-18 font-semibold active"
+                          (click)="
+                            setDLocation(this.edit_haulback?.drop_location_name)
+                          "
+                        >
+                          {{ this.edit_haulback?.drop_location_name }}
+                        </li>
+                      </ul>
+                      <div
+                        class="position-relative"
+                        (click)="showAddDropLocation()"
+                      >
+                        <input
+                          type="text"
+                          class="form-control font-size-17 br-5"
+                          readonly
+                          placeholder="Add"
+                        />
+                        <img
+                          class="top-right"
+                          src="../assets/driver-images-mobile/edit.svg"
+                        />
+                      </div>
+                    </div>
+
+                    <div align="center">
+                      <div class="mb-15px mt-15px">
+                        <button
+                          *ngIf="!this.loading_update"
+                          type="button"
+                          class="btn-accept shadow-btn br-5 btn-padding no-filter font-bold w-100-50 p-5px"
+                          (click)="handleDLChange()"
+                        >
+                          Update
+                        </button>
+                        <button
+                          *ngIf="this.loading_update"
+                          type="button"
+                          class="btn-accept shadow-btn br-5 btn-padding no-filter font-bold w-100-50 p-5px"
+                          disabled
+                        >
+                          Processing..
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="position: absolute; position: absolute; top: 28%; width: 97%"
+          class="absolute-popup"
+        >
+          <div
+            class="modal fade show"
+            *ngIf="this.show_notes_popup"
+            id="notesForApproval"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2">
+                  <div class="modal-body padding-15-7">
+                    <div class="title-11 mb-16 text-center">
+                      Notes to approver
+                    </div>
+                    <div class="text-danger" *ngIf="new_material_error !== ''">
+                      {{ new_material_error }}
+                    </div>
+                    <textarea
+                      class="form-control br-10 mb-16 font-semibold font-size-17 text-grey br-5px"
+                      [(ngModel)]="this.notes_for_approval"
+                      rows="4"
+                      placeholder="Type here ..."
+                    ></textarea>
+                    <div align="center">
+                      <div class="">
+                        <button
+                          type="button"
+                          *ngIf="!this.loading_update"
+                          (click)="updateJobNotes()"
+                          class="btn-accept btn-padding btn bg-pink dflex-btn font-bold font-size-17"
+                        >
+                          Update
+                        </button>
+                        <button
+                          *ngIf="this.loading_update"
+                          type="button"
+                          class="btn-accept btn-padding btn bg-pink dflex-btn font-bold font-size-17 no-filter"
+                          disabled
+                        >
+                          Processing..
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal fade show"
+            id="materialout"
+            *ngIf="this.hide_modal_paper_ticket"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2 modal-content-ptid">
+                  <div class="modal-body padding-15-7">
+                    <img
+                      class="float-right"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="setHidePaperTicketModal()"
+                    />
+                    <div class="title-9 mb-19 text-center">Paper ticket ID</div>
+                    <div
+                      class="text-danger"
+                      *ngIf="paper_ticket_id_error !== ''"
+                    >
+                      {{ paper_ticket_id_error }}
+                    </div>
+                    <div class="title-9 mb-19 text-center"></div>
+                    <div
+                      class="title-8 text-black-shade3 text-left mb-6 d-flex align-items-center justify-content-between"
+                    >
+                      <div class="">Paper ticket ID</div>
+                      <div class="text-right text-red font-size-24 font-bold">
+                        *
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control font-semibold font-size-17 text-grey br-5px br-5 w-200 mb-19"
+                      [value]="this.new_paper_ticket_id"
+                      (input)="this.setNewTicketId($event)"
+                      placeholder="Type here ..."
+                    />
+                    <div align="center">
+                      <div class="">
+                        <button
+                          *ngIf="!this.loading_update"
+                          (click)="this.handlePaperTicketId()"
+                          type="button"
+                          class="btn-accept btn-padding btn bg-pink dflex-btn font-bold font-size-17 no-filter btn-ppt"
+                        >
+                          Change
+                        </button>
+                        <button
+                          *ngIf="this.loading_update"
+                          type="button"
+                          class="btn-accept btn-padding btn bg-pink dflex-btn font-bold font-size-17 no-filter btn-ppt"
+                          disabled
+                        >
+                          Processing..
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal fade show"
+            *ngIf="
+              this.show_add_droplocation == true && !this.show_edit_address_dl
+            "
+            id="addingdlnotes"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2">
+                  <div class="modal-body padding-15-7">
+                    <img
+                      class="float-right"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="hideAddDropLocation()"
+                    />
+                    <div
+                      class="font-size-18 font-semibold text-black mb-19 text-center"
+                    >
+                      Drop location
+                    </div>
+                    <form
+                      [formGroup]="editDL"
+                      (ngSubmit)="handleDropLocation()"
+                      enctype="multipart/form-data"
+                    >
+                      <div class="title-72 font-size-17">
+                        Drop location name
+                      </div>
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          this.isFormClicked &&
+                          this.editDL.get('name')?.hasError('required')
+                        "
+                      >
+                        Name is required
+                      </div>
+                      <div class="position-relative mb-15px required_field22">
+                        <input
+                          type="text"
+                          class="form-control font-bold text-black font-size-18 br-5"
+                          formControlName="name"
+                          (ngModel)="(this.edit_haulback?.drop_location_name)"
+                          placeholder="Type here"
+                        />
+                        <img
+                          class="top-right"
+                          src="../assets/driver-images-mobile/edit.svg"
+                        />
+                      </div>
+
+                      <div class="title-72 font-size-17">
+                        Drop location address
+                      </div>
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          this.isFormClicked &&
+                          this.editDL.get('location')?.hasError('required')
+                        "
+                      >
+                        Address is required
+                      </div>
+
+                      <div
+                        class="position-relative mb-15px required_field22"
+                        (click)="showEditAddressDL()"
+                      >
+                        <input
+                          type="text"
+                          readonly
+                          class="form-control font-bold text-black font-size-18 br-5"
+                          formControlName="location"
+                          (ngModel)="
+                            (this.edit_haulback?.drop_location_address)
+                          "
+                          placeholder="Type here"
+                        />
+                        <img
+                          class="top-right"
+                          src="../assets/driver-images-mobile/edit.svg"
+                        />
+                      </div>
+                      <div align="center">
+                        <div class="mb-10px">
+                          <button
+                            *ngIf="!this.loading_add"
+                            type="submit"
+                            class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                          >
+                            Add
+                          </button>
+                          <button
+                            *ngIf="this.loading_add"
+                            type="button"
+                            class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                            disabled
+                          >
+                            Processing..
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade show"
+            *ngIf="this.show_edit_address_dl"
+            id="editdsaddress"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2">
+                  <div class="modal-body padding-15-7">
+                    <img
+                      class="float-right"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="hideAddAddressDL()"
+                    />
+                    <div
+                      class="font-size-18 font-semibold text-black mb-19 text-center"
+                    >
+                      Add/update address
+                    </div>
+                    <div class="border-div mb-15px">
+                      <div class="row">
+                        <div class="col-6 pr-1">
+                          <div class="title-72 font-size-17">Street</div>
+                          <div class="text-danger" *ngIf="this.street_error">
+                            Street required
+                          </div>
+                          <div
+                            class="position-relative mb-15px required_field22"
+                          >
+                            <input
+                              type="text"
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="dl_street"
+                              placeholder="Type here"
+                            />
+                            <img
+                              class="top-right-1"
+                              src="../assets/driver-images-mobile/edit.svg"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6 pl-1">
+                          <div class="title-72 font-size-17 text-right">
+                            City/Town
+                          </div>
+                          <div class="text-danger" *ngIf="this.city_error">
+                            City/Town required
+                          </div>
+                          <div
+                            class="position-relative mb-15px required_field_right"
+                          >
+                            <input
+                              type="text"
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="dl_city"
+                              placeholder="Type here"
+                            />
+                            <img
+                              class="top-right-1"
+                              src="../assets/driver-images-mobile/edit.svg"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4 pr-1">
+                          <div class="title-72 font-size-17">Country</div>
+                          <div class="position-relative mb-15px">
+                            <select
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="dl_country"
+                              (change)="setCountry($event)"
+                            >
+                              <option
+                                value="Canada"
+                                [selected]="this.set_country == 'Canada'"
+                              >
+                                Canada
+                              </option>
+                              <option
+                                value="USA"
+                                [selected]="this.set_country == 'USA'"
+                              >
+                                USA
+                              </option>
+                            </select>
+                            <img
+                              class="top-right-2"
+                              src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4 pl-1 pr-1">
+                          <div class="title-72 font-size-17">
+                            State/Province
+                          </div>
+                          <div class="position-relative mb-15px">
+                            <select
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="dl_province"
+                            >
+                              <ng-container
+                                *ngIf="this.set_country == 'Canada'"
+                              >
+                                <ng-container
+                                  *ngFor="let province of this.canada_provinces"
+                                >
+                                  <option value="{{ province }}">
+                                    {{ province }}
+                                  </option>
+                                </ng-container>
+                              </ng-container>
+                              <ng-container *ngIf="this.set_country == 'USA'">
+                                <ng-container
+                                  *ngFor="let province of this.usa_provinces"
+                                >
+                                  <option value="{{ province }}">
+                                    {{ province }}
+                                  </option>
+                                </ng-container>
+                              </ng-container>
+                            </select>
+                            <img
+                              class="top-right-2"
+                              src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4 pl-1">
+                          <div class="title-72 font-size-17 text-right">
+                            Postal code
+                          </div>
+                          <div class="position-relative">
+                            <input
+                              type="text"
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="dl_postal_code"
+                              placeholder="Type here"
+                            />
+                            <img
+                              class="top-right-1"
+                              src="../assets/driver-images-mobile/edit.svg"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div align="center">
+                      <div class="mb-10px">
+                        <button
+                          type="button"
+                          (click)="setEditDLAddress()"
+                          class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal fade show"
+            *ngIf="
+              this.update_round_id != '' &&
+              this.edit_haulback &&
+              this.show_round_update_popup == 'materialin-popup'
+            "
+            id="materialout"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2 shadow-modal">
+                  <div class="modal-body padding-15-7">
+                    <img
+                      class="float-right"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="closeRoundPopup()"
+                    />
+                    <div class="title-9 font-size-18 mb-19 text-center">
+                      Material in
+                    </div>
+                    <div class="text-danger" *ngIf="new_material_error !== ''">
+                      {{ new_material_error }}
+                    </div>
+                    <div class="title-9 mb-19 text-center"></div>
+                    <textarea
+                      class="form-control font-semibold font-size-18 text-black mb-19"
+                      [(ngModel)]="this.edit_haulback.material_in"
+                      rows="4"
+                      (input)="this.setNewMaterialIn($event)"
+                      placeholder="Type here ..."
+                    ></textarea>
+                    <div align="center">
+                      <div class="">
+                        <button
+                          *ngIf="!this.loading_update"
+                          (click)="this.handleNewMaterialin()"
+                          type="button"
+                          class="btn-accept shadow-btn br-5 font-bold font-size-18 text-black btn-padding no-filter"
+                        >
+                          Update
+                        </button>
+                        <button
+                          *ngIf="this.loading_update"
+                          type="button"
+                          class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding no-filter"
+                          disabled
+                        >
+                          Processing..
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal fade show"
+            *ngIf="
+              this.update_round_id != '' &&
+              this.show_round_update_popup == 'notes-popup'
+            "
+            id="addingnotes"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2">
+                  <div class="modal-body padding-15-7">
+                    <img
+                      class="float-right"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="closeRoundPopup()"
+                    />
+                    <div
+                      class="font-size-18 font-semibold text-black mb-19 text-center"
+                    >
+                      Round notes
+                    </div>
+                    <div
+                      class="text-danger mb-4"
+                      *ngIf="round_notes_error !== ''"
+                    >
+                      {{ round_notes_error }}
+                    </div>
+                    <textarea
+                      class="form-control font-bold text-black font-size-18 br-5 mt-1 mb-19"
+                      rows="4"
+                      [(ngModel)]="this.driver_round_notes"
+                      (input)="this.setNewNotes($event)"
+                      placeholder="Type here ..."
+                    ></textarea>
+                    <div align="center">
+                      <div class="">
+                        <button
+                          *ngIf="!this.loading_update"
+                          type="button"
+                          class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                          (click)="this.handleNewNotes()"
+                        >
+                          Update
+                        </button>
+                        <button
+                          *ngIf="this.loading_update"
+                          type="button"
+                          class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                          disabled
+                        >
+                          Processing..
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal fade show"
+            *ngIf="this.show_add_dumpsite == true && !this.show_edit_address_ds"
+            id="addingnotes"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2">
+                  <div class="modal-body padding-15-7">
+                    <img
+                      class="float-right"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="hideAddDumpSite()"
+                    />
+                    <div
+                      class="font-size-18 font-semibold text-black mb-19 text-center"
+                    >
+                      Add dump site
+                    </div>
+                    <form
+                      [formGroup]="addDumpsite"
+                      (ngSubmit)="handleAddDumpsite()"
+                      enctype="multipart/form-data"
+                    >
+                      <div class="title-72 font-size-17">Dump site name</div>
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          this.isFormClicked &&
+                          this.addDumpsite.get('name')?.hasError('required')
+                        "
+                      >
+                        Name is required
+                      </div>
+                      <div class="position-relative mb-15px required_field22">
+                        <input
+                          type="text"
+                          class="form-control font-bold text-black font-size-18 br-5"
+                          formControlName="name"
+                          placeholder="Type here"
+                        />
+                        <img
+                          class="top-right"
+                          src="../assets/driver-images-mobile/edit.svg"
+                        />
+                      </div>
+
+                      <div class="title-72 font-size-17">Dump site address</div>
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          this.isFormClicked &&
+                          this.addDumpsite.get('location')?.hasError('required')
+                        "
+                      >
+                        Address is required
+                      </div>
+
+                      <div
+                        class="position-relative mb-15px required_field22"
+                        (click)="showEditAddressDS()"
+                      >
+                        <input
+                          type="text"
+                          readonly
+                          class="form-control font-bold text-black font-size-18 br-5"
+                          formControlName="location"
+                          placeholder="Type here"
+                        />
+                        <img
+                          class="top-right"
+                          src="../assets/driver-images-mobile/edit.svg"
+                        />
+                      </div>
+                      <div align="center">
+                        <div class="mb-10px">
+                          <button
+                            *ngIf="!this.loading_add"
+                            type="submit"
+                            class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                          >
+                            Add
+                          </button>
+                          <button
+                            *ngIf="this.loading_add"
+                            type="button"
+                            class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                            disabled
+                          >
+                            Processing..
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade show"
+            *ngIf="this.show_edit_address_ds"
+            id="editdsaddress"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2">
+                  <div class="modal-body padding-15-7">
+                    <img
+                      class="float-right"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="hideAddAddressSite()"
+                    />
+                    <div
+                      class="font-size-18 font-semibold text-black mb-19 text-center"
+                    >
+                      Add/update address
+                    </div>
+                    <div class="border-div mb-15px">
+                      <div class="row">
+                        <div class="col-6 pr-1">
+                          <div class="title-72 font-size-17">Street</div>
+                          <div class="text-danger" *ngIf="this.street_error">
+                            Street required
+                          </div>
+                          <div
+                            class="position-relative mb-15px required_field22"
+                          >
+                            <input
+                              type="text"
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="ds_street"
+                              placeholder="Type here"
+                            />
+                            <img
+                              class="top-right-1"
+                              src="../assets/driver-images-mobile/edit.svg"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6 pl-1">
+                          <div class="title-72 font-size-17 text-right">
+                            City/Town
+                          </div>
+                          <div class="text-danger" *ngIf="this.city_error">
+                            City/Town required
+                          </div>
+                          <div
+                            class="position-relative mb-15px required_field_right"
+                          >
+                            <input
+                              type="text"
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="ds_city"
+                              placeholder="Type here"
+                            />
+                            <img
+                              class="top-right-1"
+                              src="../assets/driver-images-mobile/edit.svg"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4 pr-1">
+                          <div class="title-72 font-size-17">Country</div>
+                          <div class="position-relative mb-15px">
+                            <select
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="ds_country"
+                              (change)="setCountry($event)"
+                            >
+                              <option
+                                value="Canada"
+                                [selected]="this.set_country == 'Canada'"
+                              >
+                                Canada
+                              </option>
+                              <option
+                                value="USA"
+                                [selected]="this.set_country == 'USA'"
+                              >
+                                USA
+                              </option>
+                            </select>
+                            <img
+                              class="top-right-2"
+                              src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4 pl-1 pr-1">
+                          <div class="title-72 font-size-17">
+                            State/Province
+                          </div>
+                          <div class="position-relative mb-15px">
+                            <select
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="ds_province"
+                            >
+                              <ng-container
+                                *ngIf="this.set_country == 'Canada'"
+                              >
+                                <ng-container
+                                  *ngFor="let province of this.canada_provinces"
+                                >
+                                  <option value="{{ province }}">
+                                    {{ province }}
+                                  </option>
+                                </ng-container>
+                              </ng-container>
+                              <ng-container *ngIf="this.set_country == 'USA'">
+                                <ng-container
+                                  *ngFor="let province of this.usa_provinces"
+                                >
+                                  <option value="{{ province }}">
+                                    {{ province }}
+                                  </option>
+                                </ng-container>
+                              </ng-container>
+                            </select>
+                            <img
+                              class="top-right-2"
+                              src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4 pl-1">
+                          <div class="title-72 font-size-17 text-right">
+                            Postal code
+                          </div>
+                          <div class="position-relative">
+                            <input
+                              type="text"
+                              class="form-control font-bold text-grey font-size-18 br-5"
+                              id="ds_postal_code"
+                              placeholder="Type here"
+                            />
+                            <img
+                              class="top-right-1"
+                              src="../assets/driver-images-mobile/edit.svg"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div align="center">
+                      <div class="mb-10px">
+                        <button
+                          type="button"
+                          (click)="setEditDSAddress()"
+                          class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                        >
+                          Update
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="modal fade show"
+            *ngIf="
+              this.update_round_id != '' &&
+              this.show_round_update_popup == 'material-popup'
+            "
+            id="materialout"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-dialog2 vertical-align-center">
+                <div class="modal-content modal-content2 shadow-modal">
+                  <div class="modal-body padding-15-7">
+                    <img
+                      class="float-right"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="closeRoundPopup()"
+                    />
+                    <div class="title-9 font-size-18 mb-19 text-center">
+                      Material out
+                    </div>
+                    <div class="text-danger" *ngIf="new_material_error !== ''">
+                      {{ new_material_error }}
+                    </div>
+                    <div class="title-9 mb-19 text-center"></div>
+                    <textarea
+                      class="form-control font-semibold font-size-18 text-black mb-19"
+                      [(ngModel)]="this.new_material_taken_out"
+                      rows="4"
+                      (input)="this.setNewMaterial($event)"
+                      placeholder="Type here ..."
+                    ></textarea>
+                    <div align="center">
+                      <div class="">
+                        <button
+                          *ngIf="!this.loading_update"
+                          (click)="this.handleNewMaterial()"
+                          type="button"
+                          class="btn-accept shadow-btn br-5 font-bold font-size-18 text-black btn-padding no-filter"
+                        >
+                          Update
+                        </button>
+                        <button
+                          *ngIf="this.loading_update"
+                          type="button"
+                          class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding no-filter"
+                          disabled
+                        >
+                          Processing..
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            position: absolute;
+            position: absolute;
+            top: 28%;
+            right: 0%;
+            width: max-content;
+          "
+          class="absolute-popup"
+        >
+          <div
+            class="modal fade show"
+            *ngIf="
+              this.update_round_id != '' &&
+              this.show_round_update_popup == 'dumpsite-popup' &&
+              this.show_add_dumpsite != true
+            "
+            id="changedumpsite"
+            role="dialog"
+            style="
+              display: block;
+              padding-top: 0%;
+              background: #00000000;
+              position: relative !important;
+            "
+          >
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog vertical-align-center">
+                <div class="modal-content">
+                  <div class="modal-body sa_modal p-5px">
+                    <img
+                      class="float-right mr-1 mt-1"
+                      src="assets/driver-images-mobile/close.png"
+                      (click)="closeRoundPopup()"
+                    />
+                    <div
+                      class="title-9 font-semibold font-size-18 text-black mb-15px mt-15px text-center"
+                    >
+                      Update dump site
+                    </div>
+                    <div class="text-danger" *ngIf="new_dumpsite_error !== ''">
+                      {{ new_dumpsite_error }}
+                    </div>
+                    <div class="p-10-15 b-grey-1px br-5">
+                      <ul class="dumpsites dumpsites2">
+                        <ng-container *ngFor="let site of this.dump_sites">
+                          <li
+                            (click)="setNewDumpSite(site.dump_site)"
+                            class=" single-item-grey font-size-18 font-semibold {{
+                              this.new_dum_site == site.dump_site
+                                ? 'active'
+                                : ''
+                            }}"
+                          >
+                            {{ site.dump_site }}
+                          </li>
+                        </ng-container>
+                      </ul>
+                      <div
+                        class="position-relative"
+                        (click)="showAddDumpSite()"
+                      >
+                        <input
+                          type="text"
+                          class="form-control font-size-17 br-5"
+                          readonly
+                          placeholder="Add"
+                        />
+                        <img
+                          class="top-right"
+                          src="../assets/driver-images-mobile/edit.svg"
+                        />
+                      </div>
+                    </div>
+
+                    <div align="center">
+                      <div class="mb-15px mt-15px">
+                        <button
+                          *ngIf="!this.loading_update"
+                          type="button"
+                          class="btn-accept shadow-btn br-5 btn-padding no-filter font-bold w-100-50 p-5px"
+                          (click)="handleSiteChange()"
+                        >
+                          Change
+                        </button>
+                        <button
+                          *ngIf="this.loading_update"
+                          type="button"
+                          class="btn-accept shadow-btn br-5 btn-padding no-filter font-bold w-100-50 p-5px"
+                          disabled
+                        >
+                          Processing..
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Showing rounds done -->
+        <ng-container
+          *ngFor="
+            let round of this.ticket_detail?.ticket?.ticket_truck_type_rounds;
+            let i = index
+          "
+        >
+          <ng-container
+            *ngIf="
+              this.ticket_detail.ticket?.status == 'Driving' &&
+              ((round.driver_start_time && round.end_time) ||
+                this.ticket_detail?.ended_at)
+            "
+          >
+            <ng-container *ngIf="this.round_in_progress?.id != round.id">
+              <div
+                class="round-container mb-15px {{
+                  round.driver_start_time && round.end_time ? 'completed' : ''
+                }}"
+              >
+                <div class="round-top">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div
+                      class="round-no-div {{
+                        round.driver_start_time && round.end_time
+                          ? 'bg-completed'
+                          : ''
+                      }} black-17-font-bold"
+                    >
+                      Round {{ round.round_no }}
+                    </div>
+
+                    <div
+                      class="d-flex align-content"
+                      *ngIf="this.detail_round != round?.id"
+                      (click)="setRound(round?.id)"
+                    >
+                      <div class="grey-18-font-normal text-underline">
+                        View details
+                      </div>
+                      <img
+                        class="ml-1"
+                        src="assets/driver-images-mobile/round-detail-up.svg"
+                      />
+                    </div>
+                    <div
+                      class="d-flex align-content"
+                      *ngIf="
+                        this.detail_round && this.detail_round == round?.id
+                      "
+                      (click)="unsetRound()"
+                    >
+                      <div class="d-flex align-content">
+                        <div class="grey-18-font-normal text-underline">
+                          Hide details
+                        </div>
+                        <img
+                          class="ml-1"
+                          src="assets/driver-images-mobile/round-detail-down.svg"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="round-content"
+                  *ngIf="this.detail_round != round?.id"
+                >
+                  <div class="custom-padding15" (click)="setRound(round?.id)">
+                    <div class="row mb-5px min-height-65px">
+                      <div class="col-6">
+                        <div class="title-7 mb-5px">Started:</div>
+                        <div class="title-5 text-left">
+                          <div
+                            class="encircled-div text-center d-flex align-items-center justify-content-center"
+                            *ngIf="round.driver_start_time"
+                          >
+                            {{ round.driver_start_time | date : "shortTime" }}
+                          </div>
+                          <div
+                            class="encircled-div text-center d-flex align-items-center justify-content-center"
+                            *ngIf="!round.driver_start_time"
+                          >
+                            --:--
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="title-7 mb-5px text-right">
+                          Round total:
+                        </div>
+                        <div class="title-5 text-right">
+                          <div
+                            class="encircled-div text-center d-flex align-items-center justify-content-center"
+                            *ngIf="round.round_time"
+                          >
+                            {{ parseRoundTime(round.round_time) }}
+                          </div>
+                          <div
+                            class="encircled-div text-center d-flex align-items-center justify-content-center"
+                            *ngIf="!round.round_time"
+                          >
+                            0 hrs 0m
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="round-content-detailed"
+                  *ngIf="this.detail_round == round?.id && this.detail_round"
+                >
+                  <div class="">
+                    <div class="row min-height-65px">
+                      <div class="col-6 br-1px pt-1 pb-1 pl-3 pr-1">
+                        <div class="title-7 mb-5px">Material out</div>
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                          (click)="
+                            setRoundPopup(
+                              $event,
+                              'material-popup',
+                              round.id,
+                              '',
+                              '',
+                              round?.material_taken_out
+                            )
+                          "
+                        >
+                          <div class="title-5 text-left">
+                            {{ round.material_taken_out }}
+                          </div>
+                          <img
+                            src="../assets/driver-images-mobile/pencil-grey.svg"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6 pt-1 pb-1 pl-1 pr-3">
+                        <div class="title-7 mb-5px text-right">Dump site</div>
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                          (click)="
+                            setRoundPopup(
+                              $event,
+                              'dumpsite-popup',
+                              round.id,
+                              round?.dump_site,
+                              '',
+                              ''
+                            )
+                          "
+                        >
+                          <img
+                            src="assets/driver-images-mobile/round-detail-down.svg"
+                          />
+                          <div class="title-5 text-right">
+                            {{ round.dump_site }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <ng-container *ngIf="round?.haulback">
+                      <div class="myhr"></div>
+                      <div class="row data-row min-height-65px bg-grey-bg">
+                        <div class="col-6 pl-0 pr-0 br-1px">
+                          <div class="bg-grey-bg min-height-65px">
+                            <div class="pt-1 pb-1 pl-1 pr-1">
+                              <div
+                                class="d-flex justify-content-between align-items-center"
+                              >
+                                <div class="title-7 mb-5px">Material in</div>
+                                <div
+                                  class="text-red font-size-20 font-bold pr-1"
+                                >
+                                  *
+                                </div>
+                              </div>
+                              <div
+                                class="d-flex justify-content-between align-items-center"
+                                (click)="
+                                  setHaulbackRoundPopup(
+                                    $event,
+                                    'materialin-popup',
+                                    round.id,
+                                    round?.haulback?.id,
+                                    round.haulback
+                                  )
+                                "
+                              >
+                                <div class="title-5 text-left">
+                                  {{ round.haulback?.material_in }}
+                                </div>
+                                <img
+                                  src="../assets/driver-images-mobile/pencil-grey.svg"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 pl-0 pr-0">
+                          <div class="bg-grey-bg min-height-65px">
+                            <div class="pt-1 pb-1 pl-1 pr-1">
+                              <div
+                                class="d-flex justify-content-between align-items-center"
+                              >
+                                <div
+                                  class="text-red font-size-20 font-bold pl-2"
+                                >
+                                  *
+                                </div>
+                                <div class="title-7 mb-5px text-right">
+                                  Back haul
+                                </div>
+                              </div>
+                              <div
+                                class="d-flex justify-content-between align-items-center"
+                                (click)="
+                                  setHaulbackRoundPopup(
+                                    $event,
+                                    'droplocation-popup',
+                                    round.id,
+                                    round?.haulback?.id,
+                                    round.haulback
+                                  )
+                                "
+                              >
+                                <img
+                                  src="assets/driver-images-mobile/round-detail-down.svg"
+                                />
+                                <div class="title-5 text-right">
+                                  {{ round.haulback?.drop_location_name }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <div class="myhr mb-5px"></div>
+                    <div class="row mb-5px min-height-65px">
+                      <div class="col-6 pt-1 pb-1 pl-3 pr-1">
+                        <div class="title-7 mb-5px">Round started</div>
+                        <div
+                          class="title-5 text-left"
+                          *ngIf="round.driver_start_time"
+                        >
+                          {{ round.driver_start_time | date : "shortTime" }}
+                        </div>
+                        <div
+                          class="title-5 text-left"
+                          *ngIf="!round.driver_start_time"
+                        >
+                          --:--
+                        </div>
+                      </div>
+                      <div class="col-6 pt-1 pb-1 pl-1 pr-3">
+                        <div class="title-7 mb-5px text-right">Round total</div>
+                        <div
+                          class="title-5 text-right"
+                          *ngIf="round.round_time"
+                        >
+                          {{ parseRoundTime(round.round_time) }}
+                        </div>
+                        <div
+                          class="title-5 text-right"
+                          *ngIf="!round.round_time"
+                        >
+                          0 hrs 0m
+                        </div>
+                      </div>
+                    </div>
+                    <div class="myhr mb-5px"></div>
+                    <div class="row min-height-65px">
+                      <div class="col-12 pt-1 pb-1 pl-3 pr-3">
+                        <div
+                          (click)="
+                            setRoundPopup(
+                              $event,
+                              'notes-popup',
+                              round.id,
+                              '',
+                              round?.driver_notes
+                            )
+                          "
+                          *ngIf="round?.driver_start_time != ''; else Block2"
+                        >
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <div class="title-7 mb-5px">Round notes</div>
+                            <img
+                              src="../assets/driver-images-mobile/pencil-grey.svg"
+                            />
+                          </div>
+
+                          <div class="title-5 text-left">
+                            {{ round?.driver_notes }}
+                          </div>
+                        </div>
+                        <ng-template #Block2>
+                          <div>
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <div class="title-7 mb-5px">Rounds</div>
+                              <img
+                                src="../assets/driver-images-mobile/pencil-grey.svg"
+                              />
+                            </div>
+
+                            <div class="title-5 text-left">
+                              {{ round?.driver_notes }}
+                            </div>
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="hr-dash mt-3 mb-3"
+                *ngIf="
+                  this.ticket_detail?.ticket?.ticket_truck_type_rounds
+                    ?.length !=
+                  i + 1
+                "
+              ></div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+        <!-- Adding new backhaul-->
+        <app-add-new-backhaul
+          (hideAddBackhaul)="this.hideAddBackhaul()"
+          *ngIf="show_add_backhaul && !this.round_in_progress?.haulback"
+          [ticket_detail]="this.ticket_detail"
+          [inprogress_round]="this.round_in_progress"
+        ></app-add-new-backhaul>
+
+        <!-- Active round (to start OR Driving)-->
+        <div
+          *ngIf="
+            this.ticket_detail.ticket?.status == 'Driving' &&
+            (round_in_progress || this.round_to_start) &&
+            !this.all_rounds_done &&
+            this.ticket_detail?.ticket?.ticket_truck_type_rounds.length > 0
+          "
+        >
+          <ng-container
+            *ngFor="
+              let round of this.ticket_detail?.ticket?.ticket_truck_type_rounds
+            "
+          >
+            <ng-container
+              *ngIf="
+                !round?.end_time &&
+                !this.ticket_detail?.ended_at &&
+                !this.show_add_backhaul &&
+                ((round?.id == this.round_to_start?.id &&
+                  !this.round_in_progress?.id) ||
+                  round?.id == this.round_in_progress?.id)
+              "
+            >
+              <div class="round-container inprogress-round-container mb-20px">
+                <div class="inprogress-top">
+                  <div class="row">
+                    <div
+                      class="col-6 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <div
+                        class="inprogress-status black-17-font-bold bg-inprogress text-white"
+                      >
+                        <span> Round {{ round?.round_no }} </span>
+                      </div>
+                    </div>
+                    <div
+                      class="col-6 text-center d-flex justify-content-center align-items-center"
+                    >
+                      <div class="title-7">
+                        Started
+                        <span
+                          class="ml-1 font-size-17 font-bold text-black"
+                          *ngIf="round.driver_start_time"
+                          >{{ round.driver_start_time | date : "h:mm a" }}</span
+                        >
+                        <span class="ml-1" *ngIf="!round.driver_start_time"
+                          >--:--</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row min-height-65px">
+                  <div class="col-12 pt-1 pb-1 pl-3 pr-3">
+                    <div class="title-7 mb-5px">Pickup site</div>
+
+                    <div class="title-5 text-left">
+                      {{
+                        this.ticket_detail?.ticket?.project?.project_location
+                      }}
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr mb-5px"></div>
+                <div class="row min-height-65px">
+                  <div class="col-6 br-1px pt-1 pb-1 pl-3 pr-1">
+                    <div class="title-7 mb-5px">Material out</div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                      (click)="
+                        setRoundPopup(
+                          $event,
+                          'material-popup',
+                          round.id,
+                          '',
+                          '',
+                          round?.material_taken_out
+                        )
+                      "
+                    >
+                      <div class="title-5 text-left">
+                        {{ round.material_taken_out }}
+                      </div>
+                      <img
+                        src="../assets/driver-images-mobile/pencil-grey.svg"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6 pt-1 pb-1 pl-1 pr-3">
+                    <div class="title-7 mb-5px text-right">Dump site</div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                      (click)="
+                        setRoundPopup(
+                          $event,
+                          'dumpsite-popup',
+                          round.id,
+                          round?.dump_site,
+                          '',
+                          ''
+                        )
+                      "
+                    >
+                      <img
+                        src="assets/driver-images-mobile/round-detail-down.svg"
+                      />
+                      <div class="title-5 text-right">
+                        {{ round.dump_site }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-container *ngIf="round?.haulback">
+                  <div class="myhr"></div>
+                  <div class="row data-row min-height-65px bg-grey-bg">
+                    <div class="col-6 pl-0 pr-0 br-1px">
+                      <div class="bg-grey-bg min-height-65px">
+                        <div class="pt-1 pb-1 pl-1 pr-1">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <div class="title-7 mb-5px">Material in</div>
+                            <div class="text-red font-size-20 font-bold pr-1">
+                              *
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                            (click)="
+                              setHaulbackRoundPopup(
+                                $event,
+                                'materialin-popup',
+                                round.id,
+                                round?.haulback?.id,
+                                round.haulback
+                              )
+                            "
+                          >
+                            <div class="title-5 text-left">
+                              {{ round.haulback?.material_in }}
+                            </div>
+                            <img
+                              src="../assets/driver-images-mobile/pencil-grey.svg"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6 pl-0 pr-0">
+                      <div class="bg-grey-bg min-height-65px">
+                        <div class="pt-1 pb-1 pl-1 pr-1">
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                          >
+                            <div class="text-red font-size-20 font-bold pl-2">
+                              *
+                            </div>
+                            <div class="title-7 mb-5px text-right">
+                              Back haul
+                            </div>
+                          </div>
+                          <div
+                            class="d-flex justify-content-between align-items-center"
+                            (click)="
+                              setHaulbackRoundPopup(
+                                $event,
+                                'droplocation-popup',
+                                round.id,
+                                round?.haulback?.id,
+                                round.haulback
+                              )
+                            "
+                          >
+                            <img
+                              src="assets/driver-images-mobile/round-detail-down.svg"
+                            />
+                            <div class="title-5 text-right">
+                              {{ round.haulback?.drop_location_name }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="myhr mb-5px"></div>
+                <div class="row min-height-65px">
+                  <div class="col-12 pt-1 pb-1 pl-3 pr-3">
+                    <div
+                      (click)="
+                        setRoundPopup(
+                          $event,
+                          'notes-popup',
+                          round.id,
+                          '',
+                          round?.driver_notes
+                        )
+                      "
+                      *ngIf="round?.driver_start_time != ''; else Block2"
+                    >
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <div class="title-7 mb-5px">Round notes</div>
+                        <img
+                          src="../assets/driver-images-mobile/pencil-grey.svg"
+                        />
+                      </div>
+
+                      <div class="title-5 text-left">
+                        {{ round?.driver_notes }}
+                      </div>
+                    </div>
+                    <ng-template #Block2>
+                      <div>
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <div class="title-7 mb-5px">Rounds</div>
+                          <img
+                            src="../assets/driver-images-mobile/pencil-grey.svg"
+                          />
+                        </div>
+
+                        <div class="title-5 text-left">
+                          {{ round?.driver_notes }}
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+
+                <!-- Prefill Option -->
+                <ng-container *ngIf="this.round_to_start?.round_no == 1 && round?.id == this.round_to_start?.id &&
+                this.ticket_detail?.ticket?.ticket_truck_type?.rate_type == 'round'">
+                  <div class="myhr mb-5px"></div>
+                  <div class="row min-height-65px d-flex align-items-center">
+                    <div class="col-4 pt-1 pb-1 pl-3 pr-2">
+
+                      <button *ngIf="this.round_to_start?.is_prefilled !='YES'" type="button" class="pink-btn height-40px bg-white d-flex justify-content-around align-items-center" (click)="handleSetPrefill(round?.id,this.ticket_detail?.ticket_id)">
+                        <div class="title-17-grey">Pre-fill</div>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="10" cy="10" r="9" stroke="#68696D" stroke-width="2"/>
+                          <path d="M10 5V15" stroke="#68696D" stroke-width="2" stroke-linecap="round"/>
+                          <path d="M5 10H15" stroke="#68696D" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+
+                      <button *ngIf="this.round_to_start?.is_prefilled =='YES'" type="button" class="btn bg-pink dflex-btn  p-10px w-100 height-40px font-bold font-size-18 text-black d-flex justify-content-around align-items-center" >
+                        <div class="title-17-grey text-black">Pre-fill</div>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="10" cy="10" r="9" stroke="black" stroke-width="2"/>
+                          <path d="M10 5V15" stroke="black" stroke-width="2" stroke-linecap="round"/>
+                          <path d="M5 10H15" stroke="black" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+
+                    </div>
+                    <div class="col-8 pt-2 pb-1 pl-1 pr-3">
+                      <div class="title-7 ml-1 mb-5px text-left">
+                        <span *ngIf="this.round_to_start?.is_prefilled !='YES'">
+                          If you already have load from day before, mark as pre-fill
+                        </span>
+                        <span *ngIf="this.round_to_start?.is_prefilled =='YES'">
+                         Start the round and continue driving to dump site
+                        </span>
+                      </div>
+
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container
+                  *ngIf="
+                    !(this.round_in_progress?.round_no == 1 &&
+                    this.ticket_detail?.ticket?.ticket_truck_type?.rate_type == 'round' && this.round_in_progress?.is_prefilled == 'YES')
+                    &&
+                    !this.round_in_progress?.haulback &&
+                    this.all_rounds_done === false &&
+                    this.ticket_detail.ticket?.status == 'Driving' &&
+                    this.round_in_progress?.round_no &&
+                    this.round_in_progress?.id == round.id &&
+                    (!this.ticket_detail?.ended_at || this.ticket_detail == '')
+                  "
+                >
+                  <div class="myhr mb-5px"></div>
+                  <div class="row">
+                    <div class="col-12 pt-1 pb-2 pl-4 pr-3">
+                      <div>
+                        <div
+                          class="pink-btn cursor-pointer"
+                          (click)="showAddBackhaul()"
+                        >
+                          <div class="font-bold text-black font-size-16">
+                            Back haul
+                          </div>
+                          <img
+                            src="../assets/driver-images-mobile/circile-add.svg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+            <ng-container
+              *ngIf="
+                !this.ticket_detail?.ended_at &&
+                round.id === this.round_to_start?.id &&
+                (this.ticket_detail?.is_without_rounds == '0' ||
+                  this.ticket_detail?.is_without_rounds == 0) &&
+                !this.round_in_progress
+              "
+            >
+              <div [ngClass]="this.from_list ? '' : 'fix-button'">
+                <div
+                  class="d-flex justify-content-center mb-20px"
+                  align="center"
+                >
+                  <button
+                    type="button"
+                    class="btn bg-pink dflex-btn w-170 min-h-50 font-bold font-size-18 text-black p-10px"
+                    (click)="this.handleStartRound(round_to_start)"
+                  >
+                    <div>Start Round {{ round.round_no }}</div>
+                    <img
+                      src="../assets/driver-images-mobile/restart_alt.png"
+                      alt=""
+                      class="ml-3"
+                    />
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+            <!-- no rounds logic -->
+            <ng-container
+              *ngIf="
+                !this.ticket_detail?.ended_at &&
+                round.id === this.round_to_start?.id &&
+                (this.ticket_detail?.is_without_rounds == '1' ||
+                  this.ticket_detail?.is_without_rounds == 1) &&
+                !this.round_in_progress
+              "
+            >
+              <div [ngClass]="this.from_list ? '' : 'fix-button'">
+                <div
+                  class="d-flex justify-content-center mb-20px"
+                  align="center"
+                >
+                  <button
+                    type="button"
+                    class="btn bg-pink dflex-btn w-170 min-h-50 font-bold font-size-18 text-black p-10px"
+                    (click)="this.handleStartRound(round_to_start)"
+                  >
+                    <div>Start Round {{ round.round_no }}</div>
+                    <img
+                      src="../assets/driver-images-mobile/restart_alt.png"
+                      alt=""
+                      class="ml-3"
+                    />
+                  </button>
+                </div>
+              </div>
+              <br />
+              <div align="center">
+                <button
+                  class="btn w-170 min-h-50 border-pink mb-30 p-10px bg-pinkk d-flex justify-content-between align-items-center"
+                  *ngIf="!this.loading_send_approval"
+                  (click)="handleEndJob()"
+                >
+                  <img src="../assets/icons/endjob.svg" alt="" class="" />
+                  <span class="mr-4 font-bold font-size-18 text-black"
+                    >End driving</span
+                  >
+                </button>
+
+                <button
+                  class="btn w-170 min-h-50 border-pink mb-30 p-10px bg-pinkk"
+                  *ngIf="this.loading_send_approval"
+                >
+                  Processing..
+                </button>
+              </div>
+            </ng-container>
+            <ng-container
+              *ngIf="
+                this.all_rounds_done === false &&
+                this.ticket_detail.ticket?.status == 'Driving' &&
+                this.round_in_progress?.round_no &&
+                this.round_in_progress?.id == round.id &&
+                (!this.ticket_detail?.ended_at || this.ticket_detail == '')
+              "
+            >
+              <div [ngClass]="this.from_list ? '' : 'fix-button'">
+                <div class="div-grey mb-15px">
+                  <div>
+                    <div class="p-0-10 border-1px br-9">
+                      <div class="title-15 text-black">
+                        Round {{ this.round_in_progress?.round_no }} timer
+                      </div>
+                      <div class="title-14 mt-8px text-black">
+                        <span *ngIf="getElapsedTime(this.roundTime) as elapsed">
+                          {{
+                            elapsed.hours < 10
+                              ? "0" + elapsed.hours
+                              : elapsed.hours
+                          }}
+                          :
+                          {{
+                            elapsed.minutes < 10
+                              ? "0" + elapsed.minutes
+                              : elapsed.minutes
+                          }}
+                          :
+                          {{
+                            elapsed.seconds < 10
+                              ? "0" + elapsed.seconds
+                              : elapsed.seconds
+                          }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <button
+                      class="btn btn2 custom-padding3 bg_pinkk text-black end-round-btn"
+                      (click)="handleEndRound(this.round_in_progress)"
+                      [disabled]="this.end_round_disable"
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="mr-2"
+                      >
+                        <mask
+                          id="mask0_365_1930"
+                          style="mask-type: alpha"
+                          maskUnits="userSpaceOnUse"
+                          x="0"
+                          y="0"
+                          width="24"
+                          height="24"
+                        >
+                          <rect width="24" height="24" fill="#D9D9D9" />
+                        </mask>
+                        <g mask="url(#mask0_365_1930)">
+                          <path
+                            d="M8 16H16V8H8V16ZM12 22C10.6167 22 9.31667 21.7373 8.1 21.212C6.88333 20.6873 5.825 19.975 4.925 19.075C4.025 18.175 3.31267 17.1167 2.788 15.9C2.26267 14.6833 2 13.3833 2 12C2 10.6167 2.26267 9.31667 2.788 8.1C3.31267 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.31233 8.1 2.787C9.31667 2.26233 10.6167 2 12 2C13.3833 2 14.6833 2.26233 15.9 2.787C17.1167 3.31233 18.175 4.025 19.075 4.925C19.975 5.825 20.6873 6.88333 21.212 8.1C21.7373 9.31667 22 10.6167 22 12C22 13.3833 21.7373 14.6833 21.212 15.9C20.6873 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6873 15.9 21.212C14.6833 21.7373 13.3833 22 12 22ZM12 20C14.2333 20 16.125 19.225 17.675 17.675C19.225 16.125 20 14.2333 20 12C20 9.76667 19.225 7.875 17.675 6.325C16.125 4.775 14.2333 4 12 4C9.76667 4 7.875 4.775 6.325 6.325C4.775 7.875 4 9.76667 4 12C4 14.2333 4.775 16.125 6.325 17.675C7.875 19.225 9.76667 20 12 20Z"
+                            fill="#1C1B1F"
+                          />
+                        </g>
+                      </svg>
+                      End round
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <div align="center" *ngIf="!this.ticket_detail?.ended_at">
+            <div class="div-grey mb-23 width-fit-content">
+              <div>
+                <div class="title-7 text-black-shade mb-5px">Job total</div>
+                <div
+                  class="font-bold font-size-19 text-black text-black-shade4"
+                >
+                  <span *ngIf="getElapsedTime(this.jobTime) as elapsed">
+                    {{ elapsed.hours < 10 ? elapsed.hours : elapsed.hours }} hr
+                    {{
+                      elapsed.minutes < 10 ? elapsed.minutes : elapsed.minutes
+                    }}min
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="hr-dash mt-3 mb-3"></div>
+          </div>
+          <ng-container
+            *ngIf="
+              !this.ticket_detail?.ended_at &&
+              this.round_to_start?.id &&
+              (this.ticket_detail?.is_without_rounds == '0' ||
+                this.ticket_detail?.is_without_rounds == 0) &&
+              !this.round_in_progress
+            "
+          >
+            <div align="center">
+              <button
+                class="btn btn2 p-10px w-170 min-h-50 mb-42 border-pink d-flex align-items-center justify-content-start"
+                *ngIf="!this.loading_send_approval"
+                (click)="handleEndJob()"
+              >
+                <img
+                  src="../assets/icons/endjob.svg"
+                  alt=""
+                  class="mr--10"
+                  style="margin: 0.4rem"
+                />
+                <div class="ml-3 text-black font-bold font-size-18">
+                  End driving
+                </div>
+              </button>
+
+              <button
+                class="btn btn2 p-10px w-170 min-h-50 mb-42 border-pink"
+                *ngIf="this.loading_send_approval"
+              >
+                Processing..
+              </button>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- When job is not completed(not all rounds done) and job is In-Progress-->
+        <ng-container
+          *ngIf="
+            this.ticket_detail.ticket?.status == 'Driving' &&
+            !round_in_progress &&
+            !this.all_rounds_done &&
+            (!this.ticket_detail?.ended_at || this.ticket_detail == '')
+          "
+        >
+          <ng-container
+            *ngFor="
+              let round of this.ticket_detail?.ticket?.ticket_truck_type_rounds;
+              let i = index
+            "
+          >
+            <!-- New Round Setup -->
+            <!-- <ng-container *ngIf="this.ticket_detail?.is_without_rounds==1 || this.ticket_detail?.is_without_rounds=='1' ">
+
+                            <div class="round-container mb-15px">
+                                <div class="round-top">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="round-no-div black-17-font-bold">
+                                            Round {{round.round_no}}
+                                        </div>
+
+                                        <div class="d-flex align-content" *ngIf="this.detail_round != round?.id" (click)="setRound(round?.id)">
+                                            <div class="grey-18-font-normal text-underline">
+                                                View details
+                                            </div>
+                                            <img class="ml-1" src="assets/driver-images-mobile/round-detail-up.svg">
+                                        </div>
+                                        <div class="d-flex align-content" *ngIf="this.detail_round && this.detail_round == round?.id" (click)="unsetRound()">
+                                            <div class="d-flex align-content">
+                                                <div class="grey-18-font-normal text-underline">
+                                                    Hide details
+                                                </div>
+                                                <img class="ml-1" src="assets/driver-images-mobile/round-detail-down.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="round-content" *ngIf="this.detail_round != round?.id">
+
+                                    <div class="custom-padding15" (click)="setRound(round?.id)">
+                                        <div class="row mb-5px min-height-65px">
+                                            <div class="col-6 br-1px">
+
+                                                <div class="title-7 mb-5px">Material out</div>
+                                                <div class="title-5 text-left">
+                                                    {{round.material_taken_out}}
+                                                  </div>
+                                            </div>
+                                            <div class="col-6">
+
+                                                <div class="title-7  mb-5px text-right">Dump site</div>
+                                                <div class="title-5  text-right">
+                                                       {{round.dump_site}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="round-content-detailed" *ngIf="this.detail_round == round?.id && this.detail_round">
+                                    <div class="custom-padding15">
+                                        <div class="row min-height-65px">
+                                            <div class="col-12">
+
+                                                <div class="title-7 mb-5px">Pickup site</div>
+
+                                                <div class="title-5 mb-5px text-left">
+                                                    {{this.ticket_detail?.ticket?.project?.project_location}}
+                                                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="myhr mb-5px"></div>
+                                        <div class="row min-height-65px">
+                                            <div class="col-6 br-1px">
+
+                                                <div class="title-7 mb-5px">Material out</div>
+                                                <div class="title-5 mb-5px text-left">
+                                                    {{round.material_taken_out}}
+                                                  </div>
+                                            </div>
+                                            <div class="col-6">
+
+                                                <div class="title-7  mb-5px text-right">Dump site</div>
+                                                <div class="title-5  text-right">
+                                                       {{round.dump_site}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="myhr mb-5px"></div>
+                                        <div class="row min-height-65px">
+                                            <div class="col-12 ">
+
+                                                <div class="title-7 mb-5px">Round notes</div>
+                                                <div class="title-5 mb-5px text-left">
+                                                    {{round.round_notes}}
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div align="center">
+
+                                <div [ngClass]="this.from_list?'':'fix-button'">
+                                    <button type="button" class="btn bg-pink dflex-btn width-200 " (click)="this.handleStartRound(round_to_start)">
+                                        Start Round {{round.round_no}} <img src="../assets/driver-images-mobile/restart_alt.png" alt="" class="mr--10">
+                                    </button>
+                                    <br/> <br/>
+
+                                </div>
+
+                            </div>
+                        </ng-container> -->
+
+            <ng-container
+              *ngIf="round.id != this.round_to_start.id && !round.round_time"
+            >
+              <div class="round-container mb-15px">
+                <div class="round-top">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="round-no-div black-17-font-bold">
+                      Round {{ round.round_no }}
+                    </div>
+
+                    <div
+                      class="d-flex align-content"
+                      *ngIf="this.detail_round != round?.id"
+                      (click)="setRound(round?.id)"
+                    >
+                      <div class="grey-18-font-normal text-underline">
+                        View details
+                      </div>
+                      <img
+                        class="ml-1"
+                        src="assets/driver-images-mobile/round-detail-up.svg"
+                      />
+                    </div>
+                    <div
+                      class="d-flex align-content"
+                      *ngIf="
+                        this.detail_round && this.detail_round == round?.id
+                      "
+                      (click)="unsetRound()"
+                    >
+                      <div class="d-flex align-content">
+                        <div class="grey-18-font-normal text-underline">
+                          Hide details
+                        </div>
+                        <img
+                          class="ml-1"
+                          src="assets/driver-images-mobile/round-detail-down.svg"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="round-content"
+                  *ngIf="this.detail_round != round?.id"
+                >
+                  <div class="custom-padding15" (click)="setRound(round?.id)">
+                    <div class="row mb-5px min-height-65px">
+                      <div class="col-6 br-1px">
+                        <div class="title-7 mb-5px">Material out</div>
+                        <div class="title-5 text-left">
+                          {{ round.material_taken_out }}
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="title-7 mb-5px text-right">Dump site</div>
+                        <div class="title-5 text-right">
+                          {{ round.dump_site }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="round-content-detailed"
+                  *ngIf="this.detail_round == round?.id && this.detail_round"
+                >
+                  <div class="custom-padding15">
+                    <div class="row min-height-65px">
+                      <div class="col-12">
+                        <div class="title-7 mb-5px">Pickup site</div>
+
+                        <div class="title-5 mb-5px text-left">
+                          {{
+                            this.ticket_detail?.ticket?.project
+                              ?.project_location
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="myhr mb-5px"></div>
+                    <div class="row min-height-65px">
+                      <div class="col-6 br-1px">
+                        <div class="title-7 mb-5px">Material out</div>
+                        <div class="title-5 mb-5px text-left">
+                          {{ round.material_taken_out }}
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="title-7 mb-5px text-right">Dump site</div>
+                        <div class="title-5 text-right">
+                          {{ round.dump_site }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="myhr mb-5px"></div>
+                    <div class="row min-height-65px">
+                      <div class="col-12">
+                        <div class="title-7 mb-5px">Round notes</div>
+                        <div class="title-5 mb-5px text-left">
+                          {{ round.round_notes }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="hr-dash mt-3 mb-3"
+                *ngIf="
+                  this.ticket_detail?.ticket?.ticket_truck_type_rounds
+                    ?.length !=
+                  i + 1
+                "
+              ></div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+        <!-- When a round is In-Progress-->
+        <!-- <ng-container  *ngIf="false ( this.ticket_detail.ticket?.status == 'Driving' ) && round_in_progress">
+
+                    <ng-container *ngFor="let round of this.ticket_detail?.ticket?.ticket_truck_type_rounds;let i=index">
+
+                        <ng-container  *ngIf="this.round_in_progress?.id!=round.id">
+                            <div class="round-container mb-15px">
+                                <div class="round-top">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="round-no-div black-17-font-bold">
+                                            Round {{round.round_no}}
+                                        </div>
+
+                                        <div class="d-flex align-content" *ngIf="this.detail_round != round?.id" (click)="setRound(round?.id)">
+                                            <div class="grey-18-font-normal text-underline">
+                                                View details
+                                            </div>
+                                            <img class="ml-1" src="assets/driver-images-mobile/round-detail-up.svg">
+                                        </div>
+                                        <div class="d-flex align-content" *ngIf="this.detail_round && this.detail_round == round?.id" (click)="unsetRound()">
+                                            <div class="d-flex align-content">
+                                                <div class="grey-18-font-normal text-underline">
+                                                    Hide details
+                                                </div>
+                                                <img class="ml-1" src="assets/driver-images-mobile/round-detail-down.svg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="round-content" *ngIf="this.detail_round != round?.id">
+
+                                    <div class="custom-padding15" (click)="setRound(round?.id)">
+                                        <div class="row mb-5px min-height-65px">
+                                            <div class="col-6 br-1px">
+
+                                                <div class="title-7 mb-5px">Material out</div>
+                                                <div class="title-5 text-left">
+                                                    {{round.material_taken_out}}
+                                                  </div>
+                                            </div>
+                                            <div class="col-6">
+
+                                                <div class="title-7  mb-5px text-right">Dump site</div>
+                                                <div class="title-5  text-right">
+                                                       {{round.dump_site}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="round-content-detailed" *ngIf="this.detail_round == round?.id && this.detail_round">
+                                    <div class="custom-padding15">
+                                        <div class="row min-height-65px">
+                                            <div class="col-12">
+
+                                                <div class="title-7 mb-5px">Pickup site</div>
+
+                                                <div class="title-5 mb-5px text-left">
+                                                    {{this.ticket_detail?.ticket?.project?.project_location}}
+                                                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="myhr mb-5px"></div>
+                                        <div class="row min-height-65px">
+                                            <div class="col-6 br-1px">
+
+                                                <div class="title-7 mb-5px">Material out</div>
+                                                <div class="title-5 mb-5px text-left">
+                                                    {{round.material_taken_out}}
+                                                  </div>
+                                            </div>
+                                            <div class="col-6">
+
+                                                <div class="title-7  mb-5px text-right">Dump site</div>
+                                                <div class="title-5  text-right">
+                                                       {{round.dump_site}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="myhr mb-5px"></div>
+                                        <div class="row min-height-65px">
+                                            <div class="col-12 ">
+
+                                                <div class="title-7 mb-5px">Round notes</div>
+                                                <div class="title-5 mb-5px text-left">
+                                                    {{round.round_notes}}
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="hr-dash mt-3 mb-3" *ngIf="this.ticket_detail?.ticket?.ticket_truck_type_rounds?.length!=(i+1)"></div>
+                        </ng-container>
+
+                    </ng-container>
+                </ng-container> -->
+
+        <!-- When all rounds are done and no round to start OR job is ended -->
+        <ng-container
+          *ngIf="
+            this.ticket_detail.ticket?.status == 'Driving' &&
+            ((!round_in_progress &&
+              !this.round_to_start &&
+              this.all_rounds_done &&
+              this.ticket_detail?.ticket?.ticket_truck_type_rounds.length >
+                0) ||
+              (this.ticket_detail?.ended_at &&
+                this.ticket_detail?.ended_at != ''))
+          "
+        >
+          <ng-container
+            *ngFor="
+              let round of this.ticket_detail?.ticket?.ticket_truck_type_rounds
+            "
+          >
+            <ng-container>
+              <!-- <div class="empty-round" >
+                                <div class="d-flex justify-content-between align-items-center mb-10 custom-padding4">
+                                    <div>
+                                        <div class="title-12 text-black-shade4">Round {{round.round_no}}</div>
+                                        <div class="title-13 text-black-shade">
+                                          <span *ngIf="round.driver_start_time && round.end_time ">
+                                            Completed
+                                          </span>
+                                        </div>
+                                    </div>
+                                    <div class="title-13 text-black-shade" >
+                                        <u *ngIf="detail_round_id!=round.id" (click)="toggleDetail(round.id)">View details</u>
+                                        <u *ngIf="detail_round_id == round.id" (click)="toggleDetail(round.id)">Hide details</u>
+                                        <img *ngIf="detail_round_id==round.id"  (click)="toggleDetail(round.id)" src="../assets/driver-images-mobile/arrow_drop_down2.png" class="viewdetails ml-1">
+                                        <img *ngIf="detail_round_id!=round.id" (click)="toggleDetail(round.id)" src="../assets/driver-images-mobile/arrow_drop_up.png" class="hidedetails ml-1">
+                                    </div>
+                                </div>
+
+                                <div class="empty-round-white">
+                                    <div class="iniview" *ngIf="detail_round_id!=round.id">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <div class="title-13 text-black-shade">Started:</div>
+                                                <div class="title-12 text-black-shade4">{{round.driver_start_time | date:"h:mm a"}}</div>
+                                            </div>
+                                            <div>
+                                                <div class="title-13 text-black-shade">Round total</div>
+                                                <div class="title-12 text-black-shade4 text-right">{{round.round_time}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="detailview" *ngIf="detail_round_id==round.id" >
+                                      <div class="border-div mb-1">
+                                            <div class="custom-padding15">
+                                                <div class="d-flex justify-content-between align-items-center ">
+
+                                                    <div class="title-7">Started</div>
+
+                                                    <div class="title-7">Round total</div>
+
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center mb-6">
+                                                    <div class="title-5 text-left">
+                                                        {{round.driver_start_time | date:"h:mm a"}}
+                                                      </div>
+                                                    <div class="title-5">
+                                                        {{round.round_time}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="myhr"></div>
+                                            <div class="custom-padding15">
+                                                <div class="d-flex justify-content-between align-items-center ">
+
+                                                    <div class="title-7">Material out</div>
+
+                                                    <div class="title-7">Dump site</div>
+
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center mb-6">
+                                                    <div class="title-5 text-left">
+                                                        {{round.material_taken_out}}
+                                                      </div>
+                                                    <div class="title-5">
+                                                           {{round.dump_site}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="myhr"></div>
+                                            <div class="custom-padding15">
+                                                <div class="d-flex justify-content-between align-items-center ">
+
+                                                    <div class="title-7">Round notes</div>
+
+                                                    <div class="title-7"><img src="../assets/driver-images-mobile/edit.svg"  (click)="setRoundPopup($event,'notes-popup',round.id,'',round?.driver_notes)"> </div>
+
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center mb-6">
+                                                    <div class="title-5 text-left">
+                                                        {{round.driver_notes}}
+                                                      </div>
+                                                    <div class="title-5">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+            </ng-container>
+          </ng-container>
+
+          <div
+            align="center"
+            *ngIf="
+              this.ticket_detail?.ticket?.ticket_truck_type?.rate_type == 'hour'
+            "
+          >
+            <div>
+              <button
+                class="btn btn2 w-170 min-h-50 border-pink mt-3 mb-32 p-10px"
+                (click)="this.handleAddRound()"
+              >
+                <span class="font-bold font-size-18 text-black">Add round</span>
+                <img
+                  class="ml-18"
+                  src="../assets/driver-images-mobile/add_circle_outline_black.png"
+                />
+              </button>
+            </div>
+          </div>
+          <ng-container
+            *ngIf="
+              this.ticket_detail.ticket?.status == 'Driving' &&
+              !round_in_progress &&
+              !this.round_to_start &&
+              this.all_rounds_done &&
+              this.ticket_detail?.ticket?.ticket_truck_type_rounds.length > 0 &&
+              !this.ticket_detail?.ended_at &&
+              !this.ticket_detail?.ended_at
+            "
+          >
+            <div align="center">
+              <div class="div-grey mb-25 width-fit-content">
+                <div>
+                  <div class="title-7 text-black-shade mb-5px">Job total</div>
+                  <div
+                    class="font-bold font-size-19 text-black text-black-shade4"
+                  >
+                    <span *ngIf="getElapsedTime(this.jobTime) as elapsed">
+                      {{ elapsed.hours < 10 ? elapsed.hours : elapsed.hours }}
+                      hr
+                      {{
+                        elapsed.minutes < 10
+                          ? elapsed.minutes
+                          : elapsed.minutes
+                      }}min
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <br />
+              <div class="fix-button">
+                <button
+                  class="btn p-10px w-170 min-h-50 border-pink bg-pinkk d-flex align-items-center justify-content-start"
+                  *ngIf="!this.loading_send_approval"
+                  (click)="handleEndJob()"
+                >
+                  <img
+                    src="../assets/icons/endjob.svg"
+                    alt=""
+                    class="mr--10"
+                    style="margin: 0.4rem"
+                  />
+                  <div class="ml-3 text-black font-bold font-size-18">
+                    End driving
+                  </div>
+                </button>
+
+                <button
+                  class="btn p-10px w-170 min-h-50 border-pink bg_pinkk"
+                  *ngIf="this.loading_send_approval"
+                >
+                  Processing..
+                </button>
+              </div>
+            </div>
+          </ng-container>
+          <div class="ppt-container">
+            <ng-container
+              *ngIf="
+                this.ticket_detail.ticket?.status == 'Driving' &&
+                this.ticket_detail?.ended_at &&
+                this.ticket_detail?.ended_at
+              "
+            >
+              <div class="d-flex justify-content-center mb-20 margin-14px">
+                <div class="job-total-div">
+                  <div
+                    class="title-13 text-black-shade mb-5px text-grey grey-18-font-normal font-size-17"
+                  >
+                    Job total
+                  </div>
+                  <div class="title-14 text-black font-bold font-size-19">
+                    {{ getHoursMin(this.ticket_detail?.total_time) }}
+                  </div>
+                </div>
+                <div class="driver-total-div border-pink ml-10px">
+                  <div
+                    class="title-13 text-black-shade mb-5px text-grey grey-18-font-normal font-size-17"
+                  >
+                    Driver total
+                  </div>
+                  <div class="title-14 text-black font-bold font-size-19 mr-3">
+                    {{ this.edited_hours }} hr {{ this.edited_mints }}min
+                  </div>
+                  <img
+                    src="../assets/driver-images-mobile/edit.svg"
+                    class="bottom-right"
+                    (click)="showEditTimePopup()"
+                  />
+                </div>
+              </div>
+              <div
+                class="position-relative mb-22 margin-4px-5px"
+                (click)="setPPModal($event)"
+              >
+                <textarea
+                  class="form-control min-h-65 b-grey-1px br-10px font-semibold text-grey font-size-17"
+                  readonly
+                  placeholder="Notes for the approver (still load on)"
+                  >{{ this.ticket_detail?.notes_for_approver }}</textarea
+                >
+                <img
+                  (click)="showNotesPopup()"
+                  class="top-right"
+                  src="../assets/driver-images-mobile/edit.svg"
+                />
+              </div>
+              <div class="mb-20"></div>
+              <div
+                class="div-1 p-1 mb-43 margin-4px-5px br-10px b-grey-1px"
+                *ngIf="
+                  this.ticket_detail?.ticket?.required_paper_ticket_id == 'YES'
+                "
+              >
+                <div class="row">
+                  <div class="col-6 pl-4 pr-0">
+                    <div
+                      class="input-div"
+                      (click)="setPPModal($event)"
+                      data-toggle="modal"
+                      data-target="#paperticketid"
+                    >
+                      <div
+                        class="title-8 text-black-shade3 text-left mb-6 d-flex align-items-center justify-content-between"
+                      >
+                        <div class="">Paper ticket ID</div>
+                        <div class="text-right text-red font-size-24 font-bold">
+                          *
+                        </div>
+                      </div>
+                      <div class="position-relative">
+                        <div
+                          class="myinput-new title-21 min-h-35 div-2 getTicketId"
+                          *ngIf="!this.ticket_detail?.ticket?.paper_ticket_id"
+                        >
+                          Add
+                        </div>
+
+                        <div
+                          class="myinput-new title-21 min-h-35 div-2 getTicketId"
+                          *ngIf="this.ticket_detail?.ticket?.paper_ticket_id"
+                        >
+                          {{ this.ticket_detail?.ticket?.paper_ticket_id }}
+                        </div>
+                        <img
+                          src="../assets/driver-images-mobile/edit.svg"
+                          class="bottom-right2"
+                          (click)="setHidePaperTicketModal()"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6 pr-4 pl-0">
+                    <div class="input-div ml-1" (click)="setPPModal($event)">
+                      <div
+                        class="title-8 text-black-shade3 text-right mb-6 d-flex align-items-center justify-content-end"
+                      >
+                        <div class="mr-3">Picture</div>
+                        <div class="text-right text-red font-size-24 font-bold">
+                          *
+                        </div>
+                      </div>
+                      <div class="position-relative">
+                        <div class="myinput-new title-21 div-2 min-h-35">
+                          <img
+                            src="../assets/driver-images-mobile/tick-green.png"
+                            class="ml-4"
+                            width="22px"
+                            *ngIf="
+                              this.ticket_detail?.ticket?.paper_ticket_photo
+                            "
+                          />
+                          <img
+                            src="../assets/driver-images-mobile/cross-red.png"
+                            class="ml-4"
+                            width="22px"
+                            *ngIf="
+                              !this.ticket_detail?.ticket?.paper_ticket_photo
+                            "
+                          />
+                          <img
+                            src="../assets/driver-images-mobile/camera.png"
+                            class="bottom-right3 mr-3"
+                            width="43px"
+                            (click)="setHidePaperTicketPhotoModal()"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div align="center">
+                <br /><br />
+                <br /><br />
+                <ng-container
+                  *ngIf="
+                    this.ticket_detail?.ticket?.ticket_truck_type_rounds
+                      .length > 2
+                  "
+                >
+                  <br /><br /><br />
+                </ng-container>
+                <div [ngClass]="this.from_list ? '' : 'fix-button'">
+                  <button
+                    *ngIf="!loading_send_approval"
+                    class="btn bg-pink dflex-btn width-200 p-10px text-black font-bold font-size-18 min-h-60"
+                    (click)="this.handleSendApproval()"
+                  >
+                    <span>Send for approval</span
+                    ><img
+                      src="../assets/driver-images-mobile/send_approval.svg"
+                    />
+                  </button>
+
+                  <button
+                    *ngIf="loading_send_approval"
+                    class="btn bg-pink dflex-btn width-200 p-10px text-black font-bold font-size-18 min-h-60"
+                    disabled
+                  >
+                    Processing..
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <!--When no rounds and job Driving -->
+        <ng-container
+          *ngIf="
+            this.ticket_detail.ticket?.status == 'Driving' &&
+            !round_in_progress &&
+            !this.round_to_start &&
+            this.all_rounds_done &&
+            this.ticket_detail?.ticket?.ticket_truck_type_rounds.length < 1 &&
+            (!this.ticket_detail?.ended_at ||
+              this.ticket_detail?.ended_at == '')
+          "
+        >
+          <div class="position-relative mb-22">
+            <!-- <textarea class="form-control br-5" readonly rows="2" placeholder="Job notes :Scale, weight etc">{{this.ticket_detail?.notes_for_approver}}</textarea>
+                        <img (click)="showNotesPopup()" class="top-right" src="../assets/driver-images-mobile/edit.svg" > -->
+            <div
+              class="ticket-datetime mb-15px bg-inprogress text-white font-bold"
+            >
+              Start time {{ this.ticket_detail?.ticket?.ticket_time }}
+            </div>
+            <textarea
+              class="form-control br-10 mb-22 min-h-100 grey-18-font-normal font-size-17"
+              style="color: #68696d"
+              rows="2"
+              placeholder="Description"
+              readonly
+              >{{ this.ticket_detail?.ticket?.description }}</textarea
+            >
+          </div>
+
+          <div align="center">
+            <button
+              type="button"
+              class="btn w-170 min-h-50 border-pink mb-30 p-10px bg-pinkk"
+              (click)="handleAddRound()"
+              *ngIf="
+                this.ticket_detail?.ticket?.ticket_truck_type?.rate_type ==
+                'hour'
+              "
+            >
+              <span class="font-bold font-size-18 text-black">Add round</span>
+              <img
+                class="ml-18"
+                src="../assets/driver-images-mobile/add_circle_outline_black.png"
+              />
+            </button>
+            <br />
+            <div>
+              <button
+                class="btn w-170 min-h-50 border-pink mb-30 p-10px bg-pinkk d-flex justify-content-between align-items-center"
+                *ngIf="!this.loading_send_approval"
+                (click)="handleEndJob()"
+              >
+                <img src="../assets/icons/endjob.svg" alt="" class="" />
+                <span class="mr-4 font-bold font-size-18 text-black"
+                  >End driving</span
+                >
+              </button>
+
+              <button
+                class="btn w-170 min-h-50 border-pink mb-30 p-10px bg-pinkk"
+                *ngIf="this.loading_send_approval"
+              >
+                Processing..
+              </button>
+            </div>
+            <div class="div-grey mb-30 width-fit-content">
+              <div>
+                <div class="title-15 text-black-shade mb-5px">Job total</div>
+                <div class="title-14 text-black-shade4">
+                  <span *ngIf="getElapsedTime(this.jobTime) as elapsed">
+                    {{ elapsed.hours < 10 ? elapsed.hours : elapsed.hours }} hr
+                    {{
+                      elapsed.minutes < 10 ? elapsed.minutes : elapsed.minutes
+                    }}min
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hr-dash mt-3 mb-3"></div>
+          </div>
+        </ng-container>
+        <br /><br />
+        <br />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+<div class="modal fade " id="materialout"  role="dialog" style="display: none;padding-top: 0%;background: #0000005c;">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img class="float-right" src="assets/driver-images-mobile/close.png" (click)="closeRoundPopup()" />
+                    <div class="title-9 mb-19 text-center"> Material out</div>
+                    <div class="text-danger" *ngIf="new_material_error!==''">{{new_material_error}}</div>
+                    <div class="title-9 mb-19 text-center"></div>
+                    <textarea class="form-control br-5 mb-19" [(ngModel)]="this.new_material_taken_out"  rows="4" (input)="this.setNewMaterial($event)" placeholder="Type here ..."></textarea>
+                    <div align="center">
+                        <div class="">
+                            <button *ngIf="!this.loading_update" (click)="this.handleNewMaterial()" type="button" class="btn-accept btn-padding no-filter">Change</button>
+                            <button *ngIf="this.loading_update" type="button" class="btn-accept btn-padding no-filter" disabled>Processing..</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div
+  class="modal fade show"
+  *ngIf="
+    this.update_round_id != '' &&
+    this.show_round_update_popup == 'pickupsite-popup'
+  "
+  id="addingpickupnotes"
+  role="dialog"
+  style="display: block; padding-top: 0%; background: #0000005c"
+>
+  <div class="vertical-alignment-helper">
+    <div class="modal-dialog vertical-align-center">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img
+            class="float-right"
+            src="assets/driver-images-mobile/close.png"
+            (click)="closeRoundPopup()"
+          />
+          <div class="text-danger mb-4" *ngIf="this.pickup_site_error !== ''">
+            {{ this.pickup_site_error }}
+          </div>
+          <textarea
+            class="form-control br-5 mt-5 mb-19"
+            rows="4"
+            [(ngModel)]="this.pickup_site"
+            (input)="this.setPickupSite($event)"
+            placeholder="Type here ..."
+          ></textarea>
+          <div align="center">
+            <div class="">
+              <button
+                *ngIf="!this.loading_update"
+                type="button"
+                class="btn-accept btn-padding no-filter"
+                (click)="this.handleUpdatePickupSite()"
+              >
+                Done
+              </button>
+              <button
+                *ngIf="this.loading_update"
+                type="button"
+                class="btn-accept btn-padding no-filter"
+                disabled
+              >
+                Processing..
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+<div class="modal fade show" *ngIf="this.show_time_edit_popup" id="edithours" role="dialog"  style="display: block;padding-top: 0%;background: #0000005c;">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-dialog2 vertical-align-center">
+            <div class="modal-content modal-content2">
+                <div class="modal-body">
+                    <div class="time-div total-time-div mb-20" style="width: 100%;">
+                        <div class="title1-time-div mb-3">
+                            Driver total:
+                        </div>
+                        <div class="title2-time-div mb-3">
+                            {{this.edited_hours}} hr : {{this.edited_mints}} min
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-16">
+
+                        <div class="time-div time-div2 width-35pc">
+                            <div class="title-12 mb-15 hour_head">Hours</div>
+                            <img src="../assets/driver-images-mobile/arrow_drop_up.png" alt="" class="upClick2 mb-1">
+                            <ul class="time-hours">
+                                <ng-container *ngFor="let hour of hours">
+                                    <ng-container *ngIf="hour==this.edited_hours">
+                                        <li #el (click)="setHours(hour)" class="{{hour==this.edited_hours ? 'active':''}}" onload="focusTo(this.id)" id="{{hour==this.edited_hours ? 'hour-active':''}}"> {{hour}}</li>
+                                    </ng-container>
+                                    <ng-container *ngIf="hour!=this.edited_hours">
+                                        <li  (click)="setHours(hour)" > {{hour}}</li>
+                                    </ng-container>
+
+                                </ng-container>
+
+                            </ul>
+                            <img src="../assets/driver-images-mobile/arrow_drop_down2.png" class="downClick2" alt="">
+                        </div>
+                        <div class="title-12 bg-pink borderr ml-3">:</div>
+                        <div class="time-div time-div2 text-left width-200px">
+                            <div class="title-12 ml-2 mb-1 hour_head"> Hour =  min</div>
+                            <ul class="time-hours mb-38">
+                                <li (click)="setMinutes(0)" class="{{0==this.edited_mints ? 'active':''}}">0.00 = 00 min</li>
+                                <li (click)="setMinutes(15)" class="{{15==this.edited_mints ? 'active':''}}">0.25 = 15 min</li>
+                                <li (click)="setMinutes(30)" class="{{30==this.edited_mints ? 'active':''}}">0.50 = 30 min</li>
+                                <li (click)="setMinutes(45)" class="{{45==this.edited_mints ? 'active':''}}">0.75 = 45 min</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div align="center">
+                        <div class=""><button type="button" (click)="showEditTimePopup()" class="btn-accept upd_btn btn-padding no-filter">Update</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,985 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content p-0">
+      <div class="main-inner-body-container tc-users mt-15px">
+        <div class="project-profile-header-container">
+          <div class="profile_heading_div1">
+            <div
+              class="project-profile-header-left d-flex align-items-center ml-0"
+            >
+              <img
+                src="./assets/images/cc-icon.svg"
+                alt="project-profile-file-icon"
+              />
+              <div class="heading-1-400 text-color-black">
+                {{ this.loggedInUser?.company_name }}
+              </div>
+            </div>
+          </div>
+          <app-tc-profile-nav
+            [loggedinUser]="this.loggedInUser"
+            [current]="'add-users'"
+          ></app-tc-profile-nav>
+        </div>
+        <div class="main-project-setting-container inner_main_shadow">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="page-heading-title mb-5 manage-users-text">
+                Manage users
+              </div>
+            </div>
+            <div
+              class="col-md-5 d-flex justify-content-end"
+              style="height: 40px !important"
+            >
+              <button
+                class="title-14 styled-button styled-button2 openOptionModal pl-2"
+                style="border-radius: 5px !important"
+                (click)="showModal('tc_add_userr')"
+              >
+                <div class="d-flex align-items-cente">
+                  <img
+                    src="./assets/images/cust-manage-users-icon-a.svg"
+                    width="20px"
+                    alt="project-profile-tracker-icon"
+                  />
+                  <div
+                    class="heading-5-400 text-white ml-8px col text-center add-btn"
+                  >
+                    Add user
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <app-invite-people-form
+            *ngIf="this.current_modal == 'tc_add_userr'"
+            [current_modal]="this.current_modal"
+            (showModl)="showModal($event)"
+            (onInviteSuccess)="handleInviteSuccess($event)"
+          ></app-invite-people-form>
+
+          <div class="modal-backdrop" style="display: none">
+            <form [formGroup]="updateRoleForm" (ngSubmit)="confirmUpdateRole()">
+              <div class="more-modal">
+                <div class="row pb-3">
+                  <div class="col-md-7">
+                    <div
+                      class="page-heading-title1"
+                      *ngIf="this.user_selected?.user_roles?.length > 0"
+                    >
+                      {{ this.user_selected?.user_roles[0]?.role?.role_name }}
+                    </div>
+                    <div class="page-heading-title">
+                      {{ user_selected.full_name }}
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-md-5 d-flex justify-content-end"
+                    style="height: 40px !important"
+                  >
+                    <button
+                      type="button"
+                      class="title-14 styled-button openOptionModal"
+                      style="border-radius: 5px !important"
+                    >
+                      <div
+                        class="heading-5-400 text-white ml-8px col text-center"
+                      >
+                        Since {{ formatDate(user_selected.created_at) }}
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="row mt-1 mb-3 sect_2">
+                  <div class="col-6">
+                    <span
+                      *ngIf="userContactNumberError != ''"
+                      class="text-danger"
+                      >{{ userContactNumberError }}</span
+                    >
+                    <div class="title-52 text-grey-shade2">Phone number</div>
+                    <div class="position-relative required_field11">
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        width="17px"
+                        class="top-right-icon2"
+                      />
+                      <input
+                        type="text"
+                        formControlName="contact_number"
+                        class="field-input2"
+                        [ngModel]="
+                          this.user_selected &&
+                          this.user_selected.contact_number &&
+                          this.user_selected.contact_number !== null &&
+                          this.user_selected.contact_number != 'null'
+                            ? this.user_selected.contact_number
+                            : ''
+                        "
+                        placeholder="Type here"
+                        (input)="changeNumber2($event)"
+                        placeholder="+1"
+                        value="+1"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <!-- <span *ngIf="cityError!= ''" class="text-danger">{{
+                                            cityError
+                                            }}</span>  -->
+                    <div class="title-52 text-grey-shade2 text-right">
+                      Email address
+                    </div>
+                    <div class="position-relative required_field12">
+                      <input
+                        type="text"
+                        formControlName="email"
+                        class="field-input2 text-right"
+                        [ngModel]="
+                          this.user_selected && this.user_selected.email
+                        "
+                        placeholder="Type here"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-4 pl-0">
+                    <!-- <span *ngIf="addressError!= ''" class="text-danger">{{
+                                            addressError
+                                            }}</span>  -->
+                    <div class="position-relative img_div1">
+                      <div class="img_div" (click)="logoFileInput.click()">
+                        <!--  <img  src="../../assets/images/sample_img.png"  alt="" height="100px" width="79px" class="user_img"> -->
+                        <img
+                          [src]="
+                            imageSrc || '../../assets/images/sample_img.png'
+                          "
+                          alt=""
+                          height="100px"
+                          width="79px"
+                          class="user_img"
+                        />
+                      </div>
+                      <input
+                        id="logo-file-input"
+                        hidden
+                        type="file"
+                        [multiple]="false"
+                        [accept]="'image/jpeg, image/png'"
+                        (change)="uploadimage($event)"
+                        #logoFileInput
+                        formControlName="profileImage"
+                        class="field-input2"
+                        [ngModel]="
+                          this.user_selected && this.user_selected.image
+                        "
+                      />
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <span *ngIf="userRoleIDError != ''" class="text-danger">{{
+                      userRoleIDError
+                    }}</span>
+                    <div
+                      class="title-52 text-grey-shade2 text-left mt-2"
+                      style="width: 300px"
+                    >
+                      User can have multiple roles. And between projects, users
+                      can be assigned to diiferent roles
+                    </div>
+
+                    <!-- multi-select-dropdown.component.html -->
+                    <div class="form-group form-group3">
+                      <label
+                        class="field text-field mb-0"
+                        (click)="toggleDropdown()"
+                        >Role(s)</label
+                      >
+                      <div
+                        class="input-field input-field3"
+                        (click)="toggleDropdown()"
+                      >
+                        <!-- {{ selectedRoles.join(', ') }} -->
+                        <ng-container
+                          *ngFor="let role of selectedRoles; let i = index"
+                        >
+                          <span *ngIf="i < 2"
+                            >{{ role
+                            }}{{
+                              i < selectedRoles.length - 1 && i < 1 ? ", " : ""
+                            }}</span
+                          >
+                        </ng-container>
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                      </div>
+
+                      <div *ngIf="showDropdown" class="dropdown-menu3">
+                        <div class="heading-5-400 color_blur mb-2">
+                          User role
+                        </div>
+                        <div
+                          *ngFor="let role of roles"
+                          class="checkbox-container"
+                        >
+                          <div
+                            class="fake-checkbox"
+                            [ngClass]="{ checked: role.selected }"
+                            (click)="updateSelectedRoles(role.id)"
+                          >
+                            {{ role.selected ? "✓" : "" }}
+                          </div>
+                          <div
+                            style="color: rgba(136, 137, 139, 1)"
+                            (click)="updateSelectedRoles(role.id)"
+                          >
+                            {{ role.name }}
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                          <!-- Added margin-top for some spacing -->
+                          <button
+                            class="mybtn-back-blue2 fakeOk text-white"
+                            (click)="closeDropdown()"
+                          >
+                            OK
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="heading-5-400 color_blur ml-8px">
+                  Current projects
+                </div>
+
+                <div class="row" style="margin-right: -70px; margin-left: 23px">
+                  <div class="col-md-10">
+                    <!-- Add a wrapping div with a class to control the overflow -->
+                    <div class="table-responsive">
+                      <table
+                        class="table vendorTable"
+                        border="0"
+                        style="border: 0; margin: 23px 0px"
+                      >
+                        <tbody>
+                          <tr style="border: 0">
+                            <td
+                              class="project-settings-table-header"
+                              style="width: 60%"
+                            >
+                              <div class="profile-table-head text-left">
+                                Project
+                              </div>
+                            </td>
+                            <td
+                              class="project-settings-table-header pr-3"
+                              style="width: 40%"
+                            >
+                              <div class="profile-table-head text-center">
+                                Role
+                              </div>
+                            </td>
+                          </tr>
+                          <ng-container
+                            *ngFor="
+                              let sub of users_project_list;
+                              let idx = index
+                            "
+                          >
+                            <!-- <tr  > -->
+                            <tr *ngIf="this.user_selected?.id == sub?.user_id">
+                              <td>
+                                <div class="profile-table-value text-left">
+                                  {{ sub?.project_name }}
+                                </div>
+                              </td>
+                              <td>
+                                <div
+                                  class="text-center profile-table-value"
+                                  *ngFor="
+                                    let role of sub?.roles;
+                                    let last = last
+                                  "
+                                >
+                                  {{ role }}
+                                  <span *ngIf="sub?.roles.length > 1 && !last"
+                                    >,</span
+                                  >
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                          <ng-container *ngIf="!users_project_list">
+                            <tr>
+                              <td>
+                                <div class="profile-table-value text-center">
+                                  no Project found ...
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="row mt-25px justify-content-center"
+                  style="margin-top: 50px !important"
+                  *ngIf="user_selected.id != this.user_id"
+                >
+                  <div class="col-md-5 px-0 pr-2">
+                    <button
+                      class="mybtn mybtn-back-blue2 mybtnn2 float-right text-white"
+                      type="submit"
+                      *ngIf="!update_loading"
+                    >
+                      Update
+                    </button>
+                    <button
+                      class="mybtn mybtn-back-blue2 mybtnn2 float-right text-white"
+                      type="button"
+                      *ngIf="update_loading"
+                      disabled
+                    >
+                      Processing..
+                    </button>
+                  </div>
+                  <div class="col-md-5 px-0 pl-2">
+                    <button
+                      class="btn-back"
+                      type="button"
+                      (click)="showRemove()"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <div class="delete-modal2 input-popup-div">
+                    <div class="title-3-delete mb-12 text-center heading_txt">
+                      Confirmation
+                    </div>
+                    <div
+                      class="title-5-new2 remove-title mb-17 text-center text_txt"
+                    >
+                      Remove {{ this.user_selected?.full_name }} from the list?
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <button
+                        class="mybtn mybtn-back-blue2 mybtnn2 float-right text-white"
+                        type="button"
+                        (click)="confirmDelete(this.user_selected)"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        class="btn-back"
+                        (click)="hideNo(true)"
+                        type="button"
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="col-md-12 center_item"
+                  *ngIf="user_selected.id == this.user_id"
+                >
+                  <button
+                    class="mybtn mybtn-back-blue2 mybtnn2 text-white"
+                    type="submit"
+                    *ngIf="!update_loading"
+                  >
+                    Update
+                  </button>
+                  <button
+                    class="mybtn mybtn-back-blue2 mybtnn2 text-white"
+                    type="button"
+                    *ngIf="update_loading"
+                    disabled
+                  >
+                    Processing...
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table vendorTable" border="0" style="border: 0">
+                <tbody>
+                  <tr style="border: 0">
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 19%"
+                    >
+                      <div class="profile-table-head text-left">Name</div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 17%"
+                    >
+                      <div class="profile-table-head text-left">Email</div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 17%"
+                    >
+                      <div class="profile-table-head text-left">
+                        Phone number
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 17%"
+                    >
+                      <div class="profile-table-head text-left">Role</div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 30%"
+                    >
+                      <div class="profile-table-head text-left"></div>
+                    </td>
+                  </tr>
+
+                  <ng-container *ngIf="this.users_list; else elseBlock">
+                    <ng-container
+                      *ngFor="let user of this.users_list; let idx = index"
+                    >
+                      <!-- <tr *ngIf="idx<2"  > -->
+                      <tr (click)="showMore(user)">
+                        <td>
+                          <div class="profile-table-value text-left">
+                            {{ user.full_name }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-left">
+                            {{ user.email }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-left profile-table-value">
+                            {{ user.contact_number }}
+                          </div>
+                        </td>
+                        <td class="text-left">
+                          <span
+                            *ngFor="
+                              let user_role of user.user_roles;
+                              index as i
+                            "
+                          >
+                            <span
+                              class="text-left profile-table-value"
+                              *ngIf="i > 0"
+                            >
+                              , {{ user_role?.role?.role_name }}
+                            </span>
+                            <span
+                              *ngIf="i == 0"
+                              class="text-left profile-table-value"
+                            >
+                              {{ user_role?.role?.role_name }}
+                            </span>
+                          </span>
+                        </td>
+
+                        <td>
+                          <div
+                            class="text-left profile-table-value cursor-pointer"
+                          >
+                            <!-- <span *ngIf="sub?.invoice_id == downloading_invoice_id"> Downloading...</span> -->
+                            <!-- <img *ngIf=" sub?.invoice_id != downloading_invoice_id" src="assets/icons/download-profile.svg" alt="An example SVG image" class="down_icon" (click)="downloadInvoicePDF(sub?.invoice_id)"> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #elseBlock>
+                    <ng-container *ngIf="!this.users_list">
+                      <tr>
+                        <td colspan="5">
+                          <h4>
+                            <b *ngIf="!loading">No Users Found.</b>
+                            <b *ngIf="loading">Updating Users List..</b>
+                          </h4>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-template>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+                <div class="col-md-5 col-lg-4">
+                    <app-tc-profile-nav [loggedinUser]="this.loggedInUser" [current]="'add-users'"></app-tc-profile-nav>
+                </div>
+                <div class="col-md-7 col-lg-8">
+
+                    <div class="setting-content-page border-div">
+                        <div class="dashboard-title-1 mb-36">Manage users</div>
+
+                        <div class="dashbord-inner-div2">
+                            <table class="table user-table">
+                                <thead>
+                                    <tr >
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Contact number</th>
+                                        <th>role</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="this.users_list && this.users_list.length>0 ">
+                                        <tr *ngFor="let user of this.users_list">
+                                            <td>{{user.full_name}}</td>
+                                            <td style="line-break: anywhere !important;">{{user.email}}</td>
+                                            <td>{{user.contact_number}}</td>
+                                            <td>
+                                                <span *ngFor="let user_role of user.user_roles;index as i">
+                                                     <span *ngIf="i>0">
+                                                       , {{user_role?.role?.role_name}}
+                                                     </span>
+                                                     <span *ngIf="i==0">
+                                                        {{user_role?.role?.role_name}}
+                                                     </span>
+                                                </span>
+                                            </td>
+                                            <td >
+
+                                                 <img data-toggle="modal" data-target="#editdriver" (click)="setUpdateRoleId(user)" src="../../assets/icons/edit-icon.svg"></td>
+                                        </tr>
+
+                                    </ng-container>
+                                    <ng-container *ngIf="!this.users_list ">
+                                        <tr>
+                                            <td colspan="5" >
+                                                <h4><b *ngIf="!loading">No Users Found.</b>
+                                                    <b *ngIf="loading">Updating Users List..</b></h4>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <br/>
+                        <div  align="center">
+                            <button  type="submit" data-target="#adddriver" (click)="setAddForm()" data-toggle="modal" class="mybtn btn-add mybtn-back-blue2 width-fit-content text-white mybtn-padding">Add users</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade"   id="contactedit" tabindex="-1" role="dialog" aria-labelledby="companyeditLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <div class="dashboard-title mb-14">Change Role</div>
+                <form [formGroup]="updateRoleForm" (ngSubmit)="confirmUpdateRole()">
+                    <input type="hidden" formControlName="user_id">
+                    <div class="row mb-14">
+
+                        <div class="col-md-12 mb-14">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-8">
+                                    <span *ngIf="errorUpdate''" class="text-danger">{{
+                                        errorUpdate
+                                    }}</span>
+                                    <label class="w-100  position-relative m-0">
+
+
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" align="center">
+                            <button data-dismissle="modal" class="mybtn mybtn-back-blue2 width-fit-content text-white mybtn-padding" type='submit' *ngIf="!this.update_loading">Update</button>
+                            <button class="mybtn mybtn-back-blue2 width-fit-content text-white mybtn-padding" type="button" disabled *ngIf="this.update_loading">Processing...</button>
+                        </div>
+                    </div>
+                </form>
+
+
+                <div class="row " align="center">
+
+                    <div class="col-md-12" *ngIf="this.user_id != user_selected?.id">
+                        <div >
+                            <button class="mybtn mybtn-yellow-border  width-fit-content mybtn-padding" (click)="confirmDelete(user_selected?.id,this.user_selected)" *ngIf="!this.removing_loading">Remove</button>
+                            <button class="mybtn mybtn-yellow-border width-fit-content mybtn-padding" type="button" disabled *ngIf="this.removing_loading">Processing...</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div
+  class="modal fade come-from-modal right show"
+  id="adddriver"
+  tabindex="-1 "
+  role="dialog "
+  aria-labelledby="myModalLabel "
+>
+  <div class="modal-dialog max-width-50px" role="document ">
+    <div
+      class="modal-content border-15px plr-50px"
+      style="border-radius: 40px 0px 0px 40px"
+    >
+      <div class="modal-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <div class="title-02">Add contact</div>
+          </div>
+        </div>
+        <br />
+
+        <br />
+        <br />
+        <form
+          [formGroup]="addUserForm"
+          (ngSubmit)="onSaveUser()"
+          enctype="multipart/form-data"
+        >
+          <div class="row">
+            <div class="col-md-12">
+              <span *ngIf="userfull_nameError != ''" class="text-danger">{{
+                "Name is required"
+              }}</span>
+              <label class="field text-field required_field">
+                <input
+                  class="field__input"
+                  placeholder="Danyal "
+                  formControlName="full_name"
+                  value=" "
+                  type="text "
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label">Name</span>
+                  <img
+                    src="../../assets/icons/edit.png"
+                    class="icon-bottom-right2"
+                  />
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <span *ngIf="userContactNumberError != ''" class="text-danger">{{
+                userContactNumberError
+              }}</span>
+              <label class="field text-field">
+                <input
+                  class="field__input"
+                  placeholder="(---) --- ----"
+                  (input)="changeNumber($event)"
+                  formControlName="contact_number"
+                  type="text "
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label">Phone number</span>
+                  <img
+                    src="../../assets/icons/edit.png"
+                    class="icon-bottom-right2"
+                  />
+                </span>
+              </label>
+            </div>
+            <div class="col-md-7">
+              <span *ngIf="userRoleIDError; &quot;&quot;" class="text-danger">{{
+                userRoleIDError
+              }}</span>
+
+              <div class="mb-6">
+                <div class="position-relative mb-13 selectdiv">
+                  <div
+                    class="myinput btnselectlist selectlistname field__input"
+                    style="background: white"
+                    (click)="toggleAdd()"
+                  >
+                    <ng-container
+                      *ngFor="
+                        let id of this.addUserForm.get('role_ids')?.value;
+                        let i = index
+                      "
+                    >
+                      <ng-container *ngIf="id?.selected == true">
+                        <span class="field__input_label2"
+                          >{{ this.dropdownList[i]?.item_text }},
+                        </span>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                  <img
+                    src="../../assets/icons/pencile.svg"
+                    alt=""
+                    (click)="toggleAdd()"
+                    class="input-icon-right btnselectlist field__input_label22"
+                    width="17px"
+                  />
+                  <div class="selectlistdiv" *ngIf="is_shown_add">
+                    <div class="title-5-new2 mb-14">
+                      <span class="field__input_label22">Role</span>
+                    </div>
+                    <ul class="selectlistitems mb-23" formArrayName="role_ids">
+                      <ng-container
+                        *ngFor="
+                          let formItem of role_ids.controls;
+                          let idx = index
+                        "
+                      >
+                        <ng-container
+                          *ngIf="this.dropdownList[idx]?.item_text"
+                          [formGroupName]="idx"
+                        >
+                          <li
+                            class="d-flex"
+                            style="
+                              justify-content: space-between;
+                              align-items: center;
+                              align-content: center;
+                              flex-wrap: nowrap;
+                            "
+                          >
+                            <div>
+                              {{ this.dropdownList[idx]?.item_text }}
+                            </div>
+                            <input
+                              type="checkbox"
+                              (change)="setValue('add', $event)"
+                              formControlName="selected"
+                              [checked]="
+                                formItem.get('selected')?.value == true
+                              "
+                              style="float: right; margin-right: 5px"
+                            />
+                            <input
+                              type="hidden"
+                              value="{{ formItem.get('role_id')?.value }}"
+                              formControlName="role_id"
+                            />
+                          </li>
+                        </ng-container>
+                      </ng-container>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <span *ngIf="userEmailError != ''" class="text-danger">{{
+                userEmailError
+              }}</span>
+              <label class="field text-field required_field">
+                <input
+                  class="field__input"
+                  placeholder="example@mail.com "
+                  formControlName="email"
+                  value=" "
+                  type="email"
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label">Email</span>
+
+                  <img
+                    src="../../assets/icons/edit.png"
+                    class="icon-bottom-right2"
+                  />
+                </span>
+              </label>
+            </div>
+          </div>
+          <br />
+
+          <div
+            class="d-flex pl-2 pr-2 m-0 btn-div"
+            align="center"
+            style="
+              flex-wrap: nowrap;
+              justify-content: space-around;
+              align-items: center;
+            "
+          >
+            <div class="padding-left-0">
+              <button
+                class="mybtn btn-add mybtn-back-blue2 width-fit-content text-white mybtn-padding"
+                type="submit"
+                *ngIf="!is_user_loading"
+              >
+                Save
+              </button>
+
+              <button
+                class="mybtn btn-add mybtn-back-blue2 width-fit-content text-white mybtn-padding"
+                type="button"
+                *ngIf="is_user_loading"
+                disabled
+              >
+                Processing..
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade come-from-modal right show "  id="editdriver" tabindex="-1 " role="dialog " aria-labelledby="myModalLabel "  >
+    <div class="modal-dialog max-width-50px " role="document ">
+        <div class="modal-content border-15px plr-50px " style="border-radius: 40px 0px 0px 40px;">
+            <div class="modal-body ">
+
+                <div class="d-flex justify-content-between ">
+                    <div>
+                        <div class="title-02 " >Edit contact</div>
+                    </div>
+                </div>
+                <br>
+
+                <br>
+                <br>
+                <form [formGroup]="updateRoleForm" (ngSubmit)="confirmUpdateRole()">
+
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <span *ngIf="userfull_nameError != ''" class="text-danger">{{
+                                "Name is required"
+                            }}</span>
+                            <label class="field text-field required_field ">
+                                <input class="field__input " placeholder="Danyal " formControlName="full_name"  type="text ">
+                                <span class="field__label-wrap ">
+                                <span class="field__label ">Name</span>
+                                <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 ">
+                            <span *ngIf="userContactNumberError!= ''" class="text-danger">{{
+                                userContactNumberError
+                            }}</span>
+                            <label class="field text-field ">
+                                <input class="field__input " placeholder="(---) --- ----" (input)="changeNumberEdit($event)" formControlName="contact_number" type="text ">
+                                <span class="field__label-wrap ">
+                                <span class="field__label ">Phone number</span>
+                                <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-7 ">
+
+                            <span *ngIf="userRoleIDError''" class="text-danger">{{
+                                userRoleIDError
+                            }}</span>
+
+                            <div class=" mb-6">
+                                <div class="position-relative mb-13 selectdiv ">
+                                    <div class="myinput btnselectlist selectlistname field__input" style=" background: white;" (click)="toggleUpdate()">
+                                        <ng-container *ngFor="let id of this.updateRoleForm.get('role_idss')?.value;let i=index">
+                                            <ng-container *ngIf="id?.selected == true">
+
+                                                <span class="field__input_label2">{{this.dropdownList[i]?.item_text}}, </span>
+                                            </ng-container>
+                                        </ng-container>
+                                    </div>
+                                    <img src="../../assets/icons/pencile.svg" (click)="toggleUpdate()" alt="" class="input-icon-right btnselectlist field__input_label22" width="17px">
+                                    <div class="selectlistdiv" *ngIf="is_shown_update">
+                                        <div class="title-5-new2 mb-14"> <span class="field__input_label22">Role</span></div>
+                                        <ul class="selectlistitems mb-23"  formArrayName="role_idss">
+                                            <ng-container *ngFor="let formItem of role_idss.controls; let idx = index">
+                                                <ng-container [formGroupName]="idx">
+                                                    <li class="d-flex" style="justify-content: space-between;align-items: center; align-content: center;
+                                                    flex-wrap: nowrap;">
+                                                        <div>
+                                                            {{this.dropdownList[idx]?.item_text}}
+                                                        </div>
+                                                        <input type="checkbox" (change)="setValue('update',$event)" formControlName="selected" [checked]="formItem.get('selected')?.value == true"  style="float:right;margin-right:5px;">
+                                                        <input type="hidden" value="{{formItem.get('role_id')?.value}}" formControlName="role_id">
+                                                    </li>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-12 ">
+                            <span *ngIf="userEmailError!= ''" class="text-danger">{{
+                                userEmailError
+                            }}</span>
+                            <label class="field text-field required_field ">
+                                <input class="field__input " placeholder="example@mail.com " formControlName="email"  type="email">
+                                <span class="field__label-wrap ">
+                                <span class="field__label ">Email</span>
+
+                                <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                </span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <br>
+
+                    <div class="d-flex pl-2 pr-2 m-0 btn-div" align="center" style="    flex-wrap: nowrap;
+                    justify-content: space-around;
+                    align-items: center;">
+
+                        <div class="padding-left-0" >
+                            <button class="mybtn btn-add mybtn-back-blue2 width-fit-content text-white mybtn-padding" type="submit" *ngIf="!update_loading" >Save</button>
+
+                            <button class="mybtn btn-add mybtn-back-blue2 width-fit-content text-white mybtn-padding" type="button" *ngIf="update_loading" disabled >Processing..</button>
+                        </div>
+                        <div class="padding-right-0">
+                            <div class="position-relative  ">
+                                <button class="mybtn btn-add2 width-fit-content text-tc btnremove " type="button" (click)="showRemove()" *ngIf="!this.is_loading_removing">Remove</button>
+                                <button class="mybtn btn-add2 width-fit-content text-tc " disabled type="button" *ngIf="this.is_loading_removing">Removing...</button>
+                                <div class="delete-modal2 input-popup-div">
+                                    <div class="title-3-delete mb-12 text-center">Confirmation</div>
+                                    <div class="title-5-new2 remove-title mb-17 text-center">Remove {{this.user_selected?.full_name}} from the list?</div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button class="mybtn btn-add mybtn-back-blue2 width-fit-content text-white no-option mybtn-padding btnaction" type="button" (click)="confirmDelete(this.user_selected?.id,this.user_selected)">Yes</button>
+                                        <button class="mybtn btn-add2 width-fit-content btnaction no-option bg-white   text-tc" (click)="hideNo(true)" type="button">No</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div> -->

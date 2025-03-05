@@ -1,0 +1,74 @@
+<div class="modal fade  come-from-modal right show" style="display:block;padding-right: 17px;" id="addusers"
+  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog max-width-50px" role="document">
+    <div class="modal-content modal-bg-white border-15px ">
+      <div class="modal-body p-25px" >
+
+        <div class="d-flex justify-content-between mt-25px">
+          <div>
+            <div class="invite-people-to">Add new user ‍</div>
+            <div class="title-0">User details</div>
+          </div>
+        </div>
+        <form [formGroup]="addUserForm" (ngSubmit)="onSaveUser()" class="mt-25px">
+
+              <span *ngIf="userfull_nameError != ''" class="text-danger">{{
+                userfull_nameError
+                }}</span>
+              <label class="field text-field">
+                <input class="field__input" placeholder="Danyal" value="" formControlName="full_name">
+
+                <span class="field__label-wrap">
+                  <span class="field__label">Full name</span>
+                </span>
+              </label>
+          <span *ngIf="userEmailError != ''" class="text-danger">{{
+            userEmailError
+            }}</span>
+          <label class="field text-field">
+            <input class="field__input" placeholder="example@mail.com" type="email" formControlName="email">
+            <span class="field__label-wrap">
+              <span class="field__label">Email</span>
+            </span>
+          </label>
+          <span *ngIf="userContactNumberError != ''" class="text-danger">{{
+            userContactNumberError
+            }}</span>
+          <label class="field text-field">
+            <input class="field__input" placeholder="+1" value="+1" (input)="changeNumber($event)"
+              formControlName="contact_number">
+            <span class="field__label-wrap">
+              <span class="field__label">Comtact number</span>
+            </span>
+          </label>
+          <span *ngIf="userRoleIDError != ''" class="text-danger">{{
+            userRoleIDError
+            }}</span>
+          <label class="field text-field">
+            <select class="field__input icon-none" formControlName="role_id"
+              [disabled]="project_id && project_id !='' ? true:false">
+              <option value="3">Admin</option>
+              <option value="2" [selected]="project_id && project_id !='' ? true:false">Approver</option>
+              <option value="4">Dispatcher</option>
+              <option value="5">Superintendent</option>
+            </select>
+            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+            <span class="field__label-wrap">
+              <span class="field__label">User role</span>
+            </span>
+          </label>
+
+          <div class="row m-0 mt-25px">
+            <div class="col-md-5 padding-left-0">
+              <button class="btn-back goto-dashboard-setup-1 mybtn-back" (click)="showModal('')">Back</button>
+            </div>
+            <div class="col-md-7 padding-right-0">
+              <button class="mybtn mybtn-back-yellow mybtn-width" type="submit" *ngIf="!is_loading">Add User</button>
+              <button class="mybtn mybtn-back-yellow mybtn-width" type="button" *ngIf="is_loading" disabled>Processing..</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

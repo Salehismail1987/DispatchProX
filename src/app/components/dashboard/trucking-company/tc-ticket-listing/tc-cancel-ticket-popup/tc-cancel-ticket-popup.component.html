@@ -1,0 +1,36 @@
+<div class="modal modal-open fade  come-from-modal right show" id="myModal2" *ngIf="this.tickets && this.tickets?.length>0" role="dialog"
+    aria-labelledby="myModalLabel">
+      <div class="modal-dialog max-width-50px" role="document">
+          <div class="modal-content border-15px padding-modal">
+              <div class="modal-body ">
+                  <h3 class="title-14px-semibold modal-head text-black">
+                      Cancelling tickets
+                  </h3>
+                  <div class="mt-25px mb-15px">
+                      <p class="text-modal title-14px-semibold text-grey  mb-25px">
+                          You are cancelling {{tickets?.length}} tickets. Add the reason below and press cancel
+                      </p>
+                      <span *ngIf="messageError != ''" class="text-danger">{{
+                          messageError
+                      }}</span>
+                      <label class="field text-field required_field">
+                          <textarea class="field__input reason-input"  placeholder="Type here"   (change)="setReason($event)"></textarea>
+                          <span class="field__label-wrap">
+                          <span class="field__label">Reason for cancellation</span>
+                          </span>
+                      </label>
+                      <div class="d-flex justify-content-center align-items-center mt-35px">
+                        
+                        <div class=" ">
+                            <button class="cancel-btn btn-shadow " type="button" (click)="handleCancelTicket()" *ngIf="!is_loading">Cancel</button>
+                            <button class="cancel-btn btn-shadow" type="button" *ngIf="is_loading" disabled >Processing..</button>
+                        </div>
+                          <div class="">
+                              <button class="back-btn ml-4" (click)="showModal('')">Back</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>

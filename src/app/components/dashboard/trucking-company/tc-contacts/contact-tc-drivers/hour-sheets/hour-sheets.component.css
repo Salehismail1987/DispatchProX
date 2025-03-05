@@ -1,0 +1,1067 @@
+@import url("../../../../../../../assets/css/trucking-style.css");
+@import url("../../../../../../../assets/css/margins.css");
+
+
+.inner_main_shadow {
+    box-shadow: 0px 4px 4px 0px #00000040 inset;
+}
+
+.main-content {
+    border-radius: 9px;
+    padding: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.br-10 {
+    border-radius: 10px;
+}
+
+.required_field:after {
+    content: "*";
+    position: absolute;
+    top: 0;
+    right: -12px;
+    color: #f73333;
+}
+
+.progress-bar {
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #17a1fa !important;
+    transition: width 0.6s ease;
+}
+
+.invute-trucking-img {
+    background: #caeaff;
+    border-radius: 20px;
+    padding: 11px 75px 11px 75px;
+}
+
+.max-width-50 {
+    width: 45% !important;
+}
+
+.myhr3px {
+    border-bottom: 3px solid #17a1fa;
+    margin-top: -10px;
+}
+
+.tc-text-color {
+    color: #17a1fa !important;
+}
+
+.trailer-form .field__input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 55px !important;
+    padding: 1.25rem 1rem 0rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-weight: 600;
+    font-family: "Gilroy-SemiBold";
+    font-size: 14px;
+    line-height: 16px;
+    color: #68696d;
+}
+
+.trailer-form .field__label {
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+
+    color: #68696d;
+}
+
+.p-20px {
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 20px !important;
+        margin-left: 5px !important;
+        margin-right: 5px !important;
+    }
+
+    .max-width-50 {
+        width: 100% !important;
+    }
+}
+
+.mb-23 {
+    margin-bottom: 11px !important;
+}
+
+.title-0,
+.heading-new-project {
+    font-family: "Gilroy-SemiBold";
+    font-size: 20px;
+    line-height: 23px;
+    margin-top: 10px;
+    margin: 15px 10px 15px 10px;
+}
+
+.heading-new-project {
+    margin-top: 40px;
+    margin-bottom: 10px !important;
+}
+
+.field__input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 55px !important;
+    padding: 1.25rem 1rem 0rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    font-weight: 600;
+    font-family: "Gilroy-SemiBold";
+    font-size: 14px;
+    line-height: 16px;
+    color: #68696d;
+}
+
+select option {
+    font-weight: 600;
+    font-family: "Gilroy-SemiBold";
+    font-size: 14px;
+    line-height: 16px;
+    color: #111727;
+}
+
+.field__label {
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+
+    color: #68696d;
+}
+
+.btn-back {
+    font-family: "Gilroy-Bold";
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #060b23;
+    border-radius: 10px;
+    min-width: 150px;
+}
+
+.bg-medium-blue {
+    background: #17a1fa;
+    border-radius: 10px;
+    font-family: "Gilroy-Bold";
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #ffffff;
+    min-width: 150px;
+}
+
+.bg-medium-blue {
+    background: #17a1fa;
+    border-radius: 10px;
+    font-family: "Gilroy-Bold";
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #ffffff;
+    min-width: 150px;
+}
+
+.btn-div {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.tc-form {
+    margin: 0px 10px 0px 10px;
+}
+
+.your-adding {
+    font-family: "Gilroy-Bold";
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #ffffff;
+    height: 50px;
+    padding: 18px;
+}
+
+.selectlist-addon {
+    height: 49px;
+    font-family: "Gilroy-SemiBold";
+    font-size: 14px;
+    line-height: 16px;
+    color: #111727;
+}
+
+.img-invoice {
+    height: 33px !important;
+    border-radius: 18px !important;
+}
+
+.invoice-img {
+    height: 45px !important;
+    border-radius: 8px !important;
+}
+
+.img-invoice-dyn {
+    height: 40px;
+    width: 40px;
+    border-radius: 21px;
+}
+
+.vendorTable {
+    text-align: center;
+}
+
+.vendorTable tr:first-child,
+.vendorTable tr:last-child {
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.vendorTable tr {
+    border-bottom: 1px solid #e1e1e1 !important;
+}
+
+.btn-text-very-small2 {
+    font-size: 12px !important;
+    line-height: 14px !important;
+    padding: 8px 20px !important;
+    border-radius: 4px !important;
+}
+
+.title-22 {
+    font-family: "Gilroy-Bold";
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.title-driver {
+    font-family: "Gilroy-SemiBold";
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+
+    color: #111727;
+
+    opacity: 0.5;
+}
+
+.user-profile-pic {
+    width: 92px;
+    height: 109px;
+
+    /* DispatchProX blue final */
+
+    border: 1px solid #17a1fa;
+    padding: 7px;
+}
+
+.bg-blue2 {
+    background: #17a1fa !important;
+}
+
+.your-adding {
+    border: 1px solid #17a1fa;
+}
+
+.date-title {
+    font-family: "Gilroy-Bold";
+    font-size: 12px;
+    line-height: 14px;
+
+    color: #ffffff;
+}
+
+.myinput-new {
+    border: none;
+    padding: 0;
+    width: 100%;
+    font-family: "Gilroy-Bold";
+    font-size: 14px;
+    line-height: 16px;
+    color: #282d40;
+    background: transparent;
+    padding: 9px 9px;
+}
+
+.mb-2px {
+    margin-bottom: 2px;
+}
+
+.selected-truck {
+    font-family: "Gilroy-Bold";
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+    color: #282d40;
+}
+
+.input-popup-div {
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 14px;
+    padding: 9px 10px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: none;
+}
+
+.icon-center-right {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.input-popup {
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 14px;
+    padding: 9px 10px;
+    width: 100%;
+    position: relative;
+    top: 10px;
+    left: 0;
+    z-index: 2;
+    display: none;
+}
+
+.input-div {
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    padding: 3px 5px 3px 5px;
+    position: relative;
+}
+
+.driver-details-title {
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+
+    color: #111727;
+}
+
+.delete-modal {
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    padding: 18px 21px 20px 21px;
+    position: absolute;
+    width: max-content;
+    bottom: 70px;
+    right: 33%;
+    display: none;
+}
+
+.border-blue {
+
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-top: 1px solid #17a1fa;
+    margin-top: 3px;
+    border-bottom: 2px solid #17a1fa;
+
+}
+
+.text-tc {
+    color: #17a1fa;
+}
+
+.title-3-delete {
+    font-family: "Gilroy-SemiBold";
+    font-size: 15px;
+    line-height: 18px;
+    color: #000000;
+}
+
+.title-5-new2 {
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+
+    color: #68696d;
+    max-width: 160px;
+}
+
+.mybtn {
+    font-family: "Gilroy-SemiBold";
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 23px;
+    text-align: center;
+    border-radius: 5px !important;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.myinput-new {
+    border: none;
+    padding: 5px 5px;
+    width: 100% !important;
+    font-family: "Gilroy-Bold";
+    font-size: 14px;
+    line-height: 16px;
+    color: #282d40;
+    background: transparent;
+    padding: 5px 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.myinput3 {
+    border: 1px solid #ececec;
+    padding: 3px 7px;
+    border-radius: 5px;
+}
+
+.add-as-driver,
+.add-as-driver>td {
+    border: 0px !important;
+    border-bottom: 0px !important;
+}
+
+.btn-driver {
+    width: 94px !important;
+    padding: 4px;
+}
+
+.btn-customer {
+    padding: 8px 8px !important;
+ 
+}
+
+.btn-status {
+    width: 80px !important;
+    height: 225x !important;
+    font-family: "Gilroy-SemiBold" !important;
+    font-size: 13px !important;
+    line-height: 16px !important;
+    padding: 5px 4px !important;
+}
+
+.btn-status.bg-medium-blue {
+    min-width: 80px !important;
+}
+
+.border-div {
+    border: 1px solid #0000001a !important;
+}
+
+.modal-backdrop {
+    display: none !important;
+}
+
+.img-invoice {
+    height: 33px !important;
+    border-radius: 18px !important;
+}
+
+.invoice-img {
+    height: 45px !important;
+    border-radius: 8px !important;
+}
+
+.img-invoice-dyn {
+    height: 40px;
+    width: 40px;
+    border-radius: 21px;
+}
+
+.date-title {
+    font-family: "Gilroy-Bold";
+    font-size: 12px;
+    line-height: 14px;
+
+    color: #ffffff;
+}
+
+.popup-inv-div {
+    width: 282px;
+    height: 187px;
+}
+
+.popup-in-div>.img {
+    width: 176px;
+    height: 95px;
+}
+
+.img-logo {
+    width: 147px;
+    height: 59px;
+}
+
+.img-top-popup {
+    width: 176px;
+    height: 95px;
+}
+
+.mt-25px {
+    margin-top: 25px;
+}
+
+.m-25px {
+    margin: 25px;
+}
+
+.title-0 {
+    font-family: "Gilroy-SemiBold";
+    font-size: 20px;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.mt-25px {
+    margin-top: 25px;
+}
+
+.come-from-modal.left .modal-dialog,
+.come-from-modal.right .modal-dialog {
+    height: max-content !important;
+}
+
+.come-from-modal .field__input {
+    font-family: "Gilroy-SemiBold";
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #68696d;
+}
+
+.come-from-modal .field__label {
+    font-family: "Gilroy";
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #68696d;
+}
+
+.come-from-modal button {
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.cancel-btn {
+    min-width: 125px !important;
+    font-family: 'Gilroy-Bold';
+    font-size: 12px;
+    line-height: 14px;
+    background-color: white !important;
+    background: white !important;
+    border: 1px solid #dc3545 !important;
+    color: #dc3545 !important;
+    cursor: pointer !important;
+}
+
+/* updating the truck driver screen */
+th {
+    background-color: #CAEAFF;
+}
+
+.heading-2-300 {
+    font-family: "Gilroy-Bold";
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.76px;
+    text-align: left;
+    color: #000000;
+}
+
+.text-2-300 {
+    font-family: "Gilroy-SemiBold";
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.15px;
+    text-align: left;
+    color: #68696d;
+}
+
+.cust_drop {
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 14px;
+    padding: 9px 10px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: none;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+}
+
+.cust_drop .list-item,
+.list-item {
+    font-family: "Gilroy-Bold";
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.33px;
+    color: #68696d;
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    background: #ffffff;
+}
+
+.icon-center-right {
+    width: 23px !important;
+    position: absolute;
+    right: 10px !important;
+    /* bottom: 10px!important; */
+    top: 16px !important;
+}
+
+.input-div {
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    padding: 3px 5px 3px 5px;
+    position: relative;
+}
+
+.title-5-new2 {
+    color: #68696d !important;
+}
+
+.color-light {
+    color: #68696d !important;
+}
+.mb-5px {
+    padding-left: 0px !important;
+}
+
+.title-5-new33 {
+    line-height: 17.33px !important;
+    color: #68696d !important;
+}
+
+.getinputfield3 {
+    padding-left: 10px;
+}
+
+.getinputfield4 {
+    padding-left: 10px;
+}
+
+.sa_sel {
+    margin-bottom: 4px;
+    font-size: 14px !important;
+    font-weight: 400;
+    line-height: 17.15px;
+}
+
+.sa_sel2 {
+    color: #000000 !important;
+}
+
+.cur_p {
+    cursor: pointer;
+}
+
+.title-5-new33_active {
+    color: #000000 !important;
+}
+
+.sa_select {
+    font-family: "Gilroy-SemiBold";
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.15px;
+    text-align: left;
+    color: #88898b;
+}
+
+.input-div {
+    border: 1px solid #bababa;
+    padding-left: 13px;
+    padding-right: 6px;
+    padding-top: 2px;
+    height: 45px;
+    border-radius: 5px;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.icon-center-right {
+    right: 0px;
+    top: 0px;
+}
+
+.topright2 {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    background: #caeaff;
+    padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid #d9d9d9;
+}
+
+.icon-center-right {
+    position: absolute;
+    bottom: 17px;
+    width: 18px !important;
+    height: 15px;
+}
+
+.height-43px {
+    height: 45px !important;
+    border-radius: 5px !important;
+}
+
+.col-md-2.col-padding-rl {
+    padding: 0px 7px 0px 7px !important;
+}
+
+.mb-15px {
+    margin-bottom: 15px;
+}
+
+.ticket-padding {
+
+    border-width: 1px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 2px;
+    border: 1px solid #E1E1E1;
+    background: #FFFFFF;
+    padding: 6px 12px 6px 11px;
+
+
+}
+
+.mybtn-back-yellow {
+    background: #FFF8B8 !important;
+}
+
+.not-driving {
+    font-family: Gilroy-Bold;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17.33px;
+    letter-spacing: 0%;
+    color: #17A1FA;
+
+
+}
+
+.driver-type {
+    background: #FDD7E4;
+    border: 1px solid #E1E1E1;
+    width: 23px;
+    height: 23px;
+    gap: 10px;
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 3px;
+
+}
+
+.driver-type-top {
+
+    width: 55px;
+    height: 55px;
+    border-radius: 5px;
+    border-width: 1px;
+    gap: 10px;
+    padding: 3px;
+    background: #FDD7E4;
+    border: 1px solid #E1E1E1;
+    font-family: Gilroy;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24.76px;
+    display: flex;
+    color: #000000;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.br-red {
+
+    border: 1px solid #FF4D4D !important;
+}
+
+.display-period {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.approved-status{
+    width: 80px;
+    height: 25px;
+    display: flex;
+    padding: 3px 5px 3px 5px;
+    border-radius: 5px;
+    background: #17A1FA;
+    color: white;
+    font-family: 'Gilroy-SemiBold';
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.93px;
+    text-align: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    
+}
+
+.label-qty{
+    font-family: 'Gilroy' !important;
+    font-size: 13px !important;
+    font-weight: 400;
+    line-height: 15.6px;
+    text-align: center;
+    color: #68696D;
+
+}
+
+.text-semibold-16-400{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.6px;
+    color: black;
+
+}
+.value-qty{
+    width: 75px;
+    height: 34px;
+    padding: 0px 5px 0px 5px;
+   
+    border-radius: 5px ;
+    border: 1px solid #E1E1E1;
+    font-family: 'Gilroy-Bold';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.33px;
+    text-align: center;
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.white-container{
+    border-radius: 5px;
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    width: fit-content;
+    padding: 5px 10px;
+}
+.ticket-qty{
+    width: 75px;
+    height: 34px;
+    border-radius: 5px;
+    border-width: 1px;
+    gap: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    border: 1px solid #E1E1E1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.invoiced-div{
+    width: 80px;
+    height: 25px;
+    border-radius: 5px;
+    gap: 5px;
+    top: 9.5px;
+    padding-top: 3px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    background: #17A1FA;
+    color: white;
+}
+.come-from-modal.right .modal-body {
+    padding: 15px 15px 15px;
+}
+.come-from-modal.left .modal-content, .come-from-modal.right .modal-content {
+
+    border-radius: 10px 0 0 10px !important;
+}
+.title-7-new {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 14px;
+    line-height: 16px;
+}
+.text-color-black-shade5 {
+    /* color: #111727 !important; 0.5*/
+    color: #11172780 !important;
+}
+
+.mb-3px {
+    margin-bottom: 3px !important;
+}
+.title-12 {
+    font-family: 'Gilroy' !important;
+    font-size: 13px !important;
+
+    color: rgba(104, 105, 109, 1) !important;
+}
+.text-color-black-shade {
+    color: #68696d80;
+}
+
+.border-div{
+    border: 1px solid #0000001a !important;
+}
+.width-143px {
+    width: 143px;
+}
+.text-center {
+    text-align: center !important;
+  }
+  .title-5-new3 {
+    font-family: 'Gilroy-Bold';
+    font-size: 14px;
+    line-height: 16px;
+    box-shadow: none !important;
+    padding: 3px !important;
+}
+.title-5-new2{
+    font-family: 'Gilroy' !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 15.6px !important;
+    color: #68696D !important;
+
+}
+.title-6-2 {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 12px;
+    line-height: 14px;
+    margin-bottom: 7px;
+}
+
+.border-div2{
+    border: 1px solid #E1E1E1;
+}
+.br-4 {
+    border-radius: 4px;
+}
+.mb-7 {
+    margin-bottom: 7px !important;
+}
+
+.title-7{
+    font-family: 'Gilroy-Bold' !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 17.33px !important;
+    color: #000000 !important;
+}
+.mb-55px{
+    margin-bottom: 55px;
+}
+.total-div{
+    border-width: 1px 0px 2px 0px;
+    border-style: solid;
+    border-color: #88898B;
+    margin-left: 10px;
+    padding: 3px 0px 0px 0px;
+    margin-right: 10px;
+}
+
+.total-bold-text{
+    font-family: 'Gilroy-Bold' !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 19.81px !important;
+
+}
+.notes-div{
+    height: 65px !important;
+    border: 2px solid #D9D9D9 !important;
+    border-radius: 5px !important;
+    padding: 4px !important;
+}
+.mb-6 {
+    margin-bottom: 6px !important;
+}
+.myinput5 {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 14px;
+    line-height: 16px;
+    color: #68696D;
+    border: 2px solid #D9D9D9;
+    border-radius: 5px;
+    width: 100%;
+}
+.myinput5-textarea{
+    padding: 0px !important;
+    border: 0 !important;
+}
+.text-align-left{
+    text-align: left;
+}
+.ml-15px{
+    margin-left: 33px  !important;
+}
+.approved-div {
+    width: 80px;
+    height: 25px;
+    border-radius: 5px;
+    /* gap: 5px; */
+    top: 9.5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    background: #F4BE1B;
+    color: white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.nav-fill .nav-item, .nav-fill>.nav-link {
+  
+    flex: 1 1 auto;
+  }
+  .nav-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem 1rem;
+  }
+  
+  .nav-link.active {
+    box-shadow: 0px 4px 4px 0px #00000040 inset !important;
+  }
+  .btn-nav {
+    width: 150px !important;
+    height: 40px !important;
+  }

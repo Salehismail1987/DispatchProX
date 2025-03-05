@@ -1,0 +1,126 @@
+
+<div class="row m-0">
+    <div class="col-lg-4 col-md-4">
+        <div class="sidebar">
+            <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png" width="width:147px"></div>
+            <div class="display-table">
+                <div class="vertical-middle">
+                    <div class="card00">
+                        <div class="card1">
+                            <ul id="progressbar" class="text-center mt-minus-5px">
+                                <li class="active step0"></li>
+                            </ul>
+                            <h6 class="items-text">Select type</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-lg-1 col-md-1">
+    </div> -->
+    <div class="col-lg-8 col-md-6  display-table pt-4 px-0">
+  
+        <!-- <div class="vertical-middle px-7">
+            <div class="title-3 text-black-shade text-center mb-23">Welcome to DispatchProX.</div>
+            <div class="title-4 text-black-shade mb-57 text-center">Create an account for?</div>
+  
+            <div class="row">
+  
+                <div class="col-sm-5 mx-7">
+                    <div class="border-1  custom-padding-1  mb-39" (click)="setRole('Trucking Company')">
+                        <img src="../../assets/icons/truck-blue.png" class="img-responsive mb-12">
+                        <div class="type-text">
+                            <div class="title-5">For Trucking Company</div>
+                            <img src="../../assets/icons/arrow_right_alt.png" alt="" width="16px" height="12px" class="ml-13">
+                        </div>
+                    </div>
+                </div>
+  
+                <div class="col-sm-5 mx-7">
+                    <div class="border-2 custom-padding-2  mb-39"  (click)="setRole('Customer')">
+                        <img src="../../assets/icons/construction.png" class="img-responsive mb-12">
+                        <div class="type-text">
+                            <div class="title-5">For Construction Site</div>
+                            <img src="../../assets/icons/arrow_right_alt.png" alt="" width="16px" height="12px" class="ml-13">
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-sm-5">
+                <div class="border-2 custom-padding-2  mb-39"  (click)="setRole('Customer')">
+                    <img src="../../assets/icons/construction.png" class="img-responsive mb-12">
+                    <div class="type-text">
+                        <div class="title-5">For Construction Site</div>
+                        <img src="../../assets/icons/arrow_right_alt.png" alt="" width="16px" height="12px" class="ml-13">
+                    </div>
+                </div>
+            </div>
+  
+  
+  
+            <div class="row m-0">
+                <div class="col-md-12" align="center">
+                    <button class="mybtn bg-default text-black mybtn-padding2"  [routerLink]="'/login'">Back</button>
+                </div>
+            </div>
+        </div> -->
+  
+       
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 text-center mb-3">
+                <div class="title-3 text-black-shade">Welcome to DispatchProX.</div>
+                <div class="title-4 text-black-shade">Create an account for?</div>
+              </div>
+            </div>
+          
+            <div class="row justify-content-center mb-3">
+              <div class="col-md-5 mx-2 mx-7 p-0 cursor_ptr">
+                <div class=" custom-padding-2 pb-0" (click)="setRole('Customer')">
+                  <div class="type-text mt-4 mb-2">
+                    <div class="title-5">For Construction Site</div>
+                  </div>
+                  <div class="background-image"></div>
+                    <img src="../../assets/icons/construction-site.svg" class="img-responsive"  height="99%">
+                  <div class="type-text">
+                  </div>
+                </div>
+              </div>
+  
+              
+              <div class="col-md-5 mx-2 mx-7 p-0 cursor_ptr">
+                <div class=" custom-padding-2 pb-0" (click)="setRole('Trucking Company')">
+                    <div class="type-text mt-4 mb-2">
+                        <div class="title-5">For Trucking Company</div>
+                    </div>
+                    <div class="background-image2"></div>
+                    <img src="../../assets/icons/trucking-image.svg" class="img-responsive pb-2"  height="99%">
+                  </div>
+              </div>
+  
+            </div>
+          
+            <div class="row justify-content-center p-0 ">
+              <div class="col-md-5 mx-2">
+                  <div class="custom-padding-2 mb-3 cursor_ptr " (click)="setRole('Driver')">
+                      <div class="type-text mt-4 mb-2">
+                          <div class="title-5"><strong>You are a driver</strong></div>
+                      </div>
+                      <div class="background-image3"></div>
+                      <img src="../../assets/icons/driver-singup.svg" class="img-responsive" height="99%" >
+                  </div>
+              </div>
+          </div>
+          
+          <div class="row custom-back-button">
+            <div class="col-md-3 text-center">
+              <button class="mybtn bg-default text-white mybtn-padding2" [routerLink]="'/home'">Back</button>
+            </div>
+          </div>
+          </div>
+          
+    </div>
+  </div>

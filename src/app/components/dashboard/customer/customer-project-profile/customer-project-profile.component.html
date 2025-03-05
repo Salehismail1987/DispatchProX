@@ -1,0 +1,2451 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <main id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <!-- Main Container body  -->
+    <div class="body-content">
+      <div class="main-inner-body-container mt-15px ">
+        <div class="project-profile-main-container">
+          <div class="project-profile-header-container">
+            <div
+              class="profile_heading_div"
+              [style]="
+                isActive('project_profile') ? 'display:block;' : 'display:none;'
+              "
+            >
+              <div
+                class="project-profile-header-left d-flex align-items-center"
+              >
+                <img
+                  src="./assets/images/project-profile-file-icon.svg"
+                  alt="project-profile-file-icon"
+                />
+                <div class="heading-1-400 text-color-black">
+                  Profile
+                  {{
+                    this.project?.project_name
+                      ? "- " + this.project?.project_name
+                      : ""
+                  }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="tracker_heading_div"
+              [style]="
+                isActive('project_tracker') ? 'display:block;' : 'display:none;'
+              "
+            >
+              <div
+                class="project-profile-header-left d-flex align-items-center"
+              >
+                <img
+                  src="./assets/images/tracker.svg"
+                  alt="project-profile-file-icon"
+                />
+                <div class="heading-1-400 text-color-black">
+                  Tracker
+                  {{
+                    this.project?.project_name
+                      ? "- " + this.project?.project_name
+                      : ""
+                  }}
+                </div>
+              </div>
+            </div>
+            <ul class="nav nav-tabs my-nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  [class.active]="isActive('project_profile')"
+                  (click)="setActiveTab('project_profile')"
+                  id="project_profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#project_profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="project_profile"
+                  aria-selected="true"
+                >
+                  <div
+                    class="d-flex align-items-center"
+                    [ngClass]="{
+                      'w-118': isActive('project_profile'),
+                      'w-117': !isActive('project_profile')
+                    }"
+                  >
+                    <img
+                      src="./assets/images/project-profile-file-icon.svg"
+                      width="15px"
+                      alt="project-profile-file-icon"
+                    />
+                    <div class="heading-5-400 text-color-black ml-8px">
+                      Project profile
+                    </div>
+                  </div>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  [class.active]="isActive('project_tracker')"
+                  (click)="setActiveTab('project_tracker')"
+                  id="project_tracker-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#project_tracker"
+                  type="button"
+                  role="tab"
+                  aria-controls="project_tracker"
+                  aria-selected="false"
+                >
+                  <div
+                    class="d-flex align-items-cente"
+                    [ngClass]="{
+                      'w-117': isActive('project_tracker'),
+                      'w-116': !isActive('project_tracker')
+                    }"
+                  >
+                    <img
+                      src="./assets/images/project-profile-tracker-icon.svg"
+                      width="20px"
+                      alt="project-profile-tracker-icon"
+                    />
+                    <div
+                      class="heading-5-400 text-color-black ml-8px col text-center"
+                    >
+                      Tracker
+                    </div>
+                  </div>
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div class="tab-content" id="myTabContent">
+            <div
+              id="project_profile"
+              class="tab-pane fade {{
+                isActive('project_profile') ? 'show active' : '  show'
+              }} "
+            >
+              <div class="project-profile-body-container inner_main_shadow">
+                <div class="project-profile-body-header">
+                  <div class="heading-1-400 text-color-black">Project</div>
+                  <button
+                    class="btn create-dispatch-project-profile-btn"
+                    (click)="movetoCreate()"
+                  >
+                    <img
+                      src="./assets/images/create-dispatch-btn-icon.svg"
+                      alt="create-dispatch-btn-icon"
+                    />
+                    <div class="heading-5-400 text-color-black">
+                      Create dispatch
+                    </div>
+                  </button>
+                </div>
+                <div
+                  class="form"
+                  *ngIf="project && project.project_name; else elseBlock"
+                >
+                  <div class="project-profile-form-container">
+                    <form
+                      [formGroup]="updateProjForm"
+                      (ngSubmit)="onUpdateProject()"
+                      enctype="multipart/form-data"
+                    >
+                      <div class="row my-row2" *ngIf="!edit_mode_project">
+                        <div
+                          class="col-md-7 col-sm-12 profile-profile-form-row"
+                        >
+                          <div class="row">
+                            <div
+                              class="col-md-4 cursor-pointer col-sm-12 project-profile-col mb-2"
+                              (click)="toggleEditMode(true)"
+                            >
+                              <span
+                                *ngIf="updateProjJobNumberError != ''"
+                                class="text-danger"
+                                >{{ updateProjJobNumberError }}</span
+                              >
+                              <div class="project-profile-input-container">
+                                <div class="project-profile-label-container">
+                                  <div class="heading-8-400 text-color-grey">
+                                    Project name
+                                  </div>
+                                  <div
+                                    class="heading-4-400-semi text-color-F63333 h-15px"
+                                  >
+                                    *
+                                  </div>
+                                </div>
+                                <input
+                                  type="text"
+                                  class="form-control project-profile-input"
+                                  id="floatingInputValue"
+                                  readonly
+                                  placeholder="Type here."
+                                  value=""
+                                  formControlName="project_name"
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-3 cursor-pointer col-sm-12 mb-2"
+                              (click)="toggleEditMode(true)"
+                            >
+                              <span
+                                *ngIf="updateProjJobNumberError != ''"
+                                class="text-danger"
+                                >{{ updateProjJobNumberError }}</span
+                              >
+                              <div class="project-profile-input-container">
+                                <div class="project-profile-label-container">
+                                  <div class="heading-8-400 text-color-grey">
+                                    Job number
+                                  </div>
+                                  <div
+                                    class="heading-4-400-semi text-color-F63333 h-15px"
+                                  >
+                                    *
+                                  </div>
+                                </div>
+                                <input
+                                  type="text"
+                                  readonly
+                                  class="form-control project-profile-input"
+                                  id="floatingInputValue1"
+                                  placeholder="Type here."
+                                  formControlName="job_number"
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-5 cursor-pointer col-sm-12 mb-2"
+                              (click)="toggleEditMode(true)"
+                            >
+                              <div class="project-profile-input-container">
+                                <div class="project-profile-label-container">
+                                  <div class="heading-8-400 text-color-grey">
+                                    Project description
+                                  </div>
+                                  <div
+                                    class="heading-4-400-semi text-color-white project-profile-label-required-star h-15px"
+                                  >
+                                    *
+                                  </div>
+                                </div>
+                                <textarea
+                                  type="text"
+                                  readonly
+                                  class="form-control project-profile-textarea vertical-middle"
+                                  id="floatingInputValue1"
+                                  placeholder="Type here.."
+                                  rows="2"
+                                  formControlName="project_description"
+                                  >{{
+                                    this.project?.project_description
+                                  }}</textarea
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="col-md-7 col-sm-12 profile-profile-form-row"
+                        >
+                          <div class="row">
+                            <div
+                              class="col-md-4 cursor-pointer col-sm-12 project-profile-col mb-2"
+                              (click)="toggleEditMode(true)"
+                            >
+                              <span
+                                *ngIf="updateProjLocationError != ''"
+                                class="text-danger"
+                                >{{ updateProjLocationError }}</span
+                              >
+                              <div class="project-profile-input-container">
+                                <div class="project-profile-label-container">
+                                  <div class="heading-8-400 text-color-grey">
+                                    Project address
+                                  </div>
+                                  <div
+                                    class="heading-4-400-semi text-color-F63333 h-15px"
+                                  >
+                                    *
+                                  </div>
+                                </div>
+                                <textarea
+                                  type="text"
+                                  readonly
+                                  class="form-control project-profile-textarea"
+                                  id="floatingInputValue1"
+                                  placeholder="Type here.."
+                                  rows="2"
+                                  formControlName="project_location"
+                                  >{{
+                                    this.project?.project_location
+                                  }}</textarea
+                                >
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-4 cursor-pointer col-sm-12 mb-2"
+                              (click)="toggleEditMode(true)"
+                            >
+                              <div class="project-profile-input-container">
+                                <div class="project-profile-label-container">
+                                  <div class="heading-8-400 text-color-grey">
+                                    Start date
+                                  </div>
+                                  <img
+                                    src="./assets/images/calendar-icon.svg"
+                                    alt="calendar-icon"
+                                  />
+                                </div>
+                                <input
+                                  type="date"
+                                  readonly
+                                  class="form-control project-profile-input"
+                                  id="startDatePicker"
+                                  placeholder="dd/mm/yyyy"
+                                  [(ngModel)]="this.project.start_date"
+                                  formControlName="start_date"
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="col-md-4 cursor-pointer col-sm-12 mb-2"
+                              (click)="toggleEditMode(true)"
+                            >
+                              <div class="project-profile-input-container">
+                                <div class="project-profile-label-container">
+                                  <img
+                                    src="./assets/images/calendar-icon.svg"
+                                    alt="calendar-icon"
+                                  />
+                                  <div class="heading-8-400 text-color-grey">
+                                    End date
+                                  </div>
+                                </div>
+                                <input
+                                  type="date"
+                                  readonly
+                                  class="form-control project-profile-input text-end"
+                                  [(ngModel)]="this.project.planned_enddate"
+                                  formControlName="planned_enddate"
+                                  id="startDatePicker"
+                                  placeholder="dd/mm/yyyy"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-3 col-update-project col-sm-12 align-self-center">
+                                                       <input type="hidden" formControlName="project_id" [(ngModel)]="this.project_id">
+
+                                                       <button class="btn update-project-profile-dump-btn" *ngIf="!this.loading_project_update">
+                                                           <div class="heading-15-400-bold text-color-black">
+                                                               Update
+                                                           </div>
+                                                       </button>
+                                                       <button class="btn update-project-profile-dump-btn" disabled type="button" *ngIf="this.loading_project_update">
+                                                           <div class="heading-15-400-bold text-color-black">
+                                                               Processing..
+                                                           </div>
+                                                       </button>
+                                                   </div> -->
+                        <div
+                          class="col-md-7 col-sm-12 profile-profile-form-row"
+                        >
+                          <div class="row">
+                            <div
+                              class="col-md-5 cursor-pointer col-sm-12 project-profile-col"
+                              (click)="toggleEditMode(true)"
+                            >
+                              <div
+                                class="project-profile-rounds-input-container height-55px"
+                              >
+                                <img src="../assets/images/recycle.svg" />
+                                <div
+                                  class="ml-1 project-profile-label-container"
+                                >
+                                  <div class="heading-8-400 text-color-grey">
+                                    Default number of rounds
+                                  </div>
+                                </div>
+                                <input
+                                  type="number"
+                                  readonly
+                                  class="form-control project-profile-input-rounds"
+                                  id="floatingInputValue1"
+                                  placeholder="rounds"
+                                  formControlName="default_rounds"
+                                  [(ngModel)]="this.project.default_rounds"
+                                />
+                              </div>
+                            </div>
+
+                            <div
+                              class="col-md-5 cursor-pointer col-sm-12 project-profile-col"
+                              (click)="toggleEditMode(true)"
+                            >
+                              <div
+                                class="project-profile-rounds-input-container height-55px"
+                              >
+                                <img src="../assets/images/camera.svg" />
+                                <div
+                                  class="project-profile-label-container ml-1"
+                                >
+                                  <div class="heading-8-400 text-color-grey">
+                                    Require a paper ticket with each dispatch
+                                  </div>
+                                </div>
+                                <input
+                                  type="checkbox"
+                                  readonly
+                                  class="form-control project-profile-input-paperticket"
+                                  id="floatingInputValue1"
+                                  [checked]="
+                                    require_paper_ticket == 'YES' ? true : false
+                                  "
+                                  (change)="changePT($event)"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="" *ngIf="edit_mode_project">
+                        <div class="row my-row2">
+                          <div
+                            class="col-md-7 col-sm-12 profile-profile-form-row"
+                          >
+                            <!-- Edit project info popup div-->
+                            <div class="edit-modal">
+                              <div class="edit-profile-head mb-15px">
+                                Edit project info
+                                <img
+                                  src="assets/icons/cross-modal.svg"
+                                  (click)="toggleEditMode(false)"
+                                  class="curser-pointer float-right"
+                                />
+                              </div>
+
+                              <div class="row mb-15px">
+                                <div
+                                  class="col-md-4 col-sm-12 project-profile-col mb-2"
+                                >
+                                  <span
+                                    *ngIf="updateProjJobNumberError != ''"
+                                    class="text-danger"
+                                    >{{ updateProjJobNumberError }}</span
+                                  >
+                                  <div class="project-profile-input-container">
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Project name
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-color-F63333 h-15px"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <input
+                                      type="text"
+                                      class="form-control project-profile-input"
+                                      id="floatingInputValue"
+                                      placeholder="Type here."
+                                      value=""
+                                      formControlName="project_name"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col-md-3 col-sm-12 mb-2">
+                                  <span
+                                    *ngIf="updateProjJobNumberError != ''"
+                                    class="text-danger"
+                                    >{{ updateProjJobNumberError }}</span
+                                  >
+                                  <div class="project-profile-input-container">
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Job number
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-color-F63333 h-15px"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <input
+                                      type="text"
+                                      class="form-control project-profile-input"
+                                      id="floatingInputValue1"
+                                      placeholder="Type here."
+                                      formControlName="job_number"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col-md-5 col-sm-12 mb-2">
+                                  <div class="project-profile-input-container">
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Project description
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-color-white project-profile-label-required-star h-15px"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <textarea
+                                      type="text"
+                                      class="form-control project-profile-textarea vertical-middle"
+                                      id="floatingInputValue1"
+                                      placeholder="Type here.."
+                                      rows="2"
+                                      formControlName="project_description"
+                                      >{{
+                                        this.project?.project_description
+                                      }}</textarea
+                                    >
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row mb-15px">
+                                <div
+                                  class="col-md-4 col-sm-12 project-profile-col mb-2"
+                                >
+                                  <span
+                                    *ngIf="updateProjLocationError != ''"
+                                    class="text-danger"
+                                    >{{ updateProjLocationError }}</span
+                                  >
+                                  <div class="project-profile-input-container">
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Project address
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-color-F63333 h-15px"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <textarea
+                                      data-target="#changeAddress"
+                                      data-toggle="modal"
+                                      type="text"
+                                      readonly
+                                      class="form-control project-profile-textarea curser-pointer"
+                                      id="floatingInputValue1"
+                                      placeholder="Type here.."
+                                      rows="2"
+                                      formControlName="project_location"
+                                      >{{
+                                        this.project?.project_location
+                                      }}</textarea
+                                    >
+                                    <img
+                                      data-target="#changeAddress"
+                                      data-toggle="modal"
+                                      src="../../assets/icons/pencile.svg"
+                                      alt=""
+                                      width="17px"
+                                      class="top-right-icon2 curser-pointer"
+                                    />
+                                  </div>
+                                  <div
+                                    style="
+                                      position: absolute;
+                                      width: max-content;
+                                    "
+                                  >
+                                    <div
+                                      tabindex="-1"
+                                      id="changeAddress"
+                                      aria-labelledby="changeAddress"
+                                      aria-modal="true"
+                                      role="dialog"
+                                      class="modal fade"
+                                      style="position: relative !important"
+                                    >
+                                      <div class="modal-dialog margin-auto">
+                                        <div class="modal-content">
+                                          <div class="modal-body">
+                                            <div class="row">
+                                              <div
+                                                class="col-11 row ml-1 mb-2 pr-0"
+                                              >
+                                                <div class="col-12 text-center">
+                                                  <div
+                                                    class="heading-5-400 text-color-111727 text-center"
+                                                  >
+                                                    Add/update address
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="col-1">
+                                                <button
+                                                  type="button"
+                                                  data-bs-dismiss="modal"
+                                                  data-dismiss="modal"
+                                                  aria-label="Close"
+                                                  class="my-modal-close border-0 bg-transparent shadow-none"
+                                                >
+                                                  <img
+                                                    src="./assets/images/cross_2.svg"
+                                                    alt="Close"
+                                                    style="
+                                                      width: 14px;
+                                                      height: 14px;
+                                                      margin-top: -10px;
+                                                      margin-right: -15px;
+                                                    "
+                                                  />
+                                                </button>
+                                              </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                              <div class="col-6">
+                                                <div
+                                                  class="title-52 text-grey-shade2"
+                                                >
+                                                  Street
+                                                </div>
+                                                <div
+                                                  class="position-relative required_field11"
+                                                >
+                                                  <img
+                                                    src="../../assets/icons/pencile.svg"
+                                                    alt=""
+                                                    width="17px"
+                                                    class="top-right-icon22"
+                                                  /><input
+                                                    type="text"
+                                                    id="street"
+                                                    placeholder="Type here"
+                                                    class="field-input2"
+                                                    ng-reflect-name="street"
+                                                  />
+                                                </div>
+                                              </div>
+                                              <div class="col-6">
+                                                <div
+                                                  class="title-52 text-grey-shade2 text-right"
+                                                >
+                                                  City/Town
+                                                </div>
+                                                <div
+                                                  class="position-relative required_field12"
+                                                >
+                                                  <img
+                                                    src="../../assets/icons/pencile.svg"
+                                                    alt=""
+                                                    width="17px"
+                                                    class="top-left-icon22"
+                                                  /><input
+                                                    type="text"
+                                                    id="city"
+                                                    placeholder="Type here"
+                                                    class="field-input2 text-right ng-untouched ng-pristine ng-valid"
+                                                  />
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                              <div class="col-4">
+                                                <div
+                                                  class="title-52 text-grey-shade2"
+                                                >
+                                                  Country
+                                                </div>
+                                                <div
+                                                  class="position-relative required_field11"
+                                                >
+                                                  <select
+                                                    id="country"
+                                                    class="field-input2"
+                                                    (change)="
+                                                      setCountry($event)
+                                                    "
+                                                  >
+                                                    <option
+                                                      value="Canada"
+                                                      [selected]="
+                                                        this.country == 'Canada'
+                                                      "
+                                                    >
+                                                      Canada
+                                                    </option>
+                                                    <option
+                                                      value="USA"
+                                                      [selected]="
+                                                        this.country == 'USA'
+                                                      "
+                                                    >
+                                                      USA
+                                                    </option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                              <div class="col-4">
+                                                <div
+                                                  class="title-52 text-grey-shade2 text-center"
+                                                >
+                                                  Province/State
+                                                </div>
+                                                <div
+                                                  class="position-relative required_field11"
+                                                >
+                                                  <select
+                                                    type="text"
+                                                    id="province_state"
+                                                    class="field-input2"
+                                                  >
+                                                    <ng-container
+                                                      *ngIf="
+                                                        this.country == 'Canada'
+                                                      "
+                                                    >
+                                                      <option
+                                                        *ngFor="
+                                                          let pro of this
+                                                            .canada_provinces
+                                                        "
+                                                        value="{{ pro }}"
+                                                        [selected]="
+                                                          pro == this.province
+                                                        "
+                                                      >
+                                                        {{ pro }}
+                                                      </option>
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                      *ngIf="
+                                                        this.country == 'USA'
+                                                      "
+                                                    >
+                                                      <option
+                                                        *ngFor="
+                                                          let pro of this
+                                                            .usa_provinces
+                                                        "
+                                                        value="{{ pro }}"
+                                                        [selected]="
+                                                          pro == this.province
+                                                        "
+                                                      >
+                                                        {{ pro }}
+                                                      </option>
+                                                    </ng-container>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                              <div class="col-4">
+                                                <div
+                                                  class="title-52 text-grey-shade2 text-right"
+                                                >
+                                                  Postal Code
+                                                </div>
+                                                <div class="position-relative">
+                                                  <img
+                                                    src="../../assets/icons/pencile.svg"
+                                                    alt=""
+                                                    width="17px"
+                                                    class="top-left-icon22"
+                                                  /><input
+                                                    type="text"
+                                                    id="postal_code"
+                                                    placeholder="Type here"
+                                                    class="field-input2 text-right ng-untouched ng-pristine ng-valid"
+                                                    ng-reflect-name="postal_code"
+                                                  />
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                              <div
+                                                class="col-12 d-flex align-items-center justify-content-center"
+                                              >
+                                                <button
+                                                  type="button"
+                                                  (click)="saveAddress()"
+                                                  class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black button-update"
+                                                >
+                                                  Update
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-2">
+                                  <div class="project-profile-input-container">
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Start date
+                                      </div>
+                                      <img
+                                        src="./assets/images/calendar-icon.svg"
+                                        alt="calendar-icon"
+                                      />
+                                    </div>
+                                    <input
+                                      type="date"
+                                      class="form-control project-profile-input"
+                                      id="startDatePicker"
+                                      placeholder="dd/mm/yyyy"
+                                      [(ngModel)]="this.project.start_date"
+                                      formControlName="start_date"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-2">
+                                  <div class="project-profile-input-container">
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <img
+                                        src="./assets/images/calendar-icon.svg"
+                                        alt="calendar-icon"
+                                      />
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        End date
+                                      </div>
+                                    </div>
+                                    <input
+                                      type="date"
+                                      class="form-control project-profile-input text-end"
+                                      [(ngModel)]="this.project.planned_enddate"
+                                      formControlName="planned_enddate"
+                                      id="startDatePicker"
+                                      placeholder="dd/mm/yyyy"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row mb-15px">
+                                <div
+                                  class="col-md-4 col-sm-12 project-profile-col"
+                                >
+                                  <div
+                                    class="project-profile-rounds-input-container height-55px"
+                                  >
+                                    <img src="../assets/images/recycle.svg" />
+                                    <div
+                                      class="ml-1 project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Default number of rounds
+                                      </div>
+                                    </div>
+                                    <input
+                                      type="number"
+                                      class="form-control project-profile-input-rounds"
+                                      id="floatingInputValue1"
+                                      placeholder="rounds"
+                                      formControlName="default_rounds"
+                                      [(ngModel)]="this.project.default_rounds"
+                                    />
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="col-md-4 col-sm-12 project-profile-col"
+                                >
+                                  <div
+                                    class="project-profile-rounds-input-container height-55px"
+                                  >
+                                    <img src="../assets/images/camera.svg" />
+                                    <div
+                                      class="project-profile-label-container ml-1"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Require a paper ticket with each
+                                        dispatch
+                                      </div>
+                                    </div>
+                                    <input
+                                      type="checkbox"
+                                      class="form-control project-profile-input-paperticket"
+                                      id="floatingInputValue1"
+                                      [checked]="
+                                        require_paper_ticket == 'YES'
+                                          ? true
+                                          : false
+                                      "
+                                      (change)="changePT($event)"
+                                    />
+                                  </div>
+                                </div>
+                                <div
+                                  class="col-md-3 col-update-project col-sm-12 align-self-center"
+                                >
+                                  <input
+                                    type="hidden"
+                                    formControlName="project_id"
+                                    [(ngModel)]="this.project_id"
+                                  />
+
+                                  <button
+                                    class="btn update-project-profile-dump-btn"
+                                    *ngIf="!this.loading_project_update"
+                                  >
+                                    <div
+                                      class="heading-15-400-bold text-color-black"
+                                    >
+                                      Update all
+                                    </div>
+                                  </button>
+                                  <button
+                                    class="btn update-project-profile-dump-btn"
+                                    disabled
+                                    type="button"
+                                    *ngIf="this.loading_project_update"
+                                  >
+                                    <div
+                                      class="heading-15-400-bold text-color-black"
+                                    >
+                                      Processing..
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="col-md-8 col-sm-12">
+                                <div class="row mb-15px p-2 border-1px-solid">
+                                  <div class="col-md-4 col-sm-12 mb-2">
+                                    <div class="title-5">
+                                      Remove project? All tickets need to be
+                                      closed.
+                                    </div>
+                                  </div>
+                                  <div class="col-md-8 col-sm-12 mb-2">
+                                    <div class="">
+                                      <div
+                                        class="button-delete-proj curser-pointer"
+                                        (click)="deleteProjectShow()"
+                                      >
+                                        Close the
+                                        {{ this.project?.project_name }}
+                                      </div>
+                                    </div>
+                                    <div class="confirmProjectDelete">
+                                      <div class="title-11">
+                                        Are you sure that you want to remove
+                                        {{ this.project?.project_name }} from
+                                        the project listings?
+                                      </div>
+                                      <div
+                                        class="d-flex align-items-center mt-2 justify-content-center"
+                                      >
+                                        <button
+                                          class="btn-yes"
+                                          type="button"
+                                          (click)="handleDeleteProject()"
+                                        >
+                                          Yes
+                                        </button>
+                                        <button
+                                          class="btn-no ml-2"
+                                          type="button"
+                                          (click)="closeConfirm()"
+                                        >
+                                          No
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row my-row2">
+                        <div
+                          class="col-md-7 col-sm-12 profile-profile-form-row"
+                        >
+                          <div
+                            class="project-profile-team-header text-color-black heading-3-400"
+                          >
+                            Project dump sites
+                          </div>
+                          <div class="row">
+                            <div
+                              class="col-md-12 col-sm-12 project-profile-col"
+                            >
+                              <div class="">
+                                <table class="table table-borderless">
+                                  <thead>
+                                    <tr class="col-md-12">
+                                      <th
+                                        class="col-md-6 project-profile-table-header"
+                                      >
+                                        <div
+                                          class="project-profile-label-container-2"
+                                        >
+                                          <div
+                                            class="heading-8-400 text-color-grey"
+                                          >
+                                            Dump site name
+                                          </div>
+                                        </div>
+                                      </th>
+                                      <th
+                                        class="col-md-6 project-profile-table-header"
+                                      >
+                                        <div
+                                          class="project-profile-label-container-2 d-flex"
+                                        >
+                                          <div
+                                            class="heading-8-400 text-color-grey"
+                                          >
+                                            Dump site address
+                                          </div>
+                                        </div>
+                                      </th>
+                                      <th
+                                        class="col-md-1 project-profile-table-header"
+                                      ></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <ng-container formArrayName="dump_sites">
+                                      <ng-container
+                                        *ngFor="
+                                          let site of dump_sites.controls;
+                                          index as idx
+                                        "
+                                      >
+                                        <div style="position: absolute">
+                                          <div
+                                            class="modal fade"
+                                            [id]="'updateDumpSiteModal' + idx"
+                                            tabindex="-1"
+                                            [attr.aria-labelledby]="
+                                              'updateDumpSiteModal' + idx
+                                            "
+                                            aria-hidden="true"
+                                            style="
+                                              position: relative;
+                                              margin-top: -60px !important;
+                                              margin-left: -5px;
+                                            "
+                                            aria-hidden="true"
+                                          >
+                                            <div
+                                              class="modal-dialog my-modal-lg margin-auto"
+                                            >
+                                              <div class="modal-content">
+                                                <div class="modal-body">
+                                                  <button
+                                                    type="button"
+                                                    (click)="
+                                                      closeDumpUpdate(idx)
+                                                    "
+                                                    class="btn-close my-modal-close my-modal-close2"
+                                                    data-dismiss="modal"
+                                                    aria-label="Close"
+                                                  ></button>
+                                                  <div
+                                                    class="heading-5-400 text-color-black mb-3"
+                                                  >
+                                                    Edit / remove dump site
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-8">
+                                                      <div
+                                                        class="row mb-2 ml-1 border"
+                                                      >
+                                                        <div
+                                                          class="col-md-6 px-0"
+                                                        >
+                                                          <div
+                                                            class="project-profile-input-container bdr-none"
+                                                          >
+                                                            <div
+                                                              class="project-profile-label-container"
+                                                            >
+                                                              <div
+                                                                class="heading-8-400 text-color-grey"
+                                                              >
+                                                                Dump site’s name
+                                                              </div>
+                                                              <div
+                                                                class="heading-4-400-semi text-color-F63333 h-15px mb-1"
+                                                              >
+                                                                *
+                                                              </div>
+                                                            </div>
+                                                            <input
+                                                              type="text"
+                                                              class="form-control project-profile-inputtt"
+                                                              #dumpSiteName
+                                                              placeholder="Type dump_site"
+                                                              [value]="
+                                                                this
+                                                                  .dump_list &&
+                                                                this.dump_list[
+                                                                  this.idx_up
+                                                                ] != '' &&
+                                                                this.dump_list[
+                                                                  this.idx_up
+                                                                ]?.dump_site !=
+                                                                  undefined
+                                                                  ? this
+                                                                      .dump_list[
+                                                                      this
+                                                                        .idx_up
+                                                                    ]?.dump_site
+                                                                  : ''
+                                                              "
+                                                              required
+                                                            />
+                                                          </div>
+                                                        </div>
+                                                        <div
+                                                          class="col-md-6 pr-0"
+                                                        >
+                                                          <div
+                                                            class="project-profile-input-container bdr-none"
+                                                          >
+                                                            <div
+                                                              class="d-flex justify-content-end align-items-center"
+                                                            >
+                                                              <div
+                                                                class="heading-8-400 text-color-grey text-right"
+                                                              >
+                                                                Dump site
+                                                                address
+                                                              </div>
+                                                              <div
+                                                                class="heading-4-400-semi text-color-F63333 h-15px ml-10px mb-1"
+                                                              >
+                                                                *
+                                                              </div>
+                                                            </div>
+                                                            <input
+                                                              type="text"
+                                                              class="form-control project-profile-inputtt dumpsite_address text-right"
+                                                              #dumpSiteAddress
+                                                              placeholder="Type location"
+                                                              [value]="
+                                                                this
+                                                                  .dump_list &&
+                                                                this.dump_list[
+                                                                  this.idx_up
+                                                                ] != '' &&
+                                                                this.dump_list[
+                                                                  this.idx_up
+                                                                ]?.location !=
+                                                                  undefined
+                                                                  ? this
+                                                                      .dump_list[
+                                                                      this
+                                                                        .idx_up
+                                                                    ]?.location
+                                                                  : ''
+                                                              "
+                                                              required
+                                                            />
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <div class="col-md-2 mt-3">
+                                                      <button
+                                                        class="btn add-newp-btn"
+                                                        type="button"
+                                                        (click)="
+                                                          updateDumpsiteNew(
+                                                            dumpSiteName.value,
+                                                            dumpSiteAddress.value,
+                                                            this.dump_list[
+                                                              this.idx_up
+                                                            ]?.id,
+                                                            idx
+                                                          )
+                                                        "
+                                                      >
+                                                        <div
+                                                          class="heading-15-400-bold text-color-black"
+                                                        >
+                                                          Update
+                                                        </div>
+                                                      </button>
+                                                    </div>
+                                                    <div class="col-md-2 mt-3">
+                                                      <button
+                                                        class="btn remove-btn"
+                                                        type="button"
+                                                        (click)="
+                                                          removeDumpsiteNew(
+                                                            this.dump_list[
+                                                              this.idx_up
+                                                            ]?.id,
+                                                            idx
+                                                          )
+                                                        "
+                                                      >
+                                                        <div
+                                                          class="heading-15-400-bold text-color-black"
+                                                        >
+                                                          Remove
+                                                        </div>
+                                                      </button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <tr
+                                          [formGroupName]="idx"
+                                          class="border-bottom border-2 bg-table-row"
+                                          (click)="showUpdateDumpsitePopup(idx)"
+                                        >
+                                          <td>
+                                            <div
+                                              class="d-flex align-items-center project-profile-input"
+                                            >
+                                              {{
+                                                this.dump_sites &&
+                                                this.dump_sites
+                                                  .at(idx)
+                                                  .get("name")?.value &&
+                                                this.dump_sites
+                                                  .at(idx)
+                                                  .get("name")?.value !=
+                                                  undefined
+                                                  ? this.dump_sites
+                                                      .at(idx)
+                                                      .get("name")?.value
+                                                  : ""
+                                              }}
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <div
+                                              class="d-flex align-items-center project-profile-input"
+                                            >
+                                              {{
+                                                this.dump_sites &&
+                                                this.dump_sites
+                                                  .at(idx)
+                                                  .get("location")?.value &&
+                                                this.dump_sites
+                                                  .at(idx)
+                                                  .get("location")?.value !=
+                                                  undefined
+                                                  ? this.dump_sites
+                                                      .at(idx)
+                                                      .get("location")?.value
+                                                  : ""
+                                              }}
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </ng-container>
+                                    </ng-container>
+
+                                    <tr>
+                                      <td>
+                                        <div style="position: absolute">
+                                          <div
+                                            class="modal fade"
+                                            id="addDumpSiteModal"
+                                            tabindex="-1"
+                                            aria-labelledby="addDumpSiteModal"
+                                            aria-hidden="true"
+                                            style="
+                                              position: relative;
+                                              margin-left: -10px !important;
+                                              margin-top: -100px !important;
+                                            "
+                                          >
+                                            <div
+                                              class="modal-dialog my-modal-lg margin-auto"
+                                            >
+                                              <div class="modal-content">
+                                                <div class="modal-body">
+                                                  <button
+                                                    type="button"
+                                                    class="btn-close my-modal-close"
+                                                    data-dismiss="modal"
+                                                    aria-label="Close"
+                                                  ></button>
+                                                  <div
+                                                    class="heading-5-400 text-color-black mb-3"
+                                                  >
+                                                    Add new dump site
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="col-md-10">
+                                                      <div
+                                                        class="row mb-2 ml-1 border"
+                                                      >
+                                                        <div
+                                                          class="col-md-6 px-0"
+                                                        >
+                                                          <div
+                                                            class="project-profile-input-container bdr-none"
+                                                          >
+                                                            <div
+                                                              class="project-profile-label-container"
+                                                            >
+                                                              <div
+                                                                class="heading-8-400 text-color-grey"
+                                                              >
+                                                                Dump site’s name
+                                                              </div>
+                                                              <div
+                                                                class="heading-4-400-semi text-color-F63333 h-15px mb-1"
+                                                              >
+                                                                *
+                                                              </div>
+                                                            </div>
+                                                            <input
+                                                              type="text"
+                                                              class="form-control project-profile-inputtt dumpsite_name"
+                                                              id="floatingInputValue"
+                                                              placeholder="Type here"
+                                                              value=""
+                                                              required
+                                                            />
+                                                          </div>
+                                                        </div>
+                                                        <div
+                                                          class="col-md-6 px-0"
+                                                        >
+                                                          <div
+                                                            class="project-profile-input-container bdr-none"
+                                                          >
+                                                            <div
+                                                              class="d-flex justify-content-end align-items-center"
+                                                            >
+                                                              <div
+                                                                class="heading-8-400 text-color-grey text-right"
+                                                              >
+                                                                Dump site
+                                                                address
+                                                              </div>
+                                                              <div
+                                                                class="heading-4-400-semi text-color-F63333 h-15px ml-10px mb-1"
+                                                              >
+                                                                *
+                                                              </div>
+                                                            </div>
+                                                            <input
+                                                              type="text"
+                                                              class="form-control project-profile-inputtt dumpsite_addresss text-right"
+                                                              id="floatingInputValue"
+                                                              placeholder="Type here"
+                                                              value=""
+                                                              required
+                                                            />
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                    <div
+                                                      class="col-md-2 mt-3"
+                                                      style="
+                                                        padding-left: 11px !important;
+                                                      "
+                                                    >
+                                                      <button
+                                                        class="btn add-newp-btn"
+                                                        type="button"
+                                                        (click)="
+                                                          addDumpsiteNew()
+                                                        "
+                                                      >
+                                                        <div
+                                                          class="heading-15-400-bold text-color-black"
+                                                        >
+                                                          Add
+                                                        </div>
+                                                      </button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div
+                                          class="heading-5-400 text-color-black"
+                                        >
+                                          <!-- data-toggle="modal" data-target="#addDumpSiteModal" -->
+                                          <div
+                                            class="d-flex align-items-center curser-pointer"
+                                          >
+                                            <button
+                                              type="button"
+                                              (click)="showNewDumpsitePopup()"
+                                              class="btn project-profile-new-dump-btn"
+                                            >
+                                              <img
+                                                src="./assets/images/project-profile-add-icon.svg"
+                                                alt="project-profile-add-icon"
+                                              />
+                                            </button>
+                                            <div
+                                              class="heading-13-400-bold text-color-88898B ml-10px"
+                                            >
+                                              Add new
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td></td>
+                                      <td>
+                                        <div
+                                          class="heading-5-400-semi text-end"
+                                        >
+                                          ...
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <!-- <div class="col-md-3 col-sm-12 align-self-center">
+                                                                <input type="hidden" formControlName="project_id" [(ngModel)]="this.project_id">
+
+                                                                <button class="btn update-project-profile-dump-btn" *ngIf="!this.loading_project_update">
+                                                                    <div class="heading-15-400-bold text-color-black">
+                                                                        Update
+                                                                    </div>
+                                                                </button>
+                                                                <button class="btn update-project-profile-dump-btn" disabled type="button" *ngIf="this.loading_project_update">
+                                                                    <div class="heading-15-400-bold text-color-black">
+                                                                        Processing..
+                                                                    </div>
+                                                                </button>
+                                                            </div> -->
+                          </div>
+                        </div>
+                        <hr class="project-profile-hr-line" />
+                      </div>
+                    </form>
+                    <div class="project-profile-team-cotainer">
+                      <div
+                        class="project-profile-team-header heading-1-400 text-color-black"
+                      >
+                        Team
+                      </div>
+                      <div class="row my-row2">
+                        <div class="col-md-7 col-sm-12">
+                          <div
+                            class="project-setting-page-table table-responsive"
+                          >
+                            <table class="table">
+                              <thead
+                                class="table-light project-setting-table-header"
+                              >
+                                <tr>
+                                  <th
+                                    scope="col"
+                                    class="project-profile-table-header"
+                                  >
+                                    <div class="heading-8-400 text-color-grey">
+                                      Name
+                                    </div>
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    class="project-profile-table-header"
+                                  >
+                                    <div class="heading-8-400 text-color-grey">
+                                      Email
+                                    </div>
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    class="project-profile-table-header"
+                                  >
+                                    <div class="heading-8-400 text-color-grey">
+                                      Phone number
+                                    </div>
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    class="project-profile-table-header"
+                                  >
+                                    <div class="heading-8-400 text-color-grey">
+                                      Role
+                                    </div>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr
+                                  class="bg-table-row curser-pointer"
+                                  *ngIf="this.project_supr_id; else Block3"
+                                  (click)="
+                                    setUserDetails2(this.loggedinUser?.id)
+                                  "
+                                >
+                                  <td class="project-profile-table-body-data">
+                                    <input
+                                      type="hidden"
+                                      value="{{ this.loggedinUser?.id }}"
+                                      formControlName="supridendent_id"
+                                    />
+
+                                    <div class="heading-5-400 text-color-black">
+                                      {{ this.project_supr_name }}
+                                    </div>
+                                  </td>
+                                  <td class="project-profile-table-body-data">
+                                    <div class="heading-5-400 text-color-black">
+                                      {{ this.project_supr_email }}
+                                    </div>
+                                  </td>
+
+                                  <td class="project-profile-table-body-data">
+                                    <div class="heading-5-400 text-color-black">
+                                      {{ this.project_supr_no }}
+                                    </div>
+                                  </td>
+                                  <td class="project-profile-table-body-data">
+                                    <div class="heading-5-400 text-color-black">
+                                      Superintendent
+                                      <span *ngIf="this.self_user">
+                                        , Approver
+                                      </span>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <ng-template #Block3>
+                                  <tr
+                                    class="bg-table-row curser-pointer"
+                                    (click)="
+                                      setUserDetails2(this.loggedinUser?.id)
+                                    "
+                                  >
+                                    <td class="project-profile-table-body-data">
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{ this.loggedinUser?.full_name }}
+                                      </div>
+                                    </td>
+                                    <td class="project-profile-table-body-data">
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{ this.loggedinUser?.email }}
+                                      </div>
+                                    </td>
+
+                                    <td class="project-profile-table-body-data">
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{ this.loggedinUser?.contact_number }}
+                                      </div>
+                                    </td>
+                                    <td class="project-profile-table-body-data">
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        Admin
+                                        <span *ngIf="this.self_user">
+                                          , Dispatcher
+                                        </span>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </ng-template>
+                                <tr
+                                  class="cursor-pointer bg-table-row"
+                                  *ngFor="
+                                    let sup of this.project_users;
+                                    index as idx
+                                  "
+                                >
+                                  <ng-container
+                                    *ngIf="
+                                      sup?.user?.id != this.loggedinUser?.id
+                                    "
+                                  >
+                                    <td
+                                      class="project-profile-table-body-data"
+                                      (click)="setUserDetails(sup)"
+                                    >
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{
+                                          sup?.user?.full_name
+                                            ? sup?.user?.full_name
+                                            : sup?.invitation?.full_name
+                                            ? sup?.invitation?.full_name
+                                            : ""
+                                        }}
+                                      </div>
+                                    </td>
+                                    <td
+                                      class="project-profile-table-body-data"
+                                      (click)="setUserDetails(sup)"
+                                    >
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{ sup?.email }}
+                                      </div>
+                                    </td>
+
+                                    <td
+                                      class="project-profile-table-body-data"
+                                      (click)="setUserDetails(sup)"
+                                    >
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{ sup?.contact_number }}
+                                      </div>
+                                    </td>
+                                    <td
+                                      class="project-profile-table-body-data"
+                                      (click)="setUserDetails(sup)"
+                                    >
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        <ng-container
+                                          *ngFor="
+                                            let role of sup?.roles;
+                                            index as idx2
+                                          "
+                                        >
+                                          <span *ngIf="idx2 > 0">, </span>
+                                          {{ role }}
+                                        </ng-container>
+                                      </div>
+                                    </td>
+                                  </ng-container>
+                                </tr>
+
+                                <tr>
+                                  <td
+                                    class="project-profile-table-body-data d-flex align-items-center"
+                                  >
+                                    <div class="mainpopupdiv position-relative">
+                                      <div
+                                        class="d-flex align-items-center openpop curser-pointer mb-2"
+                                      >
+                                        <button
+                                          class="btn project-profile-new-dump-btn"
+                                        >
+                                          <img
+                                            src="./assets/images/project-profile-add-icon.svg"
+                                            alt="project-profile-add-icon"
+                                          />
+                                        </button>
+                                        <div
+                                          class="heading-13-400-bold text-color-88898B project-profile-team-add-new-text"
+                                        >
+                                          Add new
+                                        </div>
+                                      </div>
+                                      <div class="inapp-popup">
+                                        <div
+                                          class="float-right closepop cursor-pointer"
+                                        >
+                                          <i class="fa fa-close mr-1 mt-1"></i>
+                                        </div>
+                                        <div
+                                          class="input-group border-grey mb-1"
+                                        >
+                                          <input
+                                            type="text"
+                                            class="form-control no-border"
+                                            placeholder="Search"
+                                            (input)="searchDispComp($event)"
+                                          />
+                                          <span class="input-group-addon p-1">
+                                            <img
+                                              src="./assets/images/search-icon.svg"
+                                              alt=""
+                                            />
+                                          </span>
+                                        </div>
+                                        <div>
+                                          <ng-container
+                                            *ngFor="let disp of this.users_list"
+                                          >
+                                            <div
+                                              class="heading-5-400 text-color-88898B p-1 bg-color-FDF9D9 br-5px mb-1 cursor-pointer"
+                                              *ngIf="
+                                                disp?.id != this.loggedinUser.id
+                                              "
+                                              id="{{ disp.id }}"
+                                              (click)="setDispatcherNew(disp)"
+                                            >
+                                              {{ disp.full_name }}
+                                            </div>
+                                          </ng-container>
+                                          <div
+                                            class="heading-5-400 text-color-88898B p-1 text-center border-grey mb-1"
+                                          >
+                                            Not on the list?
+                                            <span
+                                              class="text-color-F63333 curser-pointer"
+                                              [routerLink]="
+                                                '/cust-manage-users'
+                                              "
+                                              >Add to the company</span
+                                            >
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td class="project-profile-table-body-data">
+                                    <div class="heading-5-400 text-color-grey">
+                                      ...
+                                    </div>
+                                  </td>
+                                  <td class="project-profile-table-body-data">
+                                    <div class="heading-5-400 text-color-grey">
+                                      ...
+                                    </div>
+                                  </td>
+                                  <td class="project-profile-table-body-data">
+                                    <div class="heading-5-400 text-color-grey">
+                                      ...
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th
+                                    scope="col"
+                                    class="project-profile-table-header"
+                                  >
+                                    <div
+                                      class="heading-5-400-normal text-color-grey"
+                                    >
+                                      External approvers
+                                    </div>
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    class="project-profile-table-header"
+                                  ></th>
+                                  <th
+                                    scope="col"
+                                    class="project-profile-table-header"
+                                  ></th>
+                                  <th
+                                    scope="col"
+                                    class="project-profile-table-header"
+                                  ></th>
+                                </tr>
+                                <ng-container
+                                  *ngFor="
+                                    let appr of project_external_approvers
+                                  "
+                                >
+                                  <tr
+                                    class="bg-table-row"
+                                    *ngIf="
+                                      appr?.user?.id !== this.loggedinUser?.id
+                                    "
+                                  >
+                                    <td class="project-profile-table-body-data">
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{
+                                          appr.user?.full_name
+                                            ? appr.user?.full_name
+                                            : appr.invitation?.full_name
+                                        }}
+                                      </div>
+                                    </td>
+                                    <td class="project-profile-table-body-data">
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{
+                                          appr.user?.email
+                                            ? appr.user?.email
+                                            : appr.invitation?.email
+                                        }}
+                                      </div>
+                                    </td>
+                                    <td class="project-profile-table-body-data">
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{
+                                          appr.user?.contact_number
+                                            ? appr.user?.contact_number
+                                            : appr.invitation?.contact_number
+                                        }}
+                                      </div>
+                                    </td>
+                                    <td class="project-profile-table-body-data">
+                                      <div
+                                        class="heading-5-400 text-color-black"
+                                      >
+                                        {{ appr?.role?.role_name }}
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </ng-container>
+
+                                <tr>
+                                  <td
+                                    class="project-profile-table-body-data d-flex align-items-center"
+                                  >
+                                    <div class="mainpopupdiv position-relative">
+                                      <div
+                                        class="d-flex align-items-center openpop curser-pointer mb-2"
+                                      >
+                                        <button
+                                          class="btn project-profile-new-dump-btn"
+                                        >
+                                          <img
+                                            src="./assets/images/project-profile-add-icon.svg"
+                                            alt="project-profile-add-icon"
+                                          />
+                                        </button>
+                                        <div
+                                          class="heading-13-400-bold text-color-88898B project-profile-team-add-new-text"
+                                        >
+                                          Add new
+                                        </div>
+                                      </div>
+                                      <div class="inapp-popup">
+                                        <div
+                                          class="float-right closepop cursor-pointer"
+                                        >
+                                          <i class="fa fa-close mr-1 mt-1"></i>
+                                        </div>
+                                        <div
+                                          class="input-group border-grey mb-1"
+                                        >
+                                          <input
+                                            type="text"
+                                            class="form-control no-border"
+                                            placeholder="Search"
+                                            (input)="searchAppComp($event)"
+                                          />
+                                          <span class="input-group-addon p-1">
+                                            <img
+                                              src="./assets/images/search-icon.svg"
+                                              alt=""
+                                            />
+                                          </span>
+                                        </div>
+                                        <div>
+                                          <ng-container
+                                            *ngFor="let appr of this.users_list"
+                                          >
+                                            <div
+                                              class="{{
+                                                checkAvailable(appr)
+                                                  ? 'heading-5-400 text-color-88898B p-1 bg-color-FDF9D9 br-5px mb-1 cursor-pointer'
+                                                  : 'heading-5-400 text-color-88898B  p-1 br-5px mb-1 cursor-pointer disabled-approver-container'
+                                              }}"
+                                              *ngIf="
+                                                appr?.id !=
+                                                  this.loggedinUser.id &&
+                                                appr?.role_id == '2'
+                                              "
+                                              id="{{ appr.id }}"
+                                              (click)="
+                                                checkAvailable(appr) &&
+                                                  setApproverNew(appr)
+                                              "
+                                            >
+                                              {{ appr.full_name }}
+                                            </div>
+                                          </ng-container>
+                                          <div
+                                            class="heading-5-400 text-color-88898B p-1 text-center border-grey d-none"
+                                          >
+                                            Not on the list?
+                                            <span
+                                              class="text-color-F63333 cursor-pointer"
+                                              [routerLink]="
+                                                '/cust-manage-users'
+                                              "
+                                              >Add to the company</span
+                                            >
+                                          </div>
+                                          <div
+                                            class="heading-5-400 text-color-88898B p-1 text-center border-grey"
+                                          >
+                                            Not in the company?
+                                            <span
+                                              class="text-color-F63333 cursor-pointer"
+                                              [routerLink]="
+                                                '/cust-manage-users'
+                                              "
+                                              >Invite as approver</span
+                                            >
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td
+                                    class="project-profile-table-body-data"
+                                  ></td>
+                                  <td
+                                    class="project-profile-table-body-data"
+                                  ></td>
+                                  <td
+                                    class="project-profile-table-body-data"
+                                  ></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="project-profile-hr-line-2" />
+                    <app-set-truck-rates></app-set-truck-rates>
+                  </div>
+                </div>
+                <ng-template #elseBlock>
+                  <div class="row">
+                    <div class="col-md-12 text-align-center">
+                      <div class="heading-5-400 text-color-black">
+                        <!-- Project Data Not Found -->
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+            <div
+              id="project_tracker"
+              class="tab-pane fade  {{
+                isActive('project_tracker') ? 'show active' : '  show'
+              }}"
+            >
+              <app-customer-project-tracker
+                [project]="this.project"
+                [project_id]="this.project?.id"
+              ></app-customer-project-tracker>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<!--Modal User Info-->
+<div
+  class="modal fade rightModal"
+  id="userInfoModal"
+  tabindex="-1"
+  aria-labelledby="userInfoModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog my-modal-lg modal-dialog-slideout">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <div class="heading-5-400-semi text-color-68696D mb-2">
+              <ng-container
+                *ngFor="
+                  let role of this.user_details_info?.roles;
+                  index as index
+                "
+              >
+                <span *ngIf="index > 1">,</span> {{ role }}
+              </ng-container>
+            </div>
+            <div class="heading-3-400 text-color-black">
+              {{
+                this.user_details_info?.user?.full_name
+                  ? this.user_details_info?.user?.full_name
+                  : this.user_details_info?.invitation?.full_name
+                  ? this.user_details_info?.invitation?.full_name
+                  : ""
+              }}
+            </div>
+          </div>
+          <div>
+            <button class="btn update-project-profile-dump-btn">
+              <div class="heading-15-400-bold text-color-black no-wrap">
+                Since
+                <ng-container
+                  *ngIf="
+                    this.user_details_info?.user?.created_at;
+                    else elseblockdate
+                  "
+                >
+                  {{
+                    this.user_details_info?.user?.created_at | date : "MMMM d"
+                  }}
+                </ng-container>
+                <ng-template #elseblockdate>
+                  {{ this.user_details_info?.created_at | date : "MMMM d" }}
+                </ng-template>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div class="border-grey p-1 pl-2 pr-2 mb-3">
+          <div class="row mb-2">
+            <div class="col-md-6 mb-1">
+              <div class="d-flex justify-content-between">
+                <div class="heading-8-400 text-color-68696D pl-5px">
+                  Phone number
+                </div>
+                <div
+                  class="heading-4-400-semi text-color-F63333 h-15px ml-10px mb-1"
+                >
+                  *
+                </div>
+              </div>
+              <div class="position-relative">
+                <input
+                  type="text"
+                  id="to_update_user_phone"
+                  class="form-control"
+                  [readonly]="
+                    this.user_details_info?.user_id == this.loggedinUser?.id
+                  "
+                  placeholder="(778) 983 0902"
+                  id="user_update_phone"
+                  (input)="changeNumber($event)"
+                  value="{{
+                    this.user_details_info?.contact_number
+                      ? this.user_details_info?.contact_number
+                      : this.user_details_info?.user?.contact_number
+                  }}"
+                />
+                <img
+                  src="./assets/images/pencile-icon.svg"
+                  alt=""
+                  class="input_icon"
+                />
+              </div>
+            </div>
+            <div class="col-md-6 mb-1">
+              <div class="d-flex justify-content-between">
+                <div
+                  class="heading-4-400-semi text-color-F63333 h-15px ml-10px mb-1"
+                >
+                  *
+                </div>
+                <div class="heading-8-400 text-color-68696D pr-5px">
+                  Email address
+                </div>
+              </div>
+              <div class="position-relative">
+                <input
+                  type="email"
+                  class="form-control text-right"
+                  placeholder="Jdeere@gmail.com"
+                  [readonly]="
+                    this.user_details_info?.user_id == this.loggedinUser?.id
+                  "
+                  id="user_update_email"
+                  value="{{ this.user_details_info?.email }}"
+                />
+                <img
+                  src="./assets/images/pencile-icon.svg"
+                  alt=""
+                  class="input_icon2"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-5" align="center">
+              <img src="./assets/images/user-profile.svg" alt="" />
+            </div>
+            <div class="col-md-7">
+              <div class="row mb-3">
+                <div class="col-6">
+                  <div class="heading-8-400 text-right">Role</div>
+                </div>
+                <div class="col-3">
+                  <div class="heading-8-400 text-center">Set</div>
+                </div>
+                <div class="col-3">
+                  <!-- <div class="heading-8-400 text-center">Default</div> -->
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-6">
+                  <div class="heading-8-400 text-right mt-1">Approver</div>
+                </div>
+                <div class="col-3">
+                  <div class="d-flex justify-content-center">
+                    <label class="mycheckbox">
+                      <input
+                        type="checkbox"
+                        name="roles[]"
+                        [checked]="this.is_approver_selected"
+                        (change)="roleChecked($event)"
+                        value="Approver"
+                        [disabled]="
+                          this.user_details_info?.user_id ==
+                          this.loggedinUser?.id
+                        "
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <!-- <div class="d-flex justify-content-center">
+                                        <label class="mycheckbox">
+                                            <input type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div> -->
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-6">
+                  <div class="heading-8-400 text-right mt-1">Dispatcher</div>
+                </div>
+                <div class="col-3">
+                  <div class="d-flex justify-content-center">
+                    <label class="mycheckbox">
+                      <input
+                        type="checkbox"
+                        name="roles[]"
+                        value="Dispatcher"
+                        [checked]="this.is_dispatcher_selected"
+                        (change)="roleChecked($event)"
+                        [disabled]="
+                          this.user_details_info?.user_id ==
+                          this.loggedinUser?.id
+                        "
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-1">
+                <div class="col-6">
+                  <div class="heading-8-400 text-right mt-1">
+                    Superintendent
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="d-flex justify-content-center">
+                    <label class="mycheckbox">
+                      <input
+                        type="checkbox"
+                        name="roles[]"
+                        value="Superintendent"
+                        [checked]="this.is_superintendent_selected"
+                        (change)="roleChecked($event)"
+                        [disabled]="
+                          this.user_details_info?.user_id ==
+                          this.loggedinUser?.id
+                        "
+                      />
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="heading-3-400 text-color-black text-center mb-4">
+          Ticket{{ this.user_details_info?.user?.full_name }} works on
+        </div>
+        <div class="d-flex justify-content-center mb-2">
+          <div class="">
+            <div
+              class="heading-5-400 text-color-black bg-color-D9D9D9 br-5px cp-3 pl-12px"
+            >
+              Pending
+            </div>
+          </div>
+          <div class="">
+            <div
+              class="heading-5-400 text-color-black border-grey w-50px p-1 text-center"
+              *ngIf="this.user_details_info?.user_id != this.loggedinUser?.id"
+            >
+              {{
+                this.user_details_info?.tickets_counts?.pending_count
+                  ? this.user_details_info?.tickets_counts?.pending_count
+                  : 0
+              }}
+            </div>
+
+            <div
+              class="heading-5-400 text-color-black border-grey w-50px p-1 text-center"
+              *ngIf="this.user_details_info?.user_id == this.loggedinUser?.id"
+            >
+              {{
+                this.project?.user_tickets_counts?.pending_count
+                  ? this.project?.user_tickets_counts?.pending_count
+                  : 0
+              }}
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-2">
+          <div class="">
+            <div
+              class="heading-5-400 text-color-black bg-color-FFF8B8 br-5px cp-3 pl-12px"
+            >
+              Accepted
+            </div>
+          </div>
+          <div class="">
+            <div
+              class="heading-5-400 text-color-black border-grey w-50px p-1 text-center"
+              *ngIf="this.user_details_info?.user_id != this.loggedinUser?.id"
+            >
+              {{
+                this.user_details_info?.tickets_counts?.accepted_count
+                  ? this.user_details_info?.tickets_counts?.accepted_count
+                  : 0
+              }}
+            </div>
+            <div
+              class="heading-5-400 text-color-black border-grey w-50px p-1 text-center"
+              *ngIf="this.user_details_info?.user_id == this.loggedinUser?.id"
+            >
+              {{
+                this.project?.user_tickets_counts?.accepted_count
+                  ? this.project?.user_tickets_counts?.accepted_count
+                  : 0
+              }}
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-2">
+          <div class="">
+            <div
+              class="heading-5-400 text-white bg-color-F4BE1B br-5px cp-3 pl-12px"
+            >
+              Driving
+            </div>
+          </div>
+          <div class="">
+            <div
+              class="heading-5-400 text-color-black border-grey w-50px p-1 text-center"
+              *ngIf="this.user_details_info?.user_id != this.loggedinUser?.id"
+            >
+              {{
+                this.user_details_info?.tickets_counts?.in_progress_count
+                  ? this.user_details_info?.tickets_counts?.in_progress_count
+                  : 0
+              }}
+            </div>
+            <div
+              class="heading-5-400 text-color-black border-grey w-50px p-1 text-center"
+              *ngIf="this.user_details_info?.user_id == this.loggedinUser?.id"
+            >
+              {{
+                this.project?.user_tickets_counts?.in_progress_count
+                  ? this.project?.user_tickets_counts?.in_progress_count
+                  : 0
+              }}
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mb-5">
+          <div class="">
+            <div
+              class="heading-5-400 text-white bg-color-33D1A2 br-5px cp-3 pl-12px"
+            >
+              Completed
+            </div>
+          </div>
+          <div class="">
+            <div
+              class="heading-5-400 text-color-black border-grey w-50px p-1 text-center"
+              *ngIf="this.user_details_info?.user_id != this.loggedinUser?.id"
+            >
+              {{
+                this.user_details_info?.tickets_counts?.completed_count
+                  ? this.user_details_info?.tickets_counts?.completed_count
+                  : 0
+              }}
+            </div>
+            <div
+              class="heading-5-400 text-color-black border-grey w-50px p-1 text-center"
+              *ngIf="this.user_details_info?.user_id == this.loggedinUser?.id"
+            >
+              {{
+                this.project?.user_tickets_counts?.completed_count
+                  ? this.project?.user_tickets_counts?.completed_count
+                  : 0
+              }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="d-flex justify-content-center"
+          *ngIf="this.user_details_info?.user?.id != this.loggedinUser?.id"
+        >
+          <div
+            class="cp-4 heading-5-400 text-center bg-color-FFF8B8 br-5px box-shadow mr-20px cursor-pointer"
+            (click)="updateProjectUser(this.user_details_info)"
+            *ngIf="!loading_project_user"
+          >
+            Update
+          </div>
+          <div
+            class="cp-4 heading-5-400 text-center bg-color-FFF8B8 br-5px box-shadow mr-20px"
+            disabled
+            *ngIf="loading_project_user"
+          >
+            Processing..
+          </div>
+          <div class="mainpopupdiv position-relative">
+            <div
+              class="cp-4 heading-5-400 text-center border-FFF8B8 br-5px box-shadow openpop curser-pointer"
+            >
+              Remove
+            </div>
+            <div class="inapp-popup">
+              <div class="heading-5-400-semi text-color-black text-center mb-3">
+                Are you sure that you want to remove
+                {{ this.user_details_info?.user?.full_name }} from the project?
+              </div>
+              <div class="d-flex justify-content-center">
+                <div
+                  class="cp-4 heading-5-400 text-center bg-color-FFF8B8 br-5px box-shadow mr-20px"
+                  (click)="removeProjectUser(this.user_details_info)"
+                >
+                  Yes
+                </div>
+                <div
+                  class="cp-4 heading-5-400 text-center border-FFF8B8 br-5px box-shadow openpop curser-pointer"
+                >
+                  No
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade come-from-modal right"
+  style="display: none; padding-right: 17px"
+  id="addusers33"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog max-width-50px" role="document">
+    <div class="modal-content border-15px">
+      <div class="modal-body p-25px">
+        <div class="d-flex justify-content-between mt-25px">
+          <div>
+            <div class="invite-people-to">Add new user ‍</div>
+            <div class="title-0">User details</div>
+          </div>
+        </div>
+        <form class="mt-25px">
+          <label class="field text-field">
+            <input class="field__input" placeholder="Danyal" value="" />
+
+            <span class="field__label-wrap">
+              <span class="field__label">Full name</span>
+            </span>
+          </label>
+
+          <label class="field text-field">
+            <input
+              class="field__input"
+              placeholder="example@mail.com"
+              type="email"
+            />
+            <span class="field__label-wrap">
+              <span class="field__label">Email</span>
+            </span>
+          </label>
+
+          <label class="field text-field">
+            <input class="field__input" placeholder="+1" value="+1" />
+            <span class="field__label-wrap">
+              <span class="field__label">Comtact number</span>
+            </span>
+          </label>
+
+          <label class="field text-field">
+            <select class="field__input icon-none">
+              <option value="3">Admin</option>
+              <option value="2">Approver</option>
+              <option value="4">Dispatcher</option>
+              <option value="5">Superintendent</option>
+            </select>
+            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+            <span class="field__label-wrap">
+              <span class="field__label">User role</span>
+            </span>
+          </label>
+
+          <div class="row m-0 mt-25px">
+            <div class="col-md-5 padding-left-0">
+              <button class="btn-back goto-dashboard-setup-1 mybtn-back">
+                Back
+              </button>
+            </div>
+            <div class="col-md-7 padding-right-0">
+              <button class="mybtn mybtn-back-yellow mybtn-width" type="submit">
+                Add User
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

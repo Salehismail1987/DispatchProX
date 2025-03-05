@@ -1,0 +1,8 @@
+@import url('../../../../../assets/css/invoicepdf-style.css');
+@media print {
+   
+    .invoice-img{
+        height: 41px !important;
+        border-radius: 5px  !important;
+    }
+}

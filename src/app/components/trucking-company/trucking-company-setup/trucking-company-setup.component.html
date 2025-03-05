@@ -1,0 +1,535 @@
+<div class="alldivs dashboard-setups-div">
+    <div class="fadeMe dashbord-fademe " *ngIf="current_step !=''"></div>
+    <div class="row m-0">
+        <div class="col-md-5">
+            <div class="setup-sidebar">
+                <div class="header-logo"><img class="logo-shadow" src="assets/images/logo.png"></div>
+                <div class="setup-sidebar-content">
+                    <div class="welcome-back-text">Glad to have you onboard</div>
+                    <br>
+                    <div class="lets-setup">Let’s setup</div>
+                    <br>
+                    <div class="keepmelogin">Steps to make your company running.</div>
+                    <br>
+                    <div class="keepmelogin">Add details about:</div>
+                    <br>
+                    <div>
+                        <div class="single-instruction">
+                            <i class="fa fa-circle"></i>
+                            <div class="instructions-text">Add drivers</div>
+                        </div>
+                        <div class="single-instruction">
+                            <i class="fa fa-circle"></i>
+                            <div class="instructions-text">Add truck listings</div>
+                        </div>
+                        <div class="single-instruction">
+                            <i class="fa fa-circle"></i>
+                            <div class="instructions-text">Add new users and define their roles</div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="mybtn mybtn-back-pink "  (click)="backLink('/dashboard')"> Continue to Dashboard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 display-table  dashboard-setup-1" *ngIf="current_step==''">
+            <div class="vertical-middle">
+                <div class="setup-steps goto-invitetruking" (click)="goToStep('invitetruking')">
+                    <div class="d-flex">
+                        <div class="setup-step-icon-div">
+                            <img src="assets/icons/send.svg">
+                        </div>
+                        <div class="setup-step-content">
+                            <div class="step-type-title">Invite trucking company</div>
+                            <div class="step-type-desc">Trucking companies to dispatch</div>
+                        </div>
+                    </div>
+                    <img src="assets/icons/arrow-right.svg">
+                </div>
+                <div class="setup-steps goto-drivers" (click)="goToStep('drivers')">
+                    <div class="d-flex">
+                        <div class="setup-step-icon-div">
+                            <img src="assets/icons/driver.svg">
+                        </div>
+                        <div class="setup-step-content">
+                            <div class="step-type-title">Drivers</div>
+                            <div class="step-type-desc">Add new driver listings</div>
+                        </div>
+                    </div>
+                    <img src="assets/icons/arrow-right.svg">
+                </div>
+                <div class="setup-steps goto-truck-listing" (click)="goToStep('truck-listing')">
+                    <div class="d-flex">
+                        <div class="setup-step-icon-div">
+                            <img src="assets/icons/truck-icon.svg">
+                        </div>
+                        <div class="setup-step-content">
+                            <div class="step-type-title">Truck</div>
+                            <div class="step-type-desc">Add new truck listings</div>
+                        </div>
+                    </div>
+                    <img src="assets/icons/arrow-right.svg">
+                </div>
+                <div class="setup-steps goto-user-details" (click)="goToStep('user-details')">
+                    <div class="d-flex">
+                        <div class="setup-step-icon-div">
+                            <img src="assets/icons/user-plus.svg">
+                        </div>
+                        <div class="setup-step-content">
+                            <div class="step-type-title">User</div>
+                            <div class="step-type-desc">Add new user listings</div>
+                        </div>
+                    </div>
+                    <img src="assets/icons/arrow-right.svg">
+                </div>
+            </div>
+        </div>
+
+       <div class="col-md-7 display-table setup-show-content dashboard-setups dashboard-setup-invitetruking" *ngIf="current_step == 'invitetruking'">
+            <div class="vertical-middle padding-50px">
+                <div class="row">
+                    <div class="col-lg-2">
+                    </div>
+                    <div class="col-lg-8">
+                        <img src="assets/icons/truck.gif" class="img-responsive">
+                        <br>
+                        <br>
+                        <div class="welcome-back-text">Invite people to</div>
+                            <div class="setup-title">tragget <img src="assets/icons/question-mark.svg" class="ml-2" /></div>
+
+                            <form [formGroup]="inviteTCForm" (ngSubmit)="onInviteTC()" enctype="multipart/form-data">
+                                <div class="row m-0">
+                                    <div class="col-md-6 padding-left-0">
+                                        <span *ngIf="inviteTCfull_nameError != ''" class="text-danger">{{
+                                            inviteTCfull_nameError
+                                        }}</span>
+                                        <label class="field text-field">
+                                            <input class="field__input" placeholder="Danyal" value="" formControlName="full_name">
+                                            <i class="fa fa-refresh input-icon-right" aria-hidden="true"></i>
+                                            <span class="field__label-wrap">
+                                            <span class="field__label">Full name</span>
+                                            </span>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+                                <span *ngIf="inviteTCEmailError != ''" class="text-danger">{{
+                                    inviteTCEmailError
+                                }}</span>
+                                <label class="field text-field">
+                                    <input class="field__input"  type="email" placeholder="example@mail.com" formControlName="email">
+                                    <span class="field__label-wrap">
+                                    <span class="field__label">Email</span>
+                                    </span>
+                                </label>
+                                <br>
+                                <br>
+                                <div class="row m-0">
+                                    <div class="col-md-5 padding-left-0">
+                                        <button class="btn-back goto-dashboard-setup-1" (click)="goToStep('')">Back</button>
+                                    </div>
+                                    <div class="col-md-7 padding-right-0">
+                                        <button class="mybtn mybtn-back-pink " type="submit" *ngIf="!is_tc_loading">Send invite</button>
+                                        <button class="mybtn mybtn-back-pink " type="submit" *ngIf="is_tc_loading" disabled >Processing..</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7 display-table setup-show-content dashboard-setups dashboard-setup-drivers" *ngIf="current_step == 'drivers'">
+            <div class="vertical-middle padding-50px">
+                <div class="row">
+                    <div class="col-lg-2">
+                    </div>
+                    <div class="col-lg-8">
+                        <br>
+                        <div class="welcome-back-text">Add new</div>
+                        <div class="setup-title">Driver/Employee details</div>
+                        <form [formGroup]="inviteDriverForm" (ngSubmit)="onInviteDriver()" enctype="multipart/form-data">
+
+                            <div class="uplodfile-div d-flex">
+                                <div class="uplodfile-icon-div" (click)="logoFileInput.click()">
+                                    <img src="assets/icons/truck-ico.svg" >
+                                </div>
+                                <div class="uplodfile-content">
+                                    <div>Upload<br>your photo</div>
+
+                                    <input id="logo-file-input" hidden type="file" [multiple]="false" [accept]="'image/jpeg, image/png'" (change)="uploadimage($event)" #logoFileInput formControlName="profile_image">
+                                </div>
+                                <div class="uplodfile-content">
+                                    <span>{{driverImage?.name}}</span>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row m-0">
+                                <div class="col-md-6 padding-left-0">
+                                    <span *ngIf="driverfull_nameError != ''" class="text-danger">{{
+                                        driverfull_nameError
+                                    }}</span>
+                                    <label class="field text-field">
+                                <input class="field__input" placeholder="Scott" value="" formControlName="full_name">
+                                <span class="field__label-wrap">
+                                <span class="field__label">Full name</span>
+                                </span>
+                            </label>
+                                </div>
+
+                            </div>
+                            <span *ngIf="driverEmailError != ''" class="text-danger">{{
+                                driverEmailError
+                            }}</span>
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="example@mail.com" type="email" formControlName="email">
+                                <span class="field__label-wrap">
+                                <span class="field__label">Email</span>
+                                </span>
+                            </label>
+                            <span *ngIf="driverContactNumberError != ''" class="text-danger">{{
+                                driverContactNumberError
+                            }}</span>
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="+1123456789" value="" formControlName="contact_number">
+                                <span class="field__label-wrap">
+                                <span class="field__label">Comtact number</span>
+                                </span>
+                            </label>
+                            <br>
+                            <br>
+                            <div class="row m-0">
+                                <div class="col-md-5 padding-left-0">
+                                    <button class="btn-back goto-dashboard-setup-1" (click)="goToStep('')">Back</button>
+                                </div>
+                                <div class="col-md-7 padding-right-0">
+                                    <button class="mybtn mybtn-back-pink " type="submit" *ngIf="!is_driver_loading" >Add Driver</button>
+
+                                    <button class="mybtn mybtn-back-pink " type="submit" *ngIf="is_driver_loading" disabled >Processing..</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 display-table setup-show-content dashboard-setups dashboard-setup-truck-listing" *ngIf="current_step == 'truck-listing' || current_step == 'trailer-listing'">
+            <div class="vertical-middle padding-50px">
+                <div class="row">
+                    <div class="col-lg-2">
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="welcome-back-text">Add new truck </div>
+                        <div class="setup-title">Truck details</div>
+                        <div class="welcome-back-text">You are adding:</div>
+                        <div class="row m-0">
+                            <div class="col-md-6 padding-left-0">
+                                <div class="your-adding bg-yellow goto-truck-listing" (click)="goToStep('truck-listing')">
+                                    Truck
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-right-0">
+                                <div class="your-adding goto-trailer-listing" (click)="goToStep('trailer-listing')">
+                                    Trailer
+                                </div>
+                            </div>
+                        </div>
+                        <form [formGroup]="truckForm" (ngSubmit)="onSaveTruck()">
+                            <div class="row m-0">
+                                <div class="col-md-6 padding-left-0">
+                                    <span *ngIf="truckIDError != ''" class="text-danger">{{
+                                        truckIDError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" formControlName="truck_id" placeholder="0921" value="">
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Truck ID</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 padding-right-0">
+                                    <span *ngIf="truckLicensePlateError != ''" class="text-danger">{{
+                                        truckLicensePlateError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" placeholder="RDX-12-9019" value="" formControlName="truck_license_plate">
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Truck license plate</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <span *ngIf="truckTypeError != ''" class="text-danger">{{
+                                truckTypeError
+                            }}</span>
+                            <label class="field text-field">
+                                <select class="field__input" formControlName="truck_type">
+                                    <option>3 axle / 4 axle</option>
+                                </select>
+                                <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                <span class="field__label">Truck type</span>
+                                </span>
+                            </label>
+                            <br>
+                            <div class="row m-0">
+                                <div class="col-md-6 padding-left-0">
+                                    <span *ngIf="truckColorError != ''" class="text-danger">{{
+                                        truckColorError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <select class="field__input" formControlName="truck_color">
+                                            <option>White</option>
+                                        </select>
+                                        <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Truck color</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 padding-right-0">
+
+                                    <span *ngIf="truckNicknameError != ''" class="text-danger">{{
+                                        truckNicknameError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" placeholder="RDX-12-9019" value="" formControlName="truck_nickname">
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Truck Nickname</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <span *ngIf="truckWeightCapacityError != ''" class="text-danger">{{
+                                truckWeightCapacityError
+                            }}</span>
+                            <span *ngIf="truckWeightCapacityUnitError != ''" class="text-danger">{{
+                                truckWeightCapacityUnitError
+                            }}</span>
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="10" value="" formControlName="weight_capacity">
+                                <select class="selectlist-addon" formControlName="weight_capacity_unit">
+                                    <option>ton</option>
+                                </select>
+                                <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                <span class="field__label">Truck capacity in weight</span>
+                                </span>
+                            </label>
+                            <br>
+                            <span *ngIf="truckVolumeCapacityError != ''" class="text-danger">{{
+                                truckVolumeCapacityError
+                            }}</span>
+                            <span *ngIf="truckVolumeCapacityUnitError != ''" class="text-danger">{{
+                                truckVolumeCapacityUnitError
+                            }}</span>
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="120" value="" formControlName="volume_capacity">
+                                <select class="selectlist-addon" formControlName="volume_capacity_unit">
+                                    <option>m2</option>
+                                </select>
+                                <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                <span class="field__label">Truck capacity in volume</span>
+                                </span>
+                            </label>
+                            <br>
+                            <br>
+                            <div class="row m-0">
+                                <div class="col-md-5 padding-left-0">
+                                    <button class="btn-back goto-dashboard-setup-1" (click)="goToStep('')">Back</button>
+                                </div>
+                                <div class="col-md-7 padding-right-0">
+                                    <button class="mybtn mybtn-back-pink " type="submit" *ngIf="!is_truck_loading" >Add Truck</button>
+                                    <button class="mybtn mybtn-back-pink " type="submit" *ngIf="is_truck_loading" disabled >Processing..</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 display-table setup-show-content dashboard-setups dashboard-setup-trailer-listing"  *ngIf="current_step == 'trailer-listing'">
+            <div class="vertical-middle  padding-50px">
+                <div class="row">
+                    <div class="col-lg-2">
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="welcome-back-text">Add new trailer </div>
+                        <div class="setup-title">Trailer details</div>
+                        <div class="welcome-back-text">You are adding:</div>
+                        <div class="row m-0">
+                            <div class="col-md-6 padding-left-0">
+                                <div class="your-adding goto-truck-listing" (click)="goToStep('truck-listing')">
+                                    Truck
+                                </div>
+                            </div>
+                            <div class="col-md-6 padding-right-0">
+                                <div class="your-adding  bg-yellow goto-trailer-listing" (click)="goToStep('trailer-listing')">
+                                    Trailer
+                                </div>
+                            </div>
+                        </div>
+                        <form [formGroup]="trailerForm" (ngSubmit)="onSaveTrailer()">
+                            <div class="row m-0">
+                                <div class="col-md-6 padding-left-0">
+                                    <span *ngIf="trailerLicensePlateError != ''" class="text-danger">{{
+                                        trailerLicensePlateError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" placeholder="0921" value="" formControlName="trailer_id">
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Trailer ID</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-6 padding-right-0">
+                                    <span *ngIf="trailerLicensePlateError != ''" class="text-danger">{{
+                                        trailerLicensePlateError
+                                    }}</span>
+                                    <label class="field text-field">
+                                        <input class="field__input" placeholder="RDX-12-9019" value="" formControlName="trailer_license_plate">
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Trailer license plate</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <span *ngIf="trailerTypeError != ''" class="text-danger">{{
+                                trailerTypeError
+                            }}</span>
+                            <label class="field text-field">
+                                <select class="field__input" formControlName="trailer_type">
+                                    <option>3 axle / 4 axle</option>
+                                </select>
+                                <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                <span class="field__label">Trailer type</span>
+                                </span>
+                            </label>
+                            <br>
+                            <span *ngIf="trailerWeightCapacityError != ''" class="text-danger">{{
+                                trailerWeightCapacityError
+                            }}</span>
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="10" value="" formControlName="weight_capacity">
+                                <select class="selectlist-addon" formControlName="weight_capacity_unit">
+                                    <option>ton</option>
+                                </select>
+                                <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                <span class="field__label">Trailer capacity in weight</span>
+                                </span>
+                            </label>
+                            <br>
+                            <span *ngIf="trailerVolumeCapacityError != ''" class="text-danger">{{
+                                trailerVolumeCapacityError
+                            }}</span>
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="120" value="" formControlName="volume_capacity">
+                                <select class="selectlist-addon" formControlName="volume_capacity_unit">
+                                    <option>m2</option>
+                                </select>
+                                <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                <span class="field__label">Trailer capacity in volume</span>
+                                </span>
+                            </label>
+                            <br>
+                            <br>
+                            <div class="row m-0">
+                                <div class="col-md-5 padding-left-0">
+                                    <button class="btn-back goto-dashboard-setup-1" (click)="goToStep('')">Back</button>
+                                </div>
+                                <div class="col-md-7 padding-right-0">
+                                    <button class="mybtn mybtn-back-pink " type="submit" *ngIf="!is_trailer_loading" >Add Trailer</button>
+                                    <button class="mybtn mybtn-back-pink " type="submit" *ngIf="is_trailer_loading" disabled >Processing..</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 display-table setup-show-content dashboard-setups dashboard-setup-user-detail" *ngIf="current_step == 'user-details'">
+            <div class="vertical-middle  padding-50px">
+                <div class="row">
+                    <div class="col-lg-2">
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="welcome-back-text">Add new User</div>
+                        <div class="setup-title">User details</div>
+
+                        <form [formGroup]="addUserForm" (ngSubmit)="onSaveUser()">
+                            <div class="row m-0">
+                                <div class="col-md-6 padding-left-0">
+                                    <span *ngIf="userfull_nameError != ''" class="text-danger">{{
+                                        userfull_nameError
+                                    }}</span>
+                                    <label class="field text-field">
+                                <input class="field__input" placeholder="Danyal" value="" formControlName="full_name">
+                                <i class="fa fa-refresh input-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                <span class="field__label">Full name</span>
+                                </span>
+                            </label>
+                                </div>
+
+                            </div>
+                            <span *ngIf="userEmailError != ''" class="text-danger">{{
+                                userEmailError
+                            }}</span>
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="example@mail.com" type="email" formControlName="email">
+                                <span class="field__label-wrap">
+                                <span class="field__label">Email</span>
+                                </span>
+                            </label>
+                            <span *ngIf="userContactNumberError != ''" class="text-danger">{{
+                                userContactNumberError
+                            }}</span>
+                            <label class="field text-field">
+                                <input class="field__input" placeholder="+1123456789" value="" formControlName="contact_number">
+                                <span class="field__label-wrap">
+                                <span class="field__label">Comtact number</span>
+                                </span>
+                            </label>
+                            <span *ngIf="userRoleIDError != ''" class="text-danger">{{
+                                userRoleIDError
+                            }}</span>
+                            <label class="field text-field">
+                                <select class="field__input" formControlName="role_id">
+                                    <option value="1">Bookkeeper</option>
+                                </select>
+                                <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                <span class="field__label">User role</span>
+                                </span>
+                            </label>
+                            <br>
+                            <br>
+                            <div class="row m-0">
+                                <div class="col-md-5 padding-left-0">
+                                    <button class="btn-back goto-dashboard-setup-1" (click)="goToStep('')">Back</button>
+                                </div>
+                                <div class="col-md-7 padding-right-0">
+                                    <button class="mybtn mybtn-back-pink " type="submit"  *ngIf="!is_user_loading">Add User</button>
+                                    <button class="mybtn mybtn-back-pink " type="submit" *ngIf="is_user_loading" disabled >Processing..</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

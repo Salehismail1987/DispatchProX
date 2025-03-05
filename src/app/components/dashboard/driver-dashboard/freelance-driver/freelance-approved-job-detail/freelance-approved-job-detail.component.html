@@ -1,0 +1,443 @@
+<app-dashboard-top-header-driver *ngIf="!this.from_list" [is_dashboard]="false" [header_text]="'Closed ticket'"></app-dashboard-top-header-driver>
+<div class="ticket-div" *ngIf="!loading_details && (!this.ticket_detail || !this.ticket_detail?.id)">
+    <div class="d-flex justify-content-center mb-23" *ngIf="!this.from_list">
+        Tickets details not found
+    </div>
+</div>
+
+<div class="ticket-div" *ngIf="loading_details && (!this.ticket_detail || !this.ticket_detail?.id)">
+    <div class="d-flex justify-content-center mb-23" *ngIf="!this.from_list">
+       <h4>
+        Fetching details...
+       </h4>
+    </div>
+</div>
+<div class="" *ngIf="this.ticket_detail && this.ticket_detail?.id">
+    <div class="d-flex justify-content-center border-div mb-23">
+        <div class="title-72">Ticket ID</div>
+        <div class="title-82 ml-7">{{this.ticket_detail?.ticket_no}}</div>
+    </div>
+    <ul
+    style="margin-left: 1px; padding-left: 15px"
+    class="nav d-flex align-items-center justify-content-center nav-tabs justify-content-between ticket-tabs mb-36"
+  >
+    <li
+      class=" btn-details {{
+        this.active_tab == 'ticket-detail' ? 'active' : ''
+      }}"
+    >
+      <a
+        data-toggle="tab"
+        href="#ticketdetails"
+        (click)="setActiveTab('ticket-detail')"
+      >
+        <img
+          src="../assets/driver-images-mobile/confirmation_number.svg"
+          alt=""
+        />
+        <div class="ml-17 font-size-18 font-semibold text-black">
+          Ticket details
+        </div>
+      </a>
+    </li>
+    <li
+      class="btn-details {{
+        this.active_tab == 'rounds-detail' ? 'active' : ''
+      }}"
+      style="margin-right: 0.5rem"
+    >
+      <a
+        data-toggle="tab"
+        href="#jobdetails"
+        (click)="setActiveTab('rounds-detail')"
+      >
+        <img src="../assets/driver-images-mobile/restart_alt.svg" alt="" />
+        <div class="ml-17 font-size-18 font-semibold text-black">
+          Job details
+        </div>
+      </a>
+    </li>
+  </ul>
+
+
+    <div class="tab-content">
+        <div id="ticketdetails" class="tab-pane fade show  {{this.active_tab=='ticket-detail'? 'in active':''}}">
+            <div class="">
+                                
+                <div class="ticket-datetime mb-14 bg-blue text-white">Job approved {{this.ticket_detail?.approved_at | date:'h:mm a'}}</div>
+                <div class="title-9 text-center mb-10">Job</div>
+                <div class="border-div">
+                    <div class="title-7 text-center text-black-shade3">
+                        Construction site - Project - Job number</div>
+                    <div class="title-5 text-center mb-24 text-black-shade3">
+                        {{this.ticket_detail?.construction_company?.company_name}} - {{this.ticket_detail?.project?.project_name}} - {{this.ticket_detail?.project?.job_number}}
+                    </div>
+                    <div class="myhr"></div>
+                    <div class="custom-padding15 min-height-65px">
+                        <div class="row">
+                          <div class="col-6 br-1px p-left">
+                            <div class="title-7 mb-5px">Approver</div>
+                            <div class="title-5 text-left">
+                                <span class="red-circle" *ngIf="this.notification_type && this.notification_type=='Approver Changed'"></span>  {{this.approver?.name}}
+
+                            </div>
+                          </div>
+          
+                          <div class="col-6 text-right p-right">
+                            <div class="title-7 mb-5px">Rounds</div>
+          
+                            <div class="title-5">{{ this.rounds?.length}}</div>
+
+                          </div>
+                        </div>
+                      </div>
+                  
+                    <div class="myhr"></div>
+                    <div class="title-desc custom-padding15 mb-22">
+                        {{this.ticket_detail?.description}}
+                    </div>
+                </div>
+                
+                <br/>
+                <div class="hr-dash mb-16"></div>
+                <div class="title-9 mb-11" align="center">Trucking Company</div>
+               
+                <div class="border-div">
+                    <div class="custom-padding15 min-height-65px">
+                        <div class="row">
+                            <!-- Name Column -->
+                            <div class="col-6 br-1px p-left">
+                                <div class="title-7 mb-5px">Name</div>
+                                <div class="title-5 text-left">
+                                    {{ this.ticket_detail?.trucking_company?.company_name }}
+                                </div>
+                            </div>
+                    
+                            <!-- Hour Rate Column -->
+                            <div class="col-6 text-right p-right">
+                                <div class="title-7 mb-5px">Hour Rate</div>
+                                <div class="title-5 d-flex justify-content-end">
+                                    <div class="border-pink" style="border-radius: 5px; text-align: center; height: 34px; 
+                                        align-items: center; display: flex; justify-content: center; width: 90px;">
+                                        ${{ this.ticket_detail?.trucking_company?.hour_rate }}/hr
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="myhr"></div>
+                    <div class="custom-padding15 min-height-65px">
+                        <div class="row">
+                            <!-- Dispatched Column -->
+                            <div class="col-6 br-1px p-left">
+                                <div class="title-7 mb-5px">Dispatched</div>
+                                <div class="title-5 text-left">
+                                    {{ this.dispatcher?.name ? this.dispatcher?.name : this.ticket_detail?.trucking_company?.company_name }}
+                                </div>
+                            </div>
+                    
+                            <!-- Phone Number Column -->
+                            <div class="col-6 text-right p-right">
+                                <div class="title-7 mb-5px">Phone Number</div>
+                                <div class="title-5">
+                                    {{ this.dispatcher?.contact_number }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="myhr"></div>
+                   
+                    <div class="div-1 p-1  margin-14px" >
+                        <div class="row">
+                            <div class="col-6 p-0">
+                                <div class="input-div" >
+                                    <div class="title-8 text-black-shade3 text-left mb-6">Paper ticket ID</div>
+                                    <div class="position-relative">
+                                        <div class="title-5 text-left" *ngIf="this.ticket_detail?.paper_ticket_id">{{this.ticket_detail?.paper_ticket_id}}</div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 p-0">
+                                <div class="input-div" >
+                                    
+                                    <div class="title-8 text-black-shade3 text-left mb-6"></div>
+                                    <div class="position-relative">
+                                        <div class="myinput-new title-21 div-2" align="right">
+                                            <img src="../assets/driver-images-mobile/tick-green.png" class="mr-3" width="22px" *ngIf="this.ticket_detail?.paper_ticket_photo"> 
+                                            <img  src="../assets/driver-images-mobile/camera-pink.svg" width="43px"  >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>           
+          
+            <div class="">
+                <br/>
+                <div class="row mb-46">
+                    <div class="col-6 pr-1">
+                        <div class="border-div">
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 ">Truck name</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.truck?.name
+                                }}</div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 ">Type</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.truck?.type
+                                }}</div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 ">License plate</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.truck?.license_plate
+                                }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 pl-1">
+                        <div class="border-div text-right">
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 ">Trailer name</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.trailer?.name
+                                }}</div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 ">Type</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.trailer?.type
+                                }}</div>
+                            </div>
+                            <div class="myhr"></div>
+                            <div class="custom-padding15">
+                                <div class="title-8 text-black-shade3 ">License plate</div>
+                                <div class="title-9 text-black-shade4">{{this.ticket_detail?.trailer?.license_plate
+                                }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div align="center">
+                    <ng-container *ngIf="this.ticket_detail?.rounds.length>2">
+                        <br/><br/><br/>
+                    </ng-container>
+                    <br/>  <br/>
+                    <div [ngClass]="this.from_list?'':'fix-button'">
+                   
+                        <button type="button" class="btn bg-pink custom-padding8" *ngIf="!is_downloading" (click)="handlePDFDownload(this.ticket_detail)">Download <img src="../assets/driver-images-mobile/download.png" alt=""></button>
+                        <button type="button" class="btn bg-pink custom-padding8" *ngIf="is_downloading" disabled>Downloading.. </button> 
+                    
+                    </div>
+                </div>
+            </div>            
+         
+        </div>
+        <div id="jobdetails" class="tab-pane fade show {{this.active_tab=='rounds-detail'? ' in active':''}}" >
+
+            <ng-container *ngFor="let round of this.ticket_detail?.rounds">
+                    
+                <ng-container >                       
+                    <div class="empty-round" >
+                        <div class="d-flex justify-content-between align-items-center mb-10 custom-padding4">
+                            <div> 
+                                <div class="bg-completed black-17-font-bold round-no-div">Round {{round.round_no}}</div>
+                                <div class="title-13 text-black-shade">
+                                  <span *ngIf="round.driver_start_time !='' && round.driver_end_time!=''">
+                                  </span>  
+                                </div>
+                            </div>
+                            <div class="title-13 text-black-shade" >
+                                <u *ngIf="detail_round_id!=round.id" (click)="toggleDetail(round.id)">View details</u>
+                                <u *ngIf="detail_round_id == round.id" (click)="toggleDetail(round.id)">Hide details</u>
+                                <img *ngIf="detail_round_id==round.id"  (click)="toggleDetail(round.id)" src="../assets/driver-images-mobile/arrow_drop_down2.png" class="viewdetails ml-1">
+                                <img *ngIf="detail_round_id!=round.id" (click)="toggleDetail(round.id)" src="../assets/driver-images-mobile/arrow_drop_up.png" class="hidedetails ml-1">
+                            </div>
+                        </div>
+                     
+                        <div class="empty-round-white"> 
+                            <div class="row mb-5px min-height-65px iniview" *ngIf="detail_round_id!=round.id">
+                                <div class="col-6">
+                                  <div class="title-7 mb-5px">Started:</div>
+                                  <div class="title-5 text-left">
+                                    <div class="encircled-div text-center d-flex align-items-center justify-content-center">
+                                      {{ round.driver_start_time ? (round.driver_start_time | date: "h:mm a") : '---:---' }}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-6">
+                                  <div class="title-7 mb-5px text-right">Round total:</div>
+                                  <div class="title-5 text-right">
+                                    <div class="encircled-div text-center d-flex align-items-center justify-content-center">
+                                      {{ round.round_time ? round.round_time : '0 hrs 0m' }}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                            <div class="detailview" *ngIf="detail_round_id==round.id" >
+                               
+                                <div class="mb-1">
+                                    <div class="custom-padding15 min-height-65px">
+                                        <div class="row">
+                                            <!-- Started Column -->
+                                            <div class="col-6 br-1px p-left">
+                                              <div class="title-7 mb-5px">Started</div>
+                                              <div class="title-5 text-left">
+                                                {{ round.driver_start_time ? (round.driver_start_time | date: "h:mm a") : '--:--' }}
+                                              </div>
+                                            </div>
+                                          
+                                            <!-- Round Total Column -->
+                                            <div class="col-6 text-right p-right">
+                                              <div class="title-7 mb-5px">Round Total</div>
+                                              <div class="title-5">
+                                                {{ round.round_time ? round.round_time : '0 hr 0 m' }}
+                                              </div>
+                                            </div>
+                                          </div>
+                                          
+                                    </div>
+                            
+                                    <div class="myhr"></div>
+                                    <div class="custom-padding15 min-height-65px">
+                                        <div class="row">
+                                            <!-- Material Out Column -->
+                                            <div class="col-6 br-1px p-left">
+                                                <div class="title-7 mb-5px">Material Out</div>
+                                                <div class="title-5 text-left">
+                                                    {{ round.material_taken_out }}
+                                                </div>
+                                            </div>
+                                    
+                                            <!-- Dump Site Column -->
+                                            <div class="col-6 text-right p-right">
+                                                <div class="title-7 mb-5px">Dump Site</div>
+                                                <div class="title-5">
+                                                    {{ round.dump_site_name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="myhr"></div>
+                                    <div class="custom-padding15">
+                                        <div class="d-flex justify-content-between align-items-center ">
+                                        
+                                            <div class="title-7">Round notes</div>
+                                        
+                                            <div class="title-7"></div>
+                                            
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-6">
+                                            <div class="title-5 text-left">
+                                                {{round.driver_notes}}
+                                              </div>
+                                            <div class="title-5">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                    </div>
+                   
+                </ng-container>
+            </ng-container>
+            <!-- <div class="ticket-detail-div">
+                <div class="d-flex justify-content-between align-items-center mb-23">
+                    <div>
+                        <div class="title-13 text-black-shade">Job started</div>
+                        <div class="title-12 text-black-shade4">{{this.ticket_detail?.started_at | date:"h:mm a"}}</div>
+                    </div>
+                    <div>
+                        <div class="title-13 text-black-shade">Job total</div>
+                        <div class="title-12 text-black-shade4 text-right">{{this.parseJobTotal(this.ticket_detail?.total_time)}}</div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-27">
+                    <div class="width-200">
+                        <div class="title-13 text-black-shade">Driver total</div>
+                        <div class="title-12 text-black-shade4">{{this.parseDriverTime(this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}} </div>
+                    </div>
+                    <textarea class="form-control br-10 " rows="3" placeholder="" readonly>{{this.ticket_detail?.notes_for_approver}}</textarea>
+                </div>
+                <div class="d-flex justify-content-between align-items-center" >
+                    <div class="width-200">
+                        <div class="title-13 text-black-shade">Approved hours</div>
+                        <div class="title-12 text-black-shade4">{{this.ticket_detail?.approver_time ? parseHour(this.ticket_detail?.approver_time): hourData( this.ticket_detail?.driver_hours, this.ticket_detail?.driver_minutes)}} </div>
+                    </div>
+                    <textarea class="form-control br-10 " rows="3" placeholder="" readonly>{{this.ticket_detail?.approver_notes}}</textarea>
+
+                </div>
+            </div> -->
+           
+
+
+            <div class="empty-round">
+                <div class="mb-10 custom-padding4">
+                    <div class="bg-green br-10 p-11">
+                        <div class="title-11-2 text-center text-white">Job completed {{this.ticket_detail?.ended_at | date:'h:mm a'}}</div>
+                    </div>
+                </div>
+                <div class="empty-round-white">
+                    <div class="">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="title-13 text-black-shade">Job total</div>
+                                <div class="title-12 text-black-shade4">{{this.parseJobTotal(this.ticket_detail?.total_time)}}</div>
+                            </div>
+                            <div>
+                                <div class="title-13 text-black-shade">Driver total</div>
+                                <div class="title-12 text-black-shade4 text-right">{{this.parseDriverTime(this.ticket_detail?.driver_hours,this.ticket_detail?.driver_minutes)}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div align="center">
+       
+                <br/><br/><br/>
+            <div class="">
+            <button type="button" class="btn bg-pink dflex-btn width-200 p-10px br-5px  text-black font-bold font-size-18 min-h-60"  [routerLink]="'/dashboard'">Back to Dashboard</button></div>
+                <br/><br/>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+</div>

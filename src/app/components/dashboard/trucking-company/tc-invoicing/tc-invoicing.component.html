@@ -1,0 +1,2324 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+
+    <div class="body-content">
+      <div class="project-profile-header-container">
+        <div class="profile_heading_div1">
+          <div
+            class="project-profile-header-left d-flex align-items-center ml-0"
+          >
+            <img
+              src="./assets/images/invoicing.svg"
+              alt="project-profile-file-icon"
+            />
+            <div class="heading-1-400 text-color-black">Invoicing status</div>
+          </div>
+        </div>
+        <div>
+          <button
+            [ngClass]="
+              this.current_tab == 'draft'
+                ? 'mybtn bg-blue text-white active btn-nav '
+                : 'mybtn mybtn-default text-blue btn-nav '
+            "
+            (click)="setTab('draft')"
+          >
+            Draft
+          </button>
+          <button
+            [ngClass]="
+              this.current_tab == 'invoiced'
+                ? 'mybtn bg-blue text-white btn-nav active ml-2'
+                : 'mybtn mybtn-default text-blue btn-nav ml-2'
+            "
+            (click)="setTab('invoiced')"
+          >
+            Invoiced
+          </button>
+          <!-- <button class="mybtn mybtn-default text-blue btn-nav ml-2" (click)="this.toLocation('/customer-tc-invoices')">Customers</button> -->
+        </div>
+      </div>
+      <div class="main-project-setting-container inner_main_shadow">
+        <div class="tab-content" id="nav-tabContent">
+          <!--Drafts Tickets-->
+          <div
+            class="tab-pane fade  {{
+              current_tab == 'draft' ? 'show active' : ''
+            }}"
+            *ngIf="current_tab == 'draft'"
+            id="draft-detail"
+            role="tabpanel"
+            aria-labelledby="nav-home-tab"
+          >
+            <!-- Filters Contaainer-->
+            <div class="row mt-50px">
+              <div class="col-md-3 col-padding-l">
+                <div class="main-project-setting-header-left">
+                  <div class="heading-2-300 text-color-111727">
+                    Approved tickets
+                  </div>
+                  <div class="text-2-300">Set customer, project and period</div>
+                </div>
+              </div>
+              <div class="col-md-1 col-padding-rl"></div>
+              <div class="col-md-2 col-padding-rl">
+                <div
+                  class="input-div  getinputfield {{
+                    !this.selected_company?.id ? 'border-blue' : ''
+                  }}"
+                >
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Customer
+                  </div>
+                  <div
+                    class="myinput-new selected"
+                    *ngIf="!this.selected_company?.id"
+                  >
+                    All
+                  </div>
+                  <div
+                    class="myinput-new selected"
+                    *ngIf="selected_company?.company_name != null"
+                  >
+                    {{
+                      selected_company?.company_name
+                        ? selected_company?.company_name
+                        : ""
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/images/dropdown.svg"
+                    class="icon-center-right"
+                  />
+                  <div
+                    class="input-popup-div companies_list"
+                    style="display: none"
+                  >
+                    <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                      Customer
+                    </div>
+                    <div class="title-18 text-right mb-2px d-none">Default</div>
+                    <ng-container
+                      *ngFor="let company of this.trucking_companies"
+                    >
+                      <div
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          (click)="handleFilterByCompany(company)"
+                          [ngClass]="
+                            (this.selected_company?.id == company.id &&
+                              this.selected_company?.open_paper_ticket_photo &&
+                              company?.open_paper_ticket_photo) ||
+                            (!company?.open_paper_ticket_photo &&
+                              !this.selected_company?.open_paper_ticket_photo &&
+                              this.selected_company?.trucking_company_id ==
+                                company?.trucking_company_id &&
+                              this.selected_company?.id == company.id)
+                              ? 'title-5-new'
+                              : 'title-5-new text-color-black-shade7'
+                          "
+                        >
+                          {{ company?.company_name }}
+                        </div>
+
+                        <input
+                          type="checkbox"
+                          id=""
+                          (change)="
+                            markDefault(
+                              $event,
+                              company.freelance_driver_id != null
+                                ? 'freelance_trucking_company'
+                                : 'user',
+                              company.id,
+                              company
+                            )
+                          "
+                          [checked]="this.default_company?.id == company.id"
+                          class="mycheckbox2 d-none"
+                        />
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-padding-rl">
+                <div
+                  class="input-div  getinputfield {{
+                    !this.selected_project?.id ? 'border-blue' : ''
+                  }}"
+                >
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Project
+                  </div>
+                  <div
+                    class="myinput-new selected"
+                    *ngIf="!this.selected_project?.id"
+                  >
+                    All
+                  </div>
+                  <div
+                    class="myinput-new selected"
+                    *ngIf="selected_project?.project_name != null"
+                  >
+                    {{
+                      selected_project?.project_name
+                        ? selected_project?.project_name
+                        : ""
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/images/dropdown.svg"
+                    class="icon-center-right"
+                  />
+                  <div
+                    class="input-popup-div project_list"
+                    style="display: none"
+                  >
+                    <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                      Project
+                    </div>
+                    <div class="title-18 text-right mb-2px d-none">Default</div>
+                    <div *ngIf="this.project_list?.length>0" class="d-flex justify-content-between mb-5px list-item">
+                      <div [ngClass]=" this.selected_project != 'All'? 'title-5-new'
+                              : 'title-5-new text-color-black-shade7'" (click)="handleFilterByProject('All')">
+                        All
+                      </div>
+                    </div>
+                    <ng-container *ngFor="let project of this.project_list">
+                      <div
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          (click)="handleFilterByProject(project)"
+                          [ngClass]="
+                            (this.selected_project?.id == project.id &&
+                              !this.selected_project?.trucking_company_id &&
+                              !project?.trucking_company_id) ||
+                            (this.selected_project?.trucking_company_id &&
+                              project?.trucking_company_id &&
+                              project?.trucking_company_id ==
+                                this.selected_project?.trucking_company_id &&
+                              project?.id == this.selected_project?.id)
+                              ? 'title-5-new'
+                              : 'title-5-new text-color-black-shade7'
+                          "
+                        >
+                          {{ project?.project_name }}
+                        </div>
+
+                        <input
+                          type="checkbox"
+                          id=""
+                          (change)="
+                            markDefault(
+                              $event,
+                              project.freelance_driver_id != null
+                                ? 'freelance_project'
+                                : 'project',
+                              project.id,
+                              project
+                            )
+                          "
+                          [checked]="this.default_project?.id == project.id"
+                          class="mycheckbox2 d-none"
+                        />
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-padding-rl">
+                <div
+                  class="input-div required_field getinputfield {{
+                    !this.select_duration_type ? 'border-blue' : ''
+                  }}"
+                >
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Invoicing period
+                  </div>
+                  <div class="myinput-new selected">
+                    {{
+                      this.select_duration_type
+                        ? this.select_duration_type
+                        : "All time"
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/images/dropdown.svg"
+                    class="icon-center-right"
+                  />
+                  <div
+                    class="input-popup-div duration_list"
+                    style="display: none"
+                  >
+                    <div class="d-flex justify-content-space-between mb-1">
+                      <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                        Invoicing period
+                      </div>
+                      <div
+                        class="title-5-new2 text-color-black-shade5 text-right mb-4px"
+                      >
+                        Set default
+                      </div>
+                    </div>
+
+                    <div
+                      class="d-flex justify-content-between mb-5px list-item2"
+                      (click)="handleFilterByDuration('Monthly')"
+                    >
+                      <div
+                        [ngClass]="
+                          this.select_duration_type == 'Monthly'
+                            ? 'title-5-new'
+                            : 'title-5-new text-color-black-shade7'
+                        "
+                      >
+                        Monthly
+                      </div>
+                      <input
+                        type="checkbox"
+                        [checked]="
+                          this.default_duration_type == 'Monthly' ? true : false
+                        "
+                        (change)="this.markDefaultDuration($event, 'Monthly')"
+                        class="mycheckbox2"
+                      />
+                    </div>
+
+                    <div
+                      class="d-flex justify-content-between mb-5px list-item2"
+                      (click)="handleFilterByDuration('Semi-monthly')"
+                    >
+                      <div
+                        [ngClass]="
+                          this.select_duration_type == 'Semi-monthly'
+                            ? 'title-5-new'
+                            : 'title-5-new text-color-black-shade7'
+                        "
+                      >
+                        Semi-monthly
+                      </div>
+                      <input
+                        type="checkbox"
+                        [checked]="
+                          this.default_duration_type == 'Semi-monthly'
+                            ? true
+                            : false
+                        "
+                        (change)="
+                          this.markDefaultDuration($event, 'Semi-monthly')
+                        "
+                        class="mycheckbox2"
+                      />
+                    </div>
+
+                    <div
+                      class="d-flex justify-content-between mb-5px list-item2"
+                      (click)="handleFilterByDuration('Weekly')"
+                    >
+                      <div
+                        [ngClass]="
+                          this.select_duration_type == 'Weekly'
+                            ? 'title-5-new'
+                            : 'title-5-new text-color-black-shade7'
+                        "
+                      >
+                        Weekly
+                      </div>
+                      <input
+                        type="checkbox"
+                        [checked]="
+                          this.default_duration_type == 'Weekly' ? true : false
+                        "
+                        (change)="this.markDefaultDuration($event, 'Weekly')"
+                        class="mycheckbox2"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-padding-r button-container">
+                <div
+                  class="invoices-total-div {{
+                    this.select_duration_type != '' &&
+                    this.selected_company != '' &&
+                    this.selected_company != null &&
+                    invoices?.length > 0
+                      ? 'active'
+                      : ''
+                  }} "
+                >
+                  {{
+                    this.select_duration_type != "" &&
+                    this.selected_company != "" &&
+                    this.selected_company != null &&
+                    invoices?.length > 0
+                      ? "[" + invoices?.length + "] Invoices"
+                      : " Invoices"
+                  }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Listings -->
+            <ng-container
+              *ngIf="
+                this.select_duration_type == '' ||
+                this.select_duration_type == '' ||
+                this.selected_company == null ||
+                this.selected_company == ''
+              "
+            >
+              <div class="table-responsive project-setting-page-table">
+                <table class="table mt-15px">
+                  <thead class="table-light project-setting-table-header">
+                    <tr>
+                      <th class="project-settings-table-header">
+                        <input
+                          type="checkbox"
+                          (change)="checkUncheckAll($event)"
+                          [ngClass]="
+                            !this.all_checked ? 'bg-white' : 'bg-yellow'
+                          "
+                          [checked]="this.all_checked"
+                        />
+                      </th>
+                      <th class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">
+                          Ticket ID
+                        </div>
+                      </th>
+
+                      <th class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">
+                          Customer
+                        </div>
+                      </th>
+                      <th class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">Project</div>
+                      </th>
+                      <th class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">Date</div>
+                      </th>
+                      <!-- <th class="project-settings-table-header">
+                                                <div class="heading-8-400 text-color-grey">
+                                                    Description (driver - licence plate - round qty)
+                                                </div>
+                                            </th> -->
+                      <th class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">Hours</div>
+                      </th>
+                      <th class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">Rounds</div>
+                      </th>
+                      <th class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">
+                          Subtotal
+                        </div>
+                      </th>
+                      <th
+                        class="project-settings-table-header width-30-perc"
+                      ></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngIf="this.invoices?.length > 0">
+                      <ng-container
+                        *ngFor="let invoice of this.invoices; let index = index"
+                      >
+                        <tr data-target="#myModalTicket" data-toggle="modal">
+                          <td>
+                            <input
+                              type="checkbox"
+                              value="{{ invoice?.id }}"
+                              [ngClass]="
+                                !invoice?.is_selected ? 'bg-white' : 'bg-yellow'
+                              "
+                              id="checkbox{{ index }}"
+                              [checked]="invoice?.is_selected"
+                              (change)="isAllSelected($event, index)"
+                            />
+                          </td>
+                          <td (click)="setRequestDetail(invoice)">
+                            {{ invoice?.ticket_no }}
+                          </td>
+
+                          <td (click)="setRequestDetail(invoice)">
+                            <!-- <ng-container *ngIf="invoice?.tc_ticket && invoice?.tc_ticket=='YES' && invoice?.trucking_company_requests[0]?.dispatch_by_id == this.loggedinUser.id && invoice?.trucking_company_requests[0]?.dispatch_to_id == this.loggedinUser.id; else elseblockk">
+                                                            {{invoice?.customer? invoice?.customer?.company_name:invoice?.tc_customer?.company_name}}
+                                                          </ng-container>
+                                                          <ng-template #elseblockk>
+                                                        {{ invoice?.user  ? invoice?.user?.company_name :  (
+                                                        invoice?.trucking_company_requests && invoice?.trucking_company_requests[0] && invoice?.trucking_company_requests[0]?.dispatch_by ? invoice?.trucking_company_requests[0]?.dispatch_by?.company_name:  ''
+                                                        )}}
+                                                          </ng-template> -->
+
+                            <ng-container
+                              *ngIf="
+                                invoice?.trucking_company_requests &&
+                                invoice?.trucking_company_requests.length > 0
+                              "
+                            >
+                              <ng-container
+                                *ngFor="
+                                  let reqDetail of invoice?.trucking_company_requests
+                                "
+                              >
+                                <ng-container
+                                  *ngIf="
+                                    reqDetail.dispatch_by?.id != this.user_id &&
+                                      reqDetail.dispatch_by !== null &&
+                                      reqDetail.dispatch_to_id == this.user_id;
+                                    else Block22s
+                                  "
+                                >
+                                  {{ reqDetail?.dispatch_by?.company_name }}
+                                </ng-container>
+
+                                <ng-template #Block22s>
+                                  <ng-container
+                                    *ngIf="
+                                      invoice?.tc_ticket &&
+                                      invoice?.tc_ticket == 'YES' &&
+                                      reqDetail?.dispatch_by_id ==
+                                        this.user_id &&
+                                      reqDetail?.dispatch_to_id == this.user_id
+                                    "
+                                  >
+                                    {{
+                                      invoice?.customer
+                                        ? invoice?.customer?.company_name
+                                        : invoice?.tc_customer?.company_name
+                                    }}
+                                  </ng-container>
+                                </ng-template>
+                              </ng-container>
+                            </ng-container>
+                          </td>
+                          <!-- <td *ngIf="!invoice?.tc_ticket"> -->
+
+                          <!-- <span *ngIf="this.selected_company && this.selected_company.id">
+
+                                                            {{getReq(invoice?.trucking_company_requests)}}
+
+                                                       </span>
+                                                       <span *ngIf="!this.selected_company"> -->
+                          <!-- </span> -->
+
+                          <!-- </td> -->
+
+                          <td
+                            (click)="setRequestDetail(invoice)"
+                            *ngIf="
+                              invoice?.tc_ticket && invoice?.tc_ticket == 'YES'
+                            "
+                          >
+                            {{
+                              invoice?.project
+                                ? invoice?.project?.project_name
+                                : invoice?.tc_project?.project_name
+                            }}
+                          </td>
+
+                          <td
+                            (click)="setRequestDetail(invoice)"
+                            *ngIf="!invoice?.tc_ticket"
+                          >
+                            {{ invoice?.project?.project_name }}
+                          </td>
+
+                          <td (click)="setRequestDetail(invoice)">
+                            {{ invoice?.ticket_date }}
+                          </td>
+                          <!-- <td>{{invoice?.driver_ticket?.driver?.full_name}} - {{invoice?.driver_ticket?.truck?.truck_license_plate}} - {{invoice?.ticket_truck_type_rounds?.length ? invoice?.ticket_truck_type_rounds?.length :0}} rounds</td> -->
+                          <td (click)="setRequestDetail(invoice)">
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                invoice?.driver_ticket?.approver_time != '' &&
+                                (invoice?.rate_type == 'hour' ||
+                                  invoice?.tc_ticket == 'YES')
+                              "
+                            >
+                              {{
+                                invoice?.driver_ticket?.approver_time
+                                  ? parseHour(
+                                      invoice?.driver_ticket?.approver_time
+                                    )
+                                  : ""
+                              }}
+                            </span>
+
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                (invoice?.rate_type == 'hour' ||
+                                  invoice?.tc_ticket == 'YES') &&
+                                (invoice?.driver_ticket?.approver_time == '' ||
+                                  invoice?.driver_ticket?.approver_time ==
+                                    'null' ||
+                                  invoice?.driver_ticket?.approver_time == null)
+                              "
+                            >
+                              {{
+                                parseDriverTime(
+                                  invoice?.driver_ticket?.driver_hours,
+                                  invoice?.driver_ticket?.driver_minutes
+                                )
+                              }}
+                            </span>
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                invoice?.rate_type == 'round'
+                              "
+                            >
+                              -
+                            </span>
+                          </td>
+
+                          <td (click)="setRequestDetail(invoice)">
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                invoice?.rate_type == 'round' &&
+                                invoice?.driver_ticket?.approver_rounds != '' &&
+                                invoice?.driver_ticket?.approver_rounds != null
+                              "
+                            >
+                              {{
+                                invoice?.driver_ticket?.approver_rounds
+                                  ? invoice?.driver_ticket?.approver_rounds
+                                  : ""
+                              }}
+                            </span>
+
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                invoice?.rate_type == 'round' &&
+                                (invoice?.driver_ticket?.approver_rounds ==
+                                  '' ||
+                                  invoice?.driver_ticket?.approver_rounds ==
+                                    null)
+                              "
+                            >
+                              {{
+                                invoice?.ticket_truck_type_rounds
+                                  ? getCompletedRounds(
+                                      invoice?.ticket_truck_type_rounds
+                                    )
+                                  : []
+                              }}
+                            </span>
+
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                (invoice?.rate_type == 'hour' ||
+                                  invoice?.tc_ticket == 'YES')
+                              "
+                            >
+                              -
+                            </span>
+                          </td>
+
+                          <td (click)="setRequestDetail(invoice)">
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                (invoice?.rate_type == 'hour' ||
+                                  invoice?.tc_ticket == 'YES') &&
+                                invoice?.driver_ticket?.approver_time != ''
+                              "
+                            >
+                              {{
+                                invoice?.driver_ticket?.approver_time
+                                  ? "$" +
+                                    getSubtotal(
+                                      invoice?.hour_rate,
+                                      parseHour(
+                                        invoice?.driver_ticket?.approver_time
+                                      )
+                                    )
+                                  : ""
+                              }}
+                            </span>
+
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                (invoice?.rate_type == 'hour' ||
+                                  invoice?.tc_ticket == 'YES') &&
+                                (invoice?.driver_ticket?.approver_time == '' ||
+                                  invoice?.driver_ticket?.approver_time ==
+                                    'null' ||
+                                  invoice?.driver_ticket?.approver_time == null)
+                              "
+                            >
+                              {{
+                                "$" +
+                                  getSubtotal(
+                                    invoice?.hour_rate,
+                                    parseDriverTime(
+                                      invoice?.driver_ticket?.driver_hours,
+                                      invoice?.driver_ticket?.driver_minutes
+                                    )
+                                  )
+                              }}
+                            </span>
+
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                invoice?.rate_type == 'round' &&
+                                invoice?.driver_ticket?.approver_rounds != '' &&
+                                invoice?.driver_ticket?.approver_rounds != null
+                              "
+                            >
+                              {{
+                                invoice?.driver_ticket?.approver_rounds
+                                  ? "$" +
+                                    getRoundsSubtotal(
+                                      true,
+                                      invoice?.driver_ticket?.approver_rounds,
+                                      invoice?.hour_rate
+                                    )
+                                  : ""
+                              }}
+                            </span>
+                            <span
+                              *ngIf="
+                                invoice?.status == 'Approved' &&
+                                invoice?.rate_type == 'round' &&
+                                (invoice?.driver_ticket?.approver_rounds ==
+                                  '' ||
+                                  invoice?.driver_ticket?.approver_rounds ==
+                                    null)
+                              "
+                            >
+                              {{
+                                "$" +
+                                  getRoundsSubtotal(
+                                    false,
+                                    invoice?.ticket_truck_type_rounds,
+                                    invoice?.hour_rate
+                                  )
+                              }}
+                            </span>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="this.invoices?.length < 1 && this.is_loading == ''"
+                    >
+                      <tr>
+                        <td colspan="6">No tickets found</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+              <div class="row mt-5" *ngIf="this.invoices?.length > 0">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                  <div
+                    class="mypagination-div"
+                    *ngIf="drafs_pagination?.total > 0"
+                  >
+                    <a
+                      style="cursor: pointer"
+                      (click)="changePage(drafs_pagination.current_page - 1)"
+                      [ngClass]="
+                        drafs_pagination.first_page == this.page
+                          ? 'mypagination '
+                          : 'mypagination disable'
+                      "
+                      class=""
+                      >Previous</a
+                    >
+                    <ng-container *ngFor="let item of drafs_pagination?.links">
+                      <a
+                        style="cursor: pointer"
+                        *ngIf="notSkip(item.label)"
+                        [ngClass]="
+                          item.active ? 'mypagination active' : 'mypagination'
+                        "
+                        (click)="changePage(parsePage(item.label.toString()))"
+                        >{{ item.label }}</a
+                      >
+                    </ng-container>
+
+                    <a
+                      style="cursor: pointer"
+                      (click)="changePage(drafs_pagination.current_page + 1)"
+                      [ngClass]="
+                        this.page == drafs_pagination.last_page
+                          ? 'mypagination '
+                          : 'mypagination next'
+                      "
+                      >Next</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container
+              *ngIf="
+                this.select_duration_type != '' &&
+                this.selected_company != '' &&
+                this.selected_company != null &&
+                invoices?.length > 0
+              "
+            >
+              <ng-container
+                *ngFor="let invoice of this.invoices; let weekindex = index"
+              >
+                <div
+                  *ngIf="invoice?.data && invoice?.invoices?.length > 0"
+                  class="table-responsive b-2-grey project-setting-page-table br-7 mb-35"
+                >
+                  <table class="table mt-15px">
+                    <thead class="table-light project-setting-table-header">
+                      <tr>
+                        <th class="project-settings-table-header">
+                          <div class="heading-8-400 text-color-grey">
+                            Ticket ID
+                          </div>
+                        </th>
+                        <th class="project-settings-table-header">
+                          <div class="heading-8-400 text-color-grey">Date</div>
+                        </th>
+                        <!-- <th class="project-settings-table-header">
+                                                    <div class="heading-8-400 text-color-grey">
+                                                        Description
+                                                    </div>
+                                                </th> -->
+                        <th class="project-settings-table-header">
+                          <div class="heading-8-400 text-color-grey">Hours</div>
+                        </th>
+                        <th class="project-settings-table-header">
+                          <div class="heading-8-400 text-color-grey">
+                            Rounds
+                          </div>
+                        </th>
+                        <!-- <th class="project-settings-table-header">
+                          <div class="heading-8-400 text-color-grey">
+                            Hour rate
+                          </div>
+                        </th> -->
+                        <th class="project-settings-table-header">
+                          <div class="heading-8-400 text-color-grey">
+                            Subtotal
+                          </div>
+                        </th>
+                        <th class="project-settings-table-header">
+                          <div class="heading-8-400 text-color-grey">Tax</div>
+                        </th>
+                        <th class="project-settings-table-header">
+                          <div class="heading-8-400 text-color-grey">Total</div>
+                        </th>
+                        <th class="project-settings-table-header"></th>
+                        <th
+                          class="project-settings-table-header width-30-perc"
+                        ></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container
+                        *ngIf="invoice?.data && invoice?.invoices?.length > 0"
+                      >
+                        <tr>
+                          <!-- <td class="title-5-new3 bg-grey text-black text-center openCalendar cal-open" >
+
+                                                            <span id="cal-{{weekindex}}" (click)="showCalendar($event.currentTarget, invoice,weekindex)">
+                                                              <ng-container *ngIf="this.select_duration_type == 'Monthly'">
+                                                                {{invoice?.data?.month}}
+                                                              </ng-container>
+                                                              <ng-container *ngIf="this.select_duration_type !='Monthly'">
+                                                                {{invoice?.data?.start_date}}<br>{{invoice?.data?.end_date}}
+                                                              </ng-container>
+
+                                                            </span>
+                                                            <div class="popupCalendar" id="cal-{{weekindex}}">
+                                                                <div class="calendarHighLighted " id="cal-{{weekindex}}"></div>
+                                                            </div>
+                                                        </td> -->
+                          <td>
+                            <div class="approved-status">
+                              {{
+                                invoice?.invoices[0] &&
+                                  invoice?.invoices[0]?.ticket_no
+                              }}
+                            </div>
+                            <input
+                              type="hidden"
+                              id="start-{{ weekindex }}"
+                              value="{{ invoice?.data?.start_date2 }}"
+                            />
+                            <input
+                              type="hidden"
+                              id="end-{{ weekindex }}"
+                              value="{{ invoice?.data?.end_date2 }}"
+                            />
+                          </td>
+                          <td>
+                            {{
+                              invoice?.invoices[0] &&
+                                invoice?.invoices[0]?.ticket_date
+                            }}
+                          </td>
+
+                          <!-- <td>
+                                                            {{invoice?.invoices[0]?.driver_ticket?.driver?.full_name}} - {{invoice?.invoices[0] && invoice?.invoices[0]?.driver_ticket?.truck?.truck_license_plate}} - {{invoice?.invoices[0] && invoice?.invoices[0]?.ticket_truck_type_rounds? invoice?.invoices[0]?.ticket_truck_type_rounds.length: 0}} rounds</td> -->
+                          <td class="text-center">
+                            {{
+                              invoice?.invoices[0].hour
+                                ? (invoice?.invoices[0].hour).toFixed(2) + " hr"
+                                : "-"
+                            }}
+                          </td>
+                          <td class="text-center">
+                            {{
+                              invoice?.invoices[0].round
+                                ? invoice?.invoices[0].round
+                                : "-"
+                            }}
+                          </td>
+                          <!-- <td class="text-center">
+                            ${{
+                              invoice?.invoices[0] &&
+                              invoice?.invoices[0]?.hour_rate
+                                ? invoice?.invoices[0]?.hour_rate
+                                : "0"
+                            }}
+                          </td> -->
+                          <td class="text-center">
+                            ${{
+                              invoice?.invoices[0] &&
+                                invoice?.invoices[0]?.subtotal.toFixed(2)
+                            }}
+                          </td>
+                          <td class="text-center">
+                            {{
+                              invoice?.invoices[0] && invoice?.invoices[0]?.tax
+                            }}%
+                          </td>
+                          <td class="text-center">
+                            ${{
+                              invoice?.invoices[0] &&
+                                invoice?.invoices[0]?.total.toFixed(2)
+                            }}
+                          </td>
+                        </tr>
+
+                        <ng-container
+                          *ngFor="let inv of invoice?.invoices; let ii = index"
+                        >
+                          <tr *ngIf="ii > 0 && inv?.ticket_no != ''">
+                            <td>
+                              <div class="approved-status">
+                                {{ inv?.ticket_no }}
+                              </div>
+                            </td>
+                            <td>{{ inv?.ticket_date }}</td>
+
+                            <!-- <td>
+                                                            {{inv?.driver_ticket?.driver?.full_name}} - {{inv?.driver_ticket?.truck?.truck_license_plate}} - {{(inv?.ticket_truck_type_rounds?.length)}} rounds
+                                                        </td> -->
+                            <td class="text-center">
+                              {{ inv.hour ? inv.hour.toFixed(2) + " hr" : "-" }}
+                            </td>
+                            <td class="text-center">
+                              {{ inv.round ? inv.round : "-" }}
+                            </td>
+                            <!-- <td class="text-center">
+                              ${{
+                                inv && inv?.hour_rate ? inv?.hour_rate : "0"
+                              }}
+                            </td> -->
+                            <td class="text-center">
+                              ${{ inv?.subtotal.toFixed(2) }}
+                            </td>
+                            <td class="text-center">{{ inv?.tax }}%</td>
+                            <td class="text-center">
+                              ${{ inv?.total.toFixed(2) }}
+                            </td>
+                          </tr>
+                        </ng-container>
+
+                        <tr class="bg-grey">
+                          <td>
+                            <div class="div-qty div-qty-flex">
+                              <label class="label-qty">Ticket Qty</label>
+                              <div class="value-qty">
+                                {{ invoice?.invoices?.length }}
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <span
+                              class="text-semibold-16-400 text-align-right text-right"
+                            >
+                              Summary:
+                            </span>
+                          </td>
+                          <td>
+                            <div class="white-container">
+                              <label class="label-qty">
+                                Invoicing period
+                              </label>
+                              <div class="text-semibold-16-400">
+                                <span
+                                  id="cal-{{ weekindex }}"
+                                  (click)="
+                                    showCalendar(
+                                      $event.currentTarget,
+                                      invoice,
+                                      weekindex
+                                    )
+                                  "
+                                >
+                                  <ng-container
+                                    *ngIf="
+                                      this.select_duration_type == 'Monthly'
+                                    "
+                                  >
+                                    {{ invoice?.data?.month }}
+                                  </ng-container>
+                                  <ng-container
+                                    *ngIf="
+                                      this.select_duration_type != 'Monthly'
+                                    "
+                                  >
+                                    {{ invoice?.data?.start_date }}<br />{{
+                                      invoice?.data?.end_date
+                                    }}
+                                  </ng-container>
+                                </span>
+                                <div
+                                  class="popupCalendar"
+                                  id="cal-{{ weekindex }}"
+                                >
+                                  <div
+                                    class="calendarHighLighted"
+                                    id="cal-{{ weekindex }}"
+                                  ></div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="text-center">
+                            <div class="white-container">
+                              <label class="label-qty"> Total hours </label>
+                              <div class="text-semibold-16-400">
+                                {{
+                                  invoice?.data?.hour
+                                    ? invoice?.data?.hour + " hr"
+                                    : "-"
+                                }}
+                              </div>
+                            </div>
+                          </td>
+                          <td class="text-center">
+                            <div class="white-container">
+                              <label class="label-qty"> Total Rounds </label>
+                              <div class="text-semibold-16-400">
+                                {{
+                                  invoice?.data?.totalRounds
+                                    ? invoice?.data?.totalRounds
+                                    : "-"
+                                }}
+                              </div>
+                            </div>
+                          </td>
+                          <td class="text-center">
+                            <div class="white-container">
+                              <label class="label-qty"> Subtotal </label>
+                              <div class="text-semibold-16-400">
+                                ${{ invoice?.data?.subtotal.toFixed(2) }}
+                              </div>
+                            </div>
+                          </td>
+                          <td class="text-center">
+                            <div class="white-container">
+                              <label class="label-qty"> Tax </label>
+                              <div class="text-semibold-16-400">
+                                ${{ invoice?.data?.tax_amount.toFixed(2) }}
+                              </div>
+                            </div>
+                          </td>
+                          <td class="text-center">
+                            <div class="white-container">
+                              <label class="label-qty"> Total </label>
+                              <div class="text-semibold-16-400">
+                                ${{ invoice?.data?.total.toFixed(2) }}
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <button
+                              class="mybtn2 mybtn-back-pink no-wrap"
+                              data-toggle="modal"
+                              data-target="#myModalDetail"
+                              (click)="this.setSendData(invoice)"
+                            >
+                              Send invoice
+                            </button>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+          <!-- Invoiced listing -->
+          <div
+            class="tab-pane fade {{
+              current_tab == 'invoiced' ? 'show active' : ''
+            }}"
+            id="invoiced"
+            *ngIf="current_tab == 'invoiced'"
+            role="tabpanel"
+            aria-labelledby="nav-profile-tab"
+          >
+            <div class="bg-white br-15 custom-padding13">
+              <div class="row mt-50px mb-15px">
+                <div class="col-md-3 col-padding-l">
+                  <div class="main-project-setting-header-left">
+                    <div class="heading-2-300 text-color-111727">
+                      Approved tickets
+                    </div>
+                    <div class="text-2-300">
+                      Click line to see invoice details
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-padding-rl"></div>
+                <div class="col-md-2 col-padding-rl">
+                  <div class="input-div getinputfield">
+                    <div class="title-5-new2 text-color-black-shade5 text-left">
+                      Customer
+                    </div>
+                    <div
+                      class="myinput-new selected"
+                      *ngIf="!this.selected_company?.id"
+                    >
+                      All
+                    </div>
+                    <div
+                      class="myinput-new selected"
+                      *ngIf="selected_company?.company_name != null"
+                    >
+                      {{
+                        selected_company?.company_name
+                          ? selected_company?.company_name
+                          : ""
+                      }}
+                    </div>
+                    <img
+                      src="../../assets/images/dropdown.svg"
+                      class="icon-center-right"
+                    />
+                    <div
+                      class="input-popup-div companies_list"
+                      style="display: none"
+                    >
+                      <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                        Customer
+                      </div>
+                      <div class="title-18 text-right mb-2px d-none">
+                        Default
+                      </div>
+                      <ng-container
+                        *ngFor="let company of this.trucking_companies"
+                      >
+                        <div
+                          class="d-flex justify-content-between mb-5px list-item"
+                        >
+                          <div
+                            (click)="handleFilterByCompany(company)"
+                            [ngClass]="
+                              (this.selected_company?.id == company.id &&
+                                this.selected_company
+                                  ?.open_paper_ticket_photo &&
+                                company?.open_paper_ticket_photo) ||
+                              (!company?.open_paper_ticket_photo &&
+                                !this.selected_company
+                                  ?.open_paper_ticket_photo &&
+                                this.selected_company?.trucking_company_id ==
+                                  company?.trucking_company_id &&
+                                this.selected_company?.id == company.id)
+                                ? 'title-5-new'
+                                : 'title-5-new text-color-black-shade7'
+                            "
+                          >
+                            {{ company?.company_name }}
+                          </div>
+
+                          <input
+                            type="checkbox"
+                            id=""
+                            (change)="
+                              markDefault(
+                                $event,
+                                company.freelance_driver_id != null
+                                  ? 'freelance_trucking_company'
+                                  : 'user',
+                                company.id,
+                                company
+                              )
+                            "
+                            [checked]="this.default_company?.id == company.id"
+                            class="mycheckbox2 d-none"
+                          />
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-padding-rl">
+                  <div class="input-div getinputfield">
+                    <div class="title-5-new2 text-color-black-shade5 text-left">
+                      Project
+                    </div>
+                    <div
+                      class="myinput-new selected"
+                      *ngIf="!this.selected_project?.id"
+                    >
+                      All
+                    </div>
+                    <div
+                      class="myinput-new selected"
+                      *ngIf="selected_project?.project_name != null"
+                    >
+                      {{
+                        selected_project?.project_name
+                          ? selected_project?.project_name
+                          : ""
+                      }}
+                    </div>
+                    <img
+                      src="../../assets/images/dropdown.svg"
+                      class="icon-center-right"
+                    />
+                    <div
+                      class="input-popup-div project_list"
+                      style="display: none"
+                    >
+                      <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                        Project
+                      </div>
+                      <div class="title-18 text-right mb-2px d-none">
+                        Default
+                      </div>
+                      <div
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          (click)="handleFilterByProjectAll()"
+                          [ngClass]="
+                            !this.selected_project?.id
+                              ? 'title-5-new'
+                              : 'title-5-new text-color-black-shade7'
+                          "
+                        >
+                          All
+                        </div>
+                      </div>
+                      <ng-container *ngFor="let project of this.project_list">
+                        <div
+                          class="d-flex justify-content-between mb-5px list-item"
+                        >
+                          <div
+                            (click)="handleFilterByProject(project)"
+                            [ngClass]="
+                              (this.selected_project?.id == project.id &&
+                                !this.selected_project?.trucking_company_id &&
+                                !project?.trucking_company_id) ||
+                              (this.selected_project?.trucking_company_id &&
+                                project?.trucking_company_id &&
+                                project?.trucking_company_id ==
+                                  this.selected_project?.trucking_company_id &&
+                                project?.id == this.selected_project?.id)
+                                ? 'title-5-new'
+                                : 'title-5-new text-color-black-shade7'
+                            "
+                          >
+                            {{ project?.project_name }}
+                          </div>
+
+                          <input
+                            type="checkbox"
+                            id=""
+                            (change)="
+                              markDefault(
+                                $event,
+                                project.freelance_driver_id != null
+                                  ? 'freelance_project'
+                                  : 'project',
+                                project.id,
+                                project
+                              )
+                            "
+                            [checked]="this.default_project?.id == project.id"
+                            class="mycheckbox2 d-none"
+                          />
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-padding-r">
+                  <div class="input-div getinputfield invoice-month-padding">
+                    <div class="title-5-new2 text-color-black-shade5 text-left">
+                      Invoicing month
+                    </div>
+                    <input
+                      type="month"
+                      style="border: none"
+                      value="{{ this.selected_month }}"
+                      class="myinput month-input"
+                      (change)="setInvMonth($event)"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row mb-20">
+                                <div class="col-lg-4 col-md-6 mb-10">
+
+                                    <div class="input-div required_field getinputfield">
+                                        <div class="title-5-new2 text-color-black-shade5 text-left">Select customer</div>
+                                        <div class="myinput-new" *ngIf="!this.selected_company">
+                                            All
+                                        </div>
+                                        <div class="myinput-new" *ngIf="selected_company?.company_name !=null">
+                                            <ng-container *ngFor="let company of this.trucking_companies">
+
+                                                <ng-container *ngIf="this.selected_company?.id == company.id">
+                                                    {{company?.company_name ? company?.company_name:''}}
+                                                </ng-container>
+                                            </ng-container>
+
+                                        </div>
+                                        <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                        <div class="input-popup-div companies_list" style="display: none;">
+                                            <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                                                Customer
+                                            </div>
+                                            <div class="title-18 text-right mb-2px">Default</div>
+                                            <ng-container *ngFor="let company of this.trucking_companies">
+
+                                                <div class="d-flex justify-content-between mb-2px" >
+                                                    <div (click)="handleFilterByCompany(company)" [ngClass]="this.selected_company?.id == company.id ? 'title-5-new':'title-5-new text-color-black-shade7'" >
+                                                        {{company?.company_name}}
+                                                    </div>
+
+                                                    <input type="checkbox" id="" (change)="markDefault($event,(company.freelance_driver_id !=null? 'freelance_trucking_company':'user'),company.id,company)"
+                                                    [checked]="this.default_company?.id == company.id" class="mycheckbox2">
+
+                                                </div>
+                                            </ng-container>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-10">
+
+                                    <div class="input-div required_field getinputfield">
+                                        <div class="title-5-new2 text-color-black-shade5  text-left">Select month</div>
+                                        <input type="month" style="border:none" value="{{this.selected_month}}" class="myinput month-input" (change)="setInvMonth($event)" />
+                                    </div>
+                                </div>
+                            </div> -->
+              <div class="table-responsive project-setting-page-table">
+                <table class="table mt-15px">
+                  <thead class="table-light project-setting-table-header">
+                    <tr class="header-row">
+                      <th class="project-settings-table-header text-left">
+                        <div class="heading-8-400 text-color-grey">
+                          Invoice number
+                        </div>
+                      </th>
+                      <th class="project-settings-table-header text-left">
+                        <div class="heading-8-400 text-color-grey">
+                          Customer
+                        </div>
+                      </th>
+                      <th class="project-settings-table-header text-left">
+                        <div class="heading-8-400 text-color-grey">Project</div>
+                      </th>
+                      <th class="project-settings-table-header text-center">
+                        <div class="heading-8-400 text-color-grey">
+                          Invoice date
+                        </div>
+                      </th>
+                      <th class="project-settings-table-header text-center">
+                        <div class="heading-8-400 text-color-grey">
+                          Ticket count
+                        </div>
+                      </th>
+                      <th class="project-settings-table-header text-center">
+                        <div class="heading-8-400 text-color-grey">Hours</div>
+                      </th>
+                      <th class="project-settings-table-header text-center">
+                        <div class="heading-8-400 text-color-grey">Rounds</div>
+                      </th>
+                      <th class="project-settings-table-header text-center">
+                        <div class="heading-8-400 text-color-grey">
+                          Subtotal
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngIf="this.invoiced_invoices?.length > 0">
+                      <ng-container
+                        *ngFor="let invoice of this.invoiced_invoices"
+                      >
+                        <tr
+                          data-toggle="modal"
+                          data-target="#myModalDetail2"
+                          (click)="setInvoice(invoice)"
+                        >
+                          <td class="text-center">
+                            <div class="invoiced-div">
+                              {{ invoice?.invoice_no }}
+                            </div>
+                          </td>
+                          <td class="text-left">
+                            <div *ngIf="invoice?.invoice_for">
+                              {{ invoice?.invoice_for?.company_name }}
+                            </div>
+                          </td>
+                          <td class="text-left">
+                            <div *ngIf="invoice?.tickets[0]?.ticket?.project">
+                              {{
+                                invoice?.tickets[0]?.ticket?.project
+                                  ?.project_name
+                              }}
+                            </div>
+                            <div
+                              *ngIf="invoice?.tickets[0]?.ticket?.tc_project"
+                            >
+                              {{
+                                invoice?.tickets[0]?.ticket?.tc_project
+                                  ?.project_name
+                              }}
+                            </div>
+                          </td>
+                          <td class="text-center">
+                            {{ invoice?.invoice_date | date : "d-MM-YYYY" }}
+                          </td>
+                          <td class="text-center">
+                            {{ invoice?.tickets?.length }}
+                          </td>
+
+                          <td class="text-center">
+                            {{ invoice?.hours ? invoice?.hours : "-" }}
+                          </td>
+                          <td class="text-center">
+                            {{ invoice?.rounds ? invoice?.rounds : "-" }}
+                          </td>
+                          <td class="text-center">
+                            ${{ getTotal(invoice?.total) }}
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <tr class="bg-grey">
+                        <td colspan="2"></td>
+                        <td></td>
+                        <td class="display-period">
+                          <span
+                            class="text-semibold-16-400 text-align-right text-right float-left"
+                          >
+                            Summary:
+                          </span>
+                          <div
+                            class="white-container d-inline-block ml-2 mr-5re"
+                          >
+                            <label class="label-qty"> Invoicing month </label>
+                            <div class="text-semibold-16-400">
+                              <span id="cal-0">
+                                {{
+                                  this.selected_month
+                                    ? this.selected_month
+                                    : "All time"
+                                }}
+                              </span>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <div
+                            class="white-container d-inline-block"
+                            align="center"
+                          >
+                            <label class="label-qty"> Ticket #</label>
+                            <div class="text-semibold-16-400">
+                              {{ this.total_ticket_count }}
+                            </div>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <div
+                            class="white-container d-inline-block"
+                            align="center"
+                          >
+                            <label class="label-qty"> Hours</label>
+                            <div class="text-semibold-16-400">
+                              {{
+                                this.total_hours
+                                  ? this.total_hours + " hr"
+                                  : this.total_hours
+                              }}
+                            </div>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <div
+                            class="white-container d-inline-block"
+                            align="center"
+                          >
+                            <label class="label-qty"> Rounds</label>
+                            <div class="text-semibold-16-400">
+                              {{
+                                this.total_inv_rounds
+                                  ? this.total_inv_rounds
+                                  : "-"
+                              }}
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="text-center">
+                          <div
+                            class="white-container d-inline-block"
+                            align="center"
+                          >
+                            <label class="label-qty"> Subtotal</label>
+                            <div class="text-semibold-16-400">
+                              ${{ getTotal(this.total_subtotal) }}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+
+                    <ng-container
+                      *ngIf="
+                        this.invoiced_invoices?.length < 1 ||
+                        this.loading_invoiced
+                      "
+                    >
+                      <tr>
+                        <td colspan="7" *ngIf="!this.loading_invoiced">
+                          No invoices found
+                        </td>
+                        <td colspan="7" *ngIf="this.loading_invoiced">
+                          Fetching invoices..
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-tc-approved-popup
+  [ticketDetail]="this.requestDetail"
+  *ngIf="requestDetail"
+></app-tc-approved-popup>
+
+<div
+  class="modal fade come-from-modal right"
+  *ngIf="to_send_invoice_data"
+  id="myModalDetail"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body modal-body-padding">
+        <div
+          class="d-flex justify-content-between align-items-center mb-15px top-border-div"
+        >
+          <div class="width-75px">
+            <div class="title-7-new text-color-black-shade5 mb-3px">
+              Invoice #
+            </div>
+            <div class="title-12 text-color-black-shade">{{ invoice_no }}</div>
+          </div>
+          <div class="border-div width-143px text-center getinputfield">
+            <div class="title-5-new2 text-color-black-shade5 mb-2px">
+              Invoice date
+            </div>
+            <div
+              class="title-5-new3 text-color-black-shade6"
+              (click)="showCalendarDate()"
+            >
+              {{ this.invoice_date }}
+            </div>
+            <div
+              class="input-popup-div calendar-2 calendar-width-300"
+              style="display: none; width: 300px; padding: 0; margin: 15px"
+              align="center"
+            >
+              <div
+                id="pnlEventCalendar2"
+                style="width: 100%"
+                class=""
+                (click)="getVal2()"
+              ></div>
+            </div>
+          </div>
+          <div>
+            <div class="title-6-2 m-0 mybtn-back-pink custom-padding16 br-4">
+              Invoicing
+            </div>
+          </div>
+        </div>
+        <div class="border-div2 my-border mb-42">
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Business name
+              </div>
+              <div class="title-7">{{ this.loggedinUser?.company_name }}</div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div class="title-7 text-right">
+                {{ this.loggedinUser?.email }}
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Address
+              </div>
+              <div class="title-7">
+                {{
+                  this.loggedinUser?.customer &&
+                  this.loggedinUser?.customer?.address &&
+                  this.loggedinUser?.customer?.address != "null"
+                    ? this.loggedinUser?.customer?.address
+                    : ""
+                }}
+                {{
+                  this.loggedinUser?.customer &&
+                  this.loggedinUser?.customer?.city &&
+                  this.loggedinUser?.customer?.city != "null"
+                    ? ", " + this.loggedinUser?.customer?.city
+                    : ""
+                }}
+                {{
+                  this.loggedinUser?.customer &&
+                  this.loggedinUser?.customer?.province &&
+                  this.loggedinUser?.customer?.province != "null"
+                    ? ", " + this.loggedinUser?.customer?.province
+                    : ""
+                }}
+                {{
+                  this.loggedinUser?.post_code &&
+                  this.loggedinUser?.post_code != "null"
+                    ? ", " + this.loggedinUser?.post_code
+                    : ""
+                }}
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Business number
+              </div>
+              <div class="title-7">
+                {{
+                  this.loggedinUser?.customer?.business_no
+                    ? this.loggedinUser?.customer?.business_no
+                    : ""
+                }}
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Work safety number
+              </div>
+              <div class="title-7">
+                {{
+                  this.loggedinUser?.customer?.wsbc_no
+                    ? this.loggedinUser?.customer?.wsbc_no
+                    : ""
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-div2 mb-22">
+          <div class="bg-grey-div text-center title-customer">Customer</div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Customer Name
+              </div>
+              <div class="title-7">
+                {{
+                  this.to_send_invoice_data?.trucking_company?.company_name
+                    ? this.to_send_invoice_data?.trucking_company.company_name
+                    : ""
+                }}
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div class="title-7 text-right">
+                {{
+                  this.to_send_invoice_data?.trucking_company?.email
+                    ? this.to_send_invoice_data?.trucking_company?.email
+                    : ""
+                }}
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Contact person
+              </div>
+              <div class="title-7">
+                {{
+                  this.to_send_invoice_data?.trucking_company?.full_name
+                    ? this.to_send_invoice_data?.trucking_company?.full_name
+                    : ""
+                }}
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div class="title-7 text-right">
+                {{
+                  this.to_send_invoice_data?.trucking_company?.email
+                    ? this.to_send_invoice_data?.trucking_company?.email
+                    : ""
+                }}
+              </div>
+            </div>
+          </div>
+
+          <div class="myhr2"></div>
+
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Address
+              </div>
+              <div class="title-7">
+                {{
+                  this.to_send_invoice_data?.trucking_company?.address &&
+                  this.to_send_invoice_data?.trucking_company?.address != null
+                    ? this.to_send_invoice_data?.trucking_company?.address
+                    : ""
+                }}
+                {{
+                  this.to_send_invoice_data?.trucking_company?.city &&
+                  this.to_send_invoice_data?.trucking_company?.city != "" &&
+                  this.to_send_invoice_data?.trucking_company?.city != null
+                    ? ", " + this.to_send_invoice_data?.trucking_company?.city
+                    : ""
+                }}
+                {{
+                  this.to_send_invoice_data?.trucking_company?.province &&
+                  this.to_send_invoice_data?.trucking_company?.province != "" &&
+                  this.to_send_invoice_data?.trucking_company?.province != null
+                    ? ", " +
+                      this.to_send_invoice_data?.trucking_company?.province
+                    : ""
+                }}
+                {{
+                  this.to_send_invoice_data?.trucking_company?.postal_code &&
+                  this.to_send_invoice_data?.trucking_company?.postal_code !=
+                    "" &&
+                  this.to_send_invoice_data?.trucking_company?.postal_code !=
+                    null
+                    ? ", " +
+                      this.to_send_invoice_data?.trucking_company?.post_code
+                    : ""
+                }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between custom-padding18 mb-16">
+          <div>
+            <div class="title-5-new2 text-color-black-shade2 mb-7">
+              Invoicing period
+            </div>
+            <div class="title-7">{{ this.default_duration_type }}</div>
+          </div>
+          <div>
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Dates
+            </div>
+            <div class="title-7 text-right">
+              {{ this.to_send_invoice_data?.data?.start_date }} :
+              {{ this.to_send_invoice_data?.data?.end_date }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px" *ngIf="this.to_send_invoice_data?.data?.hour">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Hours :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.to_send_invoice_data?.data?.hour }}
+              <!-- at (${{
+                this.to_send_invoice_data?.data?.hour_rate
+              }}) -->
+            </div>
+          </div>
+        </div>
+        <div
+          class="row mb-4px"
+          *ngIf="this.to_send_invoice_data?.data?.totalRounds"
+        >
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Rounds :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.to_send_invoice_data?.data?.totalRounds }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Subtotal :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              ${{ this.to_send_invoice_data?.data?.subtotal?.toFixed(2) }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Tax ({{ this.gst?.type }}): {{ this.gst?.tax }}% :
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex"
+            style="flex-wrap: nowrap; justify-content: space-between"
+          >
+            <div class="title-7">
+              ${{ this.to_send_invoice_data?.data?.tax_amount?.toFixed(2) }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-15px total-div">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Total :
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex"
+            style="flex-wrap: nowrap; justify-content: space-between"
+          >
+            <div class="title-7 total-bold-text">
+              ${{ this.to_send_invoice_data?.data?.total?.toFixed(2) }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-21">
+          <div class="col-md-6"></div>
+          <div class="col-md-6 pr-4">
+            <div class="title-5-new2 text-color-black-shade2 text-right">
+              Due date :
+            </div>
+            <div class="title-7 text-right">
+              {{ this.due_date | date : "MMMM dd" }}
+            </div>
+          </div>
+        </div>
+        <div class="mb-22">
+          <div class="position-relative notes-div">
+            <div class="title-5-new2 text-color-black-shade2 mb-6">
+              Your notes
+            </div>
+            <textarea
+              class="myinput5 myinput5-textarea notes-textarea"
+              placeholder="Type here"
+              rows="2"
+              (input)="setNotes($event)"
+            ></textarea>
+            <img
+              src="../../assets/icons/pencile.svg"
+              alt=""
+              class="top-right-icon"
+              width="17px"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-4 col-6" align="center">
+            <div class="position-relative modal-div">
+              <button
+                class="mybtn2 mybtn-default no-wrap openOptionModal2 openOptionModal"
+                (click)="toggleDownload()"
+                *ngIf="this.is_loading != 'download'"
+              >
+                Download
+              </button>
+              <button
+                class="mybtn2 mybtn-default no-wrap openOptionModal2"
+                *ngIf="this.is_loading == 'download'"
+              >
+                Processing..
+              </button>
+              <div class="option-modal" *ngIf="is_shown_download">
+                <div class="title-3 mb-12 text-center mb-12">Mark as sent?</div>
+                <div class="title-5-new2 mb-17 text-center mb-16">
+                  Change as invoiced
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <button
+                    class="mybtn5 mybtn-back-pink title-17 w-auto btnaction"
+                    (click)="downloadInvoice()"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    class="mybtn5 mybtn-default title-17 w-auto btnaction ml-18 text-blue-color"
+                    (click)="downloadInvoice(true)"
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6" align="center">
+            <button
+              class="mybtn2 mybtn-back-pink no-wrap send-invoice-btn"
+              (click)="hanldeSendInvoice()"
+              *ngIf="this.is_loading != 'save_invoice'"
+            >
+              Send invoice
+            </button>
+            <button
+              class="mybtn2 mybtn-back-pink no-wrap send-invoice-btn"
+              *ngIf="this.is_loading == 'save_invoice'"
+            >
+              Processing..
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade come-from-modal right"
+  id="myModalDetail2"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body modal-body-padding">
+        <div class="d-flex justify-content-between align-items-center mb-42">
+          <div class="width-75px">
+            <div class="title-7-new text-color-black-shade5 mb-3px">
+              Invoice #
+            </div>
+            <div class="title-12 text-color-black-shade">
+              {{ edited_invoice?.invoice_no }}
+            </div>
+          </div>
+
+          <div class="border-div width-143px text-center p-1">
+            <div class="title-5-new2 text-color-black-shade5 mb-2px">
+              Invoice date
+            </div>
+            <div class="title-5-new3 text-color-black-shade6">
+              {{ edited_invoice?.invoice_date }}
+            </div>
+          </div>
+          <div>
+            <div class="title-6-2 m-0 mybtn-back-pink invoiced-div br-4">
+              Invoiced
+            </div>
+          </div>
+        </div>
+        <div class="border-div2 mb-15px">
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Business Name
+              </div>
+              <div class="title-7">
+                {{
+                  this.edited_invoice?.invoice_by.edited_invoice?.invoice_by
+                    ?.company_name
+                    ? this.edited_invoice?.invoice_by?.company_name
+                    : this.edited_invoice?.invoice_by?.full_name
+                }}
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div class="title-7 text-right">
+                {{ edited_invoice?.invoice_by?.email }}
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Address
+              </div>
+              <div class="title-7">
+                {{
+                  this.edited_invoice?.invoice_by?.customer &&
+                  this.edited_invoice?.invoice_by?.customer?.address &&
+                  this.edited_invoice?.invoice_by?.customer?.address != "null"
+                    ? this.edited_invoice?.invoice_by?.customer?.address
+                    : ""
+                }}
+                {{
+                  this.edited_invoice?.invoice_by?.customer &&
+                  this.edited_invoice?.invoice_by?.customer?.city &&
+                  this.edited_invoice?.invoice_by?.city != "null"
+                    ? ", " + this.edited_invoice?.invoice_by?.city
+                    : ""
+                }}
+                {{
+                  this.edited_invoice?.invoice_by?.customer &&
+                  this.edited_invoice?.invoice_by?.customer?.province &&
+                  this.edited_invoice?.invoice_by?.province != "null"
+                    ? ", " + this.edited_invoice?.invoice_by?.province
+                    : ""
+                }}
+                {{
+                  this.edited_invoice?.invoice_by?.post_code &&
+                  this.edited_invoice?.invoice_by?.post_code != "null"
+                    ? ", " + this.edited_invoice?.invoice_by?.post_code
+                    : ""
+                }}
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Business number
+              </div>
+              <div class="title-7">
+                {{ this.edited_invoice?.invoice_by?.customer?.business_no }}
+              </div>
+            </div>
+            <div align="right">
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Work safety number
+              </div>
+              <div class="title-7">
+                {{ this.edited_invoice?.invoice_by?.customer?.wsbc_no }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-div2 mb-16">
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Customer Name
+              </div>
+              <div class="title-7">
+                <div *ngIf="edited_invoice?.invoice_for?.company_name">
+                  {{ edited_invoice?.invoice_for?.company_name }}
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div class="title-7 text-right">
+                <div *ngIf="edited_invoice?.invoice_for?.email">
+                  {{ edited_invoice?.invoice_for?.email }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Contact person
+              </div>
+              <div class="title-7">
+                <div>
+                  {{ edited_invoice?.invoice_for?.full_name }}
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div class="title-7 text-right">
+                <div *ngIf="edited_invoice?.invoice_for?.email">
+                  {{ edited_invoice?.invoice_for?.email }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Address
+              </div>
+              <div class="title-7">
+                <div>
+                  {{
+                    this.edited_invoice?.invoice_for?.address &&
+                    this.edited_invoice?.invoice_for?.address != "null"
+                      ? this.edited_invoice?.invoice_for?.address
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.city &&
+                    this.edited_invoice?.invoice_for?.city != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.city
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.province &&
+                    this.edited_invoice?.invoice_for?.province != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.province
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.post_code &&
+                    this.edited_invoice?.invoice_for?.post_code != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.post_code
+                      : ""
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between custom-padding18 mb-16">
+          <div>
+            <div class="title-5-new2 text-color-black-shade2 mb-7">
+              Invoicing period
+            </div>
+            <div class="title-7">
+              {{ this.edited_invoice?.invoice_period_type }}
+            </div>
+          </div>
+          <div>
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Dates
+            </div>
+            <div class="title-7 text-right">
+              {{ this.edited_invoice?.invoice_period_start | date : "MMMM d" }}
+              -
+              {{ this.edited_invoice?.invoice_period_end | date : "MMMM d, y" }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="row mb-4px"
+          *ngIf="
+            this.edited_invoice?.hours != '0' &&
+            this.edited_invoice?.hours != null &&
+            this.edited_invoice?.hours != ''
+          "
+        >
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Hours :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.edited_invoice?.hours }}
+              <!-- at (${{
+                this.edited_invoice?.hours_rate
+              }}) -->
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px" *ngIf="this.edited_invoice?.rounds">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Rounds :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.edited_invoice?.rounds }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Subtotal :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.edited_invoice?.subtotal | currency }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Tax ({{ this.gst?.type }}): {{ this.gst?.tax }}% :
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex"
+            style="flex-wrap: nowrap; justify-content: space-between"
+          >
+            <div class="title-7">
+              {{ this.edited_invoice?.tax_amount | currency }}
+            </div>
+
+            <!-- <div class="title-5-new2 text-color-black-shade2  text-right">Due date :</div> -->
+          </div>
+        </div>
+        <div class="row mb-15px total-div">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Total :
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex"
+            style="flex-wrap: nowrap; justify-content: space-between"
+          >
+            <div class="title-7 total-bold-text">
+              {{ this.edited_invoice?.total | currency }}
+            </div>
+          </div>
+        </div>
+        <!-- <div class="title-7  text-right">{{this.edited_invoice?.invoice_due_date | date:"MMMM dd"}}</div> -->
+
+        <div class="row mb-21">
+          <div class="col-md-6"></div>
+          <div class="col-md-6 pr-4">
+            <div class="title-5-new2 text-color-black-shade2 text-right">
+              Due date :
+            </div>
+            <div class="title-7 text-right">
+              {{ this.edited_invoice?.invoice_due_date | date : "MMMM dd" }}
+            </div>
+          </div>
+        </div>
+        <div class="mb-22">
+          <div class="position-relative notes-div">
+            <div class="title-5-new2 text-color-black-shade2 mb-6">
+              Your notes
+            </div>
+            <textarea
+              class="myinput5 myinput5-textarea"
+              placeholder="Type here"
+              readonly
+              rows="2"
+              >{{ this.edited_invoice?.invoice_notes }}</textarea
+            >
+            <!-- <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px"> -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-4 col-6" align="center">
+            <div class="position-relative modal-div">
+              <button
+                class="mybtn2 mybtn-back-pink no-wrap openOptionModal2 bg-white"
+                (click)="downloadEditedInvoice()"
+                *ngIf="this.is_loading != 'download'"
+              >
+                Download
+              </button>
+              <button
+                class="mybtn2 mybtn-back-pink no-wrap openOptionModal2 bg-white"
+                *ngIf="this.is_loading == 'download'"
+              >
+                Processing...
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4 col-6" align="center">
+            <button
+              class="mybtn2 mybtn-back-pink no-wrap send-invoice-btn"
+              (click)="resendInvoice()"
+              *ngIf="this.is_loading != 'resend'"
+            >
+              Resend
+            </button>
+            <button
+              class="mybtn2 mybtn-back-pink no-wrap send-invoice-btn"
+              *ngIf="this.is_loading == 'resend'"
+            >
+              Processing...
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

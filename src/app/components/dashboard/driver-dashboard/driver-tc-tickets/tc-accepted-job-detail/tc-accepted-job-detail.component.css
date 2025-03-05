@@ -1,0 +1,401 @@
+@import url("../../../../../../assets/css/driver-mobile.css");
+@import url("../../../../../../assets/css/margins.css");
+body.mat-typography{
+    background: white !important;
+}
+.bg-approved{
+    background-color: #17A1FA;
+    color: white;
+}
+
+.bg-completed{
+    background-color: #33D1A2
+    ;
+    color: white;
+}
+
+.bg-grey{
+    background:#D9D9D9;
+    color:#000000;
+}
+
+.color-lightgrey{
+    color: #88898B
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: white;
+    opacity: 1;
+}
+
+
+.text-align-right{
+    text-align: right;
+}
+
+
+.red-circle{
+    padding: 0px 12px 0px 5px;
+    background: #F73333;
+    border-radius: 50%;
+    margin-right: 5px;
+    
+}
+
+.vertical-alignment-helper{
+    height: 60% !important;
+}
+
+.border-pink{
+    border: 2px solid #FDD7E4 !important;
+    border-radius: 4px;
+}
+
+.tab-pane{
+    padding-left: 15px;
+    padding-right:15px;
+}
+.fix-button{
+    position: fixed;
+    bottom:25px;
+    margin-right: 40px;    
+    right: 0;
+    left: 0;
+}
+
+
+
+.text-black-shade3{
+    line-break: anywhere !important;
+}
+
+
+.ticket-div {
+    padding: 5px 0px 32px 0px;
+    margin: 0 5px;
+}
+
+.border-div{
+    border: 1px solid #D9D9D9;
+    border-radius: 8px;
+  
+    margin-left: 0px;
+    margin-right: 0px;
+    padding:8px;
+}
+
+.custom-padding12 {
+    padding: 0px 5px 0 5px !important;
+}
+
+.title-7{
+    font-family: 'Gilroy';
+    font-size: 17px;
+    line-height: 20px;
+    color: #68696D;
+}
+
+.custom-padding15 {
+    padding: 8px 4px !important;
+}
+
+.title-5{
+    font-family: 'Gilroy-Bold';
+    font-size: 17px;
+    line-height: 20px;
+    text-align: right;
+
+    color: #000000;
+}
+
+.desc-text{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 15px;
+    line-height: 18px;
+
+    color: #88898B;
+
+    opacity: 0.5;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.title-72{
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #68696D;
+}
+
+.title-82{
+    font-family: 'Gilroy-Bold';
+    font-size: 20px;
+    line-height: 23px;
+
+    color: #000000;
+}
+
+.tab-pane {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mr--10{
+    margin-right: -10px;
+} 
+.dflex-btn{
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+
+.bg-white{
+    background: #FFFFFF !important;
+}
+
+.font-semibold{
+    font-family: 'Gilroy-SemiBold';
+    font-weight: 400;
+}
+
+.font-size-18{
+    font-size: 18px;
+}
+
+.text-black{
+    color: #000000 !important;
+}
+.ml-17{
+    margin-left: 10px !important;
+}
+
+.btn-details{
+    height: 55px !important;
+    width: max-content !important;
+    padding: 5px 10px 5px 10px !important;
+    display: flex;
+    align-items: center;
+}
+
+.btn-details.active{
+    box-shadow: 0px 4px 4px 0px #00000040 inset;
+}
+
+.ticket-datetime {
+    margin: 0 0px !important;
+}
+
+.mb-36 {
+    margin-bottom: 20px !important;
+}
+
+.mb-14.bg-yellow2{
+    margin-bottom: 15px !important;
+}
+.mb-10{
+    margin-bottom: 10px !important;
+}
+
+.label-regular{
+    font-family: 'Gilroy';
+    font-weight: 400;
+    font-size: 17px;
+    color: #68696D;
+}
+.title-9.text-black-shade3{
+    color: #000000 !important;
+}
+
+.mb-5px{
+    margin-bottom: 5px !important;
+}
+
+.border-div {
+    border: 1px solid #D9D9D9;
+    border-radius: 8px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 5px;
+}
+.myhr{
+    width: 100%;
+    border-bottom: 1px solid #D9D9D9 !important;
+}
+
+.custom-padding15{
+    padding: 5px 5px !important;
+}
+
+.br-1px{
+    border-right: 1px solid #D9D9D9 ;
+}
+.mb-10px{
+    margin-bottom: 10px !important;
+}
+.p-right{
+   padding-right: 0.7rem !important;
+}
+
+.p-left{
+    padding-left: 0.7rem !important;
+ }
+.min-height-65px{
+    min-height: 65px !important;
+}
+
+.p-5px{
+    padding: 5px !important;
+}
+
+.round-container{
+    border-radius: 5px;
+    border-left: 2px solid #D9D9D9;
+    border-right: 2px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.round-top{
+    background: #E8EBEE;
+    padding: 5px;
+}
+
+.black-17-font-bold{
+    font-family: 'Gilroy';
+    font-weight: 700;
+    font-size: 17px;
+    color: #000;
+}
+
+.round-no-div {
+    background: #D9D9D9;
+    padding: 3px 5px;
+    height: 30px;
+    text-align: center;
+    width: 110px;
+    border-radius: 10px;
+}
+
+.grey-18-font-normal{
+    font-family: 'Gilroy';
+    font-size: 18px;
+    font-weight: 400;
+    color: #68696D;
+}
+
+.mb-15px{
+    margin-bottom: 15px !important;
+}
+
+.ticket-tabs li.active:after {
+    content: "";
+    border-bottom: none;
+    position: none;
+   
+}
+
+.ticket-tabs li {
+    background: #FFF;
+    border: 1px solid var(--Driver-pink-tragget, #FDD7E4);
+}
+
+.ticket-tabs li.active {
+   
+    box-shadow: 0px 4px 4px 0px #00000040 inset;
+
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+}
+.fix-button {
+    position: fixed;
+    bottom: 25px;
+    margin-right: 40px;
+    right: 0;
+    left: 0;
+}
+
+.ml-35 {
+    margin-left: 35px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--Declined, #FF4D4D);
+}
+
+
+.px-20 {
+    padding-left: 17px;
+    padding-right: 17px;
+}
+
+.btn-accept {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 18px;
+    line-height: 29px;
+    text-align: center;
+    color: #000;
+    border: 1px solid #FDD7E4;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    background-color: #FDD7E4;
+    border-radius: 10px;
+    padding: 12px 18px;
+    border: none;
+    position: relative;
+}
+
+.ml-36 {
+    margin-left: 36px !important;
+}
+.btn-decline, .btn-accept {
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.ml-13{
+    margin-left: 35px !important;
+}
+
+
+.btn-decline {
+    border: 1px solid var(--Declined, #FF4D4D);
+}
+
+
+.text-underline{
+    text-decoration: underline;
+}
+
+.title-20-semibold{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.5px;
+    color: #000;
+
+}
+
+
+
+.modal-padding{
+    padding: 0 13px 0px 7px !important;
+}
+
+
+.min-h-100{
+    min-height: 100px;
+}
+
+.font-size-17{
+    font-size: 17px !important;
+}

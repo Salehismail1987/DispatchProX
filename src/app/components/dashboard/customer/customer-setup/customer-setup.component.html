@@ -1,0 +1,147 @@
+<div class="wrapper">
+    <app-dashboard-header></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content" *ngIf="hide_options==false">
+            <div class="main-content bg-white border-div">
+                <div class="main-heading">Set everything ready <button class="mybtn mybtn-back-yellow float-right btn-customer p-1 w-102px" [routerLink]="'/dashboard'">Skip</button></div>
+                <div class="welcome-desc mlr-40px">Welcome to DispatchProX. DispatchProX makes dispatching trucks and planning your projects super easy. Now all your truck jobs can be found and managed in one place.
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="title-3 mb-15 text-center current-title">Complete 3 steps to start.</div>
+                        <div class="progress mb-38 ml-2 mb-8">
+
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" [style]="'width:'+this.score+'%'">
+                            </div>
+                        </div>
+                        <div class="title-3 text-grey-shade current-steps text-center mb-36">Step {{this.score ? this.getScore(this.score) : 0}} of 3 is completed.</div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    </div>
+                    <div class="col-md-5">
+                        <div class="d-flex align-items-center position-sticky mb-22">
+                            <div class="">
+                               
+                                <img class="image-guide" src="../../assets/icons/setup-ticket.svg" >
+                                
+                            </div>
+                            <div class="dasborad-guid-div">
+                                <div class="desc-1 text-color-grey ">
+                                    Top left you find your projects, track how they use trucks and set different default parameters like type of trucks used.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center position-sticky mb-22">
+                            <div class="">
+                               
+                                <img class="image-guide" src="../../assets/icons/setup-contacts.svg" >
+                                
+                            </div>
+                            <div class="dasborad-guid-div">
+                                <div class="desc-1 text-color-grey ">
+                                    The Trucking companies tab allows you to invite other Trucking companies and brokers you use to dispatch tickets.
+                                </div>
+                            </div>
+                        </div>
+                   
+                        <div class="d-flex align-items-center position-sticky mb-22">
+                            <div class="">
+                               
+                                <img class="image-guide" src="../../assets/icons/setup-company.svg" >
+                                
+                            </div>
+                            <div class="dasborad-guid-div">
+                                <div class="desc-1 text-color-grey ">
+                                    DispatchProX users, who you want to have an access to company account, and roles they have, you can always add and edit  from the Company settings. 
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                    <div class=" col-md-5 ">
+                        <div class="position-relative">
+                            <div class="dashbord-guide" [ngClass]="this.is_adduser_active ? 'dashbord-guide active' :'dashbord-guide'" (click)="showModal('add-users')"  >
+                                <div>
+                                    <img src="../assets/icons/tick.svg" class="tick-icon">
+                                </div>
+                                <div class="dashbord-guide-icon">
+                                    <img src="../assets/icons/2-user-black.svg" style="height: 25px;">
+                                </div>
+                                <div class="dashbord-guide-content">
+                                    <div class="dashbord-guide-title">Add DispatchProX Users</div>
+                                   
+                                </div>
+                               
+                            </div>
+                         
+                        </div>
+                        <div class="position-relative ">
+                            <div [ngClass]="this.is_invitepeople_active ? 'dashbord-guide active' :'dashbord-guide'"  (click)="showModal('invite-people')">
+                                <div>
+                                    <img src="../assets/icons/tick.svg" class="tick-icon">
+                                </div>
+                                <div class="dashbord-guide-icon">
+                                    <img src="../assets/icons/truck-ico.svg" style="height: 25px;">
+                                </div>
+                                <div class="dashbord-guide-content">
+                                    <div class="dashbord-guide-title">Invite trucking company</div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="position-relative ">
+                            <div [ngClass]="this.is_new_project_active ? 'dashbord-guide active' :'dashbord-guide'" (click)="showModal('new-project')" >
+                                <div>
+                                    <img src="../assets/icons/tick.svg" class="tick-icon">
+                                </div>
+                                <div class="dashbord-guide-icon">
+                                    <img src="../assets/icons/black-plus.svg" style="height: 25px;">
+                                </div>
+                                <div class="dashbord-guide-content">
+                                    <div class="dashbord-guide-title">Create new project</div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                   
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        <div class="body-content" *ngIf="hide_options==true">
+            <div class="main-content bg-white border-div">
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="main-heading">Congratulations, you are all set.</div>
+                        <div class="welcome-desc">To continue using tragget, create new dispatch for you construction site, this dispatch will be sent to the trucking company.</div>
+                        <img src="../assets/icons/demo.png" class="img">
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12" align="center">
+                        <button class="mybtn mybtn-back-yellow width-fit-content" [routerLink]="'/customer-create-ticket'">Create Dispatch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="hide_options == false">
+    <app-new-project-form *ngIf="this.current_modal=='new-project'" [current_modal]="this.current_modal"  (showModl)="showModal($event)" (setAct)="setActive($event)"></app-new-project-form>
+    <app-invite-people-form *ngIf="this.current_modal=='invite-people'" [current_modal]="this.current_modal"  (showModl)="showModal($event)" (setAct)="setActive($event)"></app-invite-people-form>
+    <app-add-user-form  *ngIf="this.current_modal=='add-users'" [current_modal]="this.current_modal"  (showModl)="showModal($event)" (setAct)="setActive($event)"></app-add-user-form>
+    
+</div>

@@ -1,0 +1,861 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="project-profile-header-container">
+        <div class="profile_heading_div1">
+          <div
+            class="project-profile-header-left d-flex align-items-center ml-0"
+          >
+            <img
+              src="./assets/icons/tragget-ticket-page-icon.svg"
+              alt="project-profile-file-icon"
+            />
+            <div class="heading-1-400 text-color-black">DispatchProX tickets</div>
+          </div>
+        </div>
+        <div
+          class="d-flex-center"
+          *ngIf="this.free_trial == 'YES' && this.is_subscribed == 'NO'"
+        >
+          <button
+            class="mybtn mybtn-default text-blue btn-nav mybtn2"
+            [routerLink]="'/cust-tragget-trial'"
+          >
+            Free Trial
+          </button>
+          <button
+            class="mybtn bg-blue text-black active btn-nav ml-2 mybtn2"
+            [routerLink]="'/cust-tragget-plans'"
+          >
+            DispatchProX Plans
+          </button>
+        </div>
+
+        <div
+          class="d-flex-center"
+          *ngIf="
+            (!this.free_trial || this.free_trial == 'NO') && this.is_subscribed
+          "
+        >
+          <button
+            class="mybtn mybtn-default text-blue btn-nav mybtn2"
+            [routerLink]="'/cust-tragget-tickets'"
+          >
+            Subscriptions and tickets
+          </button>
+          <button
+            class="mybtn bg-blue text-black active btn-nav ml-2 mybtn2"
+            [routerLink]="'/cust-tragget-plans'"
+          >
+            DispatchProX plans
+          </button>
+        </div>
+      </div>
+
+      <div class="main-project-setting-container inner_main_shadow">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <div class="title-3 text-center mb-6">
+              Get single tickets and/or cost-optimized subscriptions
+            </div>
+            <div class="title-4 text-center mb-63">
+              Fuel your business with the best-suited plan
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div
+              class="ticket-badge bg-subs float-right"
+              *ngIf="this.free_trial == 'YES' && this.is_subscribed == 'NO'"
+            >
+              <div class="title-6 text-white mb-2">Last 30 days</div>
+              <div class="title-5 text-white mb-2">
+                {{ this.last_30_days_closed_tickets }}
+              </div>
+              <div class="title-6 text-white mb-35">Tickets used</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-65 mr-4px ml-4px">
+          <div class="col-md-3 pr-2px">
+            <div
+              [ngClass]="
+                !this.active_plan &&
+                !this.active_plan?.id &&
+                this.free_trial == 'NO'
+                  ? ' plan-div active'
+                  : 'plan-div'
+              "
+            >
+              <div class="plan-div-bg">
+                <div
+                  class="d-flex justify-content-between mb-20 justify-content-space-around"
+                >
+                  <div class="d-flex plr-25px">
+                    <svg
+                      width="42"
+                      height="42"
+                      viewBox="0 0 42 42"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        opacity="0.2"
+                        cx="28.6086"
+                        cy="26.3501"
+                        r="8.28146"
+                        fill="#33D1A2"
+                      />
+                      <g clip-path="url(#clip0_2_11793)">
+                        <path
+                          d="M33.8017 13.7894L26.1977 10.0296C25.9333 9.89882 25.621 9.90887 25.3655 10.0564L17.2171 14.7608C17.2166 14.7611 17.216 14.7614 17.2155 14.7617C17.215 14.762 17.2145 14.7623 17.214 14.7626L9.06561 19.4671C8.81011 19.6146 8.6453 19.88 8.62636 20.1744L8.08042 28.6395C8.05241 29.0737 8.34506 29.4634 8.76975 29.5576L27.4646 33.7058C27.6878 33.7553 27.9116 33.7154 28.0968 33.6085C28.2819 33.5016 28.4284 33.3278 28.4971 33.1096L34.2522 14.8454C34.3829 14.4304 34.1917 13.9822 33.8017 13.7894ZM18.0972 22.4026L18.4519 16.9032L23.392 19.3457L18.0972 22.4026ZM24.611 20.6794L26.3648 30.6087L18.6427 24.1252L24.611 20.6794ZM19.5255 15.4656L24.8201 12.4087L24.4654 17.9081L19.5255 15.4656ZM16.3155 22.6134L11.3755 20.171L16.6702 17.1141L16.3155 22.6134ZM15.242 24.0511L9.94729 27.108L10.302 21.6086L15.242 24.0511ZM17.0167 25.064L24.3277 31.2023L11.3662 28.3263L17.0167 25.064ZM26.237 19.7407L31.8875 16.4783L27.8974 29.1413L26.237 19.7407ZM26.2472 17.6973L26.6019 12.1978L31.5419 14.6404L26.2472 17.6973Z"
+                          fill="#33D1A2"
+                        />
+                        <path
+                          d="M24.4497 8.49436C24.6452 8.38146 24.7977 8.19394 24.8607 7.95863L25.7741 4.54988C25.9002 4.07927 25.6209 3.59547 25.1502 3.46935C24.6796 3.34326 24.1958 3.62258 24.0697 4.0932L23.1563 7.50195C23.0302 7.97256 23.3095 8.45636 23.7802 8.58248C24.0155 8.64554 24.2541 8.60726 24.4497 8.49436Z"
+                          fill="#33D1A2"
+                        />
+                        <path
+                          d="M15.6867 12.1129C16.1087 11.8693 16.2533 11.3297 16.0096 10.9078L14.2451 7.85153C14.0015 7.42956 13.4619 7.28498 13.0399 7.5286C12.618 7.77222 12.4734 8.31182 12.717 8.73378L14.4815 11.79C14.7251 12.212 15.2647 12.3566 15.6867 12.1129Z"
+                          fill="#33D1A2"
+                        />
+                        <path
+                          d="M7.5017 17.9808C7.73704 18.0438 7.97567 18.0055 8.17117 17.8927C8.36666 17.7798 8.51918 17.5923 8.58218 17.3569C8.70833 16.8863 8.42901 16.4025 7.95834 16.2764L4.54972 15.363C4.07913 15.2369 3.59533 15.5163 3.46919 15.9869C3.34304 16.4575 3.62237 16.9413 4.09303 17.0674L7.5017 17.9808Z"
+                          fill="#33D1A2"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_2_11793">
+                          <rect
+                            width="30.1144"
+                            height="30.1144"
+                            fill="white"
+                            transform="translate(0 15.0573) rotate(-30)"
+                          />
+                        </clipPath>
+                      </defs>
+                    </svg>
+
+                    <div class="ml-17">
+                      <div class="title-21 mb-8 text-grey">Basic</div>
+                      <div class="desc-21 text-color-black-shade text-grey">
+                        Dispatching
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-grey text-ma mt-2">Free</div>
+                </div>
+                <div class="myhr23 mb-25"></div>
+                <div class="mb-30 plr-30px">
+                  <div class="d-flex align-items-center mb-11">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Dispatching to Trucking companies
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-11">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Ticket approvals
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-11">
+                    <img
+                      src="../assets/icons/cross-red-rounded.svg"
+                      width="15px"
+                    />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Billing
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-11">
+                    <img
+                      src="../assets/icons/cross-red-rounded.svg"
+                      width="15px"
+                    />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Project tracking
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-11">
+                    <img
+                      src="../assets/icons/cross-red-rounded.svg"
+                      width="15px"
+                    />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Tracking the tickets
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-11">
+                    <img
+                      src="../assets/icons/cross-red-rounded.svg"
+                      width="15px"
+                    />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Add-on features
+                    </div>
+                  </div>
+                </div>
+                <div
+                  align="center"
+                  *ngIf="
+                    !this.active_plan &&
+                    this.free_trial == 'NO' &&
+                    !this.active_plan?.id
+                  "
+                >
+                  <div class="desc-3 text-color-black-shade3 mb-20">
+                    Current Plan
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 pr-2px pl-2px">
+            <div
+              [class]="
+                this.active_plan &&
+                this.active_plan?.tragget_plan &&
+                this.active_plan?.tragget_plan?.plan_name == 'Subscription'
+                  ? ' plan-div active'
+                  : 'plan-div'
+              "
+            >
+              <div class="plan-div-bg">
+                <div
+                  class="d-flex justify-content-between mb-20 justify-content-space-around"
+                >
+                  <div class="d-flex plr-25px">
+                    <svg
+                      width="42"
+                      height="42"
+                      viewBox="0 0 42 42"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        opacity="0.2"
+                        cx="28.6086"
+                        cy="26.3501"
+                        r="8.28146"
+                        fill="#5368FE"
+                      />
+                      <g clip-path="url(#clip0_2_11793)">
+                        <path
+                          d="M33.8017 13.7894L26.1977 10.0296C25.9333 9.89882 25.621 9.90887 25.3655 10.0564L17.2171 14.7608C17.2166 14.7611 17.216 14.7614 17.2155 14.7617C17.215 14.762 17.2145 14.7623 17.214 14.7626L9.06561 19.4671C8.81011 19.6146 8.6453 19.88 8.62636 20.1744L8.08042 28.6395C8.05241 29.0737 8.34506 29.4634 8.76975 29.5576L27.4646 33.7058C27.6878 33.7553 27.9116 33.7154 28.0968 33.6085C28.2819 33.5016 28.4284 33.3278 28.4971 33.1096L34.2522 14.8454C34.3829 14.4304 34.1917 13.9822 33.8017 13.7894ZM18.0972 22.4026L18.4519 16.9032L23.392 19.3457L18.0972 22.4026ZM24.611 20.6794L26.3648 30.6087L18.6427 24.1252L24.611 20.6794ZM19.5255 15.4656L24.8201 12.4087L24.4654 17.9081L19.5255 15.4656ZM16.3155 22.6134L11.3755 20.171L16.6702 17.1141L16.3155 22.6134ZM15.242 24.0511L9.94729 27.108L10.302 21.6086L15.242 24.0511ZM17.0167 25.064L24.3277 31.2023L11.3662 28.3263L17.0167 25.064ZM26.237 19.7407L31.8875 16.4783L27.8974 29.1413L26.237 19.7407ZM26.2472 17.6973L26.6019 12.1978L31.5419 14.6404L26.2472 17.6973Z"
+                          fill="#5368FE"
+                        />
+                        <path
+                          d="M24.4497 8.49436C24.6452 8.38146 24.7977 8.19394 24.8607 7.95863L25.7741 4.54988C25.9002 4.07927 25.6209 3.59547 25.1502 3.46935C24.6796 3.34326 24.1958 3.62258 24.0697 4.0932L23.1563 7.50195C23.0302 7.97256 23.3095 8.45636 23.7802 8.58248C24.0155 8.64554 24.2541 8.60726 24.4497 8.49436Z"
+                          fill="#5368FE"
+                        />
+                        <path
+                          d="M15.6867 12.1129C16.1087 11.8693 16.2533 11.3297 16.0096 10.9078L14.2451 7.85153C14.0015 7.42956 13.4619 7.28498 13.0399 7.5286C12.618 7.77222 12.4734 8.31182 12.717 8.73378L14.4815 11.79C14.7251 12.212 15.2647 12.3566 15.6867 12.1129Z"
+                          fill="#5368FE"
+                        />
+                        <path
+                          d="M7.5017 17.9808C7.73704 18.0438 7.97567 18.0055 8.17117 17.8927C8.36666 17.7798 8.51918 17.5923 8.58218 17.3569C8.70833 16.8863 8.42901 16.4025 7.95834 16.2764L4.54972 15.363C4.07913 15.2369 3.59533 15.5163 3.46919 15.9869C3.34304 16.4575 3.62237 16.9413 4.09303 17.0674L7.5017 17.9808Z"
+                          fill="#5368FE"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_2_11793">
+                          <rect
+                            width="30.1144"
+                            height="30.1144"
+                            fill="white"
+                            transform="translate(0 15.0573) rotate(-30)"
+                          />
+                        </clipPath>
+                      </defs>
+                    </svg>
+
+                    <div class="ml-17">
+                      <div class="title-21 mb-8 text-grey text-subs">
+                        Customise
+                      </div>
+                      <div class="desc-21 text-color-black-shade text-grey">
+                        Subscriptions in 25 ticket intervals
+                      </div>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+                <div class="myhr23 mb-25"></div>
+                <div class="mb-30 plr-30px">
+                  <div class="d-flex align-items-center mb-12">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Monthly tickets based on your needs
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-12">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Project management
+                    </div>
+                  </div>
+
+                  <div class="d-flex align-items-center mb-11">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Real time notification
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-11">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Tracking the tickets
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-11">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Peace of mind
+                    </div>
+                  </div>
+                </div>
+                <div align="center" class="">
+                  <div
+                    *ngIf="
+                      this.active_plan &&
+                      this.active_plan?.tragget_plan &&
+                      this.active_plan?.tragget_plan?.plan_name ==
+                        'Subscription'
+                    "
+                  >
+                    <button
+                      class="mybtn2 bg-blue2 text-dark"
+                      (click)="alreadySubscribed()"
+                    >
+                      Build and buy your subscription
+                    </button>
+                  </div>
+                  <div
+                    *ngIf="
+                      !this.active_plan ||
+                      (this.active_plan &&
+                        this.active_plan?.tragget_plan &&
+                        this.active_plan?.tragget_plan?.plan_name !=
+                          'Subscription')
+                    "
+                  >
+                    <div align="center">
+                      <button
+                        class="mybtn2 bg-blue2 text-dark"
+                        data-toggle="modal"
+                        data-target="#selectpackage"
+                      >
+                        Build and buy your subscription
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 pr-2px pl-2px">
+            <div class="plan-div">
+              <div class="plan-div-bg">
+                <div
+                  class="d-flex justify-content-between mb-20 justify-content-space-around"
+                >
+                  <div class="d-flex plr-25px">
+                    <svg
+                      width="42"
+                      height="42"
+                      viewBox="0 0 42 42"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        opacity="0.2"
+                        cx="28.6086"
+                        cy="26.3501"
+                        r="8.28146"
+                        fill="#5368FE"
+                      />
+                      <g clip-path="url(#clip0_2_11793)">
+                        <path
+                          d="M33.8017 13.7894L26.1977 10.0296C25.9333 9.89882 25.621 9.90887 25.3655 10.0564L17.2171 14.7608C17.2166 14.7611 17.216 14.7614 17.2155 14.7617C17.215 14.762 17.2145 14.7623 17.214 14.7626L9.06561 19.4671C8.81011 19.6146 8.6453 19.88 8.62636 20.1744L8.08042 28.6395C8.05241 29.0737 8.34506 29.4634 8.76975 29.5576L27.4646 33.7058C27.6878 33.7553 27.9116 33.7154 28.0968 33.6085C28.2819 33.5016 28.4284 33.3278 28.4971 33.1096L34.2522 14.8454C34.3829 14.4304 34.1917 13.9822 33.8017 13.7894ZM18.0972 22.4026L18.4519 16.9032L23.392 19.3457L18.0972 22.4026ZM24.611 20.6794L26.3648 30.6087L18.6427 24.1252L24.611 20.6794ZM19.5255 15.4656L24.8201 12.4087L24.4654 17.9081L19.5255 15.4656ZM16.3155 22.6134L11.3755 20.171L16.6702 17.1141L16.3155 22.6134ZM15.242 24.0511L9.94729 27.108L10.302 21.6086L15.242 24.0511ZM17.0167 25.064L24.3277 31.2023L11.3662 28.3263L17.0167 25.064ZM26.237 19.7407L31.8875 16.4783L27.8974 29.1413L26.237 19.7407ZM26.2472 17.6973L26.6019 12.1978L31.5419 14.6404L26.2472 17.6973Z"
+                          fill="#5368FE"
+                        />
+                        <path
+                          d="M24.4497 8.49436C24.6452 8.38146 24.7977 8.19394 24.8607 7.95863L25.7741 4.54988C25.9002 4.07927 25.6209 3.59547 25.1502 3.46935C24.6796 3.34326 24.1958 3.62258 24.0697 4.0932L23.1563 7.50195C23.0302 7.97256 23.3095 8.45636 23.7802 8.58248C24.0155 8.64554 24.2541 8.60726 24.4497 8.49436Z"
+                          fill="#5368FE"
+                        />
+                        <path
+                          d="M15.6867 12.1129C16.1087 11.8693 16.2533 11.3297 16.0096 10.9078L14.2451 7.85153C14.0015 7.42956 13.4619 7.28498 13.0399 7.5286C12.618 7.77222 12.4734 8.31182 12.717 8.73378L14.4815 11.79C14.7251 12.212 15.2647 12.3566 15.6867 12.1129Z"
+                          fill="#5368FE"
+                        />
+                        <path
+                          d="M7.5017 17.9808C7.73704 18.0438 7.97567 18.0055 8.17117 17.8927C8.36666 17.7798 8.51918 17.5923 8.58218 17.3569C8.70833 16.8863 8.42901 16.4025 7.95834 16.2764L4.54972 15.363C4.07913 15.2369 3.59533 15.5163 3.46919 15.9869C3.34304 16.4575 3.62237 16.9413 4.09303 17.0674L7.5017 17.9808Z"
+                          fill="#5368FE"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_2_11793">
+                          <rect
+                            width="30.1144"
+                            height="30.1144"
+                            fill="white"
+                            transform="translate(0 15.0573) rotate(-30)"
+                          />
+                        </clipPath>
+                      </defs>
+                    </svg>
+
+                    <div class="ml-17">
+                      <div class="title-21 mb-8 text-grey text-single">
+                        Pack of 10
+                      </div>
+                      <div class="desc-21 text-color-black-shade text-grey">
+                        Prices starting at $15 per a pack
+                      </div>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+                <div class="myhr23 mb-25"></div>
+                <div class="mb-30 plr-30px">
+                  <div class="d-flex align-items-center mb-17">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Never expiring tickets, use when needed
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-17">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      All features Subscription tickets offers
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-18">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Convenient if some months cost optimized subscription runs
+                      out
+                    </div>
+                  </div>
+                </div>
+                <div align="center">
+                  <button
+                    class="mybtn2 bg-blue2 text-dark"
+                    data-toggle="modal"
+                    data-target="#selectpackage2"
+                  >
+                    Buy packs of 10
+                  </button>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 pl-2px">
+            <div class="plan-div">
+              <div class="plan-div-bg">
+                <div
+                  class="d-flex justify-content-between mb-20 justify-content-space-around"
+                >
+                  <div class="d-flex plr-25px">
+                    <img src="assets/icons/changes-plan-icon.svg" />
+
+                    <div class="ml-17">
+                      <div class="title-21 mb-8 text-subs">Changes</div>
+                      <div class="desc-21 text-color-black-shade text-grey">
+                        Business can fluctuate, following features always
+                        available
+                      </div>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+                <div class="myhr23 mb-25"></div>
+                <div class="mb-30 plr-30px">
+                  <div class="d-flex align-items-center mb-12">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      You run out of tickets one month, on renewal date, tickets
+                      taken from coming month
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-12">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      If you increase subscription size, added tickets available
+                      immediatly
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-12">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Decreasing subscription, lower count available from
+                      renewal date
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-11">
+                    <img src="../assets/icons/green-tick.svg" width="15px" />
+                    <div class="desc-2 text-color-black-shade2 ml-10">
+                      Cancelling subscription takes you to Free account, past
+                      tickets always available for you
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table subs-table mb-38">
+              <thead>
+                <tr>
+                  <th class="bg-head-blue width-76-perc">
+                    <div class="title-sub-head">
+                      What you will miss if you don’t have valid subscriptions
+                    </div>
+                  </th>
+                  <th class="width-12-perc title-small-head bg-head-blue">
+                    DispatchProX ticket Subscription
+                  </th>
+                  <th class="width-12-perc title-small-head bg-head-blue">
+                    Free account only
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="width-76-perc">
+                    <b>Advanced Vendor Management</b> - Simplify and enhance
+                    collaboration with your vendors for optimal outcomes.
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Efficient Dispatching </b>– Streamlined tools ensure
+                    seamless dispatching to projects, maximizing operational
+                    efficiency.
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <b>Clear Driver Communication</b> – Provide drivers with
+                    detailed job instructions, ensuring clarity and minimizing
+                    potential errors, remote and safe job approval.
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Real-Time Job Progress</b> - Monitor project advancements
+                    with live updates on truck arrivals and individual job
+                    progression.
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/grey-cross-2.svg" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Adaptive Project Oversight </b>– Gain insights at the
+                    project level, identify success metrics, and make informed
+                    adjustments for optimal outcomes.
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/grey-cross-2.svg" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Precise & Timely Billing</b> – Ensure accurate invoicing
+                    and eliminate unexpected charges, promoting transparency and
+                    trust.
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/grey-cross-2.svg" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b> Streamlined Operations</b> – Utilize modern tools to
+                    efficiently manage dump truck requirements, saving both time
+                    and money.
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/blue-tick-2.svg" />
+                  </td>
+                  <td class="width-12-perc">
+                    <img src="../assets/images/grey-cross-2.svg" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="d-flex float-right">
+              <div class="title-2">Contact us</div>
+              <img src="../assets/icons/arrow-right-circle.svg" class="ml-13" />
+            </div>
+          </div>
+        </div>
+        <a
+          style="display: none"
+          href="javascript:void(0)"
+          data-cb-type="checkout"
+          data-cb-item-0="10-tickets-package-CAD"
+          data-cb-item-0-quantity="1"
+          >subscribe</a
+        >
+        <a
+          style="display: none"
+          href="javascript:void(0)"
+          data-cb-type="checkout"
+          data-cb-item-0="Monthly-Subscription-in-CAD-CAD-Monthly"
+          data-cb-item-0-quantity="1"
+        >
+          subscribe
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade come-from-modal right show"
+  id="selectpackage"
+  tabindex="-1 "
+  role="dialog "
+  aria-labelledby="myModalLabel "
+>
+  <div class="modal-dialog max-width-40" role="document ">
+    <div class="modal-content border-30px custom-padding-4 border-radius-10px">
+      <div class="modal-body">
+        <div
+          class="d-flex text-center align-items-center justify-content-center mt-60px mb-60px"
+        >
+          <img src="assets/icons/subscription-diamond-icon.svg" class="ml-2" />
+          <div class="ml-3">
+            <div class="main-heading-2 text-center mb-7">
+              Customise your <span class="text-dark text-blue-sub">plan.</span>
+            </div>
+            <div class="title-4 text-center">
+              Customise your subscription plan
+            </div>
+          </div>
+        </div>
+        <div class="tab-content" id="nav-tabContent">
+          <form
+            class="p-3"
+            [formGroup]="subscriptionForm"
+            (ngSubmit)="handleSubscription()"
+            *ngIf="this.subscription_plan"
+          >
+            <div class="div-grey mb-66">
+              <div class="custom-padding-5">
+                <div class="desc-31 text-black-shade4 mb-12">
+                  Build your subscription
+                </div>
+              </div>
+              <div class="myhr mb-16"></div>
+              <div class="custom-padding-5 mb-9">
+                <div class="row">
+                  <div class="col-6">
+                    <span class="subs-wrapper number-wrapper">
+                      <input
+                        type="number"
+                        formControlName="quantity"
+                        min="25"
+                        step="25"
+                        class="myinput text-plans text-input-qty"
+                        (change)="handleSubsChange($event)"
+                      />
+                    </span>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      class="title-72 text-color-black-shade4 mb-4px float-right"
+                    >
+                      Monthly cost
+                    </div>
+                    <div
+                      class="title-9 text-right text-black-shade4 text-plans cost-text"
+                    >
+                      ${{ this.subscriptionForm.get("totalPrice")?.value }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr mb-16"></div>
+              <div class="custom-padding-5">
+                <div class="desc-4 text-color-black-shade3">
+                  A rule of thumb is 25 tickets per truck in a month your
+                  company manages.
+                </div>
+              </div>
+            </div>
+            <div align="center">
+              <button
+                type="button"
+                class="mybtn bg-blue2 text-dark btn-continue subs-plan-click btn-payment"
+              >
+                Continue to Payment
+              </button>
+
+              <input
+                type="hidden"
+                class="subs-plan-click-quantity"
+                value="{{ this.subs_plan_qty }}"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade come-from-modal right show"
+  id="selectpackage2"
+  tabindex="-1 "
+  role="dialog "
+  aria-labelledby="myModalLabel "
+>
+  <div class="modal-dialog max-width-40" role="document ">
+    <div class="modal-content border-30px custom-padding-4">
+      <div class="modal-body">
+        <div class="main-heading-2 text-center mb-7">Pack of 10 Tickets</div>
+        <div class="title-4 text-center">Get your single tickets.</div>
+
+        <div class="tab-content" id="nav-tabContent">
+          <form
+            class="p-1"
+            [formGroup]="tenPackForm"
+            (ngSubmit)="handleTenPack()"
+            *ngIf="this.ten_pack_plan"
+          >
+            <div class="div-grey mb-66">
+              <div class="custom-padding-5">
+                <div class="desc-3 text-black-shade4 mb-12">
+                  Choose the quantity
+                </div>
+              </div>
+              <div class="myhr mb-16"></div>
+              <div class="custom-padding-5 mb-9">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <div class="title-7 text-color-black-shade4 mb-4px">
+                      Quantity of Packs
+                    </div>
+                    <span class="number-wrapper">
+                      <input
+                        type="number"
+                        min="1"
+                        step="1"
+                        (change)="handleTenPackChange($event)"
+                        formControlName="quantity"
+                        class="myinput text-plans"
+                      />
+                    </span>
+                  </div>
+                  <div>
+                    <div
+                      class="title-7 text-right text-color-black-shade4 mb-4px"
+                    >
+                      number of Tickets
+                    </div>
+                    <div
+                      class="title-9 text-right text-black-shade4 text-plans"
+                    >
+                      {{ this.tenPackForm.get("tickets")?.value }} tickets
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr mb-16"></div>
+              <div class="custom-padding-5">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <div class="desc-4 text-color-black-shade4 mb-4px">
+                      Subscription is used always first, single tickets are the
+                      backup.
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      class="title-7 text-right text-color-black-shade4 mb-4px"
+                    >
+                      Cost
+                    </div>
+                    <div
+                      class="title-9 text-right text-black-shade4 text-plans"
+                    >
+                      ${{ this.tenPackForm.get("totalPrice")?.value }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div align="center">
+              <button
+                type="button"
+                class="mybtn bg-blue2 text-dark btn-continue 10-pack-click"
+              >
+                Continue to Payment
+              </button>
+              <a
+                style="display: none"
+                class="mybtn mybtn-back-blue text-dark"
+                style="color: white !important; display: none"
+                href="javascript:void(0)"
+                data-cb-type="checkout"
+                data-cb-item-0="Pack---of---ten---S-USD-Monthly"
+                attr.data-cb-item-0-quantity="{{ this.ten_pack_qty }}"
+                >Pack of 10</a
+              >
+              <input
+                type="hidden"
+                class="10-pack-click-quantity"
+                value="{{ this.ten_pack_qty }}"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

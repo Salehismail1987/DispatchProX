@@ -1,0 +1,209 @@
+@import url("../../../../../assets/css/trucking-style3.css");
+@import url("../../../../../assets/css/margins.css");
+.min-height-50{
+    min-height: 80px;
+}
+.myhr{
+    border-bottom: 1px solid #00000023;
+}
+
+.myhr{
+    color:black;
+}
+
+@media only screen and (min-width: 767px) and (max-width: 1034px) {
+    .field__input {
+        height: 90px !important;
+        padding: 3.25rem 1rem 0rem 1rem !important;
+
+    }
+}
+
+@media only screen and (min-width: 1034px) and (max-width: 1270px) {
+    .field__input {
+        height: 70px !important;
+        padding: 2.25rem 1rem 0rem 1rem !important;
+
+    }
+}
+
+@media only screen and (min-width: 767px) and (max-width: 1400px) {
+
+    .field__label {
+        font-family: 'Gilroy';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px !important;
+        line-height: 13px !important;
+        color: #88898B;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .modal-image{
+        right: 0px !important;
+    }
+
+}
+
+.modal-ticket{
+    border-radius: 10px 0px 0px 10px !important;
+}
+
+.modal-ticket .modal-body{
+    padding: 10px !important;
+}
+
+.tabitem{
+    width: 132px;
+    height: 35px;
+    padding: 8px 10px 5px 10px;
+    border-radius: 5px;
+    text-align: center !important;
+    font-family: 'Gilroy-Bold' !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 17.33px !important;
+    text-align: center !important;
+
+}
+
+.ml-15px{
+    margin-left: 15px;
+}
+
+.download-btn{
+    width: 140px;
+    height: 35px;
+    padding: 3px 5px 3px 5px !important;
+    border-radius: 5px;
+    font-family: 'Gilroy';
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17.33px;
+    text-align: center;
+
+}
+
+.title-10 {
+    font-family: 'Gilroy-Bold' ;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.text-black-shade2{
+    color: black !important;
+}
+
+.myhr-white{
+    border-bottom: 1px solid #FFFFFF !important;
+}
+
+.min-height-50 {
+    min-height: 55px;
+}
+.mb-20px{
+    margin-bottom: 20px !important;
+}
+
+.ticket-detail-div.min-height-50.mt-0{
+    padding: 0px 5px 0px 5px !important;
+}
+.mt-10px{
+    margin-top: 10px;
+}
+.mb-10px{
+    margin-bottom: 10px;
+}
+
+.title-summ {
+    font-family: 'Gilroy';
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.6px;
+    text-align: left;
+    color: #68696D;
+
+}
+
+.done-round{
+    background: #33D1A2;
+    width: 80px;
+    height: 25px;
+    padding: 4px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+}
+
+.come-from-modal.left .modal-content, .come-from-modal.right .modal-content {
+    overflow-x: hidden;
+}
+
+
+.nav-link.active{
+    box-shadow: 0px 4px 4px 0px #00000040 inset !important;
+
+  }
+
+  .div-grey-bg{
+    min-height: 250px !important;
+    background: #D9D9D9 !important;
+    padding: 10px !important;
+}
+
+.text-13px-semibold{
+    font-family: 'Gilroy';
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 15.93px;
+
+}
+
+.text-13px-semibold2{
+    font-family: 'Gilroy';
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.93px;
+
+}
+.text-grey{
+    color: #88898B;
+}
+
+.border-div{
+    border-radius: 5px;
+    padding: 10px;
+    background: white !important;
+
+}
+
+.myhr-1px{
+    border: 1px solid #E1E1E1 !important;
+    margin-bottom: 10px;
+}
+
+.text-bold{
+    font-weight: bold;
+}
+
+.text-dark{
+    color:#000000 !important;
+}
+
+.max-width-50px{
+    max-width: 100px;
+    line-break: anywhere !important;
+}
+
+.cursor-pointer{
+    cursor: pointer !important;
+}
+
+.no-shadow{
+  box-shadow: none !important;
+}

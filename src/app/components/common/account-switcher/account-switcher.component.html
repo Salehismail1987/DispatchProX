@@ -1,0 +1,34 @@
+<ng-container *ngIf="this.loggedinUser?.account_type=='Driver'">
+  <div class="d-flex driver-flex">
+      <div class="title-switch">
+          Login profile
+      </div>
+      <div class="" align="right">
+          <button class="btn-driver" type="button">
+              Driver
+          </button>
+          <br/>
+          <button class="mt-2 btn-tc-border-blue" type="button" (click)="switchUser('Trucking Company')">
+              Trucking Company
+          </button>
+          <br/>
+      </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="this.loggedinUser?.account_type=='Trucking Company'">
+  <div class="d-flex driver-flex">
+      <div class="title-switch">
+          Login profile
+      </div>
+      <div class="" align="right">
+          <button class="btn-tc" type="button">
+              Trucking Company
+          </button>
+          <br/>
+          <button class="mt-2 btn-driver-white" type="button" (click)="switchUser('Driver')">
+                 Driver
+          </button>
+          <br/>
+      </div>
+  </div>
+</ng-container>

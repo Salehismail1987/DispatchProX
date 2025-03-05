@@ -1,0 +1,410 @@
+<div class="row m-0 content-container" *ngIf="screen == 'tablet' || screen == 'desktop'">
+
+    <div class="col-md-6 ">
+        <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png"></div>
+        <div class="login-form-div display-table">
+            <div class="form-div vertical-middle" *ngIf="is_loading  == false && current_step == 1">
+             
+                <div class="welcome-back-text">Get ready</div>
+                <div class="title-1 text-shade-black mb-60">Setting up your Driver profile</div>
+                <form [formGroup]="invitationSingupForm" (ngSubmit)="onAccountSave()" enctype="multipart/form-data">
+                    <div class="uplodfile-div mt-3" style="display:none">
+                        <div class="uplodfile-icon-div driver-signup-file" (click)="logoFileInput.click()">
+                        </div>
+                        <div class="uplodfile-content">
+                            <div>Upload<br>your photo <small>(optional)</small></div>
+                            <input id="logo-file-input" hidden type="file" [multiple]="false" [accept]="'image/jpeg, image/png'" (change)="uploadimage($event)" #logoFileInput formControlName="profile_image">
+                        </div>
+                        <div class="uplodfile-content">
+                            <span>{{profile_image?.name}}</span>
+                        </div>
+                    </div>
+                    <br> <br>
+                    <span *ngIf="fullNameError != ''" class="text-danger">{{
+                        fullNameError
+                    }}</span>
+                    <label class="field text-field required_field">
+                        <input class="field__input" placeholder="Full name." formControlName="full_name" [(ngModel)]="this.full_name">
+                      
+                        <span class="field__label-wrap">
+                        <span class="field__label">Full Name</span>
+                        </span>
+                    </label>
+                    <br>
+                    <span *ngIf="contactError!= ''" class="text-danger">{{
+                        contactError
+                    }}</span>
+                    <label class="field text-field required_field">
+                        <input class="field__input" type="text" placeholder="+1"  (input)="changeNumber($event)" [(ngModel)]="this.contact_number" formControlName="contact_number">
+                        <span class="field__label-wrap">
+                        <span class="field__label">Mobile No.</span>
+                        </span>
+                    </label>
+                    <br>
+                    <!-- <span *ngIf="codeError ''" class="text-danger">{{
+                        codeError
+                    }}</span> -->
+                    <label class="field text-field" style="display:none">
+                        <input class="field__input" type="text" placeholder="949490" value="" formControlName="verification_code">
+                        <div class="change-text">Resend code</div>
+                        <span class="field__label-wrap">
+                        <span class="field__label">Verify mobile number</span>
+                        </span>
+                    </label>
+                    <br>
+                    <div class="row m-0">
+                        <div class="col-md-6 padding-left-0">
+                            <button class="mybtn mybtn-back-pink " type="submit">Continue</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="form-div vertical-middle" *ngIf="is_loading == false && current_step == 2">
+                <div class="welcome-back-text">Welcome onboard 
+                    <span class="text-dark">“{{this.full_name}}”</span></div>
+                <div class="title-1 text-shade-black mb-60">Set Password</div>
+                <br/>
+                <br/>
+                <form [formGroup]="setPasswordFrom" (ngSubmit)="setPasswordSubmit()">
+                    <span *ngIf="passwordError!= ''" class="text-danger">{{
+                        passwordError
+                    }}</span>
+                    <label class="field text-field">
+                        <input class="field__input" (input)="checkPassword($event)" type="password" placeholder="example"  formControlName="password">
+                        <i class="fa fa-eye-slash input-icon-right btnhshowhidepass" aria-hidden="true"></i>
+                        <span class="field__label-wrap">
+                        <span class="field__label">Password</span>
+                        </span>
+                    </label>
+                    <br>
+                    <span *ngIf="confirmPasswordError!= ''" class="text-danger">{{
+                        confirmPasswordError
+                    }}</span>
+                    <label class="field text-field">
+                        <input class="field__input" type="password" placeholder="example" value="" formControlName="confirm_password">
+                        <i class="fa fa-eye-slash input-icon-right btnhshowhidepass" aria-hidden="true"></i>
+                        <span class="field__label-wrap">
+                        <span class="field__label">Confirm password</span>
+                        </span>
+                    </label>
+                    <br>
+                    <br>
+                    <div>
+                        <div class="single-instruction">
+                            <i class="fa fa-circle" [ngClass]="{'active': atleast_eight === true}"></i>
+                            <div class="instructions-text">Atleast 8 character</div>
+                        </div>
+                        <div class="single-instruction">
+                            <i class="fa fa-circle " [ngClass]="{'active': upper_lower === true}"></i>
+                            <div class="instructions-text">Atleast one uppercase and one lowercase character</div>
+                        </div>
+                        <div class="single-instruction">
+                            <i class="fa fa-circle "  [ngClass]="{'active': number_symbol_space === true}"></i>
+                            <div class="instructions-text">Atleast one number, symbol, or whitespace character</div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row m-0">
+                        <div class="col-md-5 padding-left-0">
+                            <button class="btn-back gotostep4" (click)="backClickStep(2)">Back</button>
+                        </div>
+                        <div class="col-md-7 padding-right-0">
+                            <button class="mybtn mybtn-back-pink gotostep6" type="submit">Continue</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="form-div vertical-middle" *ngIf="is_loading  == true && current_step == 0">
+                <div class="welcome-back-text">
+                    <h2>
+                        Verifying Invitation....
+                    </h2>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="col-md-6 truck-back">
+        <div class="">
+            <div class="welcome-div-content">
+                <div class="welcome-div">
+                    <div class="welcome-title">
+                        Welcome to DispatchProX, the place for truck jobs
+                    </div>
+                    <div class="welcome-desc">DispatchProX empowers Trucking companies and simplifies their utilization for their customers by providing accurate data flow between the entities. </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-content" *ngIf="screen == 'mobile'">
+    <ng-container *ngIf="is_loading  == false && current_step==1">
+        
+        <br>
+        <div class="d-flex">
+           <img src="assets/icons/driver-back.svg"  [routerLink]="'/dashboard'">
+           <img src="assets/images/logo.png" style="margin:auto;width: 147px; height: 59px;">
+        </div>
+        <br>
+        <div class="driver-text-title mb-2">
+            You got an Invitation to use DispatchProX.
+        </div>  
+        <div class="driver-text-subtitle mb-3 ">
+            Add the details to setup your account.
+        </div>
+        <form [formGroup]="setPasswordFromMobile" (ngSubmit)="setPasswordSubmitMobile()">
+          
+                <br>
+                <div *ngIf="nameError!= ''" class="text-danger">{{
+                    nameError
+                }}</div>
+                <label class="field text-field ">
+                  
+                    <input class="field__input" placeholder="Type here." formControlName="name">
+                    <span class="field__label-wrap">
+                    <span class="field__label">Name</span>
+                    </span>
+                </label>
+                <br>
+          
+                <span *ngIf="passwordError!= ''" class="text-danger">{{
+                    passwordError
+                }}</span>           
+                <div class="my-input-group required_field">
+                    <input type="password" class="myinput" placeholder="Password"  (input)="checkPassword($event)" formControlName="password">
+                </div> 
+                
+              
+    
+                <span *ngIf="confirmPasswordError!= ''" class="text-danger">{{
+                    confirmPasswordError
+                }}</span>
+                
+                <div class="my-input-group">
+                    <input type="password" class="myinput" placeholder="Confirm Password" formControlName="confirm_password">
+                </div>
+                <div class=" d-none">
+                    <div class="single-instruction">
+                        <i class="fa fa-circle" [ngClass]="{'active': atleast_eight === true}"></i>
+                        <div class="desc-2 pl-2 color-blackshade-5">Atleast 8 character</div>
+                    </div>
+                    <div class="single-instruction">
+                        <i class="fa fa-circle" [ngClass]="{'active': upper_lower === true}"></i>
+                        <div class="idesc-2 pl-2 color-blackshade-5">Atleast one uppercase and one lowercase character</div>
+                    </div>
+                    <div class="single-instruction">
+                        <i class="fa fa-circle " [ngClass]="{'active': upper_lower === true}"></i>
+                        <div class="desc-2 pl-2 color-blackshade-5">Atleast one number, symbol, or whitespace character</div>
+                    </div>
+                </div>
+                <div *ngIf="contactError!= ''" class="text-danger">{{
+                    contactError
+                }}</div>
+                <label class="field text-field required_field">
+                  
+                    <input class="field__input"   (input)="changeNumber($event)" formControlName="contact_number">
+                    <span class="field__label-wrap">
+                    <span class="field__label">Phone number</span>
+                    </span>
+                </label>
+                <br>
+                <br>
+                <button class="mybtn bg-pink" type="submit"  >Continue</button>
+            
+        </form>
+        <br>
+        <!-- <div class="white-div">
+            <div class="heading-5 color-blackshade-4">Few step to complete your sign up</div>
+            <div class="card00">
+                <div class="card1">
+                    <ul id="progressbar" class="text-center">
+                        <li class="active-pre step0"></li>
+                        <li class="active-pre step0"></li>
+                        <li class="active-pre step0"></li>
+                    </ul>
+                    <h6 class="items-text">Set Password</h6>
+                    <h6 class="items-text active">Phone no</h6>
+                    <h6 class="items-text active">Add address</h6>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button class="mybtn bg-pink">Set up you profile</button> 
+         <br> -->
+    </ng-container>
+    
+    <!-- Setting Password -->
+    <ng-container  *ngIf="is_loading  == false && current_step == 2">
+        <form [formGroup]="invitationSingupFormMobile" (ngSubmit)="onAccountSaveMobile()" enctype="multipart/form-data">
+        
+                <div class="d-flex">
+                    <img src="assets/icons/driver-back.svg"  (click)="backClickStep(1)" class="pb-2">
+                    <img src="assets/images/logo.png" style="margin:auto;width: 147px; height: 59px;">
+                </div>
+                <br>
+                <div class="white-div text-center ">
+                    <img src="assets/icons/driver-mobile-user-icon.svg" class="pb-2">
+                    <div class="heading-5 color-blackshade-4 pb-1">{{this.full_name}}</div>
+                    <div class="heading-6 color-blackshade-5 pb-1">{{this.email}}</div>
+                    <div class="heading-6 color-blackshade-5 pb-1">{{this.contact_number}}</div>
+                </div>
+                <br>
+                
+                <div class="driver-text-subtitle text-left ml-3 mb-3 ">
+                    Add your address
+                </div>
+                <br>
+                <div *ngIf="countryError!= ''" class="text-danger">{{
+                    countryError
+                }}</div>
+                <label class="field text-field required_field">
+                    <select class="field__input icon-none" (change)="setCountry($event)" [(ngModel)]="this.country" formControlName="country">
+                        <option value="Canada">Canada </option>
+                        <option value="USA">USA </option>
+                    </select>
+                    <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                    <span class="field__label-wrap">
+                        <span class="field__label">Country</span>
+                    </span>
+                </label>
+                <br>
+                <div *ngIf="provinceError!= ''" class="text-danger">{{
+                    provinceError
+                }}</div>
+                <label class="field text-field required_field">
+                    
+                    <select class="field__input icon-none" formControlName="province">
+                        <ng-container *ngIf="this.country=='Canada'">
+                            <option>Select province</option>
+                            <option value="Alberta">Alberta </option>
+                            <option value="British Columbia">British Columbia</option>
+                            <option value="Manitoba">Manitoba </option>
+                            <option value="New Brunswick">New Brunswick </option>
+                            <option value="NewFoundland and Labrador">NewFoundland and Labrador </option>
+                            <option value="Northwest Territories">Northwest Territories </option>
+                            <option value="Nova Scotia">Nova Scotia </option>
+                            <option value="Nunavut">Nunavut </option>
+                            <option value="Ontario">Ontario </option>
+                            <option value="Prince Edward Island">Prince Edward Island </option>
+                            <option value="Quebec">Quebec </option>
+                            <option value="Saskatchewan">Saskatchewan </option>
+                            <option value="Yukon">Yukon </option>
+                        </ng-container>
+                        <ng-container *ngIf="this.country == 'USA'">
+                            <option>Select state</option>
+                            <option value="Alaska AK">Alaska AK </option>
+                            <option value=" Alabama	AL"> Alabama AL </option>
+                            <option value="Arizona AZ">Arizona AZ </option>
+                            <option value="Arkansas AR">Arkansas AR </option>
+                            <option value="California CA">California CA </option>
+                            <option value="Colorado CO">Colorado CO </option>
+                            <option value="Connecticut CT">Connecticut CT </option>
+                            <option value="Delaware DE">Delaware DE </option>
+                            <option value="Florida FL">Florida FL </option>
+                            <option value="Georgia GA">Georgia GA </option>
+                            <option value="Hawaii HI">Hawaii HI </option>
+                            <option value="Idaho iD">Idaho iD </option>
+                            <option value="Illinois IL">Illinois IL </option>
+                            <option value="Indiana IN">Indiana IN </option>
+                            <option value="Iowa IA">Iowa IA </option>
+                            <option value="Kansas KS">Kansas KS </option>
+                            <option value="Kentucky KY">Kentucky KY </option>
+                            <option value="Louisiana LA">Louisiana LA </option>
+                            <option value="Maine ME">Maine ME </option>
+                            <option value="Maryland MD">Maryland MD </option>
+                            <option value="Massachusetts MA">Massachusetts MA </option>
+                            <option value="Michigan MI">Michigan MI </option>
+                            <option value="Minnesota MN">Minnesota MN </option>
+                            <option value="Montana	MT">Montana	MT </option>
+                            <option value="Nebraska NE">Nebraska NE </option>
+                            <option value="Nevada NV">Nevada NV </option>
+                            <option value="New Hampshire NH">New Hampshire NH </option>
+                            <option value="New Jersey NJ">New Jersey	NJ </option>
+                            <option value="New Mexico NM">New Mexico NM </option>
+                            <option value="New York NY">New York NY </option>
+                            <option value="North Carolina NC">North Carolina NC </option>
+                            <option value="North Dakota ND">North Dakota ND </option>
+                            <option value="Ohio OH">Ohio OH </option>
+                            <option value="Oklahoma OK">Oklahoma OK </option>
+                            <option value="Oregon OR">Oregon OR </option>
+                            <option value="Pennsylvania[D] PA">Pennsylvania[D] PA </option>
+                            <option value="Rhode Island RI">Rhode Island RI </option>
+                            <option value="South Carolina SC">South Carolina SC </option>
+                            <option value="South Dakota SD">South Dakota SD </option>
+                            <option value="Tennessee TN">Tennessee TN </option>
+                            <option value="Texas TX">Texas TX </option>
+                            <option value="Utah UT">Utah UT </option>
+                            <option value="Vermont VT">Vermont VT </option>
+                            <option value="Virginia[D] VA">Virginia[D] VA </option>
+                            <option value="Washington WA">Washington WA </option>
+                            <option value="West Virginia WV">West Virginia WV </option>
+                            <option value="Wisconsin WI">Wisconsin WI </option>
+                            <option value="Wyoming WY">Wyoming WY </option>
+                        </ng-container>
+                    </select>
+                    <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                    <span class="field__label-wrap">
+                    <span class="field__label">Province/State</span>
+                    </span>
+                </label>
+                <br>
+                <div *ngIf="cityError!= ''" class="text-danger">{{
+                    cityError
+                }}</div>
+                <label class="field text-field required_field">
+                  
+                    <input class="field__input" placeholder="Add city" formControlName="city">
+                    <span class="field__label-wrap">
+                    <span class="field__label">City</span>
+                    </span>
+                </label>
+                <br>
+                <div *ngIf="addressError!= ''" class="text-danger">{{
+                    addressError
+                }}</div>
+                <label class="field text-field required_field">
+                
+                    <input class="field__input" placeholder="" formControlName="address">
+                    <span class="field__label-wrap">
+                    <span class="field__label">Address</span>
+                    </span>
+                </label>
+                <br>
+                <button class="mybtn bg-pink" type="submit">Continue</button>
+          
+        </form>
+     
+        <br>
+        
+    </ng-container>
+    <ng-container  *ngIf="is_loading  == false && current_step == 3">
+        <div class="main-content">
+            <img src="assets/images/back.svg" class="pb-2">
+            <br>
+            <br>
+            <div class="heading-2 color-blackshade text-center">You are all set</div>
+            <br>
+            <br>
+            <br>
+            <img src="assets/images/truck.gif" class="img">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button class="mybtn bg-pink" (click)="this.toDashboard()">Go to dashboard</button>
+            <br>
+        </div>
+    </ng-container>
+    <div class="form-div vertical-middle" *ngIf="is_loading  == true && current_step == 0">
+       
+        <div class="white-div text-center ">
+            <h3>
+                Verifying Invitation....
+            </h3>
+        </div>
+    </div>
+  
+</div>

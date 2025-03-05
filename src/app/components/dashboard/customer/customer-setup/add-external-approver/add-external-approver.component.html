@@ -1,0 +1,91 @@
+
+<div *ngIf="this.current_modal && this.current_modal === 'add_external_userr'"
+     class="modal fade show show2 d-flex align-items-center" id="invitePeople2"
+     style="display: block; padding-right: 17px;" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog2  modal-dialog-centered modal-dialog-centered2 modal-dialog-right" role="document">
+        <div class="modal-content modal-bg-white">
+            <div class="modal-body p-25px" >
+
+                <div class="row align-items-center justify-content-center">
+                    <div class="" style="width: 180px; height: 110px;" >
+                        <img [src]="'assets/images/logo.png'" class="img ">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-25px">
+                    <div>
+
+                        <div class=" justify-content-between ">
+                            <div class="title-0 ml-15px">Invite external Approver</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <form [formGroup]="addUserForm" (ngSubmit)="onSaveUser()" enctype="multipart/form-data" class="mt-15px">
+
+                    <span *ngIf="userfull_nameError != ''" class="text-danger">{{
+                        userfull_nameError
+                    }}</span>
+                    <label class="field text-field required_field">
+                        <input class="field__input" placeholder="Enter" value="" formControlName="full_name">
+                        <span class="field__label-wrap">
+                        <span class="field__label">Full name</span>
+                        </span>
+                    </label>
+                    <br>
+                    <div class="row">
+                        <div class="col-6">
+                            <span *ngIf="userEmailError != ''" class="text-danger">{{
+                                userEmailError
+                            }}</span>
+                            <label class="field text-field required_field">
+                                <input class="field__input"  type="email" placeholder="example@mail.com" formControlName="email">
+                                <span class="field__label-wrap">
+                                <span class="field__label">Email</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-6">
+                            <span *ngIf="userContactNumberError != ''" class="text-danger">{{
+                                userContactNumberError
+                            }}</span>
+                            <label class="field text-field required_field">
+                                <input class="field__input"  placeholder="(---) --- ----" formControlName="contact_number" (input)="changeNumber($event)">
+                                <span class="field__label-wrap">
+                                <span class="field__label">Phone number</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pl-0 " style="margin-top: -19px !important;" >
+                        <span *ngIf="userProjectError''" class="text-danger">{{
+                            userProjectError
+                        }}</span>
+                        <div class="form-group position-relative">
+                            <label class="field text-field"> </label>
+                            <select class="form-control icon-none mb-33 myinput2 select-no-icon pb-0" formControlName="project_id">
+                                <ng-container *ngFor="let proj of this.project_list">
+                                    <option value="{{proj?.id}}" >{{proj?.project_name}}</option>
+                                </ng-container>
+                            </select>
+                            <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                            <span class="field__labell" >Project</span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-25px justify-content-center " style="margin-top: 50px !important;" >
+                        <div class="col-md-4 px-0 pr-2">
+                            <button class="btn-back goto-dashboard-setup-1 mybtn-back" (click)="showModal('')">Back</button>
+                        </div>
+                        <div class="col-md-4 px-0 pl-2">
+                            <button class="mybtn mybtnn2 mybtn-back-yellow mybtn-width" type="submit" *ngIf="!is_loading">Send invite</button>
+                            <button class="mybtn mybtnn2 mybtn-back-yellow mybtn-width" type="button" *ngIf="is_loading" disabled >Processing..</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

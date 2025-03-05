@@ -1,0 +1,495 @@
+@import url("../../../../../assets/css/dashboard-style-new.css");
+@import url("../../../../../assets/css/project-listing.css");
+
+.mybtn-yellow-border {
+  background: white !important;
+  border: 1px solid #fff69f !important;
+}
+
+.body-content2 {
+  padding: 15px 15px 15px 15px !important;
+}
+
+.border-div {
+  border: 1px solid #0000001a !important;
+}
+.project-settings-table-header {
+  padding: 10px 10px !important;
+}
+.main-inner-body-container {
+  padding: 0px 15px 17px 15px;
+}
+
+.mt-15px {
+  margin-top: 15px;
+}
+
+.project-profile-header-container {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  padding: 15px 15px 15px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+  background-color: #fff;
+}
+
+.styled-button {
+  background-color: #fff7cb;
+  /* Yellowish background color */
+  border: none;
+  border-radius: 10px;
+  /* Border radius */
+  padding: 10px 20px;
+  /* Padding to give some space around the text */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  /* Shadow at the bottom */
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0000;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  z-index: 1050;
+
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.modal-backdrop-approver {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  z-index: 1050;
+
+}
+
+.more-modal {
+  width: 505px;
+  position: relative;
+  z-index: 1051;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 15px;
+  border-radius: 10px 0px 0px 10px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.bg-fafafa {
+  background: #fafafa;
+}
+
+.page-heading-title {
+  font-family: "Gilroy-Bold";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.81px;
+  text-align: left;
+  color: #000000;
+}
+
+.page-heading-title1 {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.15px;
+  text-align: left;
+  color: rgba(104, 105, 109, 1);
+}
+
+.text-grey-shade2 {
+  color: #68696d !important;
+}
+
+.title-52 {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.field-input2 {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  height: 34px;
+  padding: 9px 5px;
+  width: 100%;
+}
+
+.address-modal input,
+.address-modal select,
+.address-modal .field-input2 {
+  font-family: "Gilroy-Bold" !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 17.33px !important;
+  text-align: left;
+  color: #000000 !important;
+}
+
+.top-right-icon2 {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+}
+
+.img_div1 {
+  width: 150px;
+  height: 113px;
+  padding: 2px 10px 2px 10px;
+  gap: 1px;
+  opacity: 0px;
+}
+
+.img_div {
+  height: 109px;
+  width: 92px;
+  border: 1px solid rgba(23, 161, 250, 1);
+  padding: 4px;
+  margin: 5px;
+}
+
+.sect_2 {
+  height: 180px;
+  width: 480px;
+  border: 1px solid rgba(225, 225, 225, 1);
+  padding: 4px;
+  margin: 5px;
+}
+
+.field__labell {
+  display: block;
+  /* Ensure it behaves as a block element */
+  margin-bottom: 10px;
+  /* Add margin to the bottom */
+  margin-top: -83px !important;
+  padding-left: 14px;
+}
+
+.select-icon-right {
+  bottom: -13px !important;
+}
+
+.color_blur {
+  color: rgba(104, 105, 109, 1) !important;
+}
+
+.table-responsive {
+    /* max-height: 210px; */
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.custom-select-container {
+  border: 1px solid #ccc;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background: white;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border: 1px solid #ddd;
+}
+
+.dropdown-header {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+}
+
+.dropdown-item {
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-item label {
+  margin-left: 8px;
+}
+
+.select-display {
+  min-height: 20px;
+}
+
+.open .fa-caret-down {
+  transform: rotate(-180deg);
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  margin: 10px;
+}
+
+/* multi-select-dropdown.component.css */
+.dropdown-menu3 {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #fbfd92;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 50%;
+  z-index: 1000;
+  display: block;
+  padding: 8px;
+}
+
+.input-field3 {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.fa-caret-down {
+  /* Ensures the icon stays to the right */
+  margin-left: auto;
+  /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
+    background-color: none; */
+  font-size: 20px; /* Increases the size of the icon */
+  color: rgba(136, 137, 139, 1); /* Changes the color to a blue shade */
+}
+.float-right {
+  float: right;
+}
+.center_item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+
+.fake-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  color: rgba(104, 105, 109, 1);
+  font-size: 16px;
+  /* Adjust the size as needed */
+  font-weight: normal;
+  /* Normal weight to avoid thickness */
+  font-style: normal;
+  /* Ensure it's not italic */
+}
+
+.fake-checkbox.checked {
+  background-color: rgba(255, 248, 184, 1);
+  border-color: #aaa;
+  /* Darker border for visibility */
+}
+
+/* Style to indicate unselected */
+.fake-checkbox:not(.checked) {
+  background-color: white;
+}
+
+.fakeOk {
+  border: 1px solid #ccc;
+  width: 75px;
+  height: 30px;
+  top: 5px;
+  left: 37px;
+  border-radius: 4px;
+  padding: 6.5px, 10px, 6.5px, 10px;
+  /* gap:10px; gap: */
+}
+
+.form-group3 {
+  width: 230px;
+  height: 55px;
+  padding: 2px 10px 2px 10px;
+  gap: 1px;
+  border-radius: 5px 0px 0px 0px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  border: 1px solid rgba(225, 225, 225, 1);
+  margin-top: 21px;
+  margin-left: 32px;
+}
+
+.btn-back {
+  width: 75px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 4px !important;
+  border: 1px solid rgba(255, 248, 184, 1);
+}
+.mybtnn2 {
+  width: 75px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem; /* Smaller font size */
+  /* height: 100%; Ensure full height is used */
+  padding: 0.375rem 0.75rem; /* Adjust padding if necessary */
+  border-radius: 4px !important;
+}
+
+.required_field11:after {
+  content: "*";
+  position: absolute;
+  top: -14px;
+  right: 4px;
+  color: #f73333;
+  font-size: 15px;
+}
+.required_field12:after {
+  content: "*";
+  position: absolute;
+  top: -14px;
+  left: 4px;
+  color: #f73333;
+  font-size: 15px;
+}
+.delete-modal2 {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  padding: 18px 21px 20px 21px;
+  position: fixed;
+  width: max-content;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.heading_txt {
+  font-family: "Gilroy-Bold";
+  font-size: 16px;
+  line-height: 16px;
+
+  color: #111727;
+}
+.text_txt {
+  font-family: "Gilroy";
+  font-size: 13px;
+  line-height: 13px;
+
+  color: rgba(104, 105, 109, 1);
+}
+
+.mt-100px {
+  margin-top: 100px !important;
+}
+
+.styled-button {
+  background-color: #fff8b8;
+}
+
+@media (max-width: 788px) {
+  .mt-100px {
+    margin-top: 20px !important;
+  }
+  .usertablemain.project-settings-table-header {
+    width: auto !important;
+  }
+
+  .project-setting-page-table {
+    margin-top: 10px;
+  }
+
+  .table-responsive {
+    max-height: 210px;
+    overflow-y: auto;
+    overflow-x: auto;
+  }
+}
+
+.title-16px {
+  font-family: "Gilroy-Bold";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.81px;
+  text-align: left;
+  color: #000000;
+}
+
+.button-my {
+  border-radius: 5px !important;
+  height: 32px;
+  padding: 5px 10px;
+  width: 150px;
+  background: #fff8b8 !important;
+}
+
+.mybtnn2 {
+  background: #fff8b8;
+}
+
+.width-auto {
+  width: auto !important;
+}
+.cust-padding-10 {
+  padding: 10px 15px !important;
+}
+
+.close-icon {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  border: 2px solid grey;
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+.close-icon i {
+  font-size: 15px;
+}
+
+.vendorTable tr td {
+  font-family: "Gilroy";
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17.33px;
+
+  color: #68696d;
+}
+
+.vendorTable tr th,
+.project-settings-table-header {
+  font-family: "Gilroy";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.33px;
+
+  color: #68696d;
+}

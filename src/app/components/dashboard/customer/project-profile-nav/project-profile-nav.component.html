@@ -1,0 +1,43 @@
+<ul class="sub-menu-ul">
+    <li [ngClass]="current_nav == 'project-profile' ? 'active-menu': ''" >
+        <a [routerLink]="['/project-profile',project_id]">
+            <div class="sub-menu-link yellow-hover">
+                <img src="../assets/icons/setting.svg">
+                <span>Project Profile</span>
+            </div>
+        </a>
+    </li>
+    <li [ngClass]="current_nav == 'dispatched-tickets' ? 'active-menu': ''" >
+        <a  (click)="backTo('/customer-ticket-listing')" style="cursor: pointer">
+            <div class="sub-menu-link yellow-hover">
+                <img src="../assets/icons/setting.svg">
+                <span>Dispatched Tickets</span>
+            </div>
+        </a>
+    </li>
+    <li [ngClass]="current_nav == 'closed-tickets' ? 'active-menu': ''" >
+        <a (click)="backTo('/billing-list')" style="cursor: pointer">
+            <div class="sub-menu-link yellow-hover">
+                <img src="../assets/icons/setting.svg">
+                <span>Project billing</span>
+            </div>
+        </a>
+    </li>
+    <li [ngClass]="current_nav == 'set-truck-rates' ? 'active-menu': ''" >
+        <a [routerLink]="['/set-truck-rates',project_id]" >
+            <div class="sub-menu-link yellow-hover">
+                <img src="../assets/icons/setting.svg">
+                <span>Set Trucks and Rates</span>
+            </div>
+        </a>
+    </li>
+    <!-- <li [ngClass]="current_nav == 'inv-users' ? 'active-menu': ''" >
+        <a [routerLink]="['/cust-inv-users',project_id]">
+            <div class="sub-menu-link yellow-hover">
+                <img src="../assets/icons/setting.svg">
+                <span>Manage Users</span>
+            </div>
+        </a>
+    </li> -->
+    
+</ul>

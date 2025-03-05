@@ -1,0 +1,128 @@
+@import url('../../../../../../assets/css/dashboard-style-new.css');
+
+.come-from-modal.left .modal-body, .come-from-modal.right .modal-body {
+    padding: 20px 40px 20px 40px;
+}
+
+
+
+.modal-backdrop{
+    display: none !important;
+}
+
+.img-invoice{
+    height: 33px !important;
+    border-radius: 18px  !important;
+}
+
+
+.invoice-img{
+    height: 45px !important;
+    border-radius: 8px  !important;
+}
+.img-invoice-dyn{
+    height: 40px;
+    width: 40px;
+    border-radius: 21px;
+}
+
+.date-title{
+    font-family: 'Gilroy-Bold';
+    font-size: 12px;
+    line-height: 14px;
+
+    color: #FFFFFF;
+
+}
+
+.popup-inv-div{
+    width: 282px;
+    height: 187px;
+}
+.popup-in-div > .img{
+    width: 176px;
+    height: 95px;
+    
+}
+
+ .img-logo{
+    width: 147px;
+    height: 59px;
+
+}
+
+.img-top-popup{
+    width: 176px;
+    height: 95px;
+}
+
+.mt-25px{
+    margin-top:25px;
+}
+
+.m-25px{
+    margin:25px;
+}
+.title-0{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 20px;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.mt-25px{
+    margin-top:25px;
+}
+
+.come-from-modal.left .modal-dialog, .come-from-modal.right .modal-dialog {
+ height: max-content !important;
+}
+
+
+.come-from-modal  .field__input{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #68696D;
+
+}
+
+.come-from-modal  .field__label{
+    font-family: 'Gilroy';
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #68696D;
+}
+
+.come-from-modal  button{
+    box-shadow: 0px 4px 4px 0px #00000040;
+
+}
+
+
+.mybtn-back{
+    width: 150px;
+    height: 40px;
+    padding: 3px 10px 3px 10px;
+    border-radius: 5px;
+    border: 1px solid #FFF8B8;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    background: #FFFFFF;
+
+}
+
+.mybtn-width{
+    background: #FFF8B8;
+    width: 150px;
+    height:40px;
+    padding: 3px 10px 3px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    color: black;
+}

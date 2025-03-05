@@ -1,0 +1,223 @@
+<nav id="sidebar">
+
+    <div class="sidebar-header">
+        <div class="header-logo"  [routerLink]="'/dashboard'"><img src="assets/images/logo.png" class="logo-shadow"></div>
+    </div>
+    <ng-container *ngIf="loggedinUser?.role?.role_name == 'Approver' &&  loggedinUser?.parent_user?.account_type=='Trucking Company'">
+        <ul class="list-unstyled components" style="border-bottom: 0px !important;" >
+            <li  *ngIf="this.permissions.includes('projects')" [ngClass]=" this.active_menu && this.active_menu?.parent =='projects' ?  'active active-menu':'active '">
+                <a routerLink="/tc-approver-projects" class="sub-heading">Projects {{this.menu_counts && this.menu_counts?.total_approver_projects  ? '['+this.menu_counts?.total_approver_projects+']' : '[0]'}}  </a>
+            </li>
+            
+            <li class="active">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Tickets  </a>
+                <ul class="collapse list-unstyled show submenu" id="homeSubmenu">
+                    <li *ngIf="this.permissions.includes('approver_tickets')" [ngClass]="this.active_menu && this.active_menu?.child =='tc_approver_tickets' ?  'active-menu':''">
+                        <a [routerLink]="'/tc-approver-tickets'" > <img src="../assets/icons/file-plus.svg"> <span>Approve Tickets {{this.menu_counts && this.menu_counts?.total_tickets_to_approve  ? '['+this.menu_counts?.total_tickets_to_approve+']' : '[0]'}}</span></a>
+                    </li>
+                    <li *ngIf=" this.permissions.includes('approver_approved_tickets') " [ngClass]="this.active_menu && this.active_menu?.child =='tc_approver_approved_tickets' ?  'active-menu':''">
+                        <a  [routerLink]="'/tc-approver-approved-tickets'"><img src="../assets/icons/file-up.svg"> <span>Approved Tickets {{this.menu_counts && this.menu_counts?.total_tickets_approved  ? '['+this.menu_counts?.total_tickets_approved+']' : '[0]'}}</span></a>
+                    </li>
+                  
+                </ul>
+            </li>
+        </ul>
+    </ng-container>
+   
+    <ng-container  *ngIf="this.loggedinUser?.role?.role_name != 'Approver'">
+
+        <ul class="list-unstyled components" style="border-bottom:0px !important">
+            <li class="active">
+                <a data-toggle="collapse" aria-expanded="false" class="heading_li_a" style="margin-bottom: 10px !important;" (click)="toggleProjectMenu('1'); $event.preventDefault()">Tickets 
+                    <span class="float-right">
+                        <ng-container *ngIf="Tickets_list; else downArrow">
+                          <img class="ml-12px" src="../assets/icons/arrow-up-black.svg" alt="Arrow Up">
+                        </ng-container>
+                        <ng-template #downArrow>
+                          <img class="ml-12px" src="../assets/icons/arrow-down.png" alt="Arrow Down">
+                        </ng-template>
+                    </span>
+                </a>
+                <ul class="collapse list-unstyled show submenu border-menu" [class.show]="Tickets_list" >
+                    <li [ngClass]="this.active_menu && this.active_menu?.child =='requests' ? 'active-menu' : '' ">
+                        <a routerLink="/trucking-requests"  [ngClass]="this.active_menu && this.active_menu?.child =='requests' ?  'active-link   pl-0 pr-0':''" style="padding-right: 0;" >
+
+                            <div class="row">
+                                <!-- Left side (50%) -->
+                                <div class="col-md-6 d-flex align-items-start  pl-0">
+                                    <div  class="col-md-2 pr-0">
+                                        <img src="assets/icons/requests-icon.svg" *ngIf="!this.active_menu ">
+                                        <img src="assets/icons/requests-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='requests'">
+                                        <img src="assets/icons/requests-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='requests'">
+
+                                    </div>
+                                    <div class="col-md-10">
+                                        <span id="request-count">Requests</span>
+                                    </div>
+                                </div>
+                            
+                                <!-- Right side (50%) -->
+                                <div class="col-md-6 d-flex justify-content-end align-items-center pr-0">
+                                    <div style="margin-right: -16px;" >
+                                        <i *ngIf="this.menu_counts?.requests > 0 || this.menu_counts?.pending_dispatches > 0" class="fa fa-circle" style="color: #F63333;"></i>
+                                    </div>
+                                    <div>
+                                        <span class="sa_request"  [style]=" this.menu_counts?.requests == 0 && this.active_menu?.child != 'requests' ? ' color: rgba(225, 225, 225, 1) !important;':''" >[{{ this.menu_counts?.requests  }}]</span> <span class="sa_pending" [style]=" this.menu_counts?.pending_dispatches == 0 && this.active_menu?.child != 'requests' ? ' color: rgba(225, 225, 225, 1) !important;':''" style="padding-left: 0 !important; ">[{{ this.menu_counts?.pending_dispatches  }}]</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
+                    </li>
+
+
+                    <!--  <li [ngClass]="this.active_menu && this.active_menu?.child =='requests' ? 'active-menu' : '' ">
+                        <a routerLink="/trucking-requests"  [ngClass]="this.active_menu && this.active_menu?.child =='requests' ?  'active-link  ':''" >
+                            <img src="assets/icons/requests-icon.svg"  *ngIf="!this.active_menu ">
+                            <img src="assets/icons/requests-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='requests'">
+                            <img src="assets/icons/requests-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='requests'">
+                            <span id="request-count">Requests <span  [ngClass]="(this.menu_counts.requests > 0 || this.menu_counts?.pending_dispatches > 0 ) ? 'ml-45' : 'ml-56' " > <i *ngIf="this.menu_counts?.requests > 0 || this.menu_counts?.pending_dispatches > 0" style="color: #F63333;    margin-left: 21px;
+                                margin-right: 3px;" class="fa fa-circle"></i> </span> <span  class=" sa_request " [ngClass]="(this.menu_counts.requests == 0  ) ? 'blur_color' : '' "  [style]="this.menu_counts?.requests > 0 || this.menu_counts?.pending_dispatches > 0 ? 'margin-left: -22px !important; margin-top: 5px !important;':'margin-left: -8px !important; margin-top: 5px !important;'">{{'['+this.menu_counts?.requests+']'}}</span> <span class="float-right  sa_pending" style="margin-top: 3px !important;"> {{'['+this.menu_counts?.pending_dispatches+']'}}</span></span></a>
+                    </li> -->
+
+                    <!-- *ngIf="this.is_subscribed=='YES' || is_free_trial=='YES' || this.menu_counts?.tc_to_approve>0" -->
+                    <li  [ngClass]="  this.active_menu && this.active_menu?.child =='dispatched-tickets' ? 'active-menu' : '' ">
+                        <!-- *ngIf="this.menu_counts?.tc_to_approve<1 || this.is_subscribed=='YES' || is_free_trial=='YES' " -->
+                        <a  [routerLink]="'/tc-ticket-listing'" [ngClass]="this.active_menu && this.active_menu?.child =='dispatched-tickets' ?  'active-link  ':''" >
+                            <img src="assets/icons/dispatched-menu-icon.svg"  *ngIf="!this.active_menu ">
+                            <img src="assets/icons/dispatched-menu-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='dispatched-tickets'">
+                            <img src="assets/icons/dispatched-menu-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='dispatched-tickets'">
+                            <span>Dispatched  <span class="float-right mt-1 sa_dispatch">{{this.menu_counts && this.menu_counts?.dispatched_tickets  ? '['+this.menu_counts?.dispatched_tickets+']' : '[0]'}} </span></span></a>
+
+                            <!-- 
+                        <a  *ngIf="this.menu_counts?.tc_to_approve>0 && !(this.is_subscribed=='YES' || is_free_trial=='YES') " [routerLink]="'/tc-ticket-listing'" [queryParams]="{status: 'Completed'}">
+                            <img src="assets/icons/dispatched-icon.svg">
+                            <span>Dispatched  {{this.menu_counts && this.menu_counts?.dispatched_tickets  ? '['+this.menu_counts?.dispatched_tickets+']' : '[0]'}}</span></a> -->
+                    </li>
+
+                    <!-- *ngIf="this.is_subscribed=='YES' || is_free_trial=='YES'" -->
+                    <li  [ngClass]="this.active_menu && this.active_menu?.child =='tc-closed-tickets' ? 'active-menu':''">
+                        <a [routerLink]="'/tc-closed-tickets'" [ngClass]="this.active_menu && this.active_menu?.child =='tc-closed-tickets' ?  'active-link  ':''" >
+                            <img src="assets/icons/closed-icon.svg"  *ngIf="!this.active_menu ">
+                            <img src="assets/icons/closed-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='tc-closed-tickets'">
+                            <img src="assets/icons/closed-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='tc-closed-tickets'">
+                            <span>Closed  <span class="float-right mt-1">{{this.menu_counts && this.menu_counts?.closed_tickets  ? '['+this.menu_counts?.closed_tickets+']' : '[0]'}}</span>  </span></a>
+                    </li>
+        
+                    <li [ngClass]="this.active_menu && this.active_menu?.child =='tragget-tickets' ?  'active-menu':''">
+                        <a [routerLink]="'/tc-tragget-trial'" [ngClass]="this.active_menu && this.active_menu?.child =='tragget-tickets' ?  'active-link  ':''"  *ngIf="(this.is_free_trial=='YES' && (!this.is_subscribed || this.is_subscribed!='YES')) || ((!this.is_subscribed || this.is_subscribed!='YES') && this.is_free_trial=='NO')">
+                            <img src="assets/icons/tragget-ticket-icon.svg"  *ngIf="!this.active_menu ">
+                            <img src="assets/icons/tragget-ticket-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='tragget-tickets'">
+                            <img src="assets/icons/tragget-ticket-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='tragget-tickets'">
+    
+                            <span>DispatchProX tickets   </span> <span class="float-right mt-1">[0]</span></a>
+                        <a [routerLink]="'/tc-tragget-tickets'" [ngClass]="this.active_menu && this.active_menu?.child =='tragget-tickets' ?  'active-link  ':''"  *ngIf="this.is_subscribed=='YES'">
+                            <img src="assets/icons/tragget-ticket-icon.svg"  *ngIf="!this.active_menu ">
+                            <img src="assets/icons/tragget-ticket-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='tragget-tickets'">
+                            <img src="assets/icons/tragget-ticket-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='tragget-tickets'">
+                            <span>DispatchProX tickets   <span class="float-right mt-1"> 
+                                    <ng-container *ngIf="this.tragget_tickets?.usage?.left > 0 && this.tragget_tickets?.subscription">
+                                        [{{ (this.tragget_tickets?.individual_tickets) + this.tragget_tickets?.usage?.left }}]
+                                    </ng-container>
+                                    <ng-container *ngIf="!this.tragget_tickets?.subscription">
+                                        <ng-container *ngIf="this.tragget_tickets?.without_tragget_tickets < 1 && this.tragget_tickets?.individual_tickets > 0">
+                                            [{{ this.tragget_tickets?.individual_tickets }}]
+                                        </ng-container>
+                                        <ng-container *ngIf="this.tragget_tickets?.without_tragget_tickets > 0 && this.tragget_tickets?.individual_tickets < 1">
+                                            [- {{ this.tragget_tickets?.without_tragget_tickets }}]
+                                        </ng-container>
+                                        <ng-container *ngIf="(this.tragget_tickets?.without_tragget_tickets < 1 && this.tragget_tickets?.individual_tickets < 1) || (this.tragget_tickets?.without_tragget_tickets  > 0 && this.tragget_tickets?.individual_tickets > 0)">
+                                            [0]
+                                        </ng-container>
+                                        
+                                    </ng-container>
+
+                            </span> </span></a>        
+                    </li>
+    
+                </ul>
+            </li>
+            <!-- *ngIf="this.is_subscribed=='YES' || is_free_trial=='YES'" -->
+            <li class="active"  >
+                <a data-toggle="collapse" aria-expanded="false" class="heading_li_a" (click)="toggleProjectMenu('2'); $event.preventDefault()">Business
+                    <span class="float-right">
+                        <ng-container *ngIf="Business_list; else downArrow">
+                          <img class="ml-12px" src="../assets/icons/arrow-up-black.svg" alt="Arrow Up">
+                        </ng-container>
+                        <ng-template #downArrow>
+                          <img src="../assets/icons/arrow-down.png" alt="Arrow Down">
+                        </ng-template>
+                    </span>
+                </a>
+                <ul class="collapse list-unstyled show submenu border-menu" [class.show]="Business_list">
+                    <!-- *ngIf="this.is_subscribed=='YES' || is_free_trial=='YES'" -->
+                    <li  [ngClass]=" this.active_menu && this.active_menu?.child =='invoices' ?  'active-menu':''">
+                        <a [routerLink]="'/draft-tc-invoices'" [ngClass]="this.active_menu && this.active_menu?.child =='invoices' ?  'active-link  ':''">
+                            <img src="assets/icons/invoicing-menu-icon.svg"  *ngIf="!this.active_menu ">
+                            <img src="assets/icons/invoicing-menu-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='invoices'">
+                            <img src="assets/icons/invoicing-menu-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='invoices'">
+    
+                            <span>Invoicing 
+                                <!-- {{this.menu_counts && this.menu_counts?.invoices  ? '['+this.menu_counts?.invoices+']' : '[0]'}} -->
+                            </span></a>
+                    </li>
+                    <!-- *ngIf="this.is_subscribed=='YES' || is_free_trial=='YES'" -->
+                    <li  [ngClass]="  this.active_menu && this.active_menu?.child =='tc-billing-list' ?  'active-menu':''">
+                        <a [routerLink]="'/tc-billing-list'" [ngClass]="this.active_menu && this.active_menu?.child =='tc-billing-list' ?  'active-link  ':''">                            
+                            <img src="assets/icons/billing-menu-icon.svg"  *ngIf="!this.active_menu ">
+                            <img src="assets/icons/billing-menu-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='tc-billing-list'">
+                            <img src="assets/icons/billing-menu-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='tc-billing-list'">
+                            <span>Billing 
+                                <!-- {{this.menu_counts && this.menu_counts?.billings  ? '['+this.menu_counts?.billings+']' : '[0]'}} -->
+                            </span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="active" >
+                <a  data-toggle="collapse" aria-expanded="false" class="heading_li_a" (click)="toggleProjectMenu('3'); $event.preventDefault()">{{this.loggedinUser.company_name}}
+                
+                    <span class="float-right">
+                    <ng-container *ngIf="Company_list; else downArrow">
+                      <img class="ml-12px" src="../assets/icons/arrow-up-black.svg" alt="Arrow Up">
+                    </ng-container>
+                    <ng-template #downArrow>
+                      <img src="../assets/icons/arrow-down.png" alt="Arrow Down">
+                    </ng-template>
+                </span>
+            </a>
+                <ul class="collapse list-unstyled show submenu border-menu" [class.show]="Company_list">
+                    <li  [ngClass]="this.active_menu && this.active_menu?.child =='company-settings' ? 'active-menu' : '' ">
+                        <a [routerLink]="'/tc-profile-settings'" [ngClass]="this.active_menu && this.active_menu?.child =='company-settings' ?  'active-link  ':''">
+                           <img src="assets/icons/company-settings.svg" *ngIf="!this.active_menu ">
+                           <img src="assets/icons/company-settings-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='company-settings'">
+                           <img src="assets/icons/company-settings.svg" *ngIf="this.active_menu && this.active_menu?.child !='company-settings'">
+                            <span>Company settings</span></a>
+                    </li>
+                    <li [ngClass]="this.active_menu && this.active_menu?.child =='tc-company' ?  'active-menu':''">
+                        <a [routerLink]="'/contact-vendors-cc'" [ngClass]="this.active_menu && this.active_menu?.child =='tc-company' ?  'active-link  ':''">
+                            <img src="assets/icons/contacts-icon.svg" *ngIf="!this.active_menu ">
+                            <img src="assets/icons/contacts-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='tc-company'">
+                            <img src="assets/icons/contacts-icon.svg" *ngIf="this.active_menu && this.active_menu?.child !='tc-company'">
+                            <span>Contacts</span></a>
+                    </li>
+                    <li [ngClass]="this.active_menu && this.active_menu?.child =='tc-drivers' ?  'active-menu':''">
+                        <a [routerLink]="'/tc-drivers'" [ngClass]="this.active_menu && this.active_menu?.child =='tc-drivers' ?  'active-link  ':''">
+                            <img src="assets/icons/drivers-icon.svg"  *ngIf="!this.active_menu ">
+                            <img src="assets/icons/drivers-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='tc-drivers'">
+                            <img src="assets/icons/drivers-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='tc-drivers'">
+                            <span>Drivers</span></a>
+                        </li>
+                        <li [ngClass]="this.active_menu && this.active_menu?.child =='company-projects' ?  'active-menu':''">
+                            <a [routerLink]="'/tc-projects-list'" [ngClass]="this.active_menu && this.active_menu?.child =='company-projects' ?  'active-link  ':''">
+                                <img src="assets/icons/projects-menu-icon.svg"  *ngIf="!this.active_menu ">
+                                <img src="assets/icons/projects-menu-icon-a.svg" *ngIf="this.active_menu && this.active_menu?.child=='company-projects'">
+                                <img src="assets/icons/projects-menu-icon.svg" *ngIf="this.active_menu && this.active_menu?.child!='company-projects'">
+                            <span>Projects</span></a>
+                    </li>
+                </ul>
+            </li>
+    
+        </ul>
+    </ng-container>
+
+</nav>

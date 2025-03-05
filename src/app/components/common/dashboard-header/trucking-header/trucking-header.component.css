@@ -1,0 +1,127 @@
+@import url('../../../../../assets/css/trucking-style.css');
+
+#sidebar ul li a span {
+    padding-left: 10px;
+    margin-bottom: 10px !important;
+    margin-left: 0px !important;
+}
+
+.header-logo img {
+    width: 200px;
+}
+
+.ml-37{
+    margin-left: 37px !important;
+}
+
+
+#sidebar ul li a {
+    border-radius: 5px;
+    border: 0.5px solid #E1E1E1;
+    background: #FAFAFA;
+    margin-bottom: 10px !important;
+    margin-left: 15px !important;
+}
+
+#sidebar ul li a span {
+    padding-left: 10px !important;
+    color: #68696D !important;
+}
+.border-menu {
+    padding-bottom: 0px !important;
+}
+
+
+
+.header-logo img {
+    width: 200px;
+}
+
+.arrow img {
+    width: 20px;
+}
+
+.arrow {
+    float: right;
+}
+
+
+.active-link {
+    border-radius: 5px !important;
+    border: 0.5px solid #E1E1E1;
+    background: #17A1FA;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+
+.heading_li_a{
+    border: none !important;
+    padding-right: 0px !important;
+    margin-top: 10px;
+}
+
+#sidebar ul .active-menu a  {
+    color: #000 !important;
+}
+
+
+#sidebar ul .active-menu a.active-link span {
+    color: #FFF !important;
+}
+
+#sidebar ul li a {
+    margin-right: 8px!important;
+}
+.ml-12px{
+    margin-left: 12px;
+}
+
+.notification-greater-than-zero {
+    height: 14px;
+    background-color: #ff4d4d;
+    border-radius: 50%;
+}
+.ml-45{
+    margin-left: 45px !important;
+}
+.ml-56{
+    margin-left: 56px !important;
+}
+#sidebar ul li a span.ml-56 {
+    margin-left: 56px !important;
+}
+
+#sidebar ul li a span.ml-45 {
+    margin-left: 45px !important;
+}
+.blur_color{
+    color: rgba(225, 225, 225, 1) !important;
+}
+#sidebar a span.span.blur_color {
+    color: rgba(225, 225, 225, 1) !important;
+}
+
+.row {
+    width: 100%;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center; 
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-end {
+    justify-content: flex-end;
+}
+
+.sa_request {
+    margin-right: 1px;
+}
+
+.sa_pending {
+    margin-left: 10px;
+}

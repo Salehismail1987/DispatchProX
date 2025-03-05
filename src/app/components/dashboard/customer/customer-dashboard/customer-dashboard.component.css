@@ -1,0 +1,321 @@
+@import url('../../../../../assets/css/dashboard-style.css');
+
+@import url('../../../../../assets/css/construction-dashbord-style.css');
+
+.bg-blue{
+    background: #17A1FA;
+
+}
+.bg-yellow{
+    background:#FFF8B8;
+}
+
+.da-number-div {
+    border: 10px solid #33D1A2
+    ;
+}
+
+.have-declined{
+    border: 10px solid #FF4D4D
+
+    ;
+}
+
+.no-declined{
+    border: 10px solid #D9D9D9;
+}
+
+.da-number-div2{
+    border-radius: 100px;
+    width: 67px;
+    height: 67px;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+ }
+
+
+ .da-number-div2-light-grey{
+    border: 8px solid #D9D9D9 ;
+    border-radius: 100px;
+    width: 67px;
+    height: 67px;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+ }
+ .da-number-div2-border-blue{
+    border: 8px solid #FFF8B8 !important;
+    border-radius: 100px;
+    width: 67px;
+    height: 67px;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+ }
+ .d-flex-single{
+    display: -ms-flexbox!important;
+    display: flex!important;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+
+ }
+
+ .give-btn{
+   color:black;
+ }
+
+ .feedback-text{
+    font-family: 'Gilroy-Bold';
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #000000;
+ }
+
+ .ticket-badge {
+    background-image: url("../../../../../assets/icons/ticket-badge-unified.svg");
+    background-size: cover;
+    padding: 24px 3px 0px 3px;
+    background-repeat: no-repeat;
+    width: 85px;
+    height: 118px;
+    text-align: center;
+}
+
+
+.feed-back-title{
+    font-family: 'Gilroy-Bold';
+    font-size: 25px;
+    line-height: 29px;
+}
+
+.feed-back-text{
+
+    font-family: 'Gilroy';
+    font-size: 15px;
+    line-height: 18px;
+
+    color: #8D8D8D;
+}
+
+.feed-back-subtitle{
+
+    font-family: 'Gilroy-SemiBold';
+    font-size: 15px;
+    line-height: 18px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #68696D;
+}
+
+.ticket-badge > .title-6{
+    font-family: 'Gilroy-Bold';
+    font-size: 13px;
+    line-height: 15px;
+    /* identical to box height */
+
+    text-align: center;
+
+}
+.ticket-badge > .title-5{
+    font-family: 'Gilroy-Bold';
+    font-size: 24px;
+    line-height: 28px;
+    /* identical to box height */
+
+    text-align: center;
+
+}
+
+.feed-back-subtitle{
+
+    font-family: 'Gilroy-SemiBold';
+    font-size: 15px;
+    line-height: 18px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #68696D !important;
+}
+
+.btns-div{
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.max-width-50 {
+    max-width: 100% !important;
+    width: 40% !important;
+}
+
+.form-title{
+
+font-family: 'Gilroy-SemiBold';
+font-size: 20px;
+line-height: 23px;
+
+color: #000000;
+}
+
+.mybtn-back-yellow{
+    background: #FFF8B8 !important;
+}
+.required_field:after {
+    content: "*";
+    position: absolute;
+    top: 0;
+    right: -15px;
+    color: #F73333;
+}
+
+.subs-table thead tr th {
+    border: none;
+    font-family: 'Gilroy-SemiBold';
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+
+    color: #000000;
+}
+
+
+.ticket-badge{
+    width: 90px !important;
+    height: 118px;
+}
+
+.width-24px{
+    width: 24px !important;
+}
+
+.subs-table tr td {
+    padding: 5px;
+    font-size: 14px;
+    line-height: 16px;
+    padding-right: 18px;
+    color: #000000;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 500;
+    text-align: center;
+    border-right: 1px solid #D9D9D9;
+}
+
+.mb-20 {
+    margin-bottom: 20px !important;
+}
+
+
+.bg-subs{
+    background-color: #0D76BB !important;
+}
+
+.title-8-2, .title-8-1{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0em;
+
+}
+
+.title-8-2{
+    color:#68696D;
+}
+
+.title-8-1{
+    color: #111727;
+}
+
+.border-orange{
+    border: 5px solid #FF8E09 !important;
+}
+
+.border-black{
+    border: 4px solid #000000 !important;
+
+}
+.text-available{
+
+    color:  #43ABDB !important;
+    font-family: 'Gilroy-Bold';
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+
+}
+
+.text-remain{
+    font-family: 'Gilroy-Bold';
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+.bg-sky-blue {
+    background: #43ABDB !important;
+}
+.br-5px{
+  border-radius: 5px !important;
+}
+
+ .bg-grey{
+  background: #8C8B8B !important;
+ }
+
+.bg-subs{
+    background: #0D76BB !important;
+}
+
+.br-0{
+    border-radius: 0px !important;
+}
+
+
+.body-content2 {
+    padding: 16px 34px 20px 35px;
+}
+@media (max-width: 768px) {
+
+    .body-content2 {
+        padding: 20px !important;
+    }
+    .d-flex-single{
+        flex-direction: column !important;
+    }
+}
+
+.body-content2{
+    padding: 15px 15px 15px 15px !important;
+}
+
+
+.border-div{
+    border: 1px solid #0000001a !important;
+}
+
+.inner_main_shadow{
+  box-shadow: 0px 4px 4px 0px #00000040 inset;
+
+}
+
+.no-subs-text{
+  font-family: 'Gilroy-SemiBold';
+font-size: 16px;
+font-weight: 400;
+line-height: 19.6px;
+
+}

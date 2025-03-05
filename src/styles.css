@@ -1,0 +1,42 @@
+.modal-backdrop.in {
+    opacity: 0.5;
+}
+
+.modal {
+    z-index: 1056 !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.btn {
+    font-family: 'Gilroy' !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 18px !important;
+    line-height: 29px !important;
+    /* or 161% */
+    text-align: center !important;
+    color: #0B1E26 !important;
+    padding: 12px 35px;
+    border: none;
+    position: relative;
+    border-radius: 10px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.bg-pink {
+    background-color: #FDD7E4;
+    background:#FDD7E4;
+}
+
+.logo-shadow{
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+
+.btn-customer{
+    height: 40px !important;
+    width: 150px !important;
+}
+

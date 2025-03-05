@@ -1,0 +1,2087 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="setting-content-page border-div inner_main_shadow">
+        <div class="row mr-0" style="margin-bottom: 65px">
+          <div class="col-md-10 d-flex align-items-center">
+            <div class="mb-6 mr-2">
+              <img
+                class=" "
+                src="./assets/icons/vendors-icon.svg"
+                alt="project-profile-file-icon"
+              />
+            </div>
+            <div class="dashboard-title mb-6">Vendors</div>
+          </div>
+          <div class="col-md-2 d-flex justify-content-end">
+            <button
+              class="row mybtn mybtn-back-yellow width-fit-content btnn"
+              (click)="showModal('invite-people')"
+            >
+              <img
+                src="./assets/icons/plus-c.svg"
+                width="20px"
+                alt="project-profile-tracker-icon"
+                style="margin-left: -5px"
+              />
+              <div class="invite_btn">Invite vendor</div>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-7">
+            <div class="dashboard-title mb-6">Vendor listings</div>
+            <div class="mb-6 text_2">Click the line to make changes</div>
+          </div>
+
+          <div class="col-md-2 px-0">
+            <div class="input-div getinputfield sa_main cur_p">
+              <div
+                class="title-5-new2 text-color-black-shade5 text-left sa_lablee"
+              >
+                Sort by
+              </div>
+              <div
+                class="myinput-new sa_select selected sa_lablee2"
+                *ngIf="!this.sort_by || this.sort_by == null"
+              >
+                Recently invited
+              </div>
+              <div
+                class="myinput-new selected sa_lablee2 sa_selected_filter"
+                *ngIf="this.sort_by != null"
+              >
+                {{
+                  sort_by == "full_name"
+                    ? "Number of trucks"
+                    : sort_by == "email"
+                    ? "City"
+                    : "Recently invited"
+                }}
+              </div>
+              <img
+                src="../../assets/images/dropdown.svg"
+                class="icon-center-right"
+              />
+              <div
+                class="input-popup-div cust_drop companies_list"
+                style="display: none"
+              >
+                <div
+                  class="d-flex justify-content-between mb-5px list-item sa_sortt"
+                >
+                  Sort by
+                </div>
+                <div
+                  (click)="handleSortByList('company_name')"
+                  class="d-flex justify-content-between mb-5px list-item"
+                  [ngClass]="
+                    this.sort_by == 'company_name'
+                      ? 'title-5-new33_active '
+                      : ''
+                  "
+                >
+                  Recently invited
+                </div>
+                <div
+                  (click)="handleSortByList('full_name')"
+                  class="d-flex justify-content-between mb-5px list-item"
+                  [ngClass]="
+                    this.sort_by == 'full_name' ? 'title-5-new33_active ' : ''
+                  "
+                >
+                  Number of trucks
+                </div>
+                <div
+                  (click)="handleSortByList('email')"
+                  class="d-flex justify-content-between mb-5px list-item"
+                  [ngClass]="
+                    this.sort_by == 'email' ? 'title-5-new33_active ' : ''
+                  "
+                >
+                  City
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-2 px-0">
+                        <label class="field text-field">
+                            <select class="field__input icon-none sa_lablee2" (change)="handleSortByList($event)">
+                                <option value="company_name">Sort by</option>
+                                <option value="full_name">Number of trucks</option>
+                                <option value="email">City</option>
+
+                            </select>
+                            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                             <span class="field__label-wrap">
+                                <span class="field__label sa_lablee" >Sort by</span>
+                            </span>
+                        </label>
+                    </div> -->
+          <div class="col-md-3 pl-2">
+            <div class="position-relative">
+              <label class="field text-field">
+                <input
+                  class="field__input"
+                  placeholder="Search"
+                  (change)="searchBy(searchby.value)"
+                  type="text"
+                  [(ngModel)]="this.search_by"
+                  #searchby
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label">Search vendor</span>
+                </span>
+              </label>
+              <div class="topright">
+                <img
+                  src="../assets/icons/search-a.svg"
+                  (click)="searchBy(searchby.value)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" style="padding-left: 10px">
+            <table class="vendorTable">
+              <tr class="project-settings-table-header">
+                <th
+                  class="py-1"
+                  style="width: 40%; padding-left: 7px; padding-right: 0px"
+                >
+                  Vendor
+                </th>
+                <th
+                  class="py-1"
+                  style="width: 15%; padding-left: 7px; padding-right: 0px"
+                >
+                  City, Province/State
+                </th>
+                <th
+                  class="py-1"
+                  style="width: 15%; padding-left: 7px; padding-right: 0px"
+                >
+                  Primary contact
+                </th>
+                <th
+                  class="py-1"
+                  style="width: 5%; padding-left: 7px; padding-right: 0px"
+                >
+                  # of trucks
+                </th>
+                <th
+                  class="py-1"
+                  style="
+                    width: 10%;
+                    padding-left: 7px;
+                    padding-right: 0px;
+                    text-align: center;
+                  "
+                >
+                  Active tickets
+                </th>
+                <th
+                  class="py-1"
+                  style="width: 15%; padding-left: 7px; padding-right: 0px"
+                >
+                  Ticket closing rate (90 days)
+                </th>
+              </tr>
+              <tbody>
+                <ng-container
+                  *ngIf="data_list && data_list.length > 0; else elseRow"
+                >
+                  <tr
+                    *ngFor="let item of data_list"
+                    data-toggle="modal"
+                    (click)="setCompany(item)"
+                    data-target="#vendorinfo"
+                    [ngClass]="
+                      (item?.invitation_code != '' && item?.is_accepted == 0) ||
+                      (item?.invitation_code == '' &&
+                        item?.user?.is_active == 0)
+                        ? 'pending_inv_row cursor-pointer'
+                        : 'cursor-pointer'
+                    "
+                  >
+                    <td
+                      class="py-1"
+                      style="width: 40%; padding-left: 7px; padding-right: 0px"
+                    >
+                      {{
+                        item?.user
+                          ? item?.user.company_name
+                          : item?.company_name
+                      }}
+                    </td>
+                    <td
+                      class="py-1"
+                      style="width: 15%; padding-left: 7px; padding-right: 0px"
+                    >
+                      <span
+                        *ngIf="
+                          (item?.invitation_code != '' &&
+                            item?.is_accepted == 0) ||
+                          (item?.invitation_code == '' &&
+                            item?.user?.is_active == 0)
+                        "
+                      >
+                        ...
+                      </span>
+                      <span
+                        *ngIf="
+                          !(
+                            item?.invitation_code != '' &&
+                            item?.is_accepted == 0
+                          ) &&
+                          !(
+                            item?.invitation_code == '' &&
+                            item?.user?.is_active == 0
+                          )
+                        "
+                      >
+                        {{
+                          item?.user?.city
+                            ? item?.user.city
+                            : item?.user?.customer?.city
+                        }}
+                        {{
+                          item?.user?.province
+                            ? item?.user.province
+                            : item?.user?.customer?.province
+                        }}
+                      </span>
+                    </td>
+                    <td
+                      class="py-1"
+                      style="width: 15%; padding-left: 7px; padding-right: 0px"
+                    >
+                      {{
+                        item?.user && item?.user
+                          ? item?.user.full_name
+                          : item?.full_name
+                      }}
+                    </td>
+                    <td
+                      class="py-1"
+                      style="width: 5%; padding-left: 7px; padding-right: 0px"
+                    >
+                      <span
+                        *ngIf="
+                          (item?.invitation_code != '' &&
+                            item?.is_accepted == 0) ||
+                          (item?.invitation_code == '' &&
+                            item?.user?.is_active == 0)
+                        "
+                      >
+                        -
+                      </span>
+                      <span
+                        *ngIf="
+                          !(
+                            item?.invitation_code != '' &&
+                            item?.is_accepted == 0
+                          ) &&
+                          !(
+                            item?.invitation_code == '' &&
+                            item?.user?.is_active == 0
+                          )
+                        "
+                      >
+                        {{ item?.total_trucks }}
+                      </span>
+                    </td>
+                    <td
+                      class="py-1"
+                      style="
+                        width: 100%;
+                        padding-left: 7px;
+                        padding-right: 0px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
+                    >
+                      <div
+                        class="statusMainDiv"
+                        *ngIf="
+                          (item?.invitation_code != '' &&
+                            item?.is_accepted == 0) ||
+                          (item?.invitation_code == '' &&
+                            item?.user?.is_active == 0)
+                        "
+                      >
+                        <div class="activeTicketCount">-</div>
+                      </div>
+                      <div
+                        class="statusMainDiv"
+                        *ngIf="
+                          !(
+                            item?.invitation_code != '' &&
+                            item?.is_accepted == 0
+                          ) &&
+                          !(
+                            item?.invitation_code == '' &&
+                            item?.user?.is_active == 0
+                          )
+                        "
+                      >
+                        <div class="activeTicketCount">
+                          {{ item?.tickets_info?.active_tickets }}
+                        </div>
+                        <div class="statuspopdiv">
+                          <div class="d-flex align-items-center mb-9">
+                            <div class="statusDiv bg-green">
+                              {{ item?.tickets_info?.completed_tickets }}
+                            </div>
+                            <div class="title-10 ml-10">Completed</div>
+                          </div>
+                          <div class="d-flex align-items-center mb-9">
+                            <div class="statusDiv bg-dark-yellow">
+                              {{ item?.tickets_info?.inprogress_tickets }}
+                            </div>
+                            <div class="title-10 ml-10">In-progress</div>
+                          </div>
+                          <div class="d-flex align-items-center mb-9">
+                            <div class="statusDiv bg-light-yellow2 text-black">
+                              {{ item?.tickets_info?.accepted_tickets }}
+                            </div>
+                            <div class="title-10 ml-10">Accepted</div>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <div class="statusDiv bg-light-grey2 text-black">
+                              {{ item?.tickets_info?.pending_tickets }}
+                            </div>
+                            <div class="title-10 ml-10">Pending</div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="py-1"
+                      style="width: 15%; padding-left: 7px; padding-right: 0px"
+                      *ngIf="
+                        (item?.invitation_code != '' &&
+                          item?.is_accepted == 0) ||
+                        (item?.invitation_code == '' &&
+                          item?.user?.is_active == 0)
+                      "
+                    >
+                      -
+                    </td>
+                    <td
+                      class="py-1"
+                      style="width: 15%; padding-left: 7px; padding-right: 0px"
+                      *ngIf="
+                        !(
+                          item?.invitation_code != '' && item?.is_accepted == 0
+                        ) &&
+                        !(
+                          item?.invitation_code == '' &&
+                          item?.user?.is_active == 0
+                        )
+                      "
+                    >
+                      {{ item?.tickets_info?.success_ratio_90_days }}%
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-template #elseRow>
+                  <tr>
+                    <td colspan="10" class="text-center" *ngIf="!is_loading">
+                      <h4>No companies to show.</h4>
+                    </td>
+                    <td colspan="10" class="text-center" *ngIf="is_loading">
+                      <h4>Loading companies list.</h4>
+                    </td>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </table>
+            <br />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 col-lg-1">
+            <label class="field text-field">
+              <select
+                class="field__input icon-none bg-grey"
+                (change)="this.handlePerPage($event)"
+              >
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="50">100</option>
+              </select>
+              <i
+                class="fa fa-caret-down input-icon-right"
+                aria-hidden="true"
+              ></i>
+              <span class="field__label-wrap">
+                <span class="field__label">Rows</span>
+              </span>
+            </label>
+          </div>
+          <div class="col-md-10 col-lg-11">
+            <div class="mypagination-div" *ngIf="data_pagination?.total > 0">
+              <a
+                style="cursor: pointer"
+                (click)="changePage(data_pagination.current_page - 1)"
+                [ngClass]="
+                  data_pagination.full_page == this.page
+                    ? 'mypagination '
+                    : 'mypagination disable'
+                "
+                class=""
+                >Previous</a
+              >
+              <ng-container *ngFor="let item of data_pagination?.links">
+                <a
+                  style="cursor: pointer"
+                  *ngIf="notSkip(item.label)"
+                  [ngClass]="
+                    item.active ? 'mypagination active' : 'mypagination'
+                  "
+                  (click)="changePage(parsePage(item.label.toString()))"
+                  >{{ item.label }}</a
+                >
+              </ng-container>
+              <a
+                style="cursor: pointer"
+                (click)="changePage(data_pagination.current_page + 1)"
+                [ngClass]="
+                  this.page == data_pagination.last_page
+                    ? 'mypagination '
+                    : 'mypagination next'
+                "
+                >Next</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-invite-people-form
+  *ngIf="this.current_modal == 'invite-people'"
+  [current_modal]="this.current_modal"
+  (showModl)="showModal($event)"
+  (setAct)="setActive($event)"
+></app-invite-people-form>
+
+<div
+  class="modal fade come-from-modal right show asdf"
+  *ngIf="this.edit_company"
+  id="vendorinfo"
+  tabindex="-1 "
+  role="dialog "
+  aria-labelledby="myModalLabel "
+>
+  <div class="modal-dialog" role="document ">
+    <div class="modal-content">
+      <div class="modal-body p-15">
+        <form
+          [formGroup]="editProject"
+          data-toggle="modal"
+          data-target="#modalEditProject"
+        >
+          <div
+            class="title-11 mb-19 head_1"
+            [ngClass]="this.is_inv_user ? ' ' : ' text-center'"
+          >
+            Vendor info
+          </div>
+          <div class="d-flex justify-content-between align-items-center mb-30">
+            <div class="d-flex align-items-center">
+              <img
+                class="img-invoice"
+                src="assets/icons/user.svg"
+                *ngIf="
+                  !this.is_inv_user &&
+                  this.edit_company &&
+                  (this.edit_company?.profile_image == null ||
+                    this.edit_company?.profile_image == '')
+                "
+              />
+              <img
+                class="img-invoice-dyn"
+                [src]="
+                  this.backendAPIURL +
+                  (this.edit_company && this.edit_company?.profile_image)
+                "
+                *ngIf="
+                  !this.is_inv_user &&
+                  this.edit_company &&
+                  this.edit_company?.profile_image != null &&
+                  this.edit_company?.profile_image != ''
+                "
+              />
+              <div class="bg_greyy" *ngIf="this.is_inv_user">
+                <img class="img-invoice2" src="assets/icons/user_inv.svg" />
+              </div>
+
+              <div class="title-11 text-color-black-shade2 ml-14">
+                {{
+                  this.edit_company?.company_name
+                    ? this.edit_company?.company_name
+                    : this.edit_company?.user?.company_name
+                }}
+              </div>
+            </div>
+            <div
+              style="position: absolute; margin-left: 268px; margin-top: 40px"
+            >
+              <div class="row" style="position: relative">
+                <div class="col-1"></div>
+                <div
+                  class="col-10 px-0 py-2"
+                  *ngIf="
+                    edit_company?.invitation_code == '' &&
+                    edit_company?.user?.is_active == 0
+                  "
+                  style="
+                    border: 1px solid rgba(225, 225, 225, 1);
+                    border-radius: 4px;
+                    z-index: 9;
+                  "
+                >
+                  <div
+                    class="col-12 mb-2 title-driver"
+                    align="center"
+                    style="color: black; opacity: 1; font-family: 'Gilroy-Bold';"
+                  >
+                    Invitation
+                  </div>
+                  <div class="row">
+                    <div class="col-5" align="right">Status</div>
+                    <div class="col-7" align="left">
+                      <button
+                        class="mybtn bg-light-grey2 pading_btn width-fit-content btn-text-very-small2"
+                      >
+                        Pending
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row mb-1" align="center">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                      <button
+                        class="mybtn2 resend-btn title-13 mybtn-back-blue2 text-white p-8 m-0 date-title"
+                        (click)="resendInv(edit_company?.id, 'user')"
+                        *ngIf="!loading_resend"
+                      >
+                        Resend invitation
+                      </button>
+                      <button
+                        class="mybtn2  mt-3  resend-btn title-13 mybtn-back-blue2 text-white p-8 m-0 date-title"
+                        disabled
+                        *ngIf="loading_resend"
+                      >
+                        Processing..
+                      </button>
+
+                      <button
+                        class="mybtn2  mt-3  cancel-btn title-13  text-white p-8 m-0 date-title"
+                        (click)="cancelInv(edit_company?.id, 'user')"
+                        *ngIf="!loading_cancel"
+                      >
+                        Cancel invitation
+                      </button>
+                      <button
+                        class="mybtn2 cancel-btn title-13  text-white p-8 m-0 date-title"
+                        disabled
+                        *ngIf="loading_cancel"
+                      >
+                        Processing..
+                      </button>
+                    </div>
+                    <div class="col-2"></div>
+                  </div>
+                </div>
+                <div
+                  class="col-10 px-0 py-2"
+                  *ngIf="
+                    edit_company?.invitation_code != '' &&
+                    edit_company?.is_accepted == 0
+                  "
+                  style="border: 1px solid rgba(225, 225, 225, 1);z-index: 9;"
+                >
+                  <div
+                    class="col-12 mb-2 title-driver"
+                    align="center"
+                    style="color: black; opacity: 1; font-family: 'Gilroy-Bold';"
+                  >
+                    Invitation
+                  </div>
+                  <div class="row">
+                    <div class="col-5" align="right">Status</div>
+                    <div class="col-7" align="left">
+                      <button
+                        class="mybtn bg-light-grey2 width-fit-content btn-text-very-small2 pading_btn"
+                        style="width: 80px !important; padding: 0px !important"
+                      >
+                        Pending
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row mb-1" align="center">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                      <button
+                        class="mybtn2 resend-btn title-13 mybtn-back-blue2 p-8 m-0 date-title"
+                        (click)="resendInv(edit_company?.id, 'inv')"
+                        *ngIf="!loading_resend"
+                      >
+                        Resend invitation
+                      </button>
+                      <button
+                        class="mybtn2 resend-btn title-13 mybtn-back-blue2 p-8 m-0 date-title"
+                        disabled
+                        *ngIf="loading_resend"
+                      >
+                        Processing..
+                      </button>
+                      <button
+                        class="ybtn2 mt-3 cancel-btn title-13  p-8 m-0 date-title"
+                        (click)="cancelInv(edit_company?.id, 'user')"
+                        *ngIf="!loading_cancel"
+                      >
+                        Cancel invitation
+                      </button>
+                      <button
+                        class="ybtn2  mt-3  cancel-btn title-13 p-8 m-0 date-title"
+                        disabled
+                        *ngIf="loading_cancel"
+                      >
+                        Processing..
+                      </button>
+                    </div>
+                    <div class="col-2"></div>
+                  </div>
+                </div>
+                <div class="col-1"></div>
+              </div>
+
+              <button
+                class="mybtn2 title-13 mybtn-back-blue2 text-white p-8 m-0 date-title date_title2"
+                style="
+                  margin-left: 65px !important;
+                  margin-bottom: 38px !important;
+                "
+                *ngIf="edit_company?.user?.is_active == 1"
+              >
+                Since {{ edit_company?.joined_since }}
+              </button>
+            </div>
+          </div>
+          <div class="row mb-20">
+            <div class="col-md-10">
+              <nav>
+                <div
+                  class="nav nav-pills nav-fill ticket-tabs"
+                  id="nav-tab"
+                  role="tablist"
+                  *ngIf="!this.is_inv_user"
+                >
+                  <a
+                    class="nav-item nav-link active"
+                    id="nav-home-tab"
+                    data-toggle="tab"
+                    href="#company"
+                    role="tab"
+                    aria-controls="nav-home"
+                    aria-selected="true"
+                    >Company</a
+                  >
+                  <a
+                    class="nav-item nav-link"
+                    id="nav-profile-tab"
+                    data-toggle="tab"
+                    href="#contacts"
+                    role="tab"
+                    aria-controls="nav-profile"
+                    aria-selected="false"
+                    >Trucking</a
+                  >
+                </div>
+                <div
+                  class="nav nav-pills nav-fill ticket-tabs"
+                  id="nav-tab"
+                  role="tablist"
+                  *ngIf="this.is_inv_user"
+                >
+                  <a
+                    class="nav-item nav-link active"
+                    style="
+                      background-color: rgba(217, 217, 217, 1) !important;
+                      color: white !important;
+                      box-shadow: none !important;
+                    "
+                    >Company</a
+                  >
+                  <a
+                    class="nav-item nav-link"
+                    style="
+                      box-shadow: none !important;
+                      border: 1px solid rgba(217, 217, 217, 1) !important;
+                      color: rgba(217, 217, 217, 1) !important;
+                    "
+                    >Trucking</a
+                  >
+                </div>
+              </nav>
+            </div>
+            <div class="col-md-2 text-right pt-1"></div>
+          </div>
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="company"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              <div
+                class="border-div2 cursor-pointer mb-9"
+                (click)="toggleEditProject()"
+              >
+                <div class="d-flex justify-content-between custom-padding17">
+                  <div>
+                    <div class="title-5-new4 text-color-black-shade3 mb-7">
+                      Business number
+                    </div>
+                    <div
+                      class="title-11 text-color-black-shade2"
+                      *ngIf="!this.is_inv_user"
+                    >
+                      {{
+                        this.edit_company?.user?.customer?.business_no !=
+                          null &&
+                        this.edit_company?.user?.customer?.business_no != "null"
+                          ? this.edit_company?.user?.customer?.business_no
+                          : ""
+                      }}
+                    </div>
+                    <div
+                      class="title-11 text-color-black-shade2"
+                      *ngIf="this.is_inv_user"
+                    >
+                      --- ---- ---
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      class="title-5-new4 text-color-black-shade3 mb-7 text-right"
+                    >
+                      Work safety number
+                    </div>
+                    <div
+                      class="title-11 text-color-black-shade2 text-right"
+                      *ngIf="!this.is_inv_user"
+                    >
+                      {{
+                        this.edit_company?.user?.customer?.wsbc_no != null &&
+                        this.edit_company?.user?.customer?.wsbc_no != "null"
+                          ? this.edit_company?.user?.customer?.wsbc_no
+                          : ""
+                      }}
+                    </div>
+                    <div
+                      class="title-11 text-color-black-shade2 text-right"
+                      *ngIf="this.is_inv_user"
+                    >
+                      --- ---- ---
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr2"></div>
+                <div
+                  class="d-flex justify-content-between custom-padding17"
+                  *ngIf="!this.is_inv_user"
+                >
+                  <div>
+                    <div class="title-5-new4 text-color-black-shade3 mb-7">
+                      Address
+                    </div>
+                    <div class="title-11 text-color-black-shade2">
+                      {{
+                        this.edit_company?.user?.address != null &&
+                        this.edit_company?.user?.address != "null"
+                          ? this.edit_company?.user?.address
+                          : this.edit_company?.user?.customer?.address
+                      }}
+                      {{
+                        this.edit_company?.user?.city != null &&
+                        this.edit_company?.user?.city != "null"
+                          ? this.edit_company?.user?.city
+                          : this.edit_company?.user?.customer?.city
+                      }}
+                      {{
+                        this.edit_company?.user?.province != null &&
+                        this.edit_company?.user?.province != "null"
+                          ? this.edit_company?.user?.province
+                          : this.edit_company?.user?.customer?.province
+                      }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="d-flex justify-content-between custom-padding17"
+                  *ngIf="this.is_inv_user"
+                >
+                  <div style="width: 100%">
+                    <div class="row mt-1">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">Street</div>
+                        <div class="position-relative border-div2">
+                          <div class="field-input2 text-grey-shade3">...</div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          City/Town
+                        </div>
+                        <div class="position-relative">
+                          <div class="field-input2 text-right text-grey-shade3">
+                            ...
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-4 pr-0">
+                        <div class="title-52 text-grey-shade2">Country</div>
+                        <div class="position-relative">
+                          <div class="field-input2 text-grey-shade3">Set</div>
+                        </div>
+                      </div>
+                      <div class="col-4 pr-0">
+                        <div class="title-52 text-grey-shade2 text-center">
+                          Province/State
+                        </div>
+                        <div class="position-relative">
+                          <div
+                            class="field-input2 text-center text-grey-shade3"
+                          >
+                            Select
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Postal Code
+                        </div>
+                        <div class="position-relative">
+                          <div class="field-input2 text-right text-grey-shade3">
+                            ...
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="m-3 mt-5 edit_project" *ngIf="this.show_edit_project">
+                <form [formGroup]="editVendor" (ngSubmit)="onEditVendor()">
+                  <div class="title-11 mb-19 text-center head_1">
+                    Update vendor info
+                    <i
+                      class="fa fa-close float-right-icon cursor-pointer"
+                      (click)="closeEditProject()"
+                    ></i>
+                  </div>
+
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-30"
+                  >
+                    <div class="d-flex align-items-center" style="width: 71%">
+                      <img
+                        class="img-invoice"
+                        src="assets/icons/user.svg"
+                        *ngIf="
+                          this.edit_company &&
+                          (this.edit_company?.profile_image == null ||
+                            this.edit_company?.profile_image == '')
+                        "
+                      />
+                      <img
+                        class="img-invoice-dyn"
+                        [src]="
+                          this.backendAPIURL +
+                          (this.edit_company &&
+                            this.edit_company?.profile_image)
+                        "
+                        *ngIf="
+                          this.edit_company &&
+                          this.edit_company?.profile_image != null &&
+                          this.edit_company?.profile_image != ''
+                        "
+                      />
+                      <div
+                        class="title-11 text-color-black-shade2 ml-14"
+                        style="width: 83%"
+                      >
+                        <div class="position-relative required_field10">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-right-icon12"
+                          />
+                          <input
+                            type="text"
+                            formControlName="project_name"
+                            class="field-input2"
+                            [ngModel]="
+                              this.edit_company &&
+                              this.edit_company.company_name &&
+                              this.edit_company.company_name !== null
+                                ? this.edit_company.company_name
+                                : this.edit_company?.user?.company_name
+                            "
+                            placeholder="Type here"
+                            placeholder=""
+                            value=""
+                            readonly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <button
+                        class="mybtn2 title-13 mybtn-back-blue2 text-white p-8 m-0 date-title date_title2"
+                      >
+                        Since {{ edit_company?.joined_since }}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="div-1 proj-form mb-7">
+                    <div class="row mt-1">
+                      <div class="col-6">
+                        <span
+                          *ngIf="ev_businessNumber_error != ''"
+                          class="text-danger"
+                          >{{ ev_businessNumber_error }}</span
+                        >
+                        <div class="title-52 text-grey-shade2">
+                          Business number
+                        </div>
+                        <div class="position-relative">
+                          <input
+                            type="text"
+                            formControlName="business_no"
+                            class="field-input2"
+                            [ngModel]="
+                              this.edit_company?.user?.customer?.business_no !=
+                                null &&
+                              this.edit_company?.user?.customer?.business_no !=
+                                'null'
+                                ? this.edit_company?.user?.customer?.business_no
+                                : ''
+                            "
+                            placeholder="xxx-xxxx-xxx"
+                            (input)="changeNumber($event, 1)"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Work safety number
+                        </div>
+                        <div class="position-relative">
+                          <input
+                            type="text"
+                            formControlName="work_safety"
+                            class="field-input2 text-right"
+                            [ngModel]="
+                              this.edit_company?.user?.customer?.wsbc_no !=
+                                null &&
+                              this.edit_company?.user?.customer?.wsbc_no !=
+                                'null'
+                                ? this.edit_company?.user?.customer?.wsbc_no
+                                : ''
+                            "
+                            placeholder="Type here"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="title-11 text-center py-2">Update address</div>
+
+                    <div class="row mt-1">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">Street</div>
+                        <div class="position-relative">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-right-icon2"
+                          />
+                          <input
+                            type="text"
+                            formControlName="street"
+                            class="field-input2"
+                            [ngModel]="
+                              this.edit_company &&
+                              this.edit_company.user?.customer?.address &&
+                              this.edit_company.user?.customer?.address !==
+                                null &&
+                              this.edit_company.user?.customer?.address !=
+                                'null'
+                                ? this.edit_company.user?.customer?.address
+                                : ''
+                            "
+                            placeholder="Type here"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <span *ngIf="ev_city_error != ''" class="text-danger">{{
+                          ev_city_error
+                        }}</span>
+                        <div class="title-52 text-grey-shade2 text-right">
+                          City/Town
+                        </div>
+                        <div class="position-relative required_field12">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-left-icon2"
+                          />
+                          <input
+                            type="text"
+                            formControlName="city"
+                            class="field-input2 text-right"
+                            [ngModel]="
+                              this.edit_company &&
+                              this.edit_company.user?.customer?.city &&
+                              this.edit_company.user?.customer?.city !== null &&
+                              this.edit_company.user?.customer?.city != 'null'
+                                ? this.edit_company.user?.customer?.city
+                                : ''
+                            "
+                            placeholder="Type here"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-4 pr-0">
+                        <span
+                          *ngIf="ev_country_error != ''"
+                          class="text-danger"
+                          >{{ ev_country_error }}</span
+                        >
+                        <div class="title-52 text-grey-shade2">Country</div>
+                        <div class="position-relative required_field11">
+                          <select
+                            class="icon-none select-no-icon"
+                            formControlName="country"
+                            (change)="setCountry($event)"
+                            [ngModel]="this.country"
+                            [value]="
+                              this.country &&
+                              this.country !== null &&
+                              this.country != 'null'
+                                ? this.country
+                                : ''
+                            "
+                            class="field-input2"
+                          >
+                            <option
+                              value="Canada"
+                              [selected]="this.country == 'Canada'"
+                            >
+                              Canada
+                            </option>
+                            <option
+                              value="USA"
+                              [selected]="this.country == 'USA'"
+                            >
+                              USA
+                            </option>
+                          </select>
+                          <i
+                            class="fa fa-caret-down select-icon-right"
+                            aria-hidden="true"
+                          ></i>
+                        </div>
+                      </div>
+                      <div class="col-4 pr-0">
+                        <span
+                          *ngIf="ev_province_error != ''"
+                          class="text-danger"
+                          >{{ ev_province_error }}</span
+                        >
+                        <div class="title-52 text-grey-shade2 text-center">
+                          Province/State
+                        </div>
+                        <div class="position-relative required_field11">
+                          <select
+                            type="text"
+                            class="field-input2"
+                            [ngModel]="this.province"
+                            formControlName="province"
+                          >
+                            <ng-container *ngIf="this.country == 'Canada'">
+                              <option
+                                *ngFor="let pro of this.canada_provinces"
+                                value="{{ pro }}"
+                                [selected]="pro == this.province"
+                              >
+                                {{ pro }}
+                              </option>
+                            </ng-container>
+
+                            <ng-container *ngIf="this.country == 'USA'">
+                              <option
+                                *ngFor="let pro of this.usa_provinces"
+                                value="{{ pro }}"
+                                [selected]="pro == this.province"
+                              >
+                                {{ pro }}
+                              </option>
+                            </ng-container>
+                          </select>
+                          <i
+                            class="fa fa-caret-down select-icon-right"
+                            aria-hidden="true"
+                          ></i>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Postal Code
+                        </div>
+                        <div class="position-relative">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-left-icon2"
+                          />
+                          <input
+                            type="text"
+                            placeholder="V8K K0L"
+                            [ngModel]="
+                              this.edit_company &&
+                              this.edit_company?.user?.post_code &&
+                              this.edit_company?.user?.post_code !== null &&
+                              this.edit_company?.user?.post_code != 'null'
+                                ? this.edit_company?.user?.post_code
+                                : ''
+                            "
+                            formControlName="post_code"
+                            class="field-input2 text-right"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    align="center"
+                    class="d-flex justify-content-center mb-17"
+                  >
+                    <div class="">
+                      <div class="position-relative getinputfield">
+                        <div class="input-popup-div confirm">
+                          <div class="welcome-desc text-black mb-16">
+                            Confirmation
+                          </div>
+                          <div class="desc-2 text-color-grey mb-8">
+                            Are you sure you want to remove the
+                            {{ this.edit_company?.user?.company_name }} ?
+                          </div>
+                          <div
+                            align="center"
+                            class="d-flex justify-content-center"
+                          >
+                            <button
+                              class="mybtn-default mybtn-back-blue2 update1 text-white"
+                              (click)="handleDeleteDS()"
+                            >
+                              Yes
+                            </button>
+                            <button
+                              class="mybtn-default ml-10 cancel-delete"
+                              (click)="hideDSButton()"
+                            >
+                              No
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="row mt-25px justify-content-center"
+                      style="margin-top: 50px !important"
+                      *ngIf="this.edit_company?.user?.id != this.user_id"
+                    >
+                      <div class="col-md-5 px-0 pr-2">
+                        <button
+                          class="mybtn mybtn-back-yellow mybtnn2 float-right"
+                          type="submit"
+                          *ngIf="!is_loading"
+                        >
+                          Update
+                        </button>
+                        <button
+                          class="mybtn mybtn-back-yellow mybtnn2 float-right"
+                          type="button"
+                          *ngIf="is_loading"
+                          disabled
+                        >
+                          Processing..
+                        </button>
+                      </div>
+                      <div class="col-md-5 px-0 pl-2">
+                        <button
+                          class="btn-back"
+                          type="button"
+                          (click)="handleRemoveProject()"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+
+                    <div
+                      class="col-md-12 center_item"
+                      *ngIf="this.edit_company?.user?.id == this.user_id"
+                    >
+                      <button
+                        class="mybtn mybtn-back-yellow mybtnn2"
+                        type="submit"
+                        *ngIf="!is_loading"
+                      >
+                        Update
+                      </button>
+                      <button
+                        class="mybtn mybtn-back-yellow mybtnn2"
+                        type="button"
+                        *ngIf="is_loading"
+                        disabled
+                      >
+                        Processing...
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div
+                class="m-3 mt-5 edit_project edit_project2"
+                id="edit_project2"
+                *ngIf="this.show_edit_contact"
+              >
+                <form [formGroup]="editcontact" (ngSubmit)="onEditContact()">
+                  <div class="title-11 mb-19 text-center head_1">
+                    Edit contact
+                    <i
+                      class="fa fa-close float-right-icon cursor-pointer"
+                      (click)="closeEditContact()"
+                    ></i>
+                  </div>
+
+                  <div class="div-1 proj-form mb-7">
+                    <div class="row mt-1">
+                      <div class="col-6">
+                        <span *ngIf="ec_name_error != ''" class="text-danger">{{
+                          ec_name_error
+                        }}</span>
+                        <div class="title-52 text-grey-shade2">Name</div>
+                        <div class="position-relative required_field11">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-right-icon2"
+                          />
+                          <input
+                            type="text"
+                            formControlName="name"
+                            class="field-input2"
+                            placeholder="Type here"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <span
+                          *ngIf="ec_phone_error != ''"
+                          class="text-danger"
+                          >{{ ec_phone_error }}</span
+                        >
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Phone number
+                        </div>
+                        <div class="position-relative">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-left-icon2"
+                          />
+                          <input
+                            type="text"
+                            formControlName="phone"
+                            class="field-input2 text-right"
+                            placeholder="+1(xxx) xxx xxxx"
+                            (input)="changeNumber($event, 2)"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-6 pr-0">
+                        <span
+                          *ngIf="ec_email_error != ''"
+                          class="text-danger"
+                          >{{ ec_email_error }}</span
+                        >
+                        <div class="title-52 text-grey-shade2">Email</div>
+                        <div class="position-relative required_field11">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-right-icon2"
+                          />
+                          <input
+                            type="text"
+                            formControlName="email"
+                            class="field-input2"
+                            placeholder="Type here"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <!-- <span *ngIf="provinceError!= ''" class="text-danger">{{
+                                                provinceError
+                                                }}</span> -->
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Role
+                        </div>
+                        <div class="position-relative">
+                          <select
+                            class="icon-none select-no-icon"
+                            formControlName="Role"
+                            [value]=""
+                            class="field-input2"
+                            *ngIf="!this.contacts_id"
+                          >
+                            <option
+                              value="3"
+                              [selected]="
+                                this.selected_contact.role_id == 3 ||
+                                this.selected_contact.role_id != 4 ||
+                                this.selected_contact.role_id != 1
+                              "
+                            >
+                              Owner
+                            </option>
+                            <option
+                              value="4"
+                              [selected]="this.selected_contact.role_id == 4"
+                            >
+                              Dispatcher
+                            </option>
+                            <option
+                              value="1"
+                              [selected]="this.selected_contact.role_id == 1"
+                            >
+                              Bookkeper
+                            </option>
+                          </select>
+                          <select
+                            class="icon-none select-no-icon"
+                            formControlName="Role"
+                            [value]=""
+                            class="field-input2"
+                            *ngIf="this.contacts_id"
+                          >
+                            <option
+                              value="3"
+                              [selected]="
+                                this.contacts_id == 3 ||
+                                (this.contacts_id != 4 && this.contacts_id != 1)
+                              "
+                            >
+                              Owner
+                            </option>
+                            <option
+                              value="4"
+                              [selected]="this.contacts_id == 4"
+                            >
+                              Dispatcher
+                            </option>
+                            <option
+                              value="1"
+                              [selected]="this.contacts_id == 1"
+                            >
+                              Bookkeper
+                            </option>
+                          </select>
+                          <i
+                            class="fa fa-caret-down select-icon-right"
+                            aria-hidden="true"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="col-12 text-center"
+                      *ngIf="this.contacts_id == 0"
+                    >
+                      <div
+                        class="title-5-new4 text-color-black-shade3 my-2 text-center"
+                      >
+                        Send dispatch to
+                      </div>
+                      <div class="text-center d-flex justify-content-center">
+                        <div
+                          class="fake-checkbox"
+                          [ngClass]="{ checked: isCheckedEdit }"
+                          (click)="updateSenddispatch(2)"
+                        >
+                          {{ isCheckedEdit ? "✓" : "" }}
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="col-12 text-center"
+                      *ngIf="this.contacts_id != 0"
+                    >
+                      <div
+                        class="title-5-new4 text-color-black-shade3 my-2 text-center"
+                      >
+                        Send dispatch to
+                      </div>
+                      <div class="text-center d-flex justify-content-center">
+                        <div
+                          class="fake-checkbox"
+                          [ngClass]="{ checked: isCheckedEdit2 }"
+                          (click)="updateSenddispatch(4)"
+                        >
+                          {{ isCheckedEdit2 ? "✓" : "" }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    align="center"
+                    class="d-flex justify-content-center mt-3"
+                  >
+                    <div class="col-md-12 center_item">
+                      <button
+                        class="mybtn mybtn-back-yellow mybtnn2"
+                        type="submit"
+                      >
+                        Update
+                      </button>
+                      <button
+                        class="mybtn mybtn-back-yellow mybtnn2"
+                        type="button"
+                        *ngIf="is_loading"
+                        disabled
+                      >
+                        Processing...
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div
+                class="m-3 mt-5 edit_project add_contct_form"
+                *ngIf="this.show_add_contact"
+              >
+                <form [formGroup]="addcontact" (ngSubmit)="onAddContact()">
+                  <div class="title-11 mb-19 text-center head_1">
+                    Add contact
+                  </div>
+
+                  <div class="div-1 proj-form mb-7">
+                    <div class="row mt-1">
+                      <div class="col-6">
+                        <span *ngIf="ac_name_error != ''" class="text-danger">{{
+                          ac_name_error
+                        }}</span>
+                        <div class="title-52 text-grey-shade2">Name</div>
+                        <div class="position-relative required_field11">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-right-icon2"
+                          />
+                          <input
+                            type="text"
+                            formControlName="name"
+                            class="field-input2"
+                            [ngModel]="
+                              this.edit_company &&
+                              this.edit_company.user?.address &&
+                              this.edit_company.user?.address !== null &&
+                              this.edit_company.user?.address != 'null'
+                                ? this.edit_company.user?.address
+                                : ''
+                            "
+                            placeholder="Type here"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <span
+                          *ngIf="ac_phone_error != ''"
+                          class="text-danger"
+                          >{{ ac_phone_error }}</span
+                        >
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Phone number
+                        </div>
+                        <div class="position-relative">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-left-icon2"
+                          />
+                          <input
+                            type="text"
+                            formControlName="phone"
+                            class="field-input2 text-right"
+                            placeholder="+1(xxx) xxx xxxx"
+                            (input)="changeNumber($event, 3)"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col-6 pr-0">
+                        <span
+                          *ngIf="ac_email_error != ''"
+                          class="text-danger"
+                          >{{ ac_email_error }}</span
+                        >
+                        <div class="title-52 text-grey-shade2">Email</div>
+                        <div class="position-relative required_field11">
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            width="17px"
+                            class="top-right-icon2"
+                          />
+                          <input
+                            type="text"
+                            formControlName="email"
+                            class="field-input2"
+                            placeholder="Type here"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <!-- <span *ngIf="provinceError!= ''" class="text-danger">{{
+                                                provinceError
+                                                }}</span> -->
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Role
+                        </div>
+                        <div class="position-relative">
+                          <select
+                            class="icon-none select-no-icon"
+                            formControlName="Role"
+                            [value]=""
+                            class="field-input2"
+                          >
+                            <option value="3" [selected]="true">Owner</option>
+                            <option value="4">Dispatcher</option>
+                            <option value="1">Bookkeper</option>
+                          </select>
+                          <i
+                            class="fa fa-caret-down select-icon-right"
+                            aria-hidden="true"
+                          ></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 text-center">
+                      <div
+                        class="title-5-new4 text-color-black-shade3 mb-7 mt-2 text-center"
+                      >
+                        Send dispatch to
+                      </div>
+                      <div class="text-center d-flex justify-content-center">
+                        <div
+                          class="fake-checkbox"
+                          [ngClass]="{ checked: isCheckedAdd }"
+                          (click)="updateSenddispatch(3)"
+                        >
+                          {{ isCheckedAdd ? "✓" : "" }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    align="center"
+                    class="d-flex justify-content-center mt-4"
+                  >
+                    <div class="col-md-12 center_item">
+                      <button
+                        class="mybtn mybtn-back-yellow mybtnn2"
+                        type="submit"
+                      >
+                        Add
+                      </button>
+                      <button
+                        class="mybtn mybtn-back-yellow mybtnn2"
+                        type="button"
+                        *ngIf="is_loading_Add_contact"
+                        disabled
+                      >
+                        Processing...
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <br />
+
+              <div
+                class="d-flex justify-content-between align-items-center mb-30"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="title-14 text-color-black-shade2">Contacts</div>
+                </div>
+                <div class="add_contct_form">
+                  <button
+                    class="mybtn2 title-13 mybtn-back-blue2 text-white p-8 m-0 date-title date_title3"
+                    (click)="toggleAddContact(this.edit_company)"
+                  >
+                    <img
+                      src="./assets/icons/plus-d.svg"
+                      width="20px"
+                      alt="N/A"
+                      style="margin-left: -5px"
+                    />
+                  </button>
+                </div>
+              </div>
+              <div
+                class="border-div2 cursor-pointer mb-3"
+                id="edit_contact_1"
+                (click)="toggleEditContact(this.edit_company?.user)"
+              >
+                <div class="custom-padding17">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-5-new4 text-color-black-shade3 mb-7">
+                        Name
+                      </div>
+                      <div class="title-11 text-color-black-shade2">
+                        {{
+                          this.edit_company?.user
+                            ? this.edit_company?.user?.full_name
+                            : this.edit_company?.full_name
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4 text-center">
+                      <div class="title-5-new4 text-color-black-shade3 mb-7">
+                        Phone number
+                      </div>
+                      <div
+                        class="title-11 text-color-black-shade2"
+                        *ngIf="!this.is_inv_user"
+                      >
+                        {{
+                          this.edit_company?.user
+                            ? this.edit_company?.user?.contact_number
+                            : this.edit_company?.contact_number
+                        }}
+                      </div>
+                      <div
+                        class="title-11 text-color-black-shade2"
+                        *ngIf="this.is_inv_user"
+                      >
+                        (---) ---- ---
+                      </div>
+                    </div>
+                    <div class="col-4 text-right">
+                      <div class="title-5-new4 text-color-black-shade3 mb-7">
+                        Email
+                      </div>
+                      <div class="title-11 text-color-black-shade2 text-break">
+                        {{
+                          this.edit_company?.user
+                            ? this.edit_company?.user?.email
+                            : this.edit_company?.email
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr2"></div>
+                <div class="custom-padding17">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-5-new4 text-color-black-shade3 mb-7">
+                        Role
+                      </div>
+                      <div class="title-11 text-color-black-shade2">
+                        {{
+                          this.edit_company?.user?.role_id == 3 ||
+                          this.edit_company?.user?.role_id == 6
+                            ? "Owner"
+                            : this.edit_company?.user?.role_id == 4
+                            ? "Dispatcher"
+                            : this.edit_company?.user?.role_id == 1
+                            ? "Bookkeper"
+                            : ""
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4 text-center">
+                      <div
+                        class="title-5-new4 text-color-black-shade3 mb-7 text-center"
+                      >
+                        Send dispatch to
+                      </div>
+                      <div class="text-center d-flex justify-content-center">
+                        <div
+                          class="fake-checkbox"
+                          [ngClass]="{ checked: isChecked }"
+                        >
+                          {{ isChecked ? "✓" : "" }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-4 display-table text-right">
+                      <div class="vertical-middle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <ng-container
+                *ngIf="this.customerContacts && this.customerContacts.length"
+              >
+                <ng-container *ngFor="let contact of this.customerContacts">
+                  <div
+                    class="border-div2 mb-23 edit_contact_2 cursor-pointer"
+                    id="edit_contact_2"
+                    (click)="toggleEditContact(contact, 2)"
+                  >
+                    <div class="custom-padding17">
+                      <div class="row">
+                        <div class="col-4">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            Name
+                          </div>
+                          <div class="title-11 text-color-black-shade2">
+                            {{ contact?.name }}
+                          </div>
+                        </div>
+                        <div class="col-4 text-center">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            Phone number
+                          </div>
+                          <div class="title-11 text-color-black-shade2">
+                            {{ contact?.phone }}
+                          </div>
+                        </div>
+                        <div class="col-4 text-right">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            Email
+                          </div>
+                          <div
+                            class="title-11 text-color-black-shade2 text-break"
+                          >
+                            {{ contact?.email }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="custom-padding17">
+                      <div class="row">
+                        <div class="col-4">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            Role
+                          </div>
+                          <div class="title-11 text-color-black-shade2">
+                            {{ contact?.role }}
+                          </div>
+                        </div>
+                        <div class="col-4 text-center">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7 text-center"
+                          >
+                            Send dispatch to
+                          </div>
+                          <div
+                            class="text-center d-flex justify-content-center"
+                          >
+                            <div
+                              class="fake-checkbox"
+                              [ngClass]="{
+                                checked: contact.is_send_dispatch == 1
+                              }"
+                            >
+                              {{ contact.is_send_dispatch == 1 ? "✓" : "" }}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-4 display-table text-right"></div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <div class="border-div2 mb-23">
+                  <!-- <div class="col-md-12 d-flex justify-content-center py-3" *ngIf="!this.is_inv_user" >
+                                    <button class="mybtn2 title-13 mybtn-back-blue2 text-white p-8 m-0 update" (click)="handleUpdate()">Update</button>
+                                </div> -->
+                  <div
+                    class="col-md-12 d-flex justify-content-center py-3"
+                    *ngIf="this.is_inv_user"
+                  >
+                    <button
+                      class="mybtn2 title-13 mybtn-back-blue2 text-white p-8 m-0 update"
+                      (click)="handleClose()"
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  (!this.customerContacts ||
+                    this.customerContacts?.length < 1) &&
+                  !this.edit_company
+                "
+              >
+                <div class="row">
+                  <div class="col-md-12" align="center">No contacts found.</div>
+                </div>
+              </ng-container>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="contacts"
+              role="tabpanel"
+              aria-labelledby="nav-profile-tab"
+            >
+              <div class="mb-4">
+                <div class="d-flex align-items-center">
+                  <div class="title-14 text-color-black-shade2">
+                    Dispatch standing
+                  </div>
+                </div>
+              </div>
+              <div class="border-div2 mb-20">
+                <div class="custom-padding17">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="title-5-new4 text-color-black-shade3 mb-7">
+                        Last ticket dispatched on
+                      </div>
+                      <div class="title-11 text-color-black-shade2">
+                        {{
+                          this.edit_company?.tickets_info?.last_dispatch_date
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-6 text-right">
+                      <div class="title-5-new4 text-color-black-shade3 mb-7">
+                        Last 30 days dispatched tickets
+                      </div>
+                      <div class="title-11 text-color-black-shade2">
+                        {{
+                          this.edit_company?.tickets_info
+                            ?.total_dispatched_30_dates
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr2"></div>
+                <div class="custom-padding17">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="title-5-new4 text-color-black-shade3 mb-7">
+                        Last 30 days closed tickets
+                      </div>
+                      <div class="title-11 text-color-black-shade2">
+                        {{
+                          this.edit_company?.tickets_info?.total_closed_30_dates
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-6 text-right">
+                      <div class="title-5-new4 text-color-black-shade3 mb-7">
+                        Success rate
+                      </div>
+                      <div class="title-11 text-color-black-shade2">
+                        {{
+                          this.edit_company?.tickets_info
+                            ?.success_ratio_30_days
+                        }}%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-9">
+                <div class="d-flex align-items-center">
+                  <div class="title-14 text-color-black-shade2">
+                    Truck details
+                  </div>
+                </div>
+              </div>
+              <div class="border-div2 mb-20">
+                <ng-container *ngIf="this.edit_company?.trucks_info">
+                  <ng-container
+                    *ngFor="let truck of this.edit_company?.trucks_info"
+                  >
+                    <div class="custom-padding17">
+                      <div class="row">
+                        <div class="col-4">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            {{ truck?.truck_type }}
+                          </div>
+                          <div class="title-11 text-color-black-shade2">
+                            {{ truck?.truck_type_data?.total }}
+                          </div>
+                        </div>
+                        <div class="col-4 text-center">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            Towing capacity
+                          </div>
+                          <div class="title-11 text-color-black-shade2">
+                            {{ truck?.truck_type_data?.capacity }} m3
+                          </div>
+                        </div>
+                        <div class="col-4 text-right">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            Avg rate per hour
+                          </div>
+                          <div class="title-11 text-color-black-shade2">
+                            ${{ truck?.truck_type_data?.avg_rate_per_hour }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="myhr2"></div>
+                  </ng-container>
+                </ng-container>
+                <ng-container
+                  *ngIf="
+                    !this.edit_company?.trucks_info ||
+                    this.edit_company?.trucks_info?.length < 1
+                  "
+                >
+                  <div class="custom-padding17">
+                    <div class="row">
+                      <div class="col-12">No Trucks Added</div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="mb-9">
+                <div class="d-flex align-items-center">
+                  <div class="title-14 text-color-black-shade2">
+                    Trailer details
+                  </div>
+                </div>
+              </div>
+              <div class="border-div2 mb-20">
+                <ng-container *ngIf="this.edit_company?.trailers_info">
+                  <ng-container
+                    *ngFor="let trailer of this.edit_company?.trailers_info"
+                  >
+                    <div class="custom-padding17">
+                      <div class="row">
+                        <div class="col-4">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            {{ trailer?.trailer_type }}
+                          </div>
+                          <div class="title-11 text-color-black-shade2">
+                            {{ trailer?.trailer_type_data?.total }}
+                          </div>
+                        </div>
+                        <div class="col-4 text-center">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            Towing capacity
+                          </div>
+                          <div class="title-11 text-color-black-shade2">
+                            {{ trailer?.trailer_type_data?.capacity }} m3
+                          </div>
+                        </div>
+                        <div class="col-4 text-right">
+                          <div
+                            class="title-5-new4 text-color-black-shade3 mb-7"
+                          >
+                            Avg rate per hour
+                          </div>
+                          <div class="title-11 text-color-black-shade2">
+                            ${{ trailer?.trailer_type_data?.avg_rate_per_hour }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="myhr2"></div>
+                  </ng-container>
+                </ng-container>
+                <ng-container
+                  *ngIf="
+                    !this.edit_company?.trailers_info ||
+                    this.edit_company?.trailers_info?.length < 1
+                  "
+                >
+                  <div class="custom-padding17">
+                    <div class="row">
+                      <div class="col-12">No Trailers Added</div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4" align="center"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

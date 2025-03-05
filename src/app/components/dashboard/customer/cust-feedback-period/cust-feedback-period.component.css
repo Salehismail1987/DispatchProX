@@ -1,0 +1,142 @@
+@import url('../../../../../assets/css/construction-dashbord-style.css');
+.feed-back-title{
+    font-family: 'Gilroy-Bold';
+    font-size: 25px;
+    line-height: 29px;
+
+    color: #000000;
+}
+
+.feed-back-text{
+
+    font-family: 'Gilroy';
+    font-size: 15px;
+    line-height: 18px;
+    
+    color: #8D8D8D;
+}
+
+.feed-back-subtitle{
+    
+    font-family: 'Gilroy-SemiBold';
+    font-size: 15px;
+    line-height: 18px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #68696D;
+}
+
+.ticket-badge > .title-6{
+    font-family: 'Gilroy-Bold';
+    font-size: 13px;
+    line-height: 15px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #000000 !important;
+}
+.ticket-badge > .title-5{
+    font-family: 'Gilroy-Bold';
+    font-size: 24px;
+    line-height: 28px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #000000 !important;
+}
+
+.feed-back-subtitle{
+    
+    font-family: 'Gilroy-SemiBold';
+    font-size: 15px;
+    line-height: 18px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #68696D !important;
+}
+
+.btns-div{
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.max-width-50 {
+    max-width: 100% !important;
+    width: 40% !important;
+}
+
+.form-title{
+    
+font-family: 'Gilroy-SemiBold';
+font-size: 20px;
+line-height: 23px;
+
+color: #000000;
+}
+
+.mybtn-back-yellow{
+    background: #FFF8B8 !important;
+}
+.required_field:after {
+    content: "*";
+    position: absolute;
+    top: 0;
+    right: -15px;
+    color: #F73333;
+}
+
+.subs-table thead tr th {
+    border: none;
+    font-family: 'Gilroy-SemiBold';
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+
+    color: #000000;
+}
+
+
+.ticket-badge{
+    width: 90px !important;
+    height: 118px;
+}
+
+.width-24px{
+    width: 24px !important;
+}
+
+.subs-table tr td {
+    padding: 5px;
+    font-size: 14px;
+    line-height: 16px;
+    padding-right: 18px;
+    color: #000000;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 500;
+    text-align: center;
+    border-right: 1px solid #D9D9D9;
+}
+
+.mb-20 {
+    margin-bottom: 20px !important;
+}
+
+.body-content2{
+    padding: 15px 15px 15px 15px !important;
+}
+
+.border-div{
+    border: 1px solid #0000001a !important;
+}

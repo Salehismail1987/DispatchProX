@@ -1,0 +1,1188 @@
+<div style="position: absolute; position: absolute; top: 28%; width: 98%">
+  <div
+    class="modal fade show"
+    *ngIf="
+      this.update_round_id != '' &&
+      (this.show_round_update_popup == 'notes-popup' || this.show_round_update_popup == 'haulback-notes-popup' )
+    "
+    id="addingnotes"
+    role="dialog"
+    style="
+      display: block;
+      padding-top: 0%;
+      background: #00000000;
+      position: relative !important;
+    "
+  >
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-dialog2 vertical-align-center">
+        <div class="modal-content modal-content2">
+          <div class="modal-body padding-15-7">
+            <img
+              class="float-right"
+              src="assets/driver-images-mobile/close.png"
+              (click)="closeRoundPopup()"
+            />
+            <div
+              class="font-size-18 font-semibold text-black mb-19 text-center"
+            >
+             {{ this.show_round_update_popup == 'haulback-notes-popup' ? 'Haulback Notes':'Round notes'}}
+            </div>
+            <div class="text-danger mb-4" *ngIf="round_notes_error !== ''">
+              {{ round_notes_error }}
+            </div>
+            <textarea
+              class="form-control font-bold text-black font-size-18 br-5 mt-1 mb-19"
+              rows="4"
+              [(ngModel)]="this.haulback_notes"
+              (input)="this.setNewNotes($event)"
+              placeholder="Type here ..."
+            ></textarea>
+            <div align="center">
+              <div class="">
+                <button
+                  *ngIf="!this.loading_update"
+                  type="button"
+                  class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                  (click)="this.handleNewNotes()"
+                >
+                  Add
+                </button>
+                <button
+                  *ngIf="this.loading_update"
+                  type="button"
+                  class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                  disabled
+                >
+                  Processing..
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style="
+      position: absolute;
+      position: absolute;
+      top: 28%;
+      right: 0%;
+      width: max-content;
+    "
+  >
+    <div
+      class="modal fade show"
+      *ngIf="
+        this.update_round_id != '' &&
+        this.show_round_update_popup == 'dumpsite-popup' &&
+        this.show_add_dumpsite != true
+      "
+      id="changedumpsite"
+      role="dialog"
+      style="
+        display: block;
+        padding-top: 0%;
+        background: #00000000;
+        position: relative !important;
+      "
+    >
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+          <div class="modal-content">
+            <div class="modal-body sa_modal p-5px">
+              <img
+                class="float-right mr-1 mt-1"
+                src="assets/driver-images-mobile/close.png"
+                (click)="closeRoundPopup()"
+              />
+              <div
+                class="title-9 font-semibold font-size-18 text-black mb-15px mt-15px text-center"
+              >
+                Drop location
+              </div>
+
+              <div class="p-10-15 b-grey-1px br-5">
+                <ul class="dumpsites dumpsites2">
+                  <li
+                    class="single-item-grey font-size-18 font-semibold active"
+                    (click)="
+                      setDLocation(
+                        drop_location_name
+                          ? drop_location_name
+                          : this.ticket_detail?.ticket?.project
+                              ?.project_location
+                      )
+                    "
+                  >
+                    {{
+                      drop_location_name
+                        ? drop_location_name
+                        : this.ticket_detail?.ticket?.project?.project_location
+                    }}
+                  </li>
+                </ul>
+                <div class="position-relative" (click)="showAddDumpSite()">
+                  <input
+                    type="text"
+                    class="form-control font-size-17 br-5"
+                    readonly
+                    placeholder="Add"
+                  />
+                  <img
+                    class="top-right"
+                    src="../assets/driver-images-mobile/edit.svg"
+                  />
+                </div>
+              </div>
+
+              <div align="center">
+                <div class="mb-15px mt-15px">
+                  <button
+                    *ngIf="!this.loading_update"
+                    type="button"
+                    class="btn-accept shadow-btn br-5 btn-padding no-filter font-bold w-100-50 p-5px"
+                    (click)="handleSiteChange()"
+                  >
+                    Update
+                  </button>
+                  <button
+                    *ngIf="this.loading_update"
+                    type="button"
+                    class="btn-accept shadow-btn br-5 btn-padding no-filter font-bold w-100-50 p-5px"
+                    disabled
+                  >
+                    Processing..
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    style="
+      position: absolute;
+      position: absolute;
+      top: 28%;
+      left: -2%;
+      width: max-content;
+    "
+  >
+    <div
+      class="modal fade show"
+      *ngIf="
+        this.update_round_id != '' &&
+        this.show_round_update_popup == 'pickuplocation-popup' &&
+        this.show_add_pickuplocation != true
+      "
+      id="changepickuplocation"
+      role="dialog"
+      style="
+        display: block;
+        padding-top: 0%;
+        background: #00000000;
+        position: relative !important;
+      "
+    >
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+          <div class="modal-content">
+            <div class="modal-body sa_modal p-5px">
+              <img
+                class="float-right mr-1 mt-1"
+                src="assets/driver-images-mobile/close.png"
+                (click)="closeRoundPopup()"
+              />
+              <div
+                class="title-9 font-semibold font-size-18 text-black mb-15px mt-15px text-center"
+              >
+                Pickup location
+              </div>
+
+              <div class="p-10-15 b-grey-1px br-5">
+                <ul class="dumpsites dumpsites2">
+                  <li
+                    class="single-item-grey font-size-18 font-semibold active"
+                    (click)="
+                      setLocation(
+                        pickup_location_name
+                          ? pickup_location_name
+                          : inprogress_round?.dump_site
+                      )
+                    "
+                  >
+                    {{
+                      pickup_location_name
+                        ? pickup_location_name
+                        : inprogress_round?.dump_site
+                    }}
+                  </li>
+                </ul>
+                <div class="position-relative" (click)="showAddPickup()">
+                  <input
+                    type="text"
+                    class="form-control font-size-17 br-5"
+                    readonly
+                    placeholder="Add"
+                  />
+                  <img
+                    class="top-right"
+                    src="../assets/driver-images-mobile/edit.svg"
+                  />
+                </div>
+              </div>
+
+              <div align="center">
+                <div class="mb-15px mt-15px">
+                  <button
+                    *ngIf="!this.loading_update"
+                    type="button"
+                    class="btn-accept shadow-btn br-5 btn-padding no-filter font-bold w-100-50 p-5px"
+                    (click)="handlePickupChange()"
+                  >
+                    Update
+                  </button>
+                  <button
+                    *ngIf="this.loading_update"
+                    type="button"
+                    class="btn-accept shadow-btn br-5 btn-padding no-filter font-bold w-100-50 p-5px"
+                    disabled
+                  >
+                    Processing..
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade show"
+    *ngIf="
+      this.update_round_id != '' &&
+      this.show_round_update_popup == 'material-popup'
+    "
+    id="materialout"
+    role="dialog"
+    style="
+      display: block;
+      padding-top: 0%;
+      background: #00000000;
+      position: relative !important;
+    "
+  >
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-dialog2 vertical-align-center">
+        <div class="modal-content modal-content2 shadow-modal">
+          <div class="modal-body padding-15-7">
+            <img
+              class="float-right"
+              src="assets/driver-images-mobile/close.png"
+              (click)="closeRoundPopup()"
+            />
+            <div class="title-9 font-size-18 mb-19 text-center">
+              Material in
+            </div>
+            <div class="text-danger" *ngIf="new_material_error !== ''">
+              {{ new_material_error }}
+            </div>
+            <div class="title-9 mb-19 text-center"></div>
+            <textarea
+              class="form-control font-semibold font-size-18 text-black mb-19"
+              [(ngModel)]="this.material_in"
+              rows="4"
+              (input)="this.setNewMaterial($event)"
+              placeholder="Type here ..."
+            ></textarea>
+            <div align="center">
+              <div class="">
+                <button
+                  *ngIf="!this.loading_update"
+                  (click)="this.handleNewMaterial()"
+                  type="button"
+                  class="btn-accept shadow-btn br-5 font-bold font-size-18 text-black btn-padding no-filter"
+                >
+                  Update
+                </button>
+                <button
+                  *ngIf="this.loading_update"
+                  type="button"
+                  class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding no-filter"
+                  disabled
+                >
+                  Processing..
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade show"
+    *ngIf="this.show_add_dumpsite == true && !this.show_edit_address_ds"
+    id="addingnotes"
+    role="dialog"
+    style="
+      display: block;
+      padding-top: 0%;
+      background: #00000000;
+      position: relative !important;
+    "
+  >
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-dialog2 vertical-align-center">
+        <div class="modal-content modal-content2">
+          <div class="modal-body padding-15-7">
+            <img
+              class="float-right"
+              src="assets/driver-images-mobile/close.png"
+              (click)="hideAddDumpSite()"
+            />
+            <div
+              class="font-size-18 font-semibold text-black mb-19 text-center"
+            >
+              Drop location
+            </div>
+            <form
+              [formGroup]="addDumpsite"
+              (ngSubmit)="handleAddDumpsite()"
+              enctype="multipart/form-data"
+            >
+              <div class="title-72 font-size-17">Drop location name</div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  this.isFormClicked &&
+                  this.addDumpsite.get('name')?.hasError('required')
+                "
+              >
+                Name is required
+              </div>
+              <div class="position-relative mb-15px required_field22">
+                <input
+                  type="text"
+                  class="form-control font-bold text-black font-size-18 br-5"
+                  formControlName="name"
+                  placeholder="Type here"
+                />
+                <img
+                  class="top-right"
+                  src="../assets/driver-images-mobile/edit.svg"
+                />
+              </div>
+
+              <div class="title-72 font-size-17">Drop location address</div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  this.isFormClicked &&
+                  this.addDumpsite.get('location')?.hasError('required')
+                "
+              >
+                Address is required
+              </div>
+
+              <div
+                class="position-relative mb-15px required_field22"
+                (click)="showEditAddressDS()"
+              >
+                <input
+                  type="text"
+                  readonly
+                  class="form-control font-bold text-black font-size-18 br-5"
+                  formControlName="location"
+                  placeholder="Type here"
+                />
+                <img
+                  class="top-right"
+                  src="../assets/driver-images-mobile/edit.svg"
+                />
+              </div>
+              <div align="center">
+                <div class="mb-10px">
+                  <button
+                    *ngIf="!this.loading_add"
+                    type="submit"
+                    class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                  >
+                    Add
+                  </button>
+                  <button
+                    *ngIf="this.loading_add"
+                    type="button"
+                    class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                    disabled
+                  >
+                    Processing..
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade show"
+    *ngIf="this.show_edit_address_ds"
+    id="editdsaddress"
+    role="dialog"
+    style="
+      display: block;
+      padding-top: 0%;
+      background: #00000000;
+      position: relative !important;
+    "
+  >
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-dialog2 vertical-align-center">
+        <div class="modal-content modal-content2">
+          <div class="modal-body padding-15-7">
+            <img
+              class="float-right"
+              src="assets/driver-images-mobile/close.png"
+              (click)="hideAddAddressSite()"
+            />
+            <div
+              class="font-size-18 font-semibold text-black mb-19 text-center"
+            >
+              Add/update address
+            </div>
+            <div class="border-div mb-15px">
+              <div class="row">
+                <div class="col-6 pr-1">
+                  <div class="title-72 font-size-17">Street</div>
+                  <div class="text-danger" *ngIf="this.street_error">
+                    Street required
+                  </div>
+                  <div class="position-relative mb-15px required_field22">
+                    <input
+                      type="text"
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_street"
+                      placeholder="Type here"
+                    />
+                    <img
+                      class="top-right-1"
+                      src="../assets/driver-images-mobile/edit.svg"
+                    />
+                  </div>
+                </div>
+                <div class="col-6 pl-1">
+                  <div class="title-72 font-size-17 text-right">City/Town</div>
+                  <div class="text-danger" *ngIf="this.city_error">
+                    City/Town required
+                  </div>
+                  <div class="position-relative mb-15px required_field_right">
+                    <input
+                      type="text"
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_city"
+                      placeholder="Type here"
+                    />
+                    <img
+                      class="top-right-1"
+                      src="../assets/driver-images-mobile/edit.svg"
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pr-1">
+                  <div class="title-72 font-size-17">Country</div>
+                  <div class="position-relative mb-15px">
+                    <select
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_country"
+                      (change)="setCountry($event)"
+                    >
+                      <option
+                        value="Canada"
+                        [selected]="this.set_country == 'Canada'"
+                      >
+                        Canada
+                      </option>
+                      <option
+                        value="USA"
+                        [selected]="this.set_country == 'USA'"
+                      >
+                        USA
+                      </option>
+                    </select>
+                    <img
+                      class="top-right-2"
+                      src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pl-1 pr-1">
+                  <div class="title-72 font-size-17">State/Province</div>
+                  <div class="position-relative mb-15px">
+                    <select
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_province"
+                    >
+                      <ng-container *ngIf="this.set_country == 'Canada'">
+                        <ng-container
+                          *ngFor="let province of this.canada_provinces"
+                        >
+                          <option value="{{ province }}">{{ province }}</option>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="this.set_country == 'USA'">
+                        <ng-container
+                          *ngFor="let province of this.usa_provinces"
+                        >
+                          <option value="{{ province }}">{{ province }}</option>
+                        </ng-container>
+                      </ng-container>
+                    </select>
+                    <img
+                      class="top-right-2"
+                      src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pl-1">
+                  <div class="title-72 font-size-17 text-right">
+                    Postal code
+                  </div>
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_postal_code"
+                      placeholder="Type here"
+                    />
+                    <img
+                      class="top-right-1"
+                      src="../assets/driver-images-mobile/edit.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div align="center">
+              <div class="mb-10px">
+                <button
+                  type="button"
+                  (click)="setEditDSAddress()"
+                  class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade show"
+    *ngIf="this.show_add_pickuplocation == true && !this.show_edit_address_pl"
+    id="addingnotes"
+    role="dialog"
+    style="
+      display: block;
+      padding-top: 0%;
+      background: #00000000;
+      position: relative !important;
+    "
+  >
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-dialog2 vertical-align-center">
+        <div class="modal-content modal-content2">
+          <div class="modal-body padding-15-7">
+            <img
+              class="float-right"
+              src="assets/driver-images-mobile/close.png"
+              (click)="hideAddPickup()"
+            />
+            <div
+              class="font-size-18 font-semibold text-black mb-19 text-center"
+            >
+              Pickup location
+            </div>
+            <form
+              [formGroup]="addPickupLocation"
+              (ngSubmit)="handlePickupChange()"
+              enctype="multipart/form-data"
+            >
+              <div class="title-72 font-size-17">Pickup location name</div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  this.isFormClicked &&
+                  this.addPickupLocation.get('name')?.hasError('required')
+                "
+              >
+                Name is required
+              </div>
+              <div class="position-relative mb-15px required_field22">
+                <input
+                  type="text"
+                  class="form-control font-bold text-black font-size-18 br-5"
+                  formControlName="name"
+                  placeholder="Type here"
+                />
+                <img
+                  class="top-right"
+                  src="../assets/driver-images-mobile/edit.svg"
+                />
+              </div>
+
+              <div class="title-72 font-size-17">Pickup location address</div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  this.isFormClicked &&
+                  this.addPickupLocation.get('location')?.hasError('required')
+                "
+              >
+                Address is required
+              </div>
+
+              <div
+                class="position-relative mb-15px required_field22"
+                (click)="showEditAddressPL()"
+              >
+                <input
+                  type="text"
+                  readonly
+                  class="form-control font-bold text-black font-size-18 br-5"
+                  formControlName="location"
+                  placeholder="Type here"
+                />
+                <img
+                  class="top-right"
+                  src="../assets/driver-images-mobile/edit.svg"
+                />
+              </div>
+              <div align="center">
+                <div class="mb-10px">
+                  <button
+                    *ngIf="!this.loading_add"
+                    type="submit"
+                    class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                  >
+                    Add
+                  </button>
+                  <button
+                    *ngIf="this.loading_add"
+                    type="button"
+                    class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                    disabled
+                  >
+                    Processing..
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade show"
+    *ngIf="this.show_edit_address_pl"
+    id="editpladdress"
+    role="dialog"
+    style="
+      display: block;
+      padding-top: 0%;
+      background: #00000000;
+      position: relative !important;
+    "
+  >
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-dialog2 vertical-align-center">
+        <div class="modal-content modal-content2">
+          <div class="modal-body padding-15-7">
+            <img
+              class="float-right"
+              src="assets/driver-images-mobile/close.png"
+              (click)="hideAddAddressPL()"
+            />
+            <div
+              class="font-size-18 font-semibold text-black mb-19 text-center"
+            >
+              Add/update address
+            </div>
+            <div class="border-div mb-15px">
+              <div class="row">
+                <div class="col-6 pr-1">
+                  <div class="title-72 font-size-17">Street</div>
+                  <div class="text-danger" *ngIf="this.street_error">
+                    Street required
+                  </div>
+                  <div class="position-relative mb-15px required_field22">
+                    <input
+                      type="text"
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="pl_street"
+                      placeholder="Type here"
+                    />
+                    <img
+                      class="top-right-1"
+                      src="../assets/driver-images-mobile/edit.svg"
+                    />
+                  </div>
+                </div>
+                <div class="col-6 pl-1">
+                  <div class="title-72 font-size-17 text-right">City/Town</div>
+                  <div class="text-danger" *ngIf="this.city_error">
+                    City/Town required
+                  </div>
+                  <div class="position-relative mb-15px required_field_right">
+                    <input
+                      type="text"
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="pl_city"
+                      placeholder="Type here"
+                    />
+                    <img
+                      class="top-right-1"
+                      src="../assets/driver-images-mobile/edit.svg"
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pr-1">
+                  <div class="title-72 font-size-17">Country</div>
+                  <div class="position-relative mb-15px">
+                    <select
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="pl_country"
+                      (change)="setCountry($event)"
+                    >
+                      <option
+                        value="Canada"
+                        [selected]="this.set_country == 'Canada'"
+                      >
+                        Canada
+                      </option>
+                      <option
+                        value="USA"
+                        [selected]="this.set_country == 'USA'"
+                      >
+                        USA
+                      </option>
+                    </select>
+                    <img
+                      class="top-right-2"
+                      src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pl-1 pr-1">
+                  <div class="title-72 font-size-17">State/Province</div>
+                  <div class="position-relative mb-15px">
+                    <select
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="pl_province"
+                    >
+                      <ng-container *ngIf="this.set_country == 'Canada'">
+                        <ng-container
+                          *ngFor="let province of this.canada_provinces"
+                        >
+                          <option value="{{ province }}">{{ province }}</option>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="this.set_country == 'USA'">
+                        <ng-container
+                          *ngFor="let province of this.usa_provinces"
+                        >
+                          <option value="{{ province }}">{{ province }}</option>
+                        </ng-container>
+                      </ng-container>
+                    </select>
+                    <img
+                      class="top-right-2"
+                      src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pl-1">
+                  <div class="title-72 font-size-17 text-right">
+                    Postal code
+                  </div>
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="pl_postal_code"
+                      placeholder="Type here"
+                    />
+                    <img
+                      class="top-right-1"
+                      src="../assets/driver-images-mobile/edit.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div align="center">
+              <div class="mb-10px">
+                <button
+                  type="button"
+                  (click)="setEditPLAddress()"
+                  class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade show"
+    *ngIf="this.show_edit_address_ds"
+    id="editdsaddress"
+    role="dialog"
+    style="
+      display: block;
+      padding-top: 0%;
+      background: #00000000;
+      position: relative !important;
+    "
+  >
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-dialog2 vertical-align-center">
+        <div class="modal-content modal-content2">
+          <div class="modal-body padding-15-7">
+            <img
+              class="float-right"
+              src="assets/driver-images-mobile/close.png"
+              (click)="hideAddAddressSite()"
+            />
+            <div
+              class="font-size-18 font-semibold text-black mb-19 text-center"
+            >
+              Add/update address
+            </div>
+            <div class="border-div mb-15px">
+              <div class="row">
+                <div class="col-6 pr-1">
+                  <div class="title-72 font-size-17">Street</div>
+                  <div class="text-danger" *ngIf="this.street_error">
+                    Street required
+                  </div>
+                  <div class="position-relative mb-15px required_field22">
+                    <input
+                      type="text"
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_street"
+                      placeholder="Type here"
+                    />
+                    <img
+                      class="top-right-1"
+                      src="../assets/driver-images-mobile/edit.svg"
+                    />
+                  </div>
+                </div>
+                <div class="col-6 pl-1">
+                  <div class="title-72 font-size-17 text-right">City/Town</div>
+                  <div class="text-danger" *ngIf="this.city_error">
+                    City/Town required
+                  </div>
+                  <div class="position-relative mb-15px required_field_right">
+                    <input
+                      type="text"
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_city"
+                      placeholder="Type here"
+                    />
+                    <img
+                      class="top-right-1"
+                      src="../assets/driver-images-mobile/edit.svg"
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pr-1">
+                  <div class="title-72 font-size-17">Country</div>
+                  <div class="position-relative mb-15px">
+                    <select
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_country"
+                      (change)="setCountry($event)"
+                    >
+                      <option
+                        value="Canada"
+                        [selected]="this.set_country == 'Canada'"
+                      >
+                        Canada
+                      </option>
+                      <option
+                        value="USA"
+                        [selected]="this.set_country == 'USA'"
+                      >
+                        USA
+                      </option>
+                    </select>
+                    <img
+                      class="top-right-2"
+                      src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pl-1 pr-1">
+                  <div class="title-72 font-size-17">State/Province</div>
+                  <div class="position-relative mb-15px">
+                    <select
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_province"
+                    >
+                      <ng-container *ngIf="this.set_country == 'Canada'">
+                        <ng-container
+                          *ngFor="let province of this.canada_provinces"
+                        >
+                          <option value="{{ province }}">{{ province }}</option>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="this.set_country == 'USA'">
+                        <ng-container
+                          *ngFor="let province of this.usa_provinces"
+                        >
+                          <option value="{{ province }}">{{ province }}</option>
+                        </ng-container>
+                      </ng-container>
+                    </select>
+                    <img
+                      class="top-right-2"
+                      src="../assets/driver-images-mobile/arrow_drop_down2.png"
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pl-1">
+                  <div class="title-72 font-size-17 text-right">
+                    Postal code
+                  </div>
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="form-control font-bold text-grey font-size-18 br-5"
+                      id="ds_postal_code"
+                      placeholder="Type here"
+                    />
+                    <img
+                      class="top-right-1"
+                      src="../assets/driver-images-mobile/edit.svg"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div align="center">
+              <div class="mb-10px">
+                <button
+                  type="button"
+                  (click)="setEditDSAddress()"
+                  class="btn-accept br-5 font-bold font-size-18 text-black shadow-btn btn-padding"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="inprogress-round-container mb-20px">
+  <div class="inprogress-top">
+    <div class="row">
+      <div class="col-6 text-center">
+        <div
+          class="inprogress-status black-17-font-bold bg-inprogress w-100 text-white d-flex justify-content-around align-items-center"
+        >
+          <svg
+            width="28"
+            height="16"
+            viewBox="0 0 28 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect x="0.75" y="8" width="26" height="0" fill="white" />
+            <rect x="0.75" y="8" width="26" height="0" stroke="white" />
+            <path
+              d="M27.4571 8.70711C27.8476 8.31658 27.8476 7.68342 27.4571 7.29289L21.0931 0.928932C20.7026 0.538408 20.0695 0.538408 19.6789 0.928932C19.2884 1.31946 19.2884 1.95262 19.6789 2.34315L25.3358 8L19.6789 13.6569C19.2884 14.0474 19.2884 14.6805 19.6789 15.0711C20.0695 15.4616 20.7026 15.4616 21.0931 15.0711L27.4571 8.70711ZM0.75 9H26.75V7H0.75V9Z"
+              fill="white"
+            />
+          </svg>
+          <span class="mr-3"> Round {{ inprogress_round?.round_no }} </span>
+        </div>
+      </div>
+      <div
+        class="col-6 text-center d-flex justify-content-center align-items-center"
+      >
+        <div class="title-7 font-size-17 font-weight-700 text-grey">
+          Back haul
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row min-height-65px">
+    <div
+      class="col-12 pt-1 pb-1 pl-3 pr-3"
+      (click)="
+        setRoundPopup('pickuplocation-popup', inprogress_round.id, '', '', '')
+      "
+    >
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="title-7 mb-5px">Pickup location for back haul</div>
+        <div class="text-red font-size-20 font-bold mr-1">*</div>
+      </div>
+      <div class="text-danger" *ngIf="this.pickup_location_error">
+        Pickup location required
+      </div>
+      <div class="title-5 text-left">
+        {{
+          pickup_location_name
+            ? pickup_location_name
+            : inprogress_round.dump_site
+        }}
+      </div>
+    </div>
+  </div>
+  <div class="myhr mb-5px"></div>
+  <div class="row min-height-65px">
+    <div class="col-6 br-1px pt-1 pb-1 pl-3 pr-1">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="title-7 mb-5px">Material in</div>
+        <div class="text-red font-size-20 font-bold mr-1">*</div>
+      </div>
+      <div class="text-danger" *ngIf="this.material_in_error">
+        Material in required
+      </div>
+      <div
+        class="d-flex justify-content-between align-items-center"
+        (click)="
+          setRoundPopup(
+            'material-popup',
+            inprogress_round.id,
+            '',
+            '',
+            inprogress_round?.material_taken_out
+          )
+        "
+      >
+        <div class="title-5 text-left" *ngIf="material_in">
+          {{ material_in ? material_in : "Type here" }}
+        </div>
+
+        <div *ngIf="!material_in" class="title-5-grey">Type here</div>
+        <img src="../assets/driver-images-mobile/pencil-grey.svg" />
+      </div>
+    </div>
+    <div class="col-6 pt-1 pb-1 pl-1 pr-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="text-red font-size-20 font-bold ml-1">*</div>
+        <div class="title-7 mb-5px text-right">Drop location</div>
+      </div>
+      <div class="text-danger" *ngIf="this.drop_location_error">
+        Drop location required
+      </div>
+      <div
+        class="d-flex justify-content-between align-items-center"
+        (click)="
+          setRoundPopup(
+            'dumpsite-popup',
+            inprogress_round.id,
+            inprogress_round?.dump_site,
+            '',
+            ''
+          )
+        "
+      >
+        <img src="assets/driver-images-mobile/round-detail-down.svg" />
+        <div class="title-5 text-right">
+          {{
+            drop_location_name
+              ? drop_location_name
+              : this.ticket_detail?.ticket?.project?.project_location
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="myhr mb-5px"></div>
+  <div class="row min-height-65px">
+    <div class="col-12 pt-1 pb-1 pl-3 pr-3">
+      <div
+        (click)="
+          setRoundPopup('haulback-notes-popup', inprogress_round.id, '', haulback_notes)
+        "
+      >
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="title-7 mb-5px">Notes about haul back</div>
+          <img src="../assets/driver-images-mobile/pencil-grey.svg" />
+        </div>
+
+        <div class="title-5 text-left">
+          {{ haulback_notes }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-15px mb-5px">
+  <div class="col-6 pt-1 pb-5px pl-4 pr-3">
+    <div>
+      <div
+        class="pink-btn cursor-pointer float-right"
+        (click)="setHideAddBackhaul()"
+      >
+        <div class="font-bold text-black font-size-16">Cancel</div>
+        <img src="../assets/driver-images-mobile/cancel-icon.svg" />
+      </div>
+    </div>
+  </div>
+  <div class="col-6 pt-1 pb-5px">
+    <div>
+      <div
+        class="btn btn2 custom-padding3 bg_pinkk btn-add cursor-pointer float-left p-5px"
+        (click)="handleAddBackhaul()"
+        *ngIf="!loading_add_h"
+      >
+        <div class="font-bold text-black font-size-16 line-height-normal">
+          Add back<br />
+          haul
+        </div>
+        <img src="../assets/driver-images-mobile/circile-add.svg" />
+      </div>
+
+      <button
+        class="btn btn2 custom-padding3 bg_pinkk btn-add cursor-pointer float-left p-5px"
+        type="button"
+        disabled
+        *ngIf="loading_add_h"
+      >
+        <div class="font-bold text-black font-size-16 line-height-normal">
+          Processing..
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="myhr mb-20px"></div>

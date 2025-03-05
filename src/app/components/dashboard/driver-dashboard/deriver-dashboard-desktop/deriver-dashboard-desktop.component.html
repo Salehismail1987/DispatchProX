@@ -1,0 +1,115 @@
+<div class="wrapper">
+    <app-dashboard-header></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+      
+        <div class="body-content">
+            <div class="main-content2 bg-white ">
+                <div class="main-heading">Welcome to DispatchProX - now you have an online assistant</div>
+                <div class="row mb-31">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="welcome-desc">Here shortly how the process goes</div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="mybtn mybtn-back-pink mybtn-small mybtn-box-shadow" [routerLink]="'/'">Skip</button>
+                    </div>
+                </div>
+                <div class="dashboard-div custom-padding mb-32">
+                    <div class="d-flex justify-content-between align-items-center mb-35">
+                        <div class="d-flex align-items-center width-50">
+                            <div class="title-15 text-color-black-shade4 bg-light-grey custom-padding3 br-4 width-115px text-center">
+                                Pending
+                            </div>
+                            <div class="dashboard-div width-55 custom-padding2 ml-24">
+                                <div class="title-14 text-color-black-shade">You receive a job request from the Trucking company</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-div d-flex justify-content-between custom-padding4 width-50">
+                            <img src="../../assets/images/alarm.svg" alt="" width="24px">
+                            <div>
+                                <div class="title-5-new text-center">Job request for Mar 15th</div>
+                                <div class="title-7 text-center text-color-black-shade5">Ticket: BC0002988</div>
+                            </div>
+                            <img src="../../assets/images/arrow-right-circle.svg" alt="" width="24px">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-35">
+                        <div class="d-flex align-items-center width-50">
+                            <div class="title-15 text-color-black-shade4 bg-light-yellow2  custom-padding3 br-4 width-115px text-center">
+                                Accepted
+                            </div>
+                            <div class="dashboard-div width-55 custom-padding2 ml-24">
+                                <div class="title-14 text-color-black-shade">You can accept or decline the request. An accepted job goes to your Scheduler</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-div d-flex justify-content-between custom-padding4 width-50">
+                            <div></div>
+                            <button type="button" class="mybtn mybtn-danger mybtn-small mb-0 w-auto">Decline <img src="../../assets/images/cross-red.svg" alt=""></button>
+                            <div></div>
+                            <button type="button" class="mybtn mybtn-back-pink mybtn-small mb-0 w-auto">Accept <img src="../../assets/images/tick-black.svg" alt=""></button>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-35">
+                        <div class="d-flex align-items-center width-50">
+                            <div class="title-15  bg-yellow text-white custom-padding3 br-4 width-115px text-center">
+                                Driving
+                            </div>
+                            <div class="dashboard-div width-55 custom-padding2 ml-24">
+                                <div class="title-14 text-color-black-shade">By using your phone, log in, start the job, record your rounds, and add your notes like scale numbers as an example</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-div d-flex justify-content-between custom-padding4 width-50">
+                            <div></div>
+                            <button type="button" class="mybtn mybtn-back-pink mybtn-small mb-0 w-auto">Start Job <img src="../../assets/images/start.svg" alt="" class="mt-minus-5px"></button>
+                            <div></div>
+                            <button type="button" class="mybtn mybtn-back-pink mybtn-small mb-0 w-auto">Start Round <img src="../../assets/images/start.svg" alt="" class="mt-minus-5px"></button>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-35">
+                        <div class="d-flex align-items-center width-50">
+                            <div class="title-15 bg-green text-white custom-padding3 br-4 width-115px text-center">
+                                Completed
+                            </div>
+                            <div class="dashboard-div width-55 custom-padding2 ml-24">
+                                <div class="title-14 text-color-black-shade">Finish the job, add your notes for the approver, edit hours and send for the approval. You are done.</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-div custom-padding4 width-50">
+                            <div class=" d-flex justify-content-between mb-3px">
+                                <button type="button" class="mybtn mybtn-default mybtn-small mb-0 w-auto"><img src="../../assets/icons/endjob.svg" alt="" class="mt-minus-5px"> End job </button>
+
+                                <button type="button" class="mybtn mybtn-default mybtn-small mb-0 w-auto"><span class="text-color-black-shade5">Driver total</span> <span>9 hr</span><img src="../../assets/icons/pencile.svg" alt="" class="mt-minus-5px"></button>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="mybtn mybtn-back-pink mybtn-small mb-0 w-auto">Send for approval <img src="../../assets/images/send.svg" alt="" class=""></button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-35">
+                        <div class="d-flex align-items-center width-50">
+                            <div class="title-15  bg-approved text-white custom-padding3 br-4 width-115px text-center">
+                                Approved
+                            </div>
+                            <div class="dashboard-div width-55 custom-padding2 ml-24">
+                                <div class="title-14 text-color-black-shade">After ticket is approved, you can download and send the ticket to anyone who needs it.</div>
+                            </div>
+                        </div>
+                        <div class="dashboard-div custom-padding4 width-50">
+                            <div class="text-center">
+                                <button type="button" class="mybtn mybtn-back-pink mybtn-small mb-0 w-auto">Download <img src="../../assets/images/download.svg" alt="" class=""></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="title-8-2 d-flex align-items-center justify-content-end"><input type="checkbox" class="mycheckbox" value="1" (change)="setSetupStatus($event)"> <span class="ml-18">Don’t show next time</span></div>
+
+            </div>
+        </div>
+    </div>
+</div>

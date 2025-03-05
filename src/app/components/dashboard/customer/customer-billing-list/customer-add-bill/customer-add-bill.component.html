@@ -1,0 +1,501 @@
+<div
+  class="modal fade come-from-modal right"
+  id="modal-addbill"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-bg-white">
+      <div class="modal-body">
+        <form
+          [formGroup]="addInvoiceForm"
+          (ngSubmit)="handleAddBill()"
+          enctype="multipart/form-data"
+        >
+          <div class="row">
+            <div class="col-md-4">
+              <div
+                class="text-danger"
+                *ngIf="
+                  isFormClicked &&
+                  this.addInvoiceForm.get('invoice_number')?.invalid
+                "
+              >
+                Invoice number is required
+              </div>
+              <label class="field text-field required_field mb-0">
+                <input
+                  type="text"
+                  class="field__input height-43px"
+                  placeholder="Type here"
+                  formControlName="invoice_number"
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label field__label2">Invoice Number</span>
+                </span>
+              </label>
+            </div>
+            <div class="col-md-4">
+              <div
+                class="text-danger"
+                *ngIf="
+                  isFormClicked &&
+                  this.addInvoiceForm.get('invoice_date')?.invalid
+                "
+              >
+                Invoice date is required
+              </div>
+              <label class="field text-field required_field mb-0">
+                <input
+                  type="date"
+                  (change)="handleInvoiceDate($event)"
+                  class="field__input field__input-date height-43px"
+                  formControlName="invoice_date"
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label field__label2">Invoice date</span>
+                </span>
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="field text-field mb-0">
+                <input
+                  type="date"
+                  class="field__input field__input-date height-43px"
+                  formControlName="due_date"
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label field__label2">Due date</span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="ticket-detail-div">
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-6">
+                  <div class="title-52 text-grey-shade2">Vendor name</div>
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                      isFormClicked &&
+                      this.addInvoiceForm.get('invoice_by_id')?.invalid
+                    "
+                  >
+                    Vendor is required
+                  </div>
+                  <div class="selectlist required_field">
+                    <div class="selectlist-input">
+                      <div class="selectlist-input-val">
+                        {{
+                          set_company?.company_name
+                            ? set_company?.company_name
+                            : "Select"
+                        }}
+                      </div>
+                      <i
+                        class="fa fa-caret-down input-icon-right3"
+                        aria-hidden="true"
+                      ></i>
+                    </div>
+                    <div class="selectlist-options selectlist-options-tc">
+                      <div class="title-5-new2 mb-18">Vendor</div>
+                      <div
+                        class="title-7 text-color-black-shade3 mb-9 selectlist-option"
+                        *ngFor="let comp of this.all_companies"
+                        (click)="setCompany(comp)"
+                      >
+                        {{ comp?.company_name }}
+                      </div>
+
+                      <div class="title-7">
+                        Not in the list?
+                        <span
+                          class="text-color-red"
+                          (click)="showModal('invite-people')"
+                          style="cursor: pointer"
+                          >Send an invite</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6" align="right">
+                  <div
+                    class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                  >
+                    Email address
+                  </div>
+                  <input
+                    type="text"
+                    class="field-input2 text-right"
+                    value="{{ this.set_company?.email }}"
+                    formControlName="invoice_by_email"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-12">
+                  <div class="title-52 text-grey-shade2">Address</div>
+                  <div class="position-relative">
+                    <input
+                      type="text"
+                      class="field-input2"
+                      value="{{ this.set_company?.address }}"
+                      formControlName="invoice_by_address"
+                    />
+                    <img
+                      src="../../assets/icons/pencile.svg"
+                      alt=""
+                      class="top-right-icon"
+                      width="17px"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-6">
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                      isFormClicked &&
+                      this.addInvoiceForm.get('invoice_by_bussiness_no')
+                        ?.invalid
+                    "
+                  >
+                    Business number is required
+                  </div>
+                  <div class="title-52 text-grey-shade2">Business number</div>
+                  <div class="position-relative required_field">
+                    <input
+                      type="text"
+                      class="field-input2"
+                      value="{{ this.set_company?.customer?.business_no }}"
+                      formControlName="invoice_by_bussiness_no"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div
+                    class="text-danger"
+                    *ngIf="
+                      isFormClicked &&
+                      this.addInvoiceForm.get('invoice_by_wsno')?.invalid
+                    "
+                  >
+                    Work safety number is required
+                  </div>
+                  <div class="title-52 text-grey-shade2 text-right">
+                    Work safety number
+                  </div>
+                  <div class="position-relative required_field">
+                    <input
+                      type="text"
+                      class="field-input2 text-right"
+                      value="{{ this.set_company?.customer?.wsbc_no }}"
+                      formControlName="invoice_by_wsno"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ticket-detail-div mb-22">
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-12">
+                  <div class="title-52 text-grey-shade2">Trucking company</div>
+                  <div class="title-5-new">
+                    {{ this.loggedinUser?.company_name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-6">
+                  <div class="title-52 text-grey-shade2">Contact person</div>
+                  <div class="title-5-new">
+                    {{ this.loggedinUser?.full_name }}
+                  </div>
+                </div>
+                <div class="col-6" align="right">
+                  <div
+                    class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                  >
+                    Email address
+                  </div>
+                  <div class="title-5-new text-right">
+                    {{ this.loggedinUser?.email }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr"></div>
+            <div class="p-10px">
+              <div class="row">
+                <div class="col-12">
+                  <div class="title-52 text-grey-shade2">Address</div>
+                  <div class="title-5-new">
+                    {{
+                      this.loggedinUser?.address &&
+                      this.loggedinUser?.address != "null"
+                        ? this.loggedinUser?.address
+                        : ""
+                    }}
+                    {{
+                      this.loggedinUser?.city &&
+                      this.loggedinUser?.city != "null"
+                        ? ", " + this.loggedinUser?.city
+                        : ""
+                    }}
+                    {{
+                      this.loggedinUser?.province &&
+                      this.loggedinUser?.province != "null"
+                        ? ", " + this.loggedinUser?.province
+                        : ""
+                    }}
+                    {{
+                      this.loggedinUser?.post_code &&
+                      this.loggedinUser?.post_code != "null"
+                        ? ", " + this.loggedinUser?.post_code
+                        : ""
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-20px mb-5px">
+            <div class="row">
+              <div class="col-6">
+                <div class="title-52 text-grey-shade2">Invoicing period</div>
+                <div class="title-5-new">Monthly</div>
+              </div>
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Dates
+                </div>
+                <div class="title-5-new text-right">
+                  {{
+                    this.addInvoiceForm.get("invoice_start_date")?.value
+                      | date : "MMMM dd"
+                  }}
+                  -
+                  {{
+                    this.addInvoiceForm.get("invoice_end_date")?.value
+                      | date : "MMMM dd"
+                  }}
+                </div>
+
+                <input type="hidden" formControlName="invoice_start_date" />
+                <input type="hidden" formControlName="invoice_end_date" />
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px">
+            <div class="row">
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Hours :
+                </div>
+              </div>
+              <div class="col-6 display-table">
+                <div class="vertical-middle">
+                  <input
+                    type="number"
+                    min="0"
+                    class="field-input2 w-92px"
+                    placeholder="Enter"
+                    formControlName="hours"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px">
+            <div class="row">
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Rounds :
+                </div>
+              </div>
+              <div class="col-6 display-table">
+                <div class="vertical-middle">
+                  <input
+                    type="number"
+                    min="0"
+                    class="field-input2 w-92px"
+                    placeholder="Enter"
+                    formControlName="rounds"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px">
+            <div class="row">
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Subtotal :
+                </div>
+              </div>
+              <div class="col-6 display-table">
+                <div class="vertical-middle">
+                  <input
+                    type="number"
+                    min="0"
+                    (input)="changeSubtotal($event)"
+                    class="field-input2 w-92px"
+                    placeholder="$-------"
+                    formControlName="subtotal"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px">
+            <div class="row">
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  ({{ this.gst?.type }}): {{ this.gst?.tax }}% :
+                </div>
+              </div>
+              <div class="col-6 display-table">
+                <div class="vertical-middle">
+                  <input
+                    type="number"
+                    min="0"
+                    (input)="reCalculate($event)"
+                    class="field-input2 w-92px"
+                    placeholder="$-------"
+                    formControlName="tax"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plr-10px mb-5px">
+            <div class="row">
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Total :
+                </div>
+              </div>
+              <div class="col-6 display-table">
+                <div class="vertical-middle">
+                  <div class="required_field_left">
+                    <input
+                      type="number"
+                      min="0"
+                      value="{{ this.addInvoiceForm.get('total')?.value }}"
+                      class="field-input2 w-92px required_field"
+                      placeholder="$-------"
+                      formControlName="total"
+                    />
+                  </div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      isFormClicked && this.addInvoiceForm.get('total')?.invalid
+                    "
+                  >
+                    Total is required
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div align="center">
+            <div class="myhr3 mb-1px"></div>
+            <div class="myhr3"></div>
+          </div>
+          <div class="plr-20px">
+            <div class="row">
+              <div class="col-12" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Due date
+                </div>
+                <div class="title-5-new">
+                  {{
+                    this.addInvoiceForm.get("due_date")?.value
+                      | date : "MMMM dd"
+                  }}
+                </div>
+                <input
+                  type="hidden"
+                  formControlName="due_date"
+                  value="{{ this.addInvoiceForm.get('due_date')?.value }}"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="plr-20px mb-21">
+            <div class="row">
+              <div class="col-12">
+                <div class="title-52 text-grey-shade2 text-grey-shade2">
+                  Notes
+                </div>
+                <textarea
+                  name=""
+                  id=""
+                  cols="30"
+                  rows="3"
+                  formControlName="notes"
+                  placeholder=""
+                  class="form-control"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div align="center">
+            <button
+              class="mybtn3 bg-blue2 mb-10 cp-1"
+              type="submit"
+              *ngIf="this.loading != 'add'"
+            >
+              Add
+            </button>
+            <button
+              class="mybtn3 bg-blue2 mb-10 cp-1"
+              disabled
+              type="button"
+              *ngIf="this.loading == 'add'"
+            >
+              Processing...
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-invite-people-form
+  *ngIf="this.current_modal == 'invite-people'"
+  [current_modal]="this.current_modal"
+  (showModl)="showModal($event)"
+  (setAct)="setActive($event)"
+></app-invite-people-form>

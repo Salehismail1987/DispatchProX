@@ -1,0 +1,162 @@
+@import url("../../../../../assets/css/customer-billing.css");
+
+@import url("../../../../../assets/css/margins.css");
+
+.inner_main_shadow {
+  box-shadow: 0px 4px 4px 0px #00000040 inset;
+}
+
+@media only screen and (min-width: 767px) and (max-width: 999px) {
+  .field__input {
+    height: 70px !important;
+    padding: 2.25rem 1rem 0rem 1rem !important;
+  }
+}
+.calendareyeardiv {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.calendareyeardiv div {
+  padding: 5px;
+}
+
+.calendarlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.calendarlist li {
+  padding: 5px;
+  cursor: pointer;
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.calendareyear {
+  font-family: "Gilroy-Bold";
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.selectcontroldiv2 {
+  background: #fff;
+  padding: 5px 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  display: none;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.calenderrange {
+  opacity: 0;
+  top: 0;
+}
+
+.btn-customer {
+  height: 40px;
+  width: 150px;
+}
+
+.mr-25 {
+  margin-right: -25px;
+}
+
+.body-content2 {
+  padding: 15px 15px 15px 15px !important;
+}
+
+.border-div {
+  border: 1px solid #0000001a !important;
+}
+
+.nav-item.active {
+  box-shadow: 0px 4px 4px 0px #00000040 inset !important;
+}
+
+.body-content {
+  padding: 15px 15px 28px 15px !important;
+}
+
+.cust_drop {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 14px;
+  padding: 9px 10px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+}
+
+.cust_drop .list-item,
+.list-item {
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.33px;
+  color: #68696d;
+  padding: 2px 5px 2px 5px;
+  border-radius: 5px;
+  background: #fdf9d9;
+  margin-bottom: 5px !important;
+}
+
+.icon-center-right {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+.input-div {
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 3px 5px 3px 5px;
+  position: relative;
+}
+
+.title-5-new2 {
+  font-family: "Gilroy";
+  color: #68696d !important;
+  font-size: 13px;
+}
+.title-5-new33 {
+  line-height: 17.33px !important;
+  color: #88898b !important;
+}
+.sa_select {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.15px;
+  text-align: left;
+  /* background: #88898B; */
+  color: #88898b;
+}
+
+.p-15px {
+  padding: 15px !important;
+}
+
+.br-10px {
+  border-radius: 10px !important;
+}
+
+.border-radius-15 {
+  border-radius: 15px;
+}

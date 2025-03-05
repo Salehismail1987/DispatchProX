@@ -1,0 +1,177 @@
+<div class="wrapper">
+    <app-dashboard-header  [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header ></app-dashboard-top-header>
+        <div class="body-content-2">
+            <div class="setting-content-page border-div custom-padding-2">
+                <div class="row mb-34">
+                    <div class="col-md-9">
+                        <div class="p-1 feed-back-title text-align-left">
+                            Feedback period
+                        </div>
+                        <div class="p-1">
+                            <div class="feed-back-text mb-6 text-align-left">
+                                Welcome to our new electronic truck ticket system, your own online assistant! We're replacing the outdated and inefficient manual paper-based system that has been causing headaches for businesses everywhere. Our digital system provides a seamless process for tracking trucking operations, with all of your data in one place for easy access and monitoring. We value your feedback and are constantly working to improve our system. After the feedback period, you can still take advantage of our free 30-day trial to let our team of experts help you transition smoothly from paper-based to electronic. If you have questions or need assistance, feel free to reach out to us. We promise you won't be left in the dust!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pt-5 pr-5" align="center">
+                        <div class="ticket-badge">
+                            <div class="title-6 text-white mb-1">Last 30 days</div>
+                            <div class="title-5 text-white mb-1">{{this.last_30_days_tickets}}</div>
+                            <div class="title-6 text-white mb-31">Tickets used</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="title-1 text-black mb-20">After feedback period and trial period; DispatchProX tickets vs free account</div>
+                <table class="table subs-table mb-38">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>DispatchProX ticket</th>
+                            <th>Free account only</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>Ready for truck requests</b> - make it easy for construction sites, Trucking companies, and brokers to dispatch truck jobs to you
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg" class="width-24px">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg"  class="width-24px">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Accepting the Requests</b> – accept all or partially depending on your available resources
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg"  class="width-24px">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg"  class="width-24px">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Assign drivers and/or dispatch to your vendors</b> – one at a time or in batches
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg"  class="width-24px">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg"  class="width-24px">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Dispatched tickets</b> - Track the progress of the tickets you have dispatched. Be on top of each ticket
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg"  class="width-24px">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/cross-red.svg"  class="width-24px">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Closed tickets</b> – search by projects, by vendors, or by dates. You can download any if you need a copy for your records.
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg"  class="width-24px">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/cross-red.svg"  class="width-24px">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Invoicing</b> - Built automatically for you in real-time. Never miss any tickets from your invoices.
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg"  class="width-24px">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/cross-red.svg"  class="width-24px">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Billing</b> – Have all the bills ready by the vendor immediately.
+                            </td>
+                            <td>
+                                <img src="../assets/icons/green-tick.svg"  class="width-24px">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/cross-red.svg"  class="width-24px">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="title-1 text-black text-center mb-23  mt-4 feed-back-subtitle">DispatchProX offers plans to all-size companies, from one-truck companies to brokers who manage thousands of trucks.</div>
+               
+                <br/>
+                <div align="center" class=" mb-3 ">
+                    <a class="mybtn bg-blue2 text-white  mt-4 mb-5  " style="cursor:pointer;color:white !important" (click)="showFeedBackModal()" >Give feedback</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade  come-from-modal right show" *ngIf="this.show_modal" style="display:block;padding-right: 17px;" id="addusers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog max-width-50px" role="document">
+        <div class="modal-content border-15px ">
+            <div class="modal-body">
+                <br>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <img src="../assets/icons/tc-feedback.svg" class="img ">
+                    </div>
+                </div>
+                <br>
+               
+                <form [formGroup]="feedBackForm" (ngSubmit)="onSendFeedback()">
+                    <div class="row m-0">
+                        <div class="col-md-12 ">
+                            <div class=" p-1">
+                                <div class="form-title">Give feedback</div>
+                               
+                            </div>
+                            <br/>
+                            <span *ngIf="feedbackError != ''" class="text-danger">{{
+                                feedbackError
+                            }}</span>
+                            <label class="field text-field required_field">
+                                <textarea class="field__input" style="height: 130px;" placeholder="Type here"   formControlName="feedback" ></textarea>
+                                <span class="field__label-wrap">
+                                <span class="field__label">Your feedback</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                        
+                    <br>
+                    <div class="row m-0">
+
+                        <div class="col-md-12">
+
+                            <div class="d-flex btns-div" >
+                                <button style="width:150px" class="btn-back goto-dashboard-setup-1"  (click)="hideFeedbackModal()" >Back</button>
+                           
+                                <button style="width:200px" class="mybtn bg-blue2 text-white " type="submit"  *ngIf="!is_loading">Send feedback</button>
+                                <button style="width:200px" class="mybtn bg-blue2 text-white " type="button" *ngIf="is_loading" disabled >Processing..</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>           
+            </div>
+        </div>
+    </div>
+</div>

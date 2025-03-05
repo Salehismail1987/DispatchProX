@@ -1,0 +1,271 @@
+@import url('../../../assets/css/dashboard-style.css');
+@import url('../../../assets/css/trucking-dashbord-style.css');
+.progress-bar{
+    background-color: #17A1FA !important ;
+}
+.bg-dark-yellow{
+    background: #F4BE1B;
+}
+
+.bg-dark-yellow .title-2, .bg-green .title-2, .bg-completed .title-2{
+    color:white !important;
+}
+
+.bg-light-grey{
+    background-color: #D9D9D9 !important ;
+}
+
+.text-black{
+    color: black !important;
+}
+
+.bg-green{
+    background: #33D1A2;
+}
+
+.bg-completed{
+    background: #17A1FA;
+
+}
+
+.da-number-div-border-blue,.da-number-div {
+    border: 10px solid #D9D9D9 !important;
+    cursor: pointer;
+}
+.da-number-div-border-blue,.da-number-divv {
+    border: 10px solid #F4BE1B !important;
+    cursor: pointer;
+}
+
+
+.da-number-div2{
+    border-radius: 100px;
+    width: 67px;
+    height: 67px;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+ }
+
+
+ .da-number-div2-light-grey{
+    border: 8px solid #D9D9D9 ;
+    border-radius: 100px;
+    width: 67px;
+    height: 67px;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+ }
+ .da-number-div2-border-blue{
+    border: 8px solid #17A1FA !important;
+    border-radius: 100px;
+    width: 67px;
+    height: 67px;
+    vertical-align: middle;
+    text-align: center;
+    display: table-cell;
+ }
+ .d-flex-single{
+    display: -ms-flexbox!important;
+    display: flex!important;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+
+ }
+
+ .feedback-text{
+    font-family: 'Gilroy-Bold';
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #000000;
+ }
+
+ .give-btn{
+    font-family: 'Gilroy-Bold';
+font-size: 14px;
+line-height: 16px;
+/* identical to box height */
+
+text-align: center;
+
+color: #FFFFFF;
+width: 150px;
+height: 40px;
+ }
+
+
+
+.feed-back-title{
+    font-family: 'Gilroy-Bold';
+    font-size: 25px;
+    line-height: 29px;
+
+    color: #000000;
+}
+
+.feed-back-text{
+
+    font-family: 'Gilroy';
+    font-size: 15px;
+    line-height: 18px;
+
+    color: #8D8D8D;
+}
+
+.feed-back-subtitle{
+
+    font-family: 'Gilroy-SemiBold';
+    font-size: 15px;
+    line-height: 18px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #68696D !important;
+}
+.btns-div{
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.max-width-50 {
+    max-width: 100% !important;
+    width: 40% !important;
+}
+
+.form-title{
+
+font-family: 'Gilroy-SemiBold';
+font-size: 20px;
+line-height: 23px;
+
+color: #000000;
+}
+
+.mybtn-back-yellow{
+    background: #FFF8B8 !important;
+}
+.required_field:after {
+    content: "*";
+    position: absolute;
+    top: 0;
+    right: -15px;
+    color: #F73333;
+}
+
+.ticket-badge{
+    width: 90px !important;
+    height: 118px;
+}
+
+.subs-table thead tr th {
+    border: none;
+    font-family: 'Gilroy-SemiBold';
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+
+    color: #000000;
+}
+
+.width-24px{
+    width: 24px !important;
+}
+.subs-table tr td {
+    padding: 5px;
+    font-size: 14px;
+    padding-right: 18px;
+    line-height: 16px;
+    color: #000000;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 500;
+    text-align: center;
+    border-right: 1px solid #D9D9D9;
+}
+.mb-20{
+    margin-bottom:20px;
+}
+
+.bg-subs{
+    background-color: #0D76BB !important;
+}
+
+.title-8-2, .title-8-1{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0em;
+
+}
+
+.title-8-2{
+    color:#68696D;
+}
+
+.title-8-1{
+    color: #111727;
+}
+
+.border-orange{
+    border: 5px solid #FF8E09 !important;
+}
+
+.border-black{
+    border: 4px solid #000000 !important;
+
+}
+.text-available{
+
+    color:  #43ABDB !important;
+    font-family: 'Gilroy-Bold';
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+
+}
+
+.text-remain{
+    font-family: 'Gilroy-Bold';
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+.br-0{
+    border-radius: 0px !important;
+}
+.body-content {
+    padding: 15px !important;
+    }
+
+    .border-div{
+        border: 1px solid #0000001a !important;
+    }
+.br-5px{
+  border-radius: 5px !important;
+}
+
+.bg-grey{
+  background: #8C8B8B !important;
+ }
+
+ .no-subs-text{
+  font-family: 'Gilroy-SemiBold';
+font-size: 16px;
+font-weight: 400;
+line-height: 19.6px;
+
+}

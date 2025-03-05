@@ -1,0 +1,343 @@
+@import url("../../../../../assets/css/trucking-style.css");
+
+.mb_15 {
+  margin-bottom: 15px;
+}
+@media only screen and (min-width: 767px) and (max-width: 1034px) {
+  .field__input {
+    height: 45px !important;
+    padding: 1.25rem 0rem 0rem 1rem !important;
+  }
+}
+
+@media only screen and (min-width: 1034px) and (max-width: 1270px) {
+  .field__input {
+    height: 45px !important;
+    padding: 1.25rem 0rem 0rem 1rem !important;
+  }
+}
+
+@media only screen and (min-width: 767px) and (max-width: 1400px) {
+  .field__label {
+    font-family: "Gilroy";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px !important;
+    line-height: 13px !important;
+    color: #88898b;
+  }
+}
+
+.bg-declined-row {
+  background: rgba(253, 215, 228, 0.2);
+}
+
+@media (max-width: 768px) {
+  .filters-div {
+    display: none;
+  }
+}
+.nav-item {
+  width: 170px !important;
+  height: 40px !important;
+}
+.nav-tabs .nav-link {
+  padding: 5px !important;
+  border-radius: 5px !important;
+}
+
+.nav-tabs {
+  margin-right: 15px !important;
+}
+.border-div {
+  border: 1px solid #0000001a !important;
+}
+.abc {
+  background: #ffffff !important;
+  color: #17a1fa !important;
+  border: 1px solid #17a1fa !important;
+}
+.head-title-tabs {
+  padding-left: 15px !important;
+}
+
+.sec_heading {
+  font-size: 14px;
+  color: rgba(104, 105, 109, 1) !important;
+  font-family: "Gilroy-SemiBold";
+}
+.sec_heading_2 {
+  font-size: 13px;
+  color: rgba(104, 105, 109, 1) !important;
+  font-family: "Gilroy";
+}
+.W_H_25 {
+  width: 25% !important;
+  height: 45px !important;
+}
+.W_H_16 {
+  width: 16% !important;
+  height: 45px !important;
+}
+.head_txt {
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  color: rgba(0, 0, 0, 1);
+}
+
+.table {
+  table-layout: fixed;
+  width: 100%; /* Ensures the table fills the container */
+}
+
+.mytable thead tr th {
+  white-space: normal;
+}
+th {
+  /* font-family: 'Gilroy-Regular'!important; */
+  font-size: 13px !important;
+  color: rgba(104, 105, 109, 1) !important;
+}
+thead {
+  background-color: rgba(202, 234, 255, 1);
+}
+.search_icon {
+  background-color: rgba(202, 234, 255, 1);
+  border-radius: 8px !important;
+  border: 1px solid rgba(217, 217, 217, 1);
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center; /* Align vertically center */
+  justify-content: center;
+}
+.fa-caret-down {
+  margin-left: auto;
+  font-size: 20px;
+  color: rgba(136, 137, 139, 1);
+}
+
+.table th {
+  padding: 4px;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table td {
+  padding: 0.5rem;
+}
+.topright {
+  top: 5px !important;
+}
+
+.cust_drop {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 14px;
+  padding: 9px 10px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+}
+
+.cust_drop .list-item,
+.list-item {
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.33px;
+  color: #68696d;
+  padding: 2px 5px 2px 5px;
+  border-radius: 5px;
+  background: #caeaff;
+}
+
+.icon-center-right {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+}
+.input-div {
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 3px 10px 3px 10px;
+  position: relative;
+}
+
+.title-5-new2 {
+  font-family: "Gilroy";
+  color: #68696d !important;
+  font-size: 13px;
+}
+
+.mb-5px {
+  margin-bottom: 5px !important;
+}
+.sa_select {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.15px;
+  text-align: left;
+  /* background: #88898B; */
+  color: #88898b;
+}
+
+.title-5-new33 {
+  line-height: 17.33px !important;
+  color: #68696d !important;
+}
+
+.cust_drop {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 14px;
+  padding: 9px 10px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+}
+
+.cust_drop .list-item,
+.list-item {
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.33px;
+  color: #68696d;
+  padding: 2px 5px 2px 5px;
+  border-radius: 5px;
+  background: #caeaff;
+}
+
+.icon-center-right {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+}
+.input-div {
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 3px 10px 3px 10px;
+  position: relative;
+}
+
+.title-5-new2 {
+  font-family: "Gilroy";
+  color: #68696d !important;
+  font-size: 13px;
+}
+
+.mb-5px {
+  margin-bottom: 5px !important;
+}
+.sa_select {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.15px;
+  text-align: left;
+  /* background: #88898B; */
+  color: #88898b;
+}
+
+.title-5-new33 {
+  line-height: 17.33px !important;
+  color: #68696d !important;
+}
+
+.cust_drop {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 14px;
+  padding: 9px 10px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+}
+
+.cust_drop .list-item,
+.list-item {
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.33px;
+  color: #68696d;
+  padding: 2px 5px 2px 5px;
+  border-radius: 5px;
+  background: #caeaff;
+}
+
+.icon-center-right {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+}
+.input-div {
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  padding: 3px 10px 3px 10px;
+  position: relative;
+}
+
+.title-5-new2 {
+  font-family: "Gilroy";
+  color: #68696d !important;
+  font-size: 13px;
+}
+
+.mb-5px {
+  cursor: pointer;
+}
+.cur_p {
+  cursor: pointer;
+}
+
+.sa_select {
+  font-family: "Gilroy-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.15px;
+  text-align: left;
+  color: #88898b;
+}
+
+.title-5-new33 {
+  line-height: 17.33px !important;
+  color: #68696d !important;
+}
+
+.nav-link.active {
+  box-shadow: 0px 4px 4px 0px #00000040 inset !important;
+}
+
+.sa_selected_filter {
+  font-family: "Gilroy-Bold";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17.33px;
+  color: #000000;
+}
+
+.title-5-new33_active {
+  color: #000000 !important;
+}
+
+.title-5-new33_active {
+  color: #000000 !important;
+}

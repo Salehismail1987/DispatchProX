@@ -1,0 +1,1615 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content p-0">
+      <div class="main-inner-body-container mt-15px">
+        <div class="project-profile-header-container">
+          <div class="profile_heading_div1">
+            <div
+              class="project-profile-header-left d-flex align-items-center ml-0"
+            >
+              <img
+                src="./assets/images/cc-icon.svg"
+                alt="project-profile-file-icon"
+              />
+              <div class="heading-1-400 text-color-black">
+                {{ this.loggedInUser?.company_name }}
+              </div>
+            </div>
+          </div>
+          <app-tc-profile-nav
+            [loggedinUser]="this.loggedInUser"
+            [current]="'add-trucks'"
+          ></app-tc-profile-nav>
+        </div>
+        <div class="main-project-setting-container inner_main_shadow">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="page-heading-title mb-5">
+                Manage trucks and trailers
+              </div>
+            </div>
+
+            <div class="col-md-9 p-0 d-flex justify-content-end ml-0 pr-3">
+              <ul class="nav nav-tabs my-nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    [class.active]="current_step == 'truck-listing'"
+                    style="padding-left: 7px !important"
+                    (click)="goToStep('truck-listing', 'truck')"
+                  >
+                    <div
+                      class="d-flex align-items-cente"
+                      [class]="
+                        current_step == 'truck-listing' ? 'w-117' : 'w-116'
+                      "
+                    >
+                      <img
+                        src="./assets/icons/truck-white.svg"
+                        width="20px"
+                        alt="N/A"
+                        *ngIf="current_step == 'truck-listing'"
+                      />
+                      <img
+                        src="./assets/icons/truck-icon-b.svg"
+                        width="20px"
+                        *ngIf="current_step != 'truck-listing'"
+                      />
+                      <div
+                        class="heading-5-400 text-color-black ml-8px col text-center"
+                      >
+                        Truck
+                      </div>
+                    </div>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    [class.active]="current_step == 'trailer-listing'"
+                    style="padding-left: 7px !important"
+                    (click)="goToStep('trailer-listing', 'trailer')"
+                  >
+                    <div class="d-flex align-items-cente">
+                      <img
+                        src="./assets/icons/trailer-icon-a.svg"
+                        width="20px"
+                        alt="N/A"
+                        *ngIf="current_step == 'trailer-listing'"
+                      />
+                      <img
+                        src="assets/icons/trailer-icon-b.svg"
+                        width="20px"
+                        *ngIf="current_step != 'trailer-listing'"
+                      />
+                      <div
+                        class="heading-5-400 text-color-black ml-8px col text-center"
+                      >
+                        Trailer
+                      </div>
+                    </div>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link no-shadow bg-blue2 text-white"
+
+                    (click)="setActiveTab('add-trucks')"
+                    style="padding-left: 7px !important"
+                    (click)="goToStepAdd('truck-listing', 'truck')"
+                  >
+                    <div class="d-flex align-items-cente">
+                      <img
+                        src="./assets/icons/plus-a.svg"
+                        width="20px"
+                        alt="project-profile-tracker-icon"
+                        *ngIf="current_step != 'xyz'"
+                      />
+                      <img
+                        src="./assets/icons/plus-b.svg"
+                        width="20px"
+                        alt="project-profile-tracker-icon"
+                        *ngIf="current_step == 'xyz'"
+                      />
+                      <div
+                        class="heading-5-400 text-color-black text-white ml-8px col text-center"
+                      >
+                        Add Truck / Trailer
+                      </div>
+                    </div>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!--Section 2 -->
+          <div class="row">
+            <div class="col-md-7"></div>
+            <div class="col-md-5"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <table
+                class="table vendorTable"
+                border="0"
+                style="border: 0"
+                *ngIf="current_step == 'truck-listing'"
+              >
+                <tbody>
+                  <tr style="border: 0">
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 16%"
+                    >
+                      <div class="profile-table-head text-left">Truck name</div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 16%"
+                    >
+                      <div class="profile-table-head text-center">
+                        License plate
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 16%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Truck tupe
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 11%"
+                    >
+                      <div class="profile-table-head text-center">Color</div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 11%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Weight capacity
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 11%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Volume capacity
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 11%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Driving days <br />
+                        (last 30)
+                      </div>
+                    </td>
+                    <td class="project-settings-table-header" style="width: 8%">
+                      <div class="profile-table-head text-center"></div>
+                    </td>
+                  </tr>
+
+                  <ng-container *ngIf="this.truck_list; else elseBlock">
+                    <ng-container
+                      *ngFor="let truck of this.truck_list; let idx = index"
+                    >
+                      <tr
+                        (click)="setTruck(truck)"
+                        data-toggle="modal"
+                        data-target="#truckpopup"
+                      >
+                        <td>
+                          <div class="profile-table-value text-left">
+                            {{ truck.truck_nickname }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            {{ truck.truck_license_plate }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            {{ truck.truck_type }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            {{ truck.truck_color }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            {{ truck.weight_capacity }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            {{ truck.volume_capacity }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            --??--
+                          </div>
+                        </td>
+
+                        <td>
+                          <div
+                            class="text-center profile-table-value cursor-pointer"
+                          ></div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #elseBlock>
+                    <ng-container *ngIf="!this.truck_list">
+                      <tr>
+                        <td colspan="6">
+                          <h4>
+                            <b *ngIf="loading">Fetching Trucks...</b>
+                            <b *ngIf="!loading">No Trucks Found.</b>
+                          </h4>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-template>
+
+                  <div class="modal-backdrop" style="display: none">
+                    <div class="more-modal">
+                      <!--Section 2 -->
+                      <div class="row pb-3">
+                        <div class="col-md-7">
+                          <div class="page-heading-title">
+                            History of Subscription Plans
+                          </div>
+                        </div>
+
+                        <div
+                          class="col-md-5 d-flex justify-content-end"
+                          style="height: 40px !important"
+                        >
+                          <button
+                            class="title-14 styled-button openOptionModal"
+                            style="border-radius: 5px !important"
+                          >
+                            <div
+                              class="heading-5-400 text-color-black ml-8px col text-center"
+                            >
+                              Close
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <table
+                            class="table vendorTable"
+                            border="0"
+                            style="border: 0"
+                          >
+                            <tbody>
+                              <tr style="border: 0">
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-left">
+                                    Plan
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-center">
+                                    Billing Cycle
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-center">
+                                    Download Receipt
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div
+                                    class="profile-table-head text-center"
+                                  ></div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tbody>
+              </table>
+              <table
+                class="table vendorTable"
+                border="0"
+                style="border: 0"
+                *ngIf="current_step == 'trailer-listing'"
+              >
+                <tbody>
+                  <tr style="border: 0">
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 16%"
+                    >
+                      <div class="profile-table-head text-left">
+                        Trailer name
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 16%"
+                    >
+                      <div class="profile-table-head text-center">
+                        License plate
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 16%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Trailer tupe
+                      </div>
+                    </td>
+
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 11%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Weight capacity
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 11%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Volume capacity
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 11%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Driving days <br />
+                        (last 30)
+                      </div>
+                    </td>
+                    <td class="project-settings-table-header" style="width: 8%">
+                      <div class="profile-table-head text-center"></div>
+                    </td>
+                  </tr>
+
+                  <ng-container *ngIf="this.trailer_list; else elseBlock">
+                    <ng-container
+                      *ngFor="let trailer of this.trailer_list; let idx = index"
+                    >
+                      <tr
+                        (click)="setTrailer(trailer)"
+                        data-toggle="modal"
+                        data-target="#trailerpopup"
+                      >
+                        <td>
+                          <div class="profile-table-value text-left">
+                            {{ trailer.trailer_nickname }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            {{ trailer.trailer_license_plate }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            {{ trailer.trailer_type }}
+                          </div>
+                        </td>
+
+                        <td>
+                          <div class="profile-table-value text-center">
+                            {{ trailer.weight_capacity }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            {{ trailer.volume_capacity }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="profile-table-value text-center">
+                            --??--
+                          </div>
+                        </td>
+
+                        <td>
+                          <div
+                            class="text-center profile-table-value cursor-pointer"
+                          ></div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #elseBlock>
+                    <ng-container *ngIf="!this.trailer_list">
+                      <tr>
+                        <td colspan="6">
+                          <h4>
+                            <b *ngIf="loading">Fetching Trucks...</b>
+                            <b *ngIf="!loading">No Trucks Found.</b>
+                          </h4>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-template>
+
+                  <div class="modal-backdrop" style="display: none">
+                    <div class="more-modal">
+                      <!--Section 2 -->
+                      <div class="row pb-3">
+                        <div class="col-md-7">
+                          <div class="page-heading-title">
+                            History of Subscription Plans
+                          </div>
+                        </div>
+
+                        <div
+                          class="col-md-5 d-flex justify-content-end"
+                          style="height: 40px !important"
+                        >
+                          <button
+                            class="title-14 styled-button openOptionModal"
+                            style="border-radius: 5px !important"
+                          >
+                            <div
+                              class="heading-5-400 text-color-black ml-8px col text-center"
+                            >
+                              Close
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <table
+                            class="table vendorTable"
+                            border="0"
+                            style="border: 0"
+                          >
+                            <tbody>
+                              <tr style="border: 0">
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-left">
+                                    Plan
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-center">
+                                    Billing Cycle
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-center">
+                                    Download Receipt
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div
+                                    class="profile-table-head text-center"
+                                  ></div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-5 col-lg-4">
+                <app-tc-profile-nav [loggedinUser]="this.loggedInUser" [current]="'add-trucks'"></app-tc-profile-nav>
+            </div>
+            <div class="col-md-7 col-lg-8">
+                <div class="setting-content-page border-div">
+
+                    <div class="row m-0">
+                        <div class="col-lg-6 p-0">
+
+                            <div class="dashboard-title-1 mb-36">Add/ Manage Trucks</div>
+                        </div>
+                        <div class="col-lg-6 p-0">
+                            <div class="row m-0">
+                                <div class="col-md-12 " align="right">
+                                    <div class="d-inline-flex truck-dflex" >
+                                        <div style="width: 150px;height: 40px;">
+                                            <div [class]="current_step=='truck-listing' ? 'your-adding bg-blue2 active btn-customer text-white goto-truck-listing  text-center':'your-adding btn-customer goto-trailer-listing  text-center'"  (click)="goToStep('truck-listing','truck')">
+                                                Truck
+                                            </div>
+                                        </div>
+                                        <div  style="width: 150px;height: 40px;" >
+                                            <div [class]="current_step=='trailer-listing' ? 'your-adding ml-2 bg-blue2 active btn-customer  text-white goto-truck-listing  text-center':' ml-2 your-adding btn-customer goto-trailer-listing  text-center'" (click)="goToStep('trailer-listing','trailer')">
+                                                Trailer
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <br/>
+                    <div class="dashbord-inner-div2" *ngIf="current_step=='truck-listing'">
+                        <table class="table user-table">
+                            <thead>
+                                <tr >
+                                    <th class="text-left">Truck Name</th>
+                                    <th class="text-left">License #</th>
+                                    <th class="text-left">Truck type</th>
+                                    <th class="text-left">Trailer color</th>
+                                    <th class="text-center">Weight capacity</th>
+                                    <th class="text-center">Volume capacity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="this.truck_list && this.truck_list.length>0 ">
+                                    <tr *ngFor="let truck of this.truck_list" (click)="setTruck(truck)" data-toggle="modal" data-target="#truckpopup">
+                                        <td  class="text-left">{{truck.truck_nickname}}</td>
+                                        <td  class="text-left" >{{truck.truck_license_plate}}</td>
+                                        <td  class="text-left">{{truck.truck_type}}</td>
+                                        <td  class="text-left">{{truck.truck_color}}</td>
+                                        <td>{{truck.weight_capacity}}</td>
+                                        <td>{{truck.volume_capacity}}</td>
+                                    </tr>
+
+                                </ng-container>
+                                <ng-container *ngIf="!this.truck_list ">
+                                    <tr>
+                                        <td colspan="6" >
+                                            <h4><b *ngIf="!loading">No Trucks Found.</b>
+                                                <b *ngIf="loading">Fetching Trucks...</b></h4>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                            </tbody>
+                        </table>
+                        <br/>
+                        <div  align="center">
+                            <button  type="submit" data-target="#addtruck" (click)="goToStepAdd('truck-listing','truck')"  data-toggle="modal" class="mybtn btn-add mybtn-back-blue2 width-fit-content text-white mybtn-padding btn-customer">Add truck</button>
+                        </div>
+                    </div>
+
+                    <div class="dashbord-inner-div2" *ngIf="current_step=='trailer-listing'">
+                        <table class="table user-table" style="text-align:left">
+                            <thead>
+                                <tr >
+                                    <th class="text-left">Trailer Name</th>
+                                    <th class="text-left">License #</th>
+                                    <th class="text-left">Trailer type</th>
+                                    <th class="text-left">Trailer color</th>
+                                    <th class="text-center">Weight capacity</th>
+                                    <th class="text-center">Volume capacity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="this.trailer_list && this.trailer_list.length>0 ">
+                                    <tr *ngFor="let trailer of this.trailer_list" (click)="setTrailer(trailer)" data-toggle="modal" data-target="#trailerpopup">
+                                        <td  class="text-left">{{trailer.trailer_nickname}}</td>
+                                        <td  class="text-left" >{{trailer.trailer_license_plate}}</td>
+                                        <td  class="text-left">{{trailer.trailer_type}}</td>
+                                        <td  class="text-left">{{trailer.trailer_color}}</td>
+                                        <td>{{trailer.weight_capacity}}</td>
+                                        <td>{{trailer.volume_capacity}}</td>
+                                    </tr>
+
+                                </ng-container>
+                                <ng-container *ngIf="!this.trailer_list ">
+                                    <tr>
+                                        <td colspan="6" >
+                                            <h4><b *ngIf="!loading">No Trailers Found.</b>
+                                                <b *ngIf="loading">Fetching Trailers...</b></h4>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                            </tbody>
+                        </table>
+                        <br/>
+                        <div  align="center">
+                            <button  type="submit" data-target="#addtrailer"  data-toggle="modal" class="mybtn btn-add mybtn-back-blue2 width-fit-content text-white mybtn-padding btn-customer" (click)="goToStepAdd('trailer-listing','trailer')">Add trailer</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade come-from-modal right show"
+    id="newTruck"
+    tabindex="-1 "
+    role="dialog "
+    aria-labelledby="myModalLabel "
+    style="display: block"
+    *ngIf="
+      current_step_add == 'truck-listing' ||
+      current_step_add == 'trailer-listing'
+    "
+  >
+    <div
+      class="modal-dialog"
+      role="document "
+      style="
+        display: flex;
+        align-items: center;
+        height: 100vh;
+        justify-content: center;
+      "
+    >
+      <div
+        class="modal-content modal-bg-white"
+        style="
+          height: 65%;
+          max-height: 490px;
+          border-radius: 10px 0px 0px 10px;
+          width: 500px;
+        "
+      >
+        <div class="modal-body sa_modall">
+          <div class="row">
+            <div
+              class="col-lg-12 dashbord-fademe setup-truck-listing"
+              *ngIf="current_step_add == 'truck-listing'"
+            >
+              <div class="heading-new-project pb-2 mb-2 text-center">
+                Truck / trailer information
+              </div>
+
+              <div
+                class="d-flex pl-2 pr-2 m-0 my-3"
+                style="justify-content: center; align-items: center"
+              >
+                <div
+                  class="position-relative modal-div"
+                  style="margin-left: -45px"
+                >
+                  <button
+                    class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                    type="button"
+                    (click)="goToStepAdd('truck-listing', 'truck')"
+                  >
+                    Truck
+                  </button>
+                </div>
+
+                <div style="margin-right: -38px; margin-left: 15px">
+                  <button
+                    class="mybtn btn-add2 text-tc btn-customer btnremove mb-0"
+                    (click)="goToStepAdd('trailer-listing', 'trailer')"
+                  >
+                    Trailer
+                  </button>
+                </div>
+              </div>
+
+              <form
+                [formGroup]="truckForm"
+                (ngSubmit)="onSaveTruck()"
+                class="trailer-form tc-form"
+              >
+                <div class="row m-0">
+                  <div class="col-md-6 padding-left-0 p-0-sm">
+                    <span
+                      *ngIf="truckNicknameError != ''"
+                      class="text-danger"
+                      >{{ truckNicknameError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="Type here"
+                        value=""
+                        formControlName="truck_nickname"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">Truck name</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-6 padding-right-0 p-0-sm">
+                    <span
+                      *ngIf="truckLicensePlateError != ''"
+                      class="text-danger"
+                      >{{ truckLicensePlateError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="xxx-xxx"
+                        value=""
+                        formControlName="truck_license_plate"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">License plate</span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row m-0">
+                  <div class="col-md-6 padding-left-0 p-0-sm">
+                    <span *ngIf="truckTypeError != ''" class="text-danger">{{
+                      truckTypeError
+                    }}</span>
+                    <label class="field text-field required_field">
+                      <select
+                        class="field__input"
+                        formControlName="truck_type"
+                        [(ngModel)]="this.truck_type"
+                      >
+                        <option value="Single">Single</option>
+                        <option value="Tandem">Tandem</option>
+                        <option value="Tridem">Tridem</option>
+                        <option value="Quad-Axle">Quad-Axle</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label">Truck type</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-6 padding-right-0 p-0-sm">
+                    <span *ngIf="truckColorError != ''" class="text-danger">{{
+                      truckColorError
+                    }}</span>
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="Type here"
+                        value=""
+                        formControlName="truck_color"
+                      />
+
+                      <span class="field__label-wrap">
+                        <span class="field__label">Truck color</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-12 p-0 p-0-sm">
+                    <span
+                      *ngIf="truckWeightCapacityError != ''"
+                      class="text-danger"
+                      >{{ truckWeightCapacityError }}</span
+                    >
+                    <span
+                      *ngIf="truckWeightCapacityUnitError != ''"
+                      class="text-danger"
+                      >{{ truckWeightCapacityUnitError }}</span
+                    >
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="Enter"
+                        value=""
+                        formControlName="weight_capacity"
+                      />
+                      <select
+                        class="selectlist-addon"
+                        formControlName="weight_capacity_unit"
+                        [(ngModel)]="this.truck_weight"
+                      >
+                        <option value="ton">ton</option>
+                        <option value="lb">lb</option>
+                        <option value="lb2">lb2</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label"
+                          >Truck capacity in weight</span
+                        >
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-12 p-0 p-0-sm">
+                    <span
+                      *ngIf="truckVolumeCapacityError != ''"
+                      class="text-danger"
+                      >{{ truckVolumeCapacityError }}</span
+                    >
+                    <span
+                      *ngIf="truckVolumeCapacityUnitError != ''"
+                      class="text-danger"
+                      >{{ truckVolumeCapacityUnitError }}</span
+                    >
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="Enter"
+                        value=""
+                        formControlName="volume_capacity"
+                      />
+                      <select
+                        class="selectlist-addon"
+                        formControlName="volume_capacity_unit"
+                        [(ngModel)]="this.truck_volumn"
+                      >
+                        <option value="m2">m2</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label"
+                          >Truck capacity in volume</span
+                        >
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="d-flex pl-2 pr-2 m-0 mt-2"
+                  style="justify-content: center; align-items: center"
+                >
+                  <div
+                    class="position-relative modal-div"
+                    style="margin-left: -45px"
+                  >
+                    <button
+                      class="mybtn btn-add2 text-tc btn-customer btnremove mb-0"
+                      (click)="backButton()"
+                    >
+                      Back
+                    </button>
+                  </div>
+                  <div style="margin-right: -38px; margin-left: 15px">
+                    <button
+                      class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                      type="submit"
+                      *ngIf="!is_truck_loading"
+                    >
+                      Add truck
+                    </button>
+                    <button
+                      class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                      type="button"
+                      *ngIf="is_truck_loading"
+                      disabled
+                    >
+                      Processing..
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div
+              class="col-lg-12 dashbord-fademe setup-trailer-listing"
+              *ngIf="current_step_add == 'trailer-listing'"
+            >
+              <div class="heading-new-project pb-2 mb-2 text-center">
+                Truck / trailer information
+              </div>
+
+              <div
+                class="d-flex pl-2 pr-2 m-0 my-3"
+                style="justify-content: center; align-items: center"
+              >
+                <div
+                  class="position-relative modal-div"
+                  style="margin-left: -45px"
+                >
+                  <button
+                    class="mybtn btn-add2 text-tc btn-customer btnremove mb-0"
+                    type="button"
+                    (click)="goToStepAdd('truck-listing', 'truck')"
+                  >
+                    Truck
+                  </button>
+                </div>
+                <div style="margin-right: -38px; margin-left: 15px">
+                  <button
+                    class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                    type="button"
+                    (click)="goToStepAdd('trailer-listing', 'trailer')"
+                  >
+                    Trailer
+                  </button>
+                </div>
+              </div>
+
+              <form
+                [formGroup]="trailerForm"
+                (ngSubmit)="onSaveTrailer()"
+                class="trailer-form tc-form"
+              >
+                <div class="row m-0">
+                  <div class="col-md-6 padding-left-0 p-0-sm">
+                    <span
+                      *ngIf="trailerNicknameError != ''"
+                      class="text-danger"
+                      >{{ trailerNicknameError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="Type here"
+                        value=""
+                        formControlName="trailer_nickname"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">Trailer name</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-6 padding-right-0 p-0-sm">
+                    <span
+                      *ngIf="trailerLicensePlateError != ''"
+                      class="text-danger"
+                      >{{ trailerLicensePlateError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="xxx-xxx"
+                        value=""
+                        formControlName="trailer_license_plate"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">License plate</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-6 p-0 p-0-sm">
+                    <span *ngIf="trailerTypeError != ''" class="text-danger">{{
+                      trailerTypeError
+                    }}</span>
+                    <label class="field text-field required_field">
+                      <select
+                        class="field__input"
+                        formControlName="trailer_type"
+                        [(ngModel)]="this.trailer_type"
+                      >
+                        <option value="Pony">Pony</option>
+                        <option value="Tri Pony">Tri Pony</option>
+                        <option value="Quad (wagon)">Quad (wagon)</option>
+                        <option value="Transfer">Transfer</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label">Trailer type</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-12 p-0 p-0-sm">
+                    <span
+                      *ngIf="trailerWeightCapacityError != ''"
+                      class="text-danger"
+                      >{{ trailerWeightCapacityError }}</span
+                    >
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="10"
+                        value="Enter"
+                        formControlName="weight_capacity"
+                      />
+                      <select
+                        class="selectlist-addon"
+                        formControlName="weight_capacity_unit"
+                        [(ngModel)]="this.trailer_weight"
+                      >
+                        <option value="ton" selected>ton</option>
+                        <option value="lb">lb</option>
+                        <option value="lb2">lb2</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label"
+                          >Trailer capacity in weight</span
+                        >
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-12 p-0 p-0-sm">
+                    <span
+                      *ngIf="trailerVolumeCapacityError != ''"
+                      class="text-danger"
+                      >{{ trailerVolumeCapacityError }}</span
+                    >
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="Enter"
+                        formControlName="volume_capacity"
+                      />
+                      <select
+                        class="selectlist-addon"
+                        formControlName="volume_capacity_unit"
+                        [(ngModel)]="this.trailer_volumn"
+                      >
+                        <option value="m2">m2</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label"
+                          >Trailer capacity in volume</span
+                        >
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <div
+                  class="d-flex pl-2 pr-2 m-0 mt-2"
+                  style="justify-content: center; align-items: center"
+                >
+                  <div
+                    class="position-relative modal-div"
+                    style="margin-left: -45px"
+                  >
+                    <button
+                      class="mybtn btn-add2 text-tc btn-customer btnremove mb-0"
+                      (click)="backButton()"
+                    >
+                      Back
+                    </button>
+                  </div>
+                  <div style="margin-right: -38px; margin-left: 15px">
+                    <button
+                      class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                      type="submit"
+                      *ngIf="!is_trailer_loading"
+                    >
+                      Add trailer
+                    </button>
+                    <button
+                      class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                      type="button"
+                      *ngIf="is_trailer_loading"
+                      disabled
+                    >
+                      Processing..
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade come-from-modal right"
+    id="trailerpopup"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div
+      class="modal-dialog"
+      role="document"
+      style="
+        display: flex;
+        align-items: center;
+        height: 100vh;
+        justify-content: center;
+      "
+    >
+      <div
+        class="modal-content modal-bg-white"
+        style="
+          height: 60%;
+          max-height: 430px;
+          border-radius: 10px 0px 0px 10px;
+          width: 500px;
+        "
+      >
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12 edit-modal">
+              <div class="heading-new-project pb-2 mb-2 text-center">
+                Edit Trailer information
+              </div>
+
+              <form
+                [formGroup]="trailerEditForm"
+                (ngSubmit)="onEditTrailer()"
+                class="trailer-form"
+              >
+                <div class="row m-0">
+                  <div class="col-md-6 padding-left-0 p-0-sm">
+                    <span
+                      *ngIf="trailerEditNicknameError != ''"
+                      class="text-danger"
+                      >{{ trailerEditNicknameError }}</span
+                    >
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="Type here"
+                        value=""
+                        formControlName="trailer_nickname"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">Trailer name</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-6 padding-right-0 p-0-sm">
+                    <span
+                      *ngIf="trailerEditLicensePlateError != ''"
+                      class="text-danger"
+                      >{{ trailerEditLicensePlateError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="xxx-xxx"
+                        value=""
+                        formControlName="trailer_license_plate"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">License plate</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-6 p-0 p-0-sm">
+                    <span
+                      *ngIf="trailerEditTypeError != ''"
+                      class="text-danger"
+                      >{{ trailerEditTypeError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <select
+                        class="field__input"
+                        formControlName="trailer_type"
+                        [(ngModel)]="this.trailer_type"
+                      >
+                        <option value="Pony">Pony</option>
+                        <option value="Tri Pony">Tri Pony</option>
+                        <option value="Quad (wagon)">Quad (wagon)</option>
+                        <option value="Transfer">Transfer</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label">Trailer type</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-12 p-0 p-0-sm">
+                    <span
+                      *ngIf="trailerEditWeightCapacityError != ''"
+                      class="text-danger"
+                      >{{ trailerEditWeightCapacityError }}</span
+                    >
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="10"
+                        value="Enter"
+                        formControlName="weight_capacity"
+                      />
+                      <select
+                        class="selectlist-addon"
+                        formControlName="weight_capacity_unit"
+                        [(ngModel)]="this.trailer_weight"
+                      >
+                        <option value="ton" selected>ton</option>
+                        <option value="lb">lb</option>
+                        <option value="lb2">lb2</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label"
+                          >Trailer capacity in weight</span
+                        >
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-12 p-0 p-0-sm">
+                    <span
+                      *ngIf="trailerEditVolumeCapacityError != ''"
+                      class="text-danger"
+                      >{{ trailerEditVolumeCapacityError }}</span
+                    >
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="Enter"
+                        formControlName="volume_capacity"
+                      />
+                      <select
+                        class="selectlist-addon"
+                        formControlName="volume_capacity_unit"
+                        [(ngModel)]="this.trailer_volumn"
+                      >
+                        <option value="m2">m2</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label"
+                          >Trailer capacity in volume</span
+                        >
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <div
+                  class="d-flex pl-2 pr-2 m-0 mt-2"
+                  style="justify-content: center; align-items: center"
+                >
+                  <div>
+                    <div
+                      class="position-relative modal-div"
+                      style="margin-left: -45px"
+                    >
+                      <button
+                        class="mybtn btn-add2 text-tc btn-customer btnremove mb-0"
+                        type="button"
+                        *ngIf="!this.is_loading_removing"
+                      >
+                        Remove
+                      </button>
+                      <button
+                        class="mybtn btn-add2 text-tc btn-customer mb-0"
+                        disabled
+                        type="button"
+                        *ngIf="this.is_loading_removing"
+                      >
+                        Removing...
+                      </button>
+                      <div class="delete-modal">
+                        <div class="title-3-delete mb-12 text-center">
+                          Confirmation
+                        </div>
+                        <div class="title-5-new2 mb-17 text-center">
+                          Remove
+                          {{ this.selected_trailer?.trailer_nickname }} from the
+                          list?
+                        </div>
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <button
+                            class="mybtn btn-add mybtn-back-blue2 mr-2 width-fit-content text-white mybtn-padding btnaction"
+                            type="button"
+                            (click)="
+                              confirmDelete(this.selected_trailer, 'TRAILER')
+                            "
+                          >
+                            Yes
+                          </button>
+                          <button
+                            class="mybtn btn-add2 width-fit-content btnaction bg-white text-tc"
+                            type="button"
+                          >
+                            No
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-right: -38px; margin-left: 15px">
+                    <button
+                      class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                      type="submit"
+                      *ngIf="!is_trailer_loading"
+                    >
+                      Update
+                    </button>
+                    <button
+                      class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                      type="button"
+                      *ngIf="is_trailer_loading"
+                      disabled
+                    >
+                      Updating..
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalBackdrop" class="modal-backdropp"></div>
+
+  <div
+    class="modal fade come-from-modal right"
+    id="truckpopup"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div
+      class="modal-dialog"
+      role="document"
+      style="
+        display: flex;
+        align-items: center;
+        height: 100vh;
+        justify-content: center;
+      "
+    >
+      <div
+        class="modal-content modal-bg-white"
+        style="
+          height: 60%;
+          max-height: 430px;
+          border-radius: 10px 0px 0px 10px;
+          width: 500px;
+        "
+      >
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12 edit-modal">
+              <div class="heading-new-project pb-2 mb-2 text-center">
+                Edit Truck information
+              </div>
+              <form [formGroup]="truckEditForm" (ngSubmit)="onEditTruck()">
+                <div class="row m-0">
+                  <div class="col-md-6 padding-left-0 p-0-sm">
+                    <span
+                      *ngIf="truckEditNicknameError != ''"
+                      class="text-danger"
+                      >{{ truckEditNicknameError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="Type here"
+                        value=""
+                        formControlName="truck_nickname"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">Truck name</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-6 padding-right-0 p-0-sm">
+                    <span
+                      *ngIf="truckEditLicensePlateError != ''"
+                      class="text-danger"
+                      >{{ truckEditLicensePlateError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="xxx-xxx"
+                        value=""
+                        formControlName="truck_license_plate"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">License plate</span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <div class="row m-0">
+                  <div class="col-md-6 padding-left-0 p-0-sm">
+                    <span
+                      *ngIf="truckEditTypeError != ''"
+                      class="text-danger"
+                      >{{ truckEditTypeError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <select
+                        class="field__input"
+                        formControlName="truck_type"
+                        [(ngModel)]="this.truck_type"
+                      >
+                        <option value="Single">Single</option>
+                        <option value="Tandem">Tandem</option>
+                        <option value="Tridem">Tridem</option>
+                        <option value="Quad-Axle">Quad-Axle</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label">Truck type</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-6 padding-right-0 p-0-sm">
+                    <span
+                      *ngIf="truckEditColorError != ''"
+                      class="text-danger"
+                      >{{ truckEditColorError }}</span
+                    >
+                    <label class="field text-field required_field">
+                      <input
+                        class="field__input"
+                        placeholder="Type here"
+                        value=""
+                        formControlName="truck_color"
+                      />
+
+                      <span class="field__label-wrap">
+                        <span class="field__label">Truck color</span>
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-12 p-0 p-0-sm">
+                    <span
+                      *ngIf="truckEditWeightCapacityError != ''"
+                      class="text-danger"
+                      >{{ truckEditWeightCapacityError }}</span
+                    >
+                    <span
+                      *ngIf="truckEditWeightCapacityUnitError != ''"
+                      class="text-danger"
+                      >{{ truckEditWeightCapacityUnitError }}</span
+                    >
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="Enter"
+                        value=""
+                        formControlName="weight_capacity"
+                      />
+                      <select
+                        class="selectlist-addon"
+                        formControlName="weight_capacity_unit"
+                        [(ngModel)]="this.truck_weight"
+                      >
+                        <option value="ton">ton</option>
+                        <option value="lb">lb</option>
+                        <option value="lb2">lb2</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label"
+                          >Truck capacity in weight</span
+                        >
+                      </span>
+                    </label>
+                  </div>
+                  <div class="col-md-12 p-0 p-0-sm">
+                    <span
+                      *ngIf="truckVolumeCapacityError != ''"
+                      class="text-danger"
+                      >{{ truckVolumeCapacityError }}</span
+                    >
+                    <span
+                      *ngIf="truckVolumeCapacityUnitError != ''"
+                      class="text-danger"
+                      >{{ truckVolumeCapacityUnitError }}</span
+                    >
+                    <label class="field text-field">
+                      <input
+                        class="field__input"
+                        placeholder="Enter"
+                        value=""
+                        formControlName="volume_capacity"
+                      />
+                      <select
+                        class="selectlist-addon"
+                        formControlName="volume_capacity_unit"
+                        [(ngModel)]="this.truck_volumn"
+                      >
+                        <option value="m2">m2</option>
+                      </select>
+                      <span class="field__label-wrap">
+                        <span class="field__label"
+                          >Truck capacity in volume</span
+                        >
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <div
+                  class="d-flex pl-2 pr-2 m-0 mt-2 btn-div"
+                  style="justify-content: center; align-items: center"
+                >
+                  <div class="">
+                    <div
+                      class="position-relative modal-div"
+                      style="margin-left: -45px"
+                    >
+                      <button
+                        class="mybtn btn-add2 text-tc btn-customer btnremove mb-0"
+                        type="button"
+                        *ngIf="!this.is_loading_removing"
+                      >
+                        Remove
+                      </button>
+                      <button
+                        class="mybtn btn-add2 text-tc btn-customer mb-0"
+                        disabled
+                        type="button"
+                        *ngIf="this.is_loading_removing"
+                      >
+                        Removing...
+                      </button>
+                      <div class="delete-modal">
+                        <div class="title-3-delete mb-12 text-center">
+                          Confirmation
+                        </div>
+                        <div class="title-5-new2 mb-17 text-center">
+                          Remove {{ this.selected_truck?.truck_nickname }} from
+                          the list?
+                        </div>
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <button
+                            class="mybtn btn-add mybtn-back-blue2 mr-2 width-fit-content text-white mybtn-padding btnaction"
+                            type="button"
+                            (click)="
+                              confirmDelete(this.selected_truck, 'TRUCK')
+                            "
+                          >
+                            Yes
+                          </button>
+                          <button
+                            class="mybtn btn-add2 width-fit-content btnaction bg-white text-tc"
+                            type="button"
+                          >
+                            No
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-right: -38px; margin-left: 15px">
+                    <button
+                      class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                      type="submit"
+                      *ngIf="!is_truck_loading"
+                    >
+                      Update
+                    </button>
+
+                    <button
+                      class="mybtn btn-add mybtn-back-blue2 text-white mybtn-padding mb-0 btn-customer"
+                      type="button"
+                      *ngIf="is_truck_loading"
+                      disabled
+                    >
+                      Updating..
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,699 @@
+<div
+  class="modal fade come-from-modal right d-none"
+  id="myModalDetail23"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body modal-body-padding">
+        <div class="d-flex justify-content-between align-items-center mb-42">
+          <div class="width-75px">
+            <div class="title-7-new text-color-black-shade5 mb-3px">
+              Invoice #
+            </div>
+            <div class="title-12 text-color-black-shade">
+              {{ edited_invoice?.invoice_no }}
+            </div>
+          </div>
+
+          <div class="border-div width-143px text-center">
+            <div class="title-5-new2 text-color-black-shade5 mb-2px">
+              Invoice date
+            </div>
+            <div class="title-5-new3 text-color-black-shade6">
+              {{ edited_invoice?.invoice_date }}
+            </div>
+          </div>
+          <div>
+            <div class="title-6-2 m-0 mybtn-back-pink custom-padding16 br-4">
+              Bill
+            </div>
+          </div>
+        </div>
+        <div class="border-div2 mb-22">
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Business name
+              </div>
+              <div class="title-7">
+                {{
+                  this.edited_invoice?.invoice_by.edited_invoice?.invoice_by
+                    ?.company_name
+                    ? this.edited_invoice?.invoice_by?.company_name
+                    : this.edited_invoice?.invoice_by?.full_name
+                }}
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div
+                class="title-7 text-right"
+                *ngIf="this.edited_invoice?.is_custom_bill == 'NO'"
+              >
+                {{ edited_invoice?.invoice_by?.email }}
+              </div>
+              <div
+                class="title-7 text-right"
+                *ngIf="this.edited_invoice?.is_custom_bill == 'YES'"
+              >
+                {{ edited_invoice?.invoice_by_email }}
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Address
+              </div>
+
+              <div class="title-7">
+                {{
+                  this.edited_invoice?.invoice_by?.address &&
+                  this.edited_invoice?.invoice_by?.address != "null"
+                    ? this.edited_invoice?.invoice_by?.address
+                    : ""
+                }}
+                {{
+                  this.edited_invoice?.invoice_by?.city &&
+                  this.edited_invoice?.invoice_by?.city != "null"
+                    ? ", " + this.edited_invoice?.invoice_by?.city
+                    : ""
+                }}
+                {{
+                  this.edited_invoice?.invoice_by?.province &&
+                  this.edited_invoice?.invoice_by?.province != "null"
+                    ? ", " + this.edited_invoice?.invoice_by?.province
+                    : ""
+                }}
+                {{
+                  this.edited_invoice?.invoice_by?.post_code &&
+                  this.edited_invoice?.invoice_by?.post_code != "null"
+                    ? ", " + this.edited_invoice?.invoice_by?.post_code
+                    : ""
+                }}
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div
+            class="d-flex justify-content-between custom-padding17"
+            *ngIf="this.edited_invoice?.is_custom_bill == 'YES'"
+          >
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Business number
+              </div>
+              <div class="title-7">
+                {{ this.edited_invoice?.invoice_by_business_no }}
+              </div>
+            </div>
+            <div align="right">
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Work safety number
+              </div>
+              <div class="title-7">
+                {{ this.edited_invoice?.invoice_by_business_wsno }}
+              </div>
+            </div>
+          </div>
+          <div
+            class="d-flex justify-content-between custom-padding17"
+            *ngIf="this.edited_invoice?.is_custom_bill == 'NO'"
+          >
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Business number
+              </div>
+              <div class="title-7">
+                {{ this.edited_invoice?.invoice_by?.customer?.business_no }}
+              </div>
+            </div>
+            <div align="right">
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Work safety number
+              </div>
+              <div class="title-7">
+                {{ this.edited_invoice?.invoice_by?.customer?.wsbc_no }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-div2 mb-22">
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Trucking company
+              </div>
+              <div class="title-7">
+                <div *ngIf="edited_invoice?.invoice_for?.company_name">
+                  {{ edited_invoice?.invoice_for?.company_name }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Contact person
+              </div>
+              <div class="title-7">
+                <div>
+                  {{ edited_invoice?.invoice_for?.full_name }}
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div class="title-7 text-right">
+                <div *ngIf="edited_invoice?.invoice_for?.company_name">
+                  {{ edited_invoice?.invoice_for?.email }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Address
+              </div>
+              <div class="title-7">
+                <div>
+                  {{
+                    this.edited_invoice?.invoice_for?.address &&
+                    this.edited_invoice?.invoice_for?.address != "null"
+                      ? this.edited_invoice?.invoice_for?.address
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.city &&
+                    this.edited_invoice?.invoice_for?.city != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.city
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.province &&
+                    this.edited_invoice?.invoice_for?.province != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.province
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.post_code &&
+                    this.edited_invoice?.invoice_for?.post_code != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.post_code
+                      : ""
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between custom-padding18 mb-16">
+          <div>
+            <div class="title-5-new2 text-color-black-shade2 mb-7">
+              Invoicing period
+            </div>
+            <div class="title-7">
+              {{ this.edited_invoice?.invoice_period_type }}
+            </div>
+          </div>
+          <div>
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Dates
+            </div>
+            <div class="title-7 text-right">
+              {{ this.edited_invoice?.invoice_period_start }} :
+              {{ this.edited_invoice?.invoice_period_end }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px" *ngIf="this.edited_invoice?.hours">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Hours :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.edited_invoice?.hours }}
+              <!-- <span *ngIf="edited_invoice?.is_custom_bill == 'NO'">
+                at (${{ this.edited_invoice?.hours_rate }})
+              </span> -->
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px" *ngIf="this.edited_invoice?.rounds">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Rounds :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">{{ this.edited_invoice?.rounds }}</div>
+          </div>
+        </div>
+        <div class="row mb-4px">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Subtotal :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.edited_invoice?.subtotal | currency }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Tax ({{ this.gst?.type }}): {{ this.gst?.tax }}% :
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex"
+            style="flex-wrap: nowrap; justify-content: space-between"
+          >
+            <div class="title-7">
+              {{ this.edited_invoice?.tax_amount | currency }}
+            </div>
+
+            <div class="title-5-new2 text-color-black-shade2 text-right">
+              Due date :
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Total :
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex"
+            style="flex-wrap: nowrap; justify-content: space-between"
+          >
+            <div class="title-7">
+              {{ this.edited_invoice?.total | currency }}
+            </div>
+            <div class="title-7 text-right">
+              {{ this.edited_invoice?.invoice_due_date | date : "MMMM dd" }}
+            </div>
+          </div>
+        </div>
+        <div align="center" class="mb-16">
+          <div class="myhr3 width-132px mb-3px"></div>
+          <div class="myhr3 width-132px"></div>
+        </div>
+        <div class="mb-22">
+          <div class="d-flex">
+            <div class="title-5-new2 text-color-black-shade2 mb-6">
+              Your notes
+            </div>
+          </div>
+          <div class="position-relative">
+            <div class="p-3" style="border: 1px solid gray; border-radius: 4px">
+              {{ this.edited_invoice?.invoice_notes }}
+            </div>
+            <img
+              src="../../assets/icons/pencile.svg"
+              alt=""
+              class="top-right-icon"
+              width="17px"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4 col-6" align="center">
+            <div class="position-relative modal-div">
+              <button
+                class="mybtn2 mybtn-back-pink no-wrap"
+                (click)="downloadEditedInvoice()"
+                *ngIf="this.is_loading != 'download'"
+              >
+                Download
+              </button>
+              <button
+                class="mybtn2 mybtn-back-pink no-wrap"
+                *ngIf="this.is_loading == 'download'"
+              >
+                Processing...
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade come-from-modal right"
+  id="myModalDetail2"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body modal-body-padding">
+        <div class="d-flex justify-content-between align-items-center mb-42">
+          <div class="width-75px">
+            <div class="title-7-new text-color-black-shade5 mb-3px">
+              Invoice #
+            </div>
+            <div class="title-12 text-color-black-shade">
+              {{ edited_invoice?.invoice_no }}
+            </div>
+          </div>
+
+          <div class="border-div width-143px text-center p-1">
+            <div class="title-5-new2 text-color-black-shade5 mb-2px">
+              Invoice date
+            </div>
+            <div class="title-5-new3 text-color-black-shade6">
+              {{ edited_invoice?.invoice_date }}
+            </div>
+          </div>
+          <div>
+            <div class="title-6-2 m-0 mybtn-back-pink invoiced-div br-4">
+              Bill
+            </div>
+          </div>
+        </div>
+        <div class="border-div2 mb-15px">
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Vendor Name
+              </div>
+              <div class="title-7">
+                {{
+                  this.edited_invoice?.invoice_by.edited_invoice?.invoice_by
+                    ?.company_name
+                    ? this.edited_invoice?.invoice_by?.company_name
+                    : this.edited_invoice?.invoice_by?.full_name
+                }}
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div class="title-7 text-right">
+                {{ edited_invoice?.invoice_by?.email }}
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Address
+              </div>
+              <div class="title-7">
+                {{
+                  this.edited_invoice?.invoice_by?.customer &&
+                  this.edited_invoice?.invoice_by?.customer?.address &&
+                  this.edited_invoice?.invoice_by?.customer?.address != "null"
+                    ? this.edited_invoice?.invoice_by?.customer?.address
+                    : ""
+                }}
+                {{
+                  this.edited_invoice?.invoice_by?.customer &&
+                  this.edited_invoice?.invoice_by?.customer?.city &&
+                  this.edited_invoice?.invoice_by?.city != "null"
+                    ? ", " + this.edited_invoice?.invoice_by?.city
+                    : ""
+                }}
+                {{
+                  this.edited_invoice?.invoice_by?.customer &&
+                  this.edited_invoice?.invoice_by?.customer?.province &&
+                  this.edited_invoice?.invoice_by?.province != "null"
+                    ? ", " + this.edited_invoice?.invoice_by?.province
+                    : ""
+                }}
+                {{
+                  this.edited_invoice?.invoice_by?.post_code &&
+                  this.edited_invoice?.invoice_by?.post_code != "null"
+                    ? ", " + this.edited_invoice?.invoice_by?.post_code
+                    : ""
+                }}
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Business number
+              </div>
+              <div class="title-7">
+                {{ this.edited_invoice?.invoice_by?.customer?.business_no }}
+              </div>
+            </div>
+            <div align="right">
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Work safety number
+              </div>
+              <div class="title-7">
+                {{ this.edited_invoice?.invoice_by?.customer?.wsbc_no }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-div2 mb-16">
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Company
+              </div>
+              <div class="title-7">
+                <div *ngIf="edited_invoice?.invoice_for?.company_name">
+                  {{ edited_invoice?.invoice_for?.company_name }}
+                </div>
+              </div>
+            </div>
+            <div>
+              <!-- <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">Email address</div>
+                            <div class="title-7 text-right">
+                                <div *ngIf="edited_invoice?.invoice_for?.email">
+                                    {{edited_invoice?.invoice_for?.email}} 
+                                </div>
+                                
+                            </div> -->
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Contact person
+              </div>
+              <div class="title-7">
+                <div>
+                  {{ edited_invoice?.invoice_for?.full_name }}
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+                Email address
+              </div>
+              <div class="title-7 text-right">
+                <div *ngIf="edited_invoice?.invoice_for?.email">
+                  {{ edited_invoice?.invoice_for?.email }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="d-flex justify-content-between custom-padding17">
+            <div>
+              <div class="title-5-new2 text-color-black-shade2 mb-7">
+                Address
+              </div>
+              <div class="title-7">
+                <div>
+                  {{
+                    this.edited_invoice?.invoice_for?.address &&
+                    this.edited_invoice?.invoice_for?.address != "null"
+                      ? this.edited_invoice?.invoice_for?.address
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.city &&
+                    this.edited_invoice?.invoice_for?.city != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.city
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.province &&
+                    this.edited_invoice?.invoice_for?.province != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.province
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.post_code &&
+                    this.edited_invoice?.invoice_for?.post_code != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.post_code
+                      : ""
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between custom-padding18 mb-16">
+          <div>
+            <div class="title-5-new2 text-color-black-shade2 mb-7">
+              Invoicing period
+            </div>
+            <div class="title-7">
+              {{ this.edited_invoice?.invoice_period_type }}
+            </div>
+          </div>
+          <div>
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Dates
+            </div>
+            <div class="title-7 text-right">
+              {{ this.edited_invoice?.invoice_period_start | date : "MMMM d" }}
+              -
+              {{ this.edited_invoice?.invoice_period_end | date : "MMMM d, y" }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px" *ngIf="this.edited_invoice?.hours">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Hours :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.edited_invoice?.hours }}
+              <!-- at (${{
+                this.edited_invoice?.hours_rate
+              }}) -->
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px" *ngIf="this.edited_invoice?.rounds">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Rounds :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.edited_invoice?.rounds }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Subtotal :
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="title-7">
+              {{ this.edited_invoice?.subtotal | currency }}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4px">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Tax ({{ this.gst?.type }}): {{ this.gst?.tax }}% :
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex"
+            style="flex-wrap: nowrap; justify-content: space-between"
+          >
+            <div class="title-7">
+              {{ this.edited_invoice?.tax_amount | currency }}
+            </div>
+
+            <!-- <div class="title-5-new2 text-color-black-shade2  text-right">Due date :</div> -->
+          </div>
+        </div>
+        <div class="row mb-15px total-div">
+          <div class="col-md-6">
+            <div class="title-5-new2 text-color-black-shade2 mb-7 text-right">
+              Total :
+            </div>
+          </div>
+          <div
+            class="col-md-6 d-flex"
+            style="flex-wrap: nowrap; justify-content: space-between"
+          >
+            <div class="title-7 total-bold-text">
+              {{ this.edited_invoice?.total | currency }}
+            </div>
+          </div>
+        </div>
+        <!-- <div class="title-7  text-right">{{this.edited_invoice?.invoice_due_date | date:"MMMM dd"}}</div> -->
+
+        <div class="row mb-21">
+          <div class="col-md-6"></div>
+          <div class="col-md-6 pr-4">
+            <div class="title-5-new2 text-color-black-shade2 text-right">
+              Due date :
+            </div>
+            <div class="title-7 text-right">
+              {{ this.edited_invoice?.invoice_due_date | date : "MMMM dd" }}
+            </div>
+          </div>
+        </div>
+        <div class="mb-22">
+          <div class="position-relative notes-div">
+            <div class="title-5-new2 text-color-black-shade2 mb-6">
+              Your notes
+            </div>
+            <textarea
+              class="myinput5 myinput5-textarea"
+              placeholder="Type here"
+              readonly
+              rows="2"
+              >{{ this.edited_invoice?.invoice_notes }}</textarea
+            >
+            <!-- <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px"> -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="position-relative modal-div" align="center">
+              <button
+                class="mybtn2 mybtn-back-pink no-wrap send-invoice-btn"
+                (click)="downloadEditedInvoice()"
+                *ngIf="this.is_loading != 'download'"
+              >
+                Download
+              </button>
+              <button
+                class="mybtn2 mybtn-back-pink no-wrap send-invoice-btn"
+                *ngIf="this.is_loading == 'download'"
+              >
+                Processing...
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

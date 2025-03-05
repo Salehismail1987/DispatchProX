@@ -1,0 +1,115 @@
+<div class="header-bar bg-white" *ngIf="is_dashboard">
+    <div>
+        <div class="title-1 text-black-shade ">Welcome {{this.loggedinUser.full_name}} 👋🏽</div>
+        <div class="title-2 text-black-shade2">{{this.header_text}}</div>
+    </div>
+    <img *ngIf="this.notifications && this.notifications.length>0" src='assets/driver-images-mobile/red-circle.svg' style='position: absolute;
+        right: 23px;
+        margin-top: -22px;' data-toggle="modal" data-target="#headerDriverMenuPopup" />
+    <img src="assets/images/driver-profile.png" class="w-50px" *ngIf="!this.loggedinUser.profile_image || this.loggedinUser.profile_image  == ''"  data-toggle="modal" data-target="#headerDriverMenuPopup">
+    <img  class="w-50px" [src]="backendAPIURL+this.loggedinUser.profile_image" *ngIf="this.loggedinUser.profile_image  && this.loggedinUser.profile_image  !== null && this.loggedinUser.profile_image  != ''"  data-toggle="modal" data-target="#headerDriverMenuPopup">
+</div>
+
+<div class="header-bar header-bar2 bg-white"  *ngIf="!is_dashboard">
+    <div [routerLink]="'/dashboard'">
+        <img src="../assets/driver-images-mobile/arrow-back.svg" alt="">
+    </div>
+    <div>
+        <div class="title-6">{{this.header_text}}</div>
+    </div>
+    <div data-toggle="modal" data-target="#headerDriverMenuPopup">
+        <img *ngIf="this.notifications && this.notifications.length>0" src='assets/driver-images-mobile/red-circle.svg' style='position: absolute;
+        right: 23px;
+        margin-top: -4px;' />
+        <img src="assets/images/driver-profile.png" class="w-50px" *ngIf="!this.loggedinUser.profile_image || this.loggedinUser.profile_image  == ''" >
+        <img  class="w-50px" [src]="backendAPIURL+this.loggedinUser.profile_image" *ngIf="this.loggedinUser.profile_image  && this.loggedinUser.profile_image  !== null && this.loggedinUser.profile_image  != ''" >
+
+    </div>
+</div>
+ <!-- User menu modals  -->
+ <div class="user-menu-modals-container">
+    <!-- Profile logo menu Updated for ios -->
+    <div class="tragget-header-menu-modal ">
+    <div class="modal fade pr-0 top-0px" id="headerDriverMenuPopup" tabindex="-1" role="dialog" aria-labelledby="headerDriverMenuPopup" aria-hidden="true" >
+      <div class="modal-dialog modal-dialog-scrollable custom-modal-dialog m-0" style="height:max-content;">
+        <div class="modal-content  custom-modal-content border-none">
+            <div class="modal-body form-body">
+                <div class="mb-10">
+                    <img src="assets/mobile-images/mobile-menu-logo.svg" class="nav-single cursor-pointer" [routerLink]="'/dashboard'" width="120px" >
+                </div>
+                <div class="d-flex flex-column  ">
+                  <div
+                    [routerLink]="'/driver-notifications-list'"
+                     class="sub-menu-single-item nav-single cursor-pointer d-flex justify-content-between align-items-center"
+                   >
+                    <div class="d-flex align-items-center ">
+                        <img
+                        src="assets/mobile-images/notification-icon.svg"
+                        class="sub-menu-item-img img-fluid user-menu-item-img"
+                        alt="notification-icon"
+                        />
+                        <div class="menu-item-heading text-color-grey ml-4"> Notification </div>
+                    </div>
+                     <div  class="notification-greater-than-zero sh_not" *ngIf="this.notifications && this.notifications.length>0"></div>
+                   </div>
+                   <div
+                   [routerLink]="'/driver-edit-profile'"
+                     class="sub-menu-single-item nav-single cursor-pointer d-flex justify-content-between align-items-center"
+                   >
+                   <div class="d-flex align-items-center ">
+                        <img
+                            src="assets/mobile-images/edit-profile-icon.svg"
+                            class="sub-menu-item-img img-fluid user-menu-item-img"
+                            alt="edit-profile-icon"
+                        />
+                        <div class="menu-item-heading text-color-grey ml-4">
+                            Profile
+                        </div>
+                   </div>
+                    
+                     <div></div>
+                   </div>
+                   <div
+                     class="sub-menu-single-item d-flex   nav-single cursor-pointer justify-content-between align-items-center "
+                     [routerLink]="'/driver-change-password'"
+                     
+                   >
+                    <div class="d-flex align-items-center ">
+                        <img
+                        src="assets/mobile-images/change-password-icon.svg"
+                        class="sub-menu-item-img img-fluid user-menu-item-img "
+                        alt="change-password-icon"
+                        />
+                        <div class="menu-item-heading text-color-grey ml-4">
+                        Change password
+                        </div>
+                     </div>
+                     <div></div>
+                   </div>
+                   <div
+                   class="sub-menu-single-item d-flex   nav-single cursor-pointer justify-content-between align-items-center bg-pink mb-0px"
+                   (click)="logout()"
+                   
+                 >
+                  <div class="d-flex align-items-center " >
+                      <img
+                      src="assets/mobile-images/logout-dark-icon.svg"
+                      class="sub-menu-item-img img-fluid user-menu-item-img "
+                      alt="change-password-icon"
+                      />
+                      <div class="menu-item-heading  ml-4 text-black">
+                        Log out
+                      </div>
+                   </div>
+                   <div></div>
+                 </div>
+                 
+                 </div>
+              </div>
+        </div>
+      </div>
+              
+    </div>
+  
+    </div>
+</div>

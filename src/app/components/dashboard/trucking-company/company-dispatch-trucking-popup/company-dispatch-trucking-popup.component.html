@@ -1,0 +1,1290 @@
+<div
+  class="modal fade come-from-modal right"
+  *ngIf="!this.is_dispatched"
+  id="myModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div
+      class="modal-content"
+      style="
+        height: fit-content;
+        top: 6%;
+        max-height: 90%;
+        bottom: 5%;
+        border-radius: 10px 0px 0px 10px;
+      "
+    >
+      <div class="modal-body modal-body2">
+        <div>
+          <a
+            class="float-right"
+            style="position: absolute; top: 10px; right: 10px"
+            ><img
+              style="cursor: pointer"
+              data-dismiss="modal"
+              src="assets/icons/cross-box.svg"
+              (click)="tc_disp_error()"
+          /></a>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="dashboard-title">Dispatch to vendor</div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="sec_heading">{{ this.request_project_name }}</div>
+        </div>
+
+        <div class="tab-content" id="nav-tabContent">
+          <form
+            [formGroup]="this.dispatchForm"
+            (ngSubmit)="onTCDispatch()"
+            enctype="multipart/form-data"
+          >
+            <div class="pl-2 pr-2">
+              <br />
+              <div class="row">
+                <div class="col-md-12 px-2">
+                  <span
+                    class="text-danger"
+                    *ngIf="this.errorTruckingComp != ''"
+                    >{{ this.errorTruckingComp }}</span
+                  >
+                  <label class="field text-field">
+                    <select
+                      class="field__input icon-none border_bluee"
+                      formControlName="trucking_company_id"
+                    >
+                      <ng-container
+                        *ngFor="let company of this.trucking_companies"
+                      >
+                        <option
+                          [value]="company.id"
+                          *ngIf="company.id != this.user_id"
+                        >
+                          {{ company.company_name }}
+                        </option>
+                      </ng-container>
+                    </select>
+                    <i
+                      class="fa fa-caret-down input-icon-right"
+                      aria-hidden="true"
+                    ></i>
+                    <span class="field__label-wrap">
+                      <span class="field__label">Select trucking company</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 px-2">
+                  <label class="field text-field">
+                    <div
+                      class="field__input bg-light-grey pt-27px pl-3"
+                      style="height: 55px"
+                    >
+                      {{ this.selected_tickets }}
+                    </div>
+                    <span class="field__label-wrap">
+                      <span class="field__label pl-2">#</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-5 px-2">
+                  <ng-container formArrayName="ticket_truck_types">
+                    <ng-container
+                      *ngFor="
+                        let formItem of ticket_truck_types.controls;
+                        let idx = index
+                      "
+                    >
+                      <ng-container [formGroupName]="idx" *ngIf="idx == 0">
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            formedClicked2 &&
+                            this.is_tc_form_error &&
+                            formItem.get('truck_names')?.value == ''
+                          "
+                          >Truck Name is required</span
+                        >
+                        <label class="field text-field">
+                          <input type="hidden" formControlName="old_rates" />
+                          <input
+                            class="field__input"
+                            placeholder="Tandem"
+                            formControlName="truck_ids"
+                            [(ngModel)]="
+                              this.truck_types[idx].ticket_truck_type_id
+                                ? this.truck_types[idx].ticket_truck_type_id
+                                : this.truck_types[idx].ticket_truck_type
+                            "
+                            type="hidden"
+                          />
+                          <input
+                            class="field__input bg-light-grey"
+                            placeholder="Tandem"
+                            formControlName="truck_names"
+                            readonly
+                            [ngModel]="getName(this.truck_types[idx])"
+                            type="text"
+                            style="height: 55px"
+                          />
+                          <span class="field__label-wrap">
+                            <span class="field__label">Truck</span>
+                          </span>
+                        </label>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </div>
+                <div class="col-md-5 px-2">
+                  <span class="text-danger" *ngIf="this.errorDate != ''">{{
+                    this.errorDate
+                  }}</span>
+
+                  <label class="field text-field">
+                    <input
+                      class="field__input bg-light-grey"
+                      placeholder=""
+                      [(ngModel)]="this.todayDate"
+                      readonly="true"
+                      formControlName="dispatch_date"
+                      type="date"
+                      style="height: 55px"
+                    />
+                    <span class="field__label-wrap">
+                      <span class="field__label">Date</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="row" *ngIf="rateError">
+                <div class="col-md-12 text-danger">
+                  {{ this.rateError }}
+                </div>
+              </div>
+              <ng-container formArrayName="ticket_truck_types">
+                <ng-container
+                  *ngFor="
+                    let formItem of ticket_truck_types.controls;
+                    let idx = index
+                  "
+                >
+                  <ng-container [formGroupName]="idx">
+                    <div class="row">
+                      <div class="col-md-6 px-2">
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            formedClicked2 &&
+                            this.is_tc_form_error &&
+                            formItem.get('rates')?.value == ''
+                          "
+                          >Rate is required</span
+                        >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            formedClicked2 &&
+                            this.is_tc_form_error &&
+                            formItem.get('rates')?.invalid &&
+                            formItem.get('rates')?.hasError('pattern')
+                          "
+                          >Rate is invalid</span
+                        >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            formedClicked2 &&
+                            this.is_tc_form_error &&
+                            !formItem.get('rates')?.invalid &&
+                            !formItem.get('rates')?.hasError('pattern') &&
+                            formItem.get('rates')?.value != '' &&
+                            this.error[idx] &&
+                            this.error[idx] != ''
+                          "
+                          >{{ this.error[idx] }}
+                        </span>
+                        <div
+                          class="border-rate d-flex border_bluee"
+                          style="
+                            flex-direction: row;
+                            flex-wrap: nowrap;
+                            justify-content: space-between;
+                            align-items: center;
+                            max-width: 152px;
+                          "
+                        >
+                          <div
+                            class="col-12 px-0"
+                            style="height: 55px; text-align: center"
+                          >
+                            <label
+                              class="field text-field mb-1 required_fieldd"
+                            >
+                              <span class="field__label-wrap">
+                                <span
+                                  class="field__label"
+                                  style="
+                                    font-size: 13px !important;
+                                    font-family: 'Gilroy';
+                                    color: rgba(104, 105, 109, 1) !important;
+                                  "
+                                >
+                                  $/{{
+                                    this.truck_types[idx]
+                                      .trucking_company_request.rate_type ==
+                                    "hour"
+                                      ? "hr"
+                                      : this.truck_types[idx]
+                                          .trucking_company_request.rate_type ==
+                                        "round"
+                                      ? "round"
+                                      : "hr"
+                                  }}
+                                  rate you pay
+                                </span>
+                              </span>
+                            </label>
+                            <input
+                              class="text-center"
+                              style="
+                                margin-left: 0.5rem;
+                                font-family: Gilroy-SemiBold;
+                                font-size: 13px;
+                                line-height: 15px;
+                                color: #272525;
+                                border: 1px solid rgba(202, 234, 255, 1) !important;
+                                padding: 1px;
+                                border-radius: 5px;
+                                width: max-content;
+                                max-width: 80px;
+                                height: 34px;
+                              "
+                              placeholder="$___.__"
+                              formControlName="rates"
+                              type="text"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 px-2">
+                        <div
+                          style="
+                            width: 100%;
+                            border: 1x solid;
+                            border: 1px solid rgba(225, 225, 225, 1);
+                            background: #d9d9d946 !important;
+                            border-radius: 5px;
+                            padding-right: 0px !important;
+                            height: 55px;
+                          "
+                        >
+                          <div
+                            class="text-center pb-1"
+                            style="
+                              color: rgba(104, 105, 109, 1);
+                              font-size: 13px;
+                              font-family: 'Gilroy';
+                            "
+                          >
+                            Your rate
+                          </div>
+                          <div
+                            class="text-center"
+                            style="
+                              color: rgba(40, 45, 64, 1);
+                              font-family: 'Gilroy-Bold';
+                              font-size: 16px;
+                            "
+                          >
+                            / (${{
+                              this.truck_types[idx].trucking_company_request
+                                .rate_per_hour
+                            }})
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+              <input
+                type="hidden"
+                formControlName="selected_tickets"
+                [(ngModel)]="this.selected_items"
+              />
+              <input
+                type="hidden"
+                formControlName="user_id"
+                [(ngModel)]="this.user_id"
+              />
+              <div align="center" class="mb-5">
+                <button
+                  class="mybtn mybtn-back-blue text-white width-fit-content"
+                  type="submit"
+                  *ngIf="!this.is_loading_tc"
+                >
+                  Dispatch [{{ this.selected_tickets }}] at rate ${{
+                    this.total_rates.toFixed(2)
+                  }}
+                </button>
+                <button
+                  class="mybtn mybtn-back-blue text-white width-fit-content"
+                  type="button"
+                  *ngIf="this.is_loading_tc"
+                  disabled
+                >
+                  Dispatching..
+                </button>
+              </div>
+              <div align="center">
+                <div>
+                  <div class="dashboard-title">No vendors?</div>
+                </div>
+
+                <div class="decline_div" *ngIf="this.show_reason_modal">
+                  <div align="left" class="declining-label">
+                    Reason for declining [{{ this.selected_tickets }}]
+                  </div>
+                  <div class="required_fieldd2">*</div>
+                  <div
+                    class="agreement-div mt-2 mb-2"
+                    *ngIf="this.show_reason_modal"
+                  >
+                    <img
+                      _ngcontent-rje-c108
+                      data-target="#changeAddress"
+                      data-toggle="modal"
+                      src="../../assets/icons/pencile.svg"
+                      alt
+                      width="17px"
+                      class="top-right-icon22 cursor-pointer"
+                      style="position: absolute; right: 33px; margin-top: 13px"
+                    />
+                    <textarea
+                      rows="1"
+                      (input)="setReason($event)"
+                      class="form-control no-resize"
+                      placeholder="Type here"
+                      style="height: 52px !important"
+                      >{{ this.reason_decling }}</textarea
+                    >
+                  </div>
+                </div>
+
+                <div class="col-md-12" *ngIf="this.show_reason_modal">
+                  <button
+                    class="mybtn mybtn-decline width-fit-content"
+                    (click)="declineTicketHandler()"
+                    *ngIf="!this.is_decline_loading"
+                  >
+                    Decline [{{ this.selected_tickets }}] tickets
+                  </button>
+
+                  <button
+                    type="button"
+                    *ngIf="this.is_decline_loading"
+                    style="width: max-content"
+                    class="btn-back gotosignup mybtn mybtn-decline"
+                    disabled
+                  >
+                    Processing...
+                  </button>
+                </div>
+
+                <button
+                  class="mybtn mybtn-decline width-fit-content"
+                  (click)="declineTicketHandler()"
+                  *ngIf="!this.is_decline_loading && !this.show_reason_modal"
+                >
+                  Decline [{{ this.selected_tickets }}] tickets
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade come-from-modal right"
+  *ngIf="!this.is_dispatched"
+  id="myModal2"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div
+      class="modal-content"
+      style="
+        height: fit-content;
+        top: 10%;
+        max-height: 85%;
+        bottom: 5%;
+        border-radius: 10px 0px 0px 10px;
+      "
+    >
+      <div class="modal-body">
+        <!-- <div>
+                    <a class="float-right" style="position:absolute;top:10px;right:10px"><img style="cursor:pointer" data-dismiss="modal" src="assets/icons/cross-box.svg"/></a>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="dashboard-title">Assign drivers</div>
+                    </div>
+
+                </div> -->
+        <div>
+          <a
+            class="float-right"
+            style="position: absolute; top: 10px; right: 10px"
+            ><img
+              style="cursor: pointer"
+              data-dismiss="modal"
+              src="assets/icons/cross-box.svg"
+              (click)="driver_disp_error()"
+          /></a>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="dashboard-title">Assign drivers</div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="sec_heading">{{ this.request_project_name }}</div>
+        </div>
+        <br />
+
+        <div class="tab-content pl-2 pr-2" id="nav-tabContent ">
+          <span class="text-danger" *ngIf="this.driver_message != ''">{{
+            this.driver_message
+          }}</span>
+          <form
+            [formGroup]="this.dispatchDriverForm"
+            enctype="multipart/form-data"
+          >
+            <input
+              type="hidden"
+              formControlName="trucking_company_id"
+              [(ngModel)]="this.user_id"
+            />
+            <input
+              type="hidden"
+              formControlName="user_id"
+              [(ngModel)]="this.user_id"
+            />
+
+            <ng-container formArrayName="driver_tickets">
+              <ng-container
+                *ngFor="
+                  let formItem of driver_tickets.controls;
+                  let idx = index
+                "
+              >
+                <ng-container [formGroupName]="idx">
+                  <div class="row border-blue-div pt-2 p-1 mb-3">
+                    <div class="col-md-4 pl-3px pr-3px">
+                      <label
+                        [class]="
+                          formItem.get('rates')?.value != '' &&
+                          formItem.get('driver_id')?.value != '' &&
+                          formItem.get('truck_id')?.value != '' &&
+                          (((this.selected_ticket_list[idx]
+                            ?.ticket_trailer_type ||
+                            this.selected_ticket_list[idx]?.ticket_truck_type
+                              ?.project_trailer_id) &&
+                            formItem.get('trailer_id')?.value != '') ||
+                            (!this.selected_ticket_list[idx]
+                              ?.ticket_trailer_type &&
+                              !this.selected_ticket_list[idx]?.ticket_truck_type
+                                ?.project_trailer_id))
+                            ? 'driver-selected field text-field'
+                            : ' field text-field '
+                        "
+                      >
+                        <div
+                          style="border: 1px solid rgb(255 255 255)"
+                          [class]="
+                            formItem.get('rates')?.value != '' &&
+                            formItem.get('driver_id')?.value != '' &&
+                            formItem.get('truck_id')?.value != '' &&
+                            (((this.selected_ticket_list[idx]
+                              ?.ticket_trailer_type ||
+                              this.selected_ticket_list[idx]?.ticket_truck_type
+                                ?.project_trailer_id) &&
+                              formItem.get('trailer_id')?.value != '') ||
+                              (!this.selected_ticket_list[idx]
+                                ?.ticket_trailer_type &&
+                                !this.selected_ticket_list[idx]
+                                  ?.ticket_truck_type?.project_trailer_id))
+                              ? 'driver-selected field__input  pt-27px '
+                              : ' field__input  pt-27px'
+                          "
+                        >
+                          {{ formItem.get("ticket_no")?.value }}
+                        </div>
+                        <span class="field__label-wrap">
+                          <span
+                            class=""
+                            [class]="
+                              formItem.get('rates')?.value != '' &&
+                              formItem.get('driver_id')?.value != '' &&
+                              formItem.get('truck_id')?.value != '' &&
+                              (((this.selected_ticket_list[idx]
+                                ?.ticket_trailer_type ||
+                                this.selected_ticket_list[idx]
+                                  ?.ticket_truck_type?.project_trailer_id) &&
+                                formItem.get('trailer_id')?.value != '') ||
+                                (!this.selected_ticket_list[idx]
+                                  ?.ticket_trailer_type &&
+                                  !this.selected_ticket_list[idx]
+                                    ?.ticket_truck_type?.project_trailer_id))
+                                ? 'driver-selected field__label '
+                                : ' field__label '
+                            "
+                            >Ticket ID</span
+                          >
+                        </span>
+                      </label>
+                    </div>
+                    <div class="col-md-4 pl-3px pr-3px">
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          formedClicked &&
+                          this.is_driver_form_error &&
+                          formItem.get('driver_id')?.value == ''
+                        "
+                        >Driver is required</span
+                      >
+                      <div class="input-div2 getinputfield border_none">
+                        <div class="desc-5 text-color-grey text-left mb-5px">
+                          Assign driver
+                        </div>
+                        <span class="reqfi">*</span>
+                        <input type="hidden" formControlName="driver_id" />
+                        <div
+                          class="title-16 myinput4 input-date border_bluee driver_sel2"
+                          *ngIf="formItem.get('driver')?.value"
+                        >
+                          {{ formItem.get("driver")?.value?.full_name }}
+                        </div>
+                        <div
+                          class="title-16 myinput4 input-date border_bluee driver_sel"
+                          *ngIf="!formItem.get('driver')?.value"
+                        >
+                          Select
+                        </div>
+                        <img
+                          src="../../assets/icons/arrow-downn.svg"
+                          class="icon-center-right2 top35"
+                        />
+                        <div class="input-popup-div driver-div cp-9">
+                          <div
+                            class="desc-5 text-black-shade3 mb-3px p-7p-label"
+                          >
+                            Select Driver
+                          </div>
+
+                          <ng-container
+                            *ngFor="let driver of this.drivers_list"
+                          >
+                            <div
+                              class="d-flex justify-content-between mb-9"
+                              *ngIf="
+                                getDriverAvailable(idx, driver) &&
+                                  (checkAvailable('driver', driver, idx) ||
+                                    formItem.get('driver_id')?.value ==
+                                      driver.id);
+                                else elseDriver
+                              "
+                            >
+                              <div
+                                [class]="
+                                  formItem.get('driver_id')?.value == driver.id
+                                    ? 'title-7 p-7p  text-black-shade3'
+                                    : 'title-7 p-7p text-color-grey'
+                                "
+                                (click)="
+                                  setDriver(
+                                    idx,
+                                    driver,
+                                    formItem.get('ticket_id')?.value
+                                  )
+                                "
+                              >
+                                {{ driver.full_name }}
+                              </div>
+                            </div>
+                            <ng-template #elseDriver>
+                              <div class="p-7p-disabled text-color-grey">
+                                {{ driver.full_name }}-
+                                <ng-container
+                                  *ngFor="let ava of this.driver_availability"
+                                >
+                                  <ng-container
+                                    *ngIf="
+                                      ava.driver_id == driver?.id &&
+                                      ava.ticket_id ==
+                                        formItem.get('ticket_id')?.value
+                                    "
+                                  >
+                                    {{
+                                      ava?.current_job
+                                        ? ava?.current_job?.ticket_no
+                                        : ""
+                                    }}
+                                  </ng-container>
+                                </ng-container>
+                              </div>
+                            </ng-template>
+                          </ng-container>
+                        </div>
+                      </div>
+                      <!-- <label class="field text-field">
+                                            <select class="field__input" (change)="setDriver(idx,$event,formItem.get('ticket_id')?.value)" formControlName="driver_id"  >
+                                                <option value="">Select</option>
+                                                <option *ngFor="let driver of this.drivers_list"   [value]="driver.id">
+                                                    {{driver.full_name}}
+                                                </option>
+                                            </select>
+                                            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                            <span class="field__label-wrap">
+                                                <span class="field__label">Select driver</span>
+                                            </span>
+                                        </label> -->
+                    </div>
+                    <div class="col-md-4 pr-3px pl-3px mb-1">
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          formedClicked &&
+                          (formItem.get('rates')?.value == '' ||
+                            formItem.get('rates')?.value == null)
+                        "
+                        >Rate is required</span
+                      >
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          formedClicked &&
+                          formItem.get('rates')?.invalid &&
+                          formItem.get('rates')?.hasError('pattern')
+                        "
+                        >Rate is invalid</span
+                      >
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          formedClicked &&
+                          formItem.get('rates')?.value != '' &&
+                          formItem.get('rates')?.value != null &&
+                          formItem.get('rates')?.errors &&
+                          formItem.get('rates')?.hasError('max')
+                        "
+                        >Driver rate cannot be more than
+                        {{
+                          formItem.get("ticket_rate")?.value
+                            ? formItem.get("ticket_rate")?.value
+                            : " ticket rate"
+                        }}</span
+                      >
+                      <label class="field text-field">
+                        <span class="field__label-wrap">
+                          <span class="field__label descc_5"
+                            >$/hr rate for driver</span
+                          >
+                          <span class="reqfie">*</span>
+                        </span>
+                      </label>
+
+                      <input
+                        (input)="rateChange($event, idx)"
+                        class="ng-pristine ng-invalid ng-touched text-center driver_sel2 ml-0"
+                        style="
+                          font-family: Gilroy-SemiBold;
+                          font-size: 13px;
+                          line-height: 15px;
+                          color: #272525;
+                          border: 1px solid rgba(202, 234, 255, 1);
+                          padding: 1px;
+                          border-radius: 5px;
+                          width: 80px;
+                          max-width: 100px;
+                          height: 34px;
+                          margin-left: 12px;
+                        "
+                        placeholder="$___.__"
+                        formControlName="rates"
+                        [readonly]="
+                          formItem.get('driver')?.value &&
+                          (formItem.get('driver')?.value?.role_id == 6 ||
+                            formItem.get('driver')?.value?.role_id == '6')
+                        "
+                        type="text"
+                      />
+
+                      <span
+                        align="right"
+                        style="float: right; margin-right: 10px"
+                        class="driver_sel2 pl-0 mr-0"
+                      >
+                        {{ formItem.get("perc")?.value }}%
+                      </span>
+                    </div>
+                    <div class="col-md-6 pl-3px pr-3px">
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          formedClicked &&
+                          this.is_driver_form_error &&
+                          formItem.get('truck_id')?.value == ''
+                        "
+                        >Truck is required</span
+                      >
+
+                      <div class="input-div2 getinputfield border_none">
+                        <div class="desc-5 text-color-grey text-left mb-5px">
+                          Set truck
+                        </div>
+                        <span class="reqfi">*</span>
+                        <input type="hidden" formControlName="truck_id" />
+                        <div
+                          class="title-16 myinput4 input-date border_bluee driver_sel2"
+                          *ngIf="formItem.get('truck')?.value"
+                        >
+                          {{ formItem.get("truck")?.value?.truck_nickname }}
+                        </div>
+                        <div
+                          class="title-16 myinput4 input-date border_bluee driver_sel"
+                          *ngIf="!formItem.get('truck_id')?.value"
+                        >
+                          Select
+                        </div>
+                        <img
+                          src="../../assets/icons/arrow-downn.svg"
+                          class="icon-center-right2 top35"
+                        />
+                        <div class="input-popup-div truck-div cp-9">
+                          <div
+                            class="desc-5 text-black-shade3 mb-3px p-7p-label"
+                          >
+                            Select
+                            {{
+                              formItem.get("ticket_truck_type")?.value
+                                ? formItem.get("ticket_truck_type")?.value
+                                : "Truck"
+                            }}
+                          </div>
+
+                          <ng-container *ngFor="let truck of this.trucks_list">
+                            <ng-container
+                              *ngIf="
+                                truck?.truck_type ==
+                                formItem.get('ticket_truck_type')?.value
+                              "
+                            >
+                              <!--  -->
+                              <div
+                                class="d-flex justify-content-between mb-9"
+                                *ngIf="
+                                  getTruckAvailable(idx, truck) &&
+                                    (checkAvailable('truck', truck, idx) ||
+                                      formItem.get('truck_id')?.value ==
+                                        truck.id);
+                                  else elseTruck
+                                "
+                              >
+                                <div
+                                  [class]="
+                                    formItem.get('truck_id')?.value == truck.id
+                                      ? 'title-7 p-7p  text-black-shade3'
+                                      : 'title-7 p-7p text-color-grey'
+                                  "
+                                  (click)="
+                                    setTruck(
+                                      idx,
+                                      truck,
+                                      formItem.get('ticket_id')?.value
+                                    )
+                                  "
+                                >
+                                  {{ truck.truck_nickname }}
+                                </div>
+                              </div>
+                              <ng-template #elseTruck>
+                                <div class="p-7p-disabled text-color-grey">
+                                  {{ truck.truck_nickname }}-
+                                  <ng-container
+                                    *ngFor="let ava of this.truck_availability"
+                                  >
+                                    <ng-container
+                                      *ngIf="
+                                        ava.truck_id == truck?.id &&
+                                        ava.ticket_id ==
+                                          formItem.get('ticket_id')?.value
+                                      "
+                                    >
+                                      {{
+                                        ava?.current_job
+                                          ? ava?.current_job?.ticket_no
+                                          : ""
+                                      }}
+                                    </ng-container>
+                                  </ng-container>
+                                </div>
+                              </ng-template>
+                            </ng-container>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6 pr-3px pl-3px">
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          formedClicked &&
+                          this.error_trailer[idx] &&
+                          this.error_trailer[idx] != ''
+                        "
+                        >Trailer is required</span
+                      >
+
+                      <span
+                        *ngIf="
+                          this.selected_ticket_list[idx]?.ticket_truck_type
+                            ?.project_trailer_id ||
+                          this.selected_ticket_list[idx]?.ticket_trailer_type
+                        "
+                      >
+                        <div class="input-div2 getinputfield border_none">
+                          <div class="desc-5 text-color-grey text-left mb-5px">
+                            Set trailer
+                          </div>
+                          <span class="reqfi">*</span>
+                          <input type="hidden" formControlName="trailer_id" />
+                          <div
+                            class="title-16 myinput4 input-date border_bluee driver_sel2"
+                            *ngIf="formItem.get('trailer')?.value"
+                          >
+                            {{
+                              formItem.get("trailer")?.value?.trailer_nickname
+                            }}
+                          </div>
+                          <div
+                            class="title-16 myinput4 input-date border_bluee driver_sel"
+                            *ngIf="!formItem.get('trailer_id')?.value"
+                          >
+                            Select
+                          </div>
+                          <img
+                            src="../../assets/icons/arrow-downn.svg"
+                            class="icon-center-right2 top35"
+                          />
+                          <div class="input-popup-div trailer-div cp-9">
+                            <div
+                              class="desc-5 text-black-shade3 mb-3px p-7p-label"
+                            >
+                              Select
+                              {{
+                                formItem.get("ticket_trailer_type")?.value
+                                  ? formItem.get("ticket_trailer_type")?.value
+                                  : "Trailer"
+                              }}
+                            </div>
+
+                            <ng-container
+                              *ngFor="let trailer of this.trailers_list"
+                            >
+                              <ng-container
+                                *ngIf="
+                                  trailer?.trailer_type ==
+                                  formItem.get('ticket_trailer_type')?.value
+                                "
+                              >
+                                <div
+                                  class="d-flex justify-content-between mb-9"
+                                  *ngIf="
+                                    getTrailerAvailable(idx, trailer) &&
+                                      (checkAvailable(
+                                        'trailer',
+                                        trailer,
+                                        idx
+                                      ) ||
+                                        formItem.get('trailer_id')?.value ==
+                                          trailer.id);
+                                    else elseTrailer
+                                  "
+                                >
+                                  <div
+                                    [class]="
+                                      formItem.get('trailer_id')?.value ==
+                                      trailer.id
+                                        ? 'title-7 p-7p  text-black-shade3'
+                                        : 'title-7 p-7p text-color-grey'
+                                    "
+                                    (click)="
+                                      setTrailer(
+                                        idx,
+                                        trailer,
+                                        formItem.get('ticket_id')?.value
+                                      )
+                                    "
+                                  >
+                                    {{ trailer.trailer_nickname }}
+                                  </div>
+                                </div>
+                              </ng-container>
+                              <ng-template #elseTrailer>
+                                <div class="p-7p-disabled text-color-grey">
+                                  {{ trailer.trailer_nickname }}-
+                                  <ng-container
+                                    *ngFor="
+                                      let ava of this.trailer_availability
+                                    "
+                                  >
+                                    <ng-container
+                                      *ngIf="
+                                        ava.trailer_id == trailer?.id &&
+                                        ava.ticket_id ==
+                                          formItem.get('ticket_id')?.value
+                                      "
+                                    >
+                                      {{
+                                        ava?.current_job
+                                          ? ava?.current_job?.ticket_no
+                                          : ""
+                                      }}
+                                    </ng-container>
+                                  </ng-container>
+                                </div>
+                              </ng-template>
+                            </ng-container>
+                            <!-- <ng-container *ngFor="let trailer of this.trailers_list">
+                                                        <ng-container *ngIf="trailer?.trailer_type==formItem.get('ticket_trailer_type')?.value">
+                                                            <div class="d-flex justify-content-between  mb-9" *ngIf="trailer.is_available=='NO'">
+                                                                <div class='p-7p-disabled text-color-grey' >{{trailer.trailer_nickname}}-{{trailer?.current_job? trailer?.current_job?.ticket?.ticket_no:''}}</div>
+
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container> -->
+                          </div>
+                        </div>
+                      </span>
+
+                      <!-- <label class="field text-field" *ngIf="!this.selected_ticket_list[idx]?.ticket_trailer_type && !this.selected_ticket_list[idx]?.ticket_truck_type?.project_trailer_id">
+                                            <input class="field__input" type="hidden" formControlName="trailer_id" value="">
+                                            <select class="field__input" disabled="disabled" >
+                                                <option value="">No Trailer</option>
+                                            </select>
+                                            <span class="field__label-wrap">
+                                                <span class="field__label">Select trailer</span>
+                                            </span>
+                                        </label> -->
+
+                      <span
+                        *ngIf="
+                          !this.selected_ticket_list[idx]
+                            ?.ticket_trailer_type &&
+                          !this.selected_ticket_list[idx]?.ticket_truck_type
+                            ?.project_trailer_id
+                        "
+                      >
+                        <div class="input-div2 getinputfield border_none">
+                          <div class="desc-5 text-color-grey text-left mb-5px">
+                            Set trailer
+                          </div>
+                          <input type="hidden" />
+                          <div
+                            class="title-16 myinput4 input-date border_geryy driver_sel"
+                          >
+                            None
+                          </div>
+                          <img
+                            src="../../assets/icons/arrow-downn_dis.svg"
+                            class="icon-center-right2 icon-center-right3 top35"
+                          />
+                        </div>
+                      </span>
+                    </div>
+                    <!-- <div class="col-md-4 pr-3px pl-3px">
+                                        <div class="d-flex-ca p-1 border-div-time">
+                                            <div class="">
+                                                <span class="label-time">
+                                                    Date
+                                                </span>
+
+                                                <br/>
+                                                <span class="value-time"  >
+                                                    <span *ngIf="formItem.get('ticket')?.value">
+                                                        {{formItem.get('ticket')?.value?.ticket_date | date:'MMM d'}}
+                                                    </span>
+                                                </span>
+
+                                            </div>
+                                            <div  class="text-right">
+                                                <span class="label-time">
+                                                    Time
+                                                </span>
+
+                                                <br>
+                                                <span class="value-time"  >
+                                                    <span *ngIf="formItem.get('ticket')?.value">
+                                                        {{formItem.get('ticket')?.value?.ticket_time}}
+                                                    </span>
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                    </div> -->
+                    <input
+                      type="hidden"
+                      formControlName="ticket_id"
+                      (ngModel)="(this.selected_items[idx]?.id)"
+                    />
+                  </div>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+
+            <br />
+            <div align="center" class="mb-5">
+              <!-- data-dismiss="modal" data-toggle="modal" data-target="#ticket-dispatch-driver" -->
+              <button
+                class="mybtn mybtn-back-blue text-white width-fit-content"
+                *ngIf="!this.is_loading_driver"
+                (click)="onDriverDispatch()"
+                type="submit"
+              >
+                Dispatch [{{ this.getTicketsToDispatch() }}] tickets
+              </button>
+
+              <button
+                class="mybtn mybtn-back-blue text-white width-fit-content"
+                *ngIf="this.is_loading_driver"
+                type="button"
+              >
+                Dispatching...
+              </button>
+            </div>
+            <div align="center">
+              <div>
+                <div class="dashboard-title">No driver?</div>
+              </div>
+
+              <div class="decline_div ml-0 mr-0" *ngIf="this.show_reason_modal">
+                <div align="left" class="declining-label">
+                  Reason for declining [{{ this.selected_tickets }}]
+                </div>
+                <div class="required_fieldd2">*</div>
+                <div
+                  class="agreement-div mt-2 mb-2"
+                  *ngIf="this.show_reason_modal"
+                >
+                  <img
+                    _ngcontent-rje-c108
+                    data-target="#changeAddress"
+                    data-toggle="modal"
+                    src="../../assets/icons/pencile.svg"
+                    alt
+                    width="17px"
+                    class="top-right-icon22 cursor-pointer"
+                    style="position: absolute; right: 33px; margin-top: 13px"
+                  />
+                  <textarea
+                    rows="1"
+                    (input)="setReason($event)"
+                    class="form-control no-resize"
+                    placeholder="Type here"
+                    style="height: 52px !important"
+                    >{{ this.reason_decling }}</textarea
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-12" *ngIf="this.show_reason_modal">
+                <button
+                  class="mybtn mybtn-decline width-fit-content"
+                  (click)="declineTicketHandler()"
+                  *ngIf="!this.is_decline_loading"
+                >
+                  Decline [{{ this.selected_tickets }}] tickets
+                </button>
+
+                <button
+                  type="button"
+                  *ngIf="this.is_decline_loading"
+                  style="width: max-content"
+                  class="btn-back gotosignup mybtn mybtn-decline"
+                  disabled
+                >
+                  Processing...
+                </button>
+              </div>
+
+              <button
+                class="mybtn mybtn-decline width-fit-content"
+                (click)="declineTicketHandler()"
+                *ngIf="!this.is_decline_loading && !this.show_reason_modal"
+              >
+                Decline [{{ this.selected_tickets }}] tickets
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade come-from-modal right"
+  *ngIf="this.is_dispatched_driver"
+  style="display: block"
+  id="ticket-dispatch-driver"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8" align="center">
+            <br />
+            <br />
+            <img
+              src="../assets/images/ticl-blue-bg.svg"
+              class="img-responsive border-all-30px"
+            />
+            <br />
+            <br />
+            <div class="dashboard-title text-center">
+              Tickets are dispatched to drivers successfully.
+            </div>
+            <br />
+            <button
+              class="mybtn mybtn-back-blue text-white width-fit-content modal-btn"
+            >
+              Dispatch more
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade come-from-modal right"
+  *ngIf="this.is_dispatched"
+  style="display: block"
+  aria-hidden="false"
+  id="ticket-dispatch-company"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8" align="center">
+            <br />
+            <br />
+            <img
+              src="../assets/images/ticl-blue-bg.svg"
+              class="img-responsive border-all-30px"
+            />
+            <br />
+            <br />
+            <div class="dashboard-title text-center">
+              Tickets are dispatched to company successfully.
+            </div>
+            <div class="welcome-desc">
+              The tickets are dispatched to
+              <strong class="text-black">{{
+                this.trucking_company_name
+                  ? "“" + this.trucking_company_name + "”"
+                  : ""
+              }}</strong>
+              company successfully
+            </div>
+            <br />
+            <button
+              class="mybtn mybtn-back-blue text-white width-fit-content modal-btn"
+            >
+              Back to listing
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade show" id="declinereasonModal"
+role="dialog" *ngIf="show_reason_modal" style="display: block;padding-top:
+0%;background: #0000002c;">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6" style="float:left">
+                            <div class="ticket-label">Ticket IDs</div>
+
+                            <div class="dashboard-title2">{{combineTickets(this.requestDetail)}}</div>
+                        </div>
+                        <div class="col-md-6" style="float:right">
+                            <div class="status-div bg-red" >
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="title-2 title-status text-white "> Declining</div>
+                                    <div class="title-2 title-status status-div-white ml-1">{{this.selected_tickets}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <nav class="d-flex justify-content-between mb-15">
+                        <div align="left" class="declining-label">
+                            Reason for declining
+                        </div>
+                        <div class="" align="right">
+                            <div class="title-52 text-grey-shade2 text-right">Date</div>
+                            <div class="title-5-new">{{this.requestDetail[0].ticket_date}}</div>
+                        </div>
+                    </nav>
+                    <div class="agreement-div mt-2 mb-2">
+                        <textarea rows="3" (input)="setReason($event)"
+                        class="form-control"
+                        placeholder="Type here
+                        ...">{{this.reason_decling}}</textarea>
+                    </div>
+                    <div align="center" class="row">
+                        <div class="col-md-6">
+
+                            <button type="button"
+                            *ngIf="!this.is_decline_loading" class="mybtn mybtn-decline" (click)="declineTicketHandler()">Decline</button>
+
+                            <button type="button" *ngIf="this.is_decline_loading"
+                            style="width: max-content;" class="btn-back
+                            gotosignup mybtn mybtn-decline" disabled>Processing...</button>
+
+                        </div>
+                        <div class="col-md-6" >
+                            <button type="button" class="mybtn mybtn-back" (click)="backHandle()">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

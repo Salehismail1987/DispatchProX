@@ -1,0 +1,454 @@
+<div class="wrapper">
+    <app-dashboard-header  [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header ></app-dashboard-top-header>
+        <div class="body-content-3">
+            <!-- No Free Trial Started -->
+            <ng-container *ngIf="this.is_free_trial=='NO' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                <div class="setting-content-page border-div custom-padding-74">
+                    <div class="dashboard-title mb-50 title-dash" *ngIf="this.is_free_trial=='NO' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                        <img src="assets/icons/tragget-ticket-page-icon.svg"> 
+                        <span class="ml-1 ">
+                            DispatchProX tickets - fuel to trucking business
+                        </span>
+                    </div>
+                    <div class="" *ngIf="(this.is_free_trial=='NO' ) && this.is_expired=='NO' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                        <div class="row mb-45">
+                            <div class="col-md-4">
+                                <img class="mt-2" src="assets/images/trial-period-image-left.svg" style="max-width: -webkit-fill-available;">
+                            </div>
+                            <div class="col-md-8">
+                                <img class="float-right " src="assets/images/trial-period-image.svg" style="max-width: -webkit-fill-available;">
+                            </div>
+                           
+                        </div>             
+                         
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <table class="table subs-table mb-38">
+                                <thead>
+                                    <tr>
+                                        <th class="bg-head-blue width-76-perc">
+                                           <div class="title-sub-head">
+                                            What you will miss if you don’t have valid subscriptions
+                                           </div> 
+                                        </th>
+                                        <th class=" width-12-perc title-small-head bg-head-blue">DispatchProX ticket Subscription</th>
+                                        <th class=" width-12-perc title-small-head bg-head-blue">Free account</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="width-76-perc">
+                                            <b>Ready for truck requests </b> - make it easy for construction sites, Trucking companies, and brokers to dispatch truck jobs to you
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class=" width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Accepting the Requests</b> – accept all or partially depending on your available resources
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Assign drivers and/or dispatch to your vendors</b> – one at a time or in batches
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Dispatched tickets</b> - Track the progress of the tickets you have dispatched. Be on top of each ticket
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Closed tickets</b> – search by projects, by vendors, or by dates. You can download any if you need a copy for your records.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Invoicing</b> - Built automatically for you in real-time. Never miss any tickets from your invoices.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Billing</b> – Have all the bills ready by the vendor immediately.
+                                        </td>
+                                        <td class="width-12-perc">
+                                         
+                                        </td>
+                                        <td class="width-12-perc">
+                                          
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </div>
+                      </div>
+
+                      <div class="title-footer text-center">
+                        DispatchProX offers plans to all-size companies, from one-truck companies to brokers who manage thousands of trucks.
+                    </div>
+                </div>
+
+               
+            </ng-container>
+
+            <!-- When Free Trial is Driving -->
+            <ng-container *ngIf="this.is_free_trial=='YES'  && this.is_expired=='NO' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                <div class="setting-content-page mb-15px border-div custom-padding-74">
+                    <div class="row " >
+                        <div class="col-md-6 d-flex justify-content-start align-items-center">
+                            <div class="dashboard-title  title-dash mb-0 d-flex justify-content-start align-items-center">
+                                <img src="assets/icons/tragget-ticket-page-icon.svg"> 
+                                <div class="ml-2 ">
+                                    Free Trial
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="float-right d-flex mt-0">
+                        
+                                <button class='mybtn bg-blue text-white active btn-nav btn-customer'  [routerLink]="'/tc-tragget-trial'" >Free Trial</button>
+                                <button class='mybtn mybtn-default text-blue btn-nav ml-2 btn-customer' [routerLink]="'/tc-tragget-plans'" >DispatchProX Plans</button>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                </div>
+                <div class="setting-content-page mb-15px border-div custom-padding-74">
+                    <div class="row mb-34 custom-padding-721" >
+                        <div class="col-md-3">
+                            <img src="assets/images/truck-background.svg">
+                            <div class=" btn-left ">
+                                {{this.days_left}} days left
+                            </div>
+                                
+                        </div>
+                        <div class="col-md-6">
+                            <div class="custom-padding">
+                                <div class="title-3 text-center mb-6 title-head-trial"><span class="text-blue-2">{{this.days_left}} Days</span> left for Free-Trial to end.</div>
+                                <div class="title-4 text-center text-color-brown title-head-text">Use all the features and then make your decision.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" align="right">
+                            <div class="ticket-badge bg-subs">
+                                <div class="title-6 text-white mb-2">Last 30 days</div>
+                                <div class="title-5 text-white mb-2">{{this.last_30_days_closed_tickets}}</div>
+                                <div class="title-6 text-white mb-35">Tickets used</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <table class="table subs-table mb-38">
+                                <thead>
+                                    <tr>
+                                        <th class="bg-head-blue width-76-perc">
+                                           <div class="title-sub-head">
+                                            What you will miss if you don’t have valid subscriptions
+                                           </div> 
+                                        </th>
+                                        <th class=" width-12-perc title-small-head bg-head-blue">DispatchProX ticket Subscription</th>
+                                        <th class=" width-12-perc title-small-head bg-head-blue">Free account</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="width-76-perc">
+                                            <b>Ready for truck requests </b> - make it easy for construction sites, Trucking companies, and brokers to dispatch truck jobs to you
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class=" width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Accepting the Requests</b> – accept all or partially depending on your available resources
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Assign drivers and/or dispatch to your vendors</b> – one at a time or in batches
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Dispatched tickets</b> - Track the progress of the tickets you have dispatched. Be on top of each ticket
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Closed tickets</b> – search by projects, by vendors, or by dates. You can download any if you need a copy for your records.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Invoicing</b> - Built automatically for you in real-time. Never miss any tickets from your invoices.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Billing</b> – Have all the bills ready by the vendor immediately.
+                                        </td>
+                                        <td class="width-12-perc">
+                                         
+                                        </td>
+                                        <td class="width-12-perc">
+                                          
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </div>
+                      </div>
+                      <div class="title-footer text-center">
+                        DispatchProX offers plans to all-size companies, from one-truck companies to brokers who manage thousands of trucks.
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- <div class="setting-content-page border-div custom-padding-7 d-none">
+                
+                <div class="dashboard-title mb-6 title-dash" *ngIf="this.is_free_trial=='YES' && (this.is_subscribed=='NO' || !this.is_subscribed)">Free-Trial</div>
+                <div class="dashboard-title mb-6 title-dash" *ngIf="(!this.is_free_trial || this.is_free_trial=='NO') && this.is_subscribed =='YES'">DispatchProX ticket vs Free account</div>
+               
+                <div *ngIf="this.is_free_trial=='YES'  && this.is_expired=='NO' && (this.is_subscribed=='NO' || !this.is_subscribed)"> 
+                    <div class="row mb-34" >
+                        <div class="col-md-12">
+                            <div class="float-right d-flex">
+                        
+                                <button class='mybtn bg-blue text-white active btn-nav btn-customer'  [routerLink]="'/tc-tragget-trial'" >Free Trial</button>
+                                <button class='mybtn mybtn-default text-blue btn-nav ml-2 btn-customer' [routerLink]="'/tc-tragget-plans'" >DispatchProX Plans</button>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <div class="row mb-34" >
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <div class="custom-padding">
+                                <div class="title-3 text-center mb-6"><span class="text-blue-2">{{this.days_left}} Days</span> left for Free-Trial to end.</div>
+                                <div class="title-4 text-center text-color-brown">Use all the features and then make your decision.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" align="center">
+                            <div class="ticket-badge bg-subs">
+                                <div class="title-6 text-white mb-2">Last 30 days</div>
+                                <div class="title-5 text-white mb-2">{{this.last_30_days_closed_tickets}}</div>
+                                <div class="title-6 text-white mb-35">Tickets used</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+               
+
+                <div *ngIf="((!this.is_free_trial || this.is_free_trial=='NO') ) && (this.is_subscribed =='YES' ||  this.is_expired=='YES')"> 
+                    <div class="row mb-34" >
+                        <div class="col-md-12">
+                            <div class="float-right d-flex">
+                        
+                                <button class='mybtn mybtn-default text-blue  btn-nav btn-customer'  [routerLink]="'/tc-tragget-tickets'" >Subscriptions and tickets</button>
+                              
+                                <button class='mybtn mybtn-default text-blue  btn-nav ml-2  btn-customer' [routerLink]="'/tc-tragget-plans'" >DispatchProX plans</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-15" >
+                        <div class="col-md-3">
+                            <div class="col-md-3" align="center">
+                                <div class="ticket-badge bg-subs">
+                                    <div class="title-6 text-white mb-1">Last 30 days</div>
+                                    <div class="title-5 text-white mb-3">{{this.last_30_days_closed_tickets}}</div>
+                                    <div class="title-6 text-white mb-31">Tickets used</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="title-free-1">
+                                DispatchProX tickets helps you to run your business smoothly
+                            </div>
+                            <br>
+                            <div class="title-free-2">
+                                Just having an account helps you to run your business, but paying DispatchProX tickets allows you to focus on growing your business.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ng-container *ngIf="is_free_trial=='NO' && (this.is_subscribed=='NO' || !this.is_subscribed)"><br><br>
+                </ng-container>
+                
+                <div class="title-1 text-black mb-31">What you will miss if you don’t have valid subscriptions 
+                </div>
+                <table class="table subs-table mb-38">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="table-h">DispatchProX ticket Subscription</th>
+                            <th class="table-h">Free account only</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>Ready for truck requests</b> - make it easy for construction sites, Trucking companies, and brokers to dispatch truck jobs to you
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Accepting the Requests</b> – accept all or partially depending on your available resources
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Assign drivers and/or dispatch to your vendors</b> – one at a time or in batches
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Dispatched tickets</b> - Track the progress of the tickets you have dispatched. Be on top of each ticket
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/grey-cross.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Closed tickets</b> – search by projects, by vendors, or by dates. You can download any if you need a copy for your records.
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/grey-cross.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Invoicing</b> - Built automatically for you in real-time. Never miss any tickets from your invoices.
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/grey-cross.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Billing</b> – Have all the bills ready by the vendor immediately.
+                            </td>
+                            <td>
+                                <img src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img src="../assets/icons/grey-cross.svg">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="title-1 text-black text-center mb-23" *ngIf="is_free_trial=='YES'">DispatchProX offers plans to all-size companies, from one-truck companies to brokers who manage thousands of trucks.</div>
+            
+            </div> -->
+        </div>
+    </div>
+</div>
+

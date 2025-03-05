@@ -1,0 +1,397 @@
+<div
+  class="modal fade come-from-modal right"
+  id="myModalDetail2"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex justify-content-between align-items-center mb-42">
+          <div>
+            <div class="title-10 text-black-shade2 mb-3px">Invoice #</div>
+            <div class="dashboard-title mb-0">
+              {{ edited_invoice?.invoice_no }}
+            </div>
+          </div>
+          <div class="div-1">
+            <div class="title-5-new2 mb-2px">Invoice date</div>
+            <div class="title-5-new">{{ edited_invoice?.invoice_date }}</div>
+          </div>
+          <button
+            class="mybtn bg-yellow width-fit-content btn-text-very-small3 mb-0"
+          >
+            Bill
+          </button>
+        </div>
+
+        <div class="ticket-detail-div">
+          <div class="p-10px">
+            <div class="row">
+              <div class="col-6">
+                <div class="title-52 text-grey-shade2">Vendor name</div>
+                <div class="title-5-new">
+                  {{
+                    this.edited_invoice?.invoice_by.edited_invoice?.invoice_by
+                      ?.company_name
+                      ? this.edited_invoice?.invoice_by?.company_name
+                      : this.edited_invoice?.invoice_by?.full_name
+                  }}
+                </div>
+              </div>
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Email address
+                </div>
+                <div
+                  class="title-5-new text-right"
+                  *ngIf="edited_invoice?.is_custom_bill == 'NO'"
+                >
+                  {{ edited_invoice?.invoice_by?.email }}
+                </div>
+                <div
+                  class="title-5-new text-right"
+                  *ngIf="edited_invoice?.is_custom_bill == 'YES'"
+                >
+                  {{ edited_invoice?.invoice_by_email }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr"></div>
+          <div class="p-10px">
+            <div class="row">
+              <div class="col-12">
+                <div class="title-52 text-grey-shade2">Address</div>
+                <div class="title-5-new">
+                  {{
+                    this.edited_invoice?.invoice_by?.customer &&
+                    this.edited_invoice?.invoice_by?.customer?.address &&
+                    this.edited_invoice?.invoice_by?.customer?.address !=
+                      null &&
+                    this.edited_invoice?.invoice_by?.customer?.address != "null"
+                      ? this.edited_invoice?.invoice_by?.customer?.address
+                      : ""
+                  }}
+                  <!-- {{this.edited_invoice?.invoice_by?.customer && this.edited_invoice?.invoice_by?.customer?.address && this.edited_invoice?.invoice_by?.customer?.address !='null' ? this.edited_invoice?.invoice_by?.customer?.address:(this.edited_invoice?.invoice_by?.customer && this.edited_invoice?.invoice_by?.customer?.address && this.edited_invoice?.invoice_by?.customer?.address !='null' ? this.edited_invoice?.invoice_by?.customer?.address : '')}}  -->
+                  {{
+                    this.edited_invoice?.invoice_by?.customer &&
+                    this.edited_invoice?.invoice_by?.customer?.city &&
+                    this.edited_invoice?.invoice_by?.customer?.city != null &&
+                    this.edited_invoice?.invoice_by?.customer?.city != "null"
+                      ? ", " + this.edited_invoice?.invoice_by?.customer?.city
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_by?.customer &&
+                    this.edited_invoice?.invoice_by?.customer?.province &&
+                    this.edited_invoice?.invoice_by?.customer?.province !=
+                      null &&
+                    this.edited_invoice?.invoice_by?.customer?.province !=
+                      "null"
+                      ? ", " +
+                        this.edited_invoice?.invoice_by?.customer?.province
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_by?.post_code &&
+                    this.edited_invoice?.invoice_by?.post_code != null &&
+                    this.edited_invoice?.invoice_by?.post_code != "null"
+                      ? ", " + this.edited_invoice?.invoice_by?.post_code
+                      : ""
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr"></div>
+          <div class="p-10px">
+            <div class="row">
+              <div class="col-6">
+                <div class="title-52 text-grey-shade2">Business number</div>
+                <div
+                  class="title-5-new"
+                  *ngIf="edited_invoice?.is_custom_bill == 'YES'"
+                >
+                  {{ this.edited_invoice?.invoice_by_business_no }}
+                </div>
+                <div
+                  class="title-5-new"
+                  *ngIf="edited_invoice?.is_custom_bill == 'NO'"
+                >
+                  {{ this.edited_invoice?.invoice_by?.customer?.business_no }}
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="title-52 text-grey-shade2 text-right">
+                  Work safety number
+                </div>
+                <div
+                  class="title-5-new text-right"
+                  *ngIf="edited_invoice?.is_custom_bill == 'YES'"
+                >
+                  {{ this.edited_invoice?.invoice_by_business_wsno }}
+                </div>
+                <div
+                  class="title-5-new text-right"
+                  *ngIf="edited_invoice?.is_custom_bill == 'NO'"
+                >
+                  {{ this.edited_invoice?.invoice_by?.customer?.wsbc_no }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ticket-detail-div">
+          <div class="p-10px">
+            <div class="row">
+              <div class="col-12">
+                <div class="title-52 text-grey-shade2">Trucking company</div>
+                <div class="title-5-new">
+                  <div *ngIf="edited_invoice?.invoice_for?.company_name">
+                    {{ edited_invoice?.invoice_for?.company_name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr"></div>
+          <div class="p-10px">
+            <div class="row">
+              <div class="col-6">
+                <div class="title-52 text-grey-shade2">Contact person</div>
+                <div class="title-5-new">
+                  <div>
+                    {{ edited_invoice?.invoice_for?.full_name }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-6" align="right">
+                <div
+                  class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                >
+                  Email address
+                </div>
+                <div class="title-5-new text-right">
+                  <div *ngIf="edited_invoice?.invoice_for?.company_name">
+                    {{ edited_invoice?.invoice_for?.email }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr"></div>
+          <div class="p-10px">
+            <div class="row">
+              <div class="col-12">
+                <div class="title-52 text-grey-shade2">Address</div>
+                <div class="title-5-new">
+                  {{
+                    this.edited_invoice?.invoice_for?.address &&
+                    this.edited_invoice?.invoice_for?.address != null
+                      ? this.edited_invoice?.invoice_for?.address
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.city &&
+                    this.edited_invoice?.invoice_for?.city != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.city
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.province &&
+                    this.edited_invoice?.invoice_for?.province != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.province
+                      : ""
+                  }}
+                  {{
+                    this.edited_invoice?.invoice_for?.post_code &&
+                    this.edited_invoice?.invoice_for?.post_code != "null"
+                      ? ", " + this.edited_invoice?.invoice_for?.post_code
+                      : ""
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-10px">
+          <div class="row">
+            <div class="col-6">
+              <div class="title-52 text-grey-shade2">Invoicing period</div>
+              <div class="title-5-new">
+                {{ this.edited_invoice?.invoice_period_type }}
+              </div>
+            </div>
+            <div class="col-6" align="right">
+              <div
+                class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+              >
+                Dates
+              </div>
+              <div class="title-5-new text-right">
+                {{ this.edited_invoice?.invoice_period_start }} :
+                {{ this.edited_invoice?.invoice_period_end }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="p-10px"
+          *ngIf="
+            this.edited_invoice?.hours != null &&
+            this.edited_invoice?.hours != '0' &&
+            this.edited_invoice?.hours != ''
+          "
+        >
+          <div class="row">
+            <div class="col-6" align="right">
+              <div
+                class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+              >
+                Hours :
+              </div>
+            </div>
+            <div class="col-6 display-table">
+              <div class="vertical-middle">
+                <div class="title-5-new">
+                  {{ this.edited_invoice?.hours }}
+                  <!-- <span *ngIf="edited_invoice.is_custom_bill == 'NO'">
+                    at (${{ this.edited_invoice?.hours_rate }})
+                  </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-10px" *ngIf="this.edited_invoice?.rounds">
+          <div class="row">
+            <div class="col-6" align="right">
+              <div
+                class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+              >
+                Rounds :
+              </div>
+            </div>
+            <div class="col-6 display-table">
+              <div class="vertical-middle">
+                <div class="title-5-new">
+                  {{ this.edited_invoice?.rounds }}
+                  <!-- <span *ngIf="edited_invoice.is_custom_bill == 'NO'">
+                      at (${{ this.edited_invoice?.hours_rate }})
+                    </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-10px">
+          <div class="row">
+            <div class="col-6" align="right">
+              <div
+                class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+              >
+                Subtotal :
+              </div>
+            </div>
+            <div class="col-6 display-table">
+              <div class="vertical-middle">
+                <div class="title-5-new">
+                  {{ this.edited_invoice?.subtotal | currency }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-10px">
+          <div class="row">
+            <div class="col-6" align="right">
+              <div
+                class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+              >
+                Tax ({{ this.gst?.type }}): {{ this.gst?.tax }}% :
+              </div>
+            </div>
+            <div class="col-6 display-table">
+              <div class="vertical-middle">
+                <div class="title-5-new">
+                  {{ this.edited_invoice?.tax_amount | currency }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-10px">
+          <div class="row">
+            <div class="col-6" align="right">
+              <div
+                class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+              >
+                Total :
+              </div>
+            </div>
+            <div class="col-6 display-table">
+              <div class="vertical-middle">
+                <div class="title-5-new">
+                  {{ this.edited_invoice?.total | currency }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div align="center">
+          <div class="myhr3 mb-1px"></div>
+          <div class="myhr3"></div>
+        </div>
+        <div class="p-10px">
+          <div class="row">
+            <div class="col-12" align="right">
+              <div
+                class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+              >
+                Due date
+              </div>
+              <div class="title-5-new">
+                {{ this.edited_invoice?.invoice_due_date | date : "MMMM dd" }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-10px">
+          <div class="row">
+            <div class="col-12">
+              <div class="title-52 text-grey-shade2 text-grey-shade2">
+                Notes
+              </div>
+
+              <div
+                class="p-3"
+                style="border: 1px solid gray; border-radius: 4px"
+              >
+                {{ this.edited_invoice?.invoice_notes }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div align="center">
+          <button
+            class="mybtn3 bg-blue2 mb-10 cp-1"
+            (click)="downloadEditedInvoice()"
+            *ngIf="this.is_loading != 'download'"
+          >
+            Download
+          </button>
+          <button
+            class="mybtn3 bg-blue2 mb-10 cp-1"
+            *ngIf="this.is_loading == 'download'"
+          >
+            Processing...
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

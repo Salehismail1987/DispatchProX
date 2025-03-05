@@ -1,0 +1,1963 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div>
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="ticket-detail"
+            role="tabpanel"
+            aria-labelledby="nav-home-tab"
+          >
+            <div
+              class="bg-white border-div br-10 custom-padding13 inner_main_shadow"
+            >
+              <div class="row mb-95">
+                <div class="col-lg-10 col-md-9 col-sm-8 display-table">
+                  <div class="vertical-middle d-flex align-items-center">
+                    <img src="assets/icons/driver-icon-tc.svg" />
+                    <div class="title-9 text-color-black-shade mb-16-sm ml-2">
+                      {{ this.loggedinUser?.company_name }} drivers
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-lg-2 col-md-3 col-sm-4"
+                  style="
+                    display: flex;
+                    justify-content: end;
+                    align-items: center;
+                  "
+                >
+                  <button
+                    class="mybtn btn-small text-white mybtn-back-blue2 btn-customer m-0 mb-16"
+                    data-toggle="modal"
+                    data-target="#adddriver"
+                  >
+                    Invite new
+                  </button>
+                </div>
+              </div>
+
+              <div class="row mb-15px">
+                <div class="col-md-3 col-padding-l">
+                  <div class="main-project-setting-header-left">
+                    <div class="heading-2-300 text-color-111727">
+                      Driver listings
+                    </div>
+                    <div class="text-2-300">Click the line to make changes</div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-padding-rl"></div>
+                <div class="col-md-2 col-padding-rl"></div>
+
+                <div class="col-md-2 col-padding-rl">
+                  <div class="input-div getinputfield2 cur_p">
+                    <div class="title-5-new2 text-color-black-shade5 text-left">
+                      Sort by
+                    </div>
+                    <div
+                      class="myinput-new sa_sel sa_select selected"
+                      *ngIf="!this.sort_by"
+                    >
+                      Select
+                    </div>
+                    <div
+                      class="myinput-new sa_sel sa_sel2 selected"
+                      *ngIf="this.sort_by != null"
+                    >
+                      {{
+                        this.sort_by == "number_of_trucks"
+                          ? "Number of trucks "
+                          : this.sort_by == "city"
+                          ? "City "
+                          : "Recently invited"
+                      }}
+                    </div>
+                    <img
+                      src="../../assets/images/dropdown.svg"
+                      class="icon-center-right"
+                    />
+                    <div
+                      class="input-popup-div2 cust_drop companies_list"
+                      style="display: none"
+                    >
+                      <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                        Sort by
+                      </div>
+                      <div class="title-18 text-right mb-2px d-none">
+                        Default
+                      </div>
+
+                      <div
+                        (click)="setSortBy('recently_invited')"
+                        class="d-flex justify-content-between mb-5px list-item"
+                        [ngClass]="
+                          this.sort_by == 'recently_invited'
+                            ? 'title-5-new33_active'
+                            : ''
+                        "
+                      >
+                        <div
+                          [ngClass]="
+                            this.sort_by == 'recently_invited'
+                              ? 'title-5-new33 title-5-new33_active'
+                              : 'title-5-new33 text-color-black-shade7'
+                          "
+                        >
+                          Recently invited
+                        </div>
+                      </div>
+                      <div
+                        (click)="setSortBy('number_of_trucks')"
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          [ngClass]="
+                            this.sort_by == 'number_of_trucks'
+                              ? 'title-5-new33 title-5-new33_active'
+                              : 'title-5-new33 text-color-black-shade7'
+                          "
+                        >
+                          Number of trucks
+                        </div>
+                      </div>
+                      <div
+                        (click)="setSortBy('city')"
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          [ngClass]="
+                            this.sort_by == 'city'
+                              ? 'title-5-new33 title-5-new33_active'
+                              : 'title-5-new33 text-color-black-shade7'
+                          "
+                        >
+                          City
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  [class]="
+                    true ? 'col-md-3 col-padding-r' : 'col-md-3 col-padding-r'
+                  "
+                >
+                  <div class="position-relative">
+                    <label class="field text-field">
+                      <input
+                        class="field__input height-43px"
+                        placeholder="Search"
+                        (change)="searchBy(searchby.value)"
+                        type="text"
+                        [(ngModel)]="this.search_by"
+                        #searchby
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label field__label2"
+                          >Search driver</span
+                        >
+                      </span>
+                    </label>
+                    <div class="topright2">
+                      <img
+                        src="../assets/icons/search2.svg"
+                        (click)="searchBy(searchby.value)"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="vendorTable">
+                  <tr>
+                    <th class="w-30px">E/F</th>
+                    <th class="text-left">Driver’s name</th>
+                    <th>Phone number</th>
+                    <th>Default truck</th>
+                    <th>Default trailer</th>
+                    <th>Current job status</th>
+                    <th>Hour sheets</th>
+                  </tr>
+                  <ng-container *ngIf="this.drivers_list?.length > 0">
+                    <ng-container *ngFor="let driver of this.drivers_list">
+                      <tr
+                      class="{{ driver?.invitation_code ? 'bg-grey-row':'border-shadow-row'}}"
+                        data-toggle="modal"
+                        (click)="setDriver(driver)"
+                        data-target="#driverinfo"
+                      >
+                        <td class="w-30px">
+                          <div *ngIf="driver?.company_name; else noCompany">
+                            <div class="driver-type">E</div>
+                          </div>
+
+                          <ng-template #noCompany>
+                            <div class="driver-type">F</div>
+                          </ng-template>
+                        </td>
+
+                        <td class="text-left">{{ driver?.full_name }}</td>
+                        <td>{{ driver?.contact_number }}</td>
+                        <td>{{ driver?.default_truck?.truck_nickname }}</td>
+                        <td>{{ driver?.default_trailer?.trailer_nickname }}</td>
+                        <td>
+                          <button
+                            *ngIf="driver?.current_job; else noJob"
+                            [ngClass]="
+                              getStatusClass(driver?.current_job?.status)
+                            "
+                          >
+                            {{ driver?.current_job?.status }}
+                          </button>
+                          <ng-template #noJob>
+                            <span class="not-driving"> Not Driving </span>
+                          </ng-template>
+                        </td>
+
+                        <td>
+                          <div class="ticket-padding">
+                            Ticket () to<br />
+                            process
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+
+                  <ng-container *ngIf="!loading">
+                    <ng-container
+                      *ngIf="
+                        !this.drivers_list || this.drivers_list?.length < 1
+                      "
+                    >
+                      <tr>
+                        <td colspan="5">No drivers found</td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                </table>
+              </div>
+              <div
+                class="row border-blue pt-2"
+                *ngIf="
+                  this.loggedinUser.role_id != 6 &&
+                  this.loggedinUser.account_type == 'Trucking Company'
+                "
+              >
+                <div class="col-md-1 pt-1"></div>
+                <div
+                  class="col-md-2 pt-1"
+                  style="
+                    display: flex;
+                    align-items: center;
+                    font-family: Gilroy;
+                    color: #68696d;
+                    font-weight: 700;
+                    justify-content: center;
+                    font-size: 14px;
+                    line-height: 17.33px;
+                  "
+                >
+                  {{ this.loggedinUser?.full_name }}
+                </div>
+                <div class="col-md-5" style="padding-left: 0px !important">
+                  <button
+                    class="mybtn2 text-white btn-driver btn-customer"
+                    (click)="setAsDriver()"
+                  >
+                    Set
+                  </button>
+                  <span
+                    class="ml-1"
+                    style="
+                      font-family: Gilroy;
+                      color: #68696d;
+                      font-weight: 700;
+                      margin-left: 30px !important;
+
+                      font-size: 14px;
+                      line-height: 17.33px;
+                    "
+                  >
+                    as driver
+                  </span>
+                </div>
+              </div>
+              <div class="row mt-2" *ngIf="this.drivers_list?.length > 24">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                  <div class="mypagination-div" *ngIf="pagination?.total > 0">
+                    <a
+                      style="cursor: pointer"
+                      (click)="changePage(pagination.current_page - 1)"
+                      [ngClass]="
+                        pagination.first_page == this.page
+                          ? 'mypagination '
+                          : 'mypagination disable'
+                      "
+                      class=""
+                      >Previous</a
+                    >
+                    <ng-container *ngFor="let item of pagination?.links">
+                      <a
+                        style="cursor: pointer"
+                        *ngIf="notSkip(item.label)"
+                        [ngClass]="
+                          item.active ? 'mypagination active' : 'mypagination'
+                        "
+                        (click)="changePage(parsePage(item.label.toString()))"
+                        >{{ item.label }}</a
+                      >
+                    </ng-container>
+
+                    <a
+                      style="cursor: pointer"
+                      (click)="changePage(pagination.current_page + 1)"
+                      [ngClass]="
+                        this.page == pagination.last_page
+                          ? 'mypagination '
+                          : 'mypagination next'
+                      "
+                      >Next</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade come-from-modal right show"
+  id="adddriver"
+  tabindex="-1 "
+  role="dialog "
+  aria-labelledby="myModalLabel "
+>
+  <div class="modal-dialog max-width-50px" role="document ">
+    <div class="modal-content modal-bg-white border-15px">
+      <div class="modal-body" style="padding: 0px">
+        <div class="mt-25px" align="center">
+          <div class="invute-trucking-img popup-inv-div">
+            <img
+              src="../../assets/images/driver-profile.png"
+              class="img mb-23"
+              style="height: 95px; width: 100px"
+            />
+            <div class="text-center">
+              <img
+                class="logo-shadow"
+                src="../../assets/images/logo.png"
+                style="width: 147px; height: 59px"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between ml-4 mt-25px">
+          <div>
+            <div class="title-0">Invite driver</div>
+          </div>
+        </div>
+
+        <form
+          [formGroup]="inviteDriverForm"
+          (ngSubmit)="onInviteDriver()"
+          enctype="multipart/form-data"
+          class="m-25px tc-form"
+        >
+          <div class="uplodfile-div d-flex" style="display: none !important">
+            <div class="uplodfile-icon-div" (click)="logoFileInput.click()">
+              <img src="assets/icons/truck-ico.svg" />
+            </div>
+            <div class="uplodfile-content">
+              <div>Upload<br />your photo</div>
+
+              <input
+                id="logo-file-input"
+                hidden
+                type="file"
+                [multiple]="false"
+                [accept]="'image/jpeg, image/png'"
+                #logoFileInput
+                formControlName="profile_image"
+              />
+            </div>
+            <div class="uplodfile-content">
+              <span>{{ driverImage?.name }}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <span *ngIf="driverfull_nameError != ''" class="text-danger">{{
+                driverfull_nameError
+              }}</span>
+              <label class="field text-field required_field">
+                <input
+                  class="field__input"
+                  placeholder="Danyal "
+                  formControlName="full_name"
+                  value=""
+                  type="text "
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label">Full name</span>
+                </span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-7">
+              <span *ngIf="driverEmailError != ''" class="text-danger">{{
+                driverEmailError
+              }}</span>
+              <label class="field text-field required_field">
+                <input
+                  class="field__input"
+                  placeholder="example@mail.com "
+                  formControlName="email"
+                  value=" "
+                  type="email"
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label">Email</span>
+                </span>
+              </label>
+            </div>
+            <div class="col-md-5">
+              <span
+                *ngIf="driverContactNumberError != ''"
+                class="text-danger"
+                >{{ driverContactNumberError }}</span
+              >
+              <label class="field text-field">
+                <input
+                  class="field__input"
+                  placeholder="(---) --- ----"
+                  (input)="changeNumber($event)"
+                  formControlName="contact_number"
+                  type="text "
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label">Phone number</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="d-flex m-0 btn-div mt-25px" align="center">
+            <div class="padding-left-0">
+              <button
+                class="btn-back goto-dashboard-setup-1"
+                data-dismiss="modal"
+              >
+                Back
+              </button>
+            </div>
+            <div class="padding-right-0">
+              <button
+                class="mybtn bg-medium-blue text-white"
+                type="submit"
+                *ngIf="!is_driver_loading"
+              >
+                Send Invite
+              </button>
+
+              <button
+                class="mybtn bg-medium-blue text-white"
+                type="button"
+                *ngIf="is_driver_loading"
+                disabled
+              >
+                Processing..
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade come-from-modal show"
+  *ngIf="this.show_edit_phone"
+  id="editPhone"
+  role="dialog"
+  tabindex="-1 "
+  aria-labelledby="myModalLabel "
+  style="z-index: 10000 !important"
+>
+  <div class="modal-dialog vertical-align-center">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="title-11 mb-16 text-center">Edit phone</div>
+        <div class="text-danger" *ngIf="edit_phone_error !== ''">
+          {{ edit_phone_error }}
+        </div>
+        <input
+          type="text"
+          class="form-control br-10 mb-16"
+          [(ngModel)]="this.edit_phone"
+          id="edit_contact_number"
+          placeholder="(---) --- ----"
+          (input)="changeEditNumber($event)"
+        />
+        <div align="center">
+          <div class="">
+            <button
+              type="button"
+              *ngIf="!this.loading_update"
+              style="width: 120px"
+              (click)="updateDriverPhone()"
+              class="mybtn bg-medium-blue text-white"
+            >
+              Save
+            </button>
+            <button
+              *ngIf="this.loading_update"
+              type="button"
+              style="width: 120px"
+              class="mybtn bg-medium-blue text-white"
+              disabled
+            >
+              Processing..
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade come-from-modal right show"
+  id="driverinfo"
+  tabindex="-1 "
+  role="dialog "
+  aria-labelledby="myModalLabel "
+>
+  <div class="modal-dialog" role="document ">
+    <div class="modal-content modal-bg-white" style="margin-top: 50px">
+      <div class="modal-body">
+        <div class="d-flex justify-content-between align-items-center mb-30">
+          <div
+            class="row"
+            style="margin: 0px !important; flex-direction: column !important"
+          >
+            <div class="title-driver">Driver<br /></div>
+            <div class="title-22 text-color-black-shade2">
+              {{ this.driver_detail?.full_name }}
+            </div>
+          </div>
+          <div>
+            <div class="row" style="margin: 0px !important">
+              <div class="col-4"></div>
+              <div
+                class="col-8"
+                style="
+                  background: white;
+                  border: 1px solid #e1e1e1;
+                  border-radius: 5px;
+                  padding: 15px !important;
+                "
+                *ngIf="
+                  driver_detail?.is_accepted == 0 &&
+                  driver_detail?.invitation_code != ''
+                "
+              >
+                <div
+                  class="col-12 mb-15px title-driver"
+                  align="center"
+                  style="color: black; opacity: 1; font-family: 'Gilroy-Bold'"
+                >
+                  Invitation
+                </div>
+                <div
+                  class="row mb-15px justify-content-center align-items-center"
+                >
+                  <div class="col-5" align="right">Status</div>
+                  <div class="col-7" align="left">
+                    <button [ngClass]="this.getStatusClass('Pending')">
+                      Pending
+                    </button>
+                  </div>
+                </div>
+
+                <div class="row" align="center">
+                  <div class="col-2"></div>
+                  <div class="col-12">
+                    <button
+                      class="mybtn2 title-13 mybtn-back-blue2 text-white p-8 m-0 date-title"
+                      (click)="resendInv(driver_detail?.id)"
+                      *ngIf="!loading_resend"
+                    >
+                      Resend invitation
+                    </button>
+                    <button
+                      class="mybtn2 title-13 mybtn-back-blue2 text-white p-8 m-0 date-title"
+                      disabled
+                      *ngIf="loading_resend"
+                    >
+                      Processing..
+                    </button>
+                    <!-- <button
+                      class="mybtn2 mt-3 cancel-btn title-13 mybtn-back-blue2 text-white p-8 m-0 date-title"
+                      (click)="cancelInv(driver_detail?.id)"
+                      *ngIf="!loading_cancel"
+                    >
+                      Cancel invitation
+                    </button>
+                    <button
+                      class="mybtn2  mt-3 cancel-btn title-13 mybtn-back-blue2 text-white p-8 m-0 date-title"
+                      disabled
+                      *ngIf="loading_cancel"
+                    >
+                      Processing..
+                    </button> -->
+                  </div>
+                  <div class="col-2"></div>
+                </div>
+              </div>
+              <div class="col-1"></div>
+            </div>
+
+            <button
+              class="mybtn2 title-13 mybtn-back-blue2 text-white p-8 m-0 date-title"
+              *ngIf="driver_detail?.is_active == 1"
+            >
+              Since {{ driver_detail?.joined_since }}
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="project-profile-header-container d-flex mb-25px"
+          style="justify-content: flex-end"
+        >
+          <div class="profile_heading_div1">
+            <div
+              class="project-profile-header-left d-flex align-items-center ml-0"
+            >
+              <div class="heading-1-400 text-color-black"></div>
+            </div>
+          </div>
+          <nav>
+            <div
+              class="nav nav-pills nav-fill ticket-tabs"
+              id="nav-tab"
+              role="tablist"
+            >
+              <a
+                class="nav-item btn-nav nav-link active"
+                id="nav-home-tab"
+                data-bs-toggle="tab"
+                href="#company"
+                role="tab"
+                aria-controls="company"
+                aria-selected="true"
+                >Info</a
+              >
+              <a
+                class="nav-item btn-nav nav-link"
+                id="nav-hoursheet-tab"
+                data-bs-toggle="tab"
+                href="#hoursheet"
+                role="tab"
+                aria-controls="hoursheet"
+                aria-selected="false"
+                >Hour sheets</a
+              >
+            </div>
+          </nav>
+        </div>
+
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="company"
+            role="tabpanel"
+            aria-labelledby="nav-home-tab"
+          >
+            <div class="border-div2 mb-9" *ngIf="driver_detail?.is_active == 1">
+              <div class="d-flex justify-content-between custom-padding17">
+                <div>
+                  <div class="title-5-new4 text-color-black-shade3 mb-7">
+                    Phone number
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                    style="
+                      border: 1px solid #e1e1e1;
+                      padding: 5px;
+                      border-radius: 5px;
+                      background: white;
+                    "
+                  >
+                    <div class="title-11 text-color-black-shade2">
+                      {{ driver_detail?.contact_number }}
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        style="margin-left: 8px"
+                        (click)="showEditModal('edit_phone')"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="input-popup"
+                    *ngIf="show_edit_phone"
+                    style="display: block"
+                  >
+                    <div class="title-3 text-center mb-19">Edit Phone</div>
+                    <div class="text-danger" *ngIf="edit_phone_error !== ''">
+                      {{ edit_phone_error }}
+                    </div>
+                    <div class="position-relative mb-11 required_field2">
+                      <input
+                        type="text"
+                        class="myinput-new myinput3"
+                        [(ngModel)]="this.edit_phone"
+                        id="edit_contact_number"
+                        placeholder="(---) --- ----"
+                        (change)="changeEditNumber($event)"
+                      />
+                    </div>
+                    <div align="center" class="mb-17">
+                      <button
+                        type="button"
+                        *ngIf="!this.loading_update"
+                        style="min-width: 49px; width: 80px !important"
+                        (click)="updateDriverPhone()"
+                        class="mybtn p-1 bg-medium-blue text-white"
+                      >
+                        Save
+                      </button>
+                      <button
+                        *ngIf="this.loading_update"
+                        type="button"
+                        style="min-width: 49px; width: 80px !important"
+                        class="mybtn p-1 bg-medium-blue text-white"
+                        disabled
+                      >
+                        Processing..
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="title-5-new4 text-color-black-shade3 mb-7 text-right"
+                  >
+                    Email address
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                    style="
+                      border: 1px solid #e1e1e1;
+                      padding: 5px;
+                      border-radius: 5px;
+                      background: white;
+                    "
+                  >
+                    <div class="title-11 text-color-black-shade2">
+                      {{ driver_detail?.email }}
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        style="margin-left: 8px"
+                        (click)="showEditModal('edit_phone')"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="custom-padding17">
+                <div class="row">
+                  <div class="col-3">
+                    <ng-container
+                      *ngIf="
+                        this.driver_detail?.profile_image != '' &&
+                        this.driver_detail?.profile_image !== undefined &&
+                        this.driver_detail?.profile_image !== null
+                      "
+                    >
+                      <img
+                        class="user-profile-pic"
+                        [src]="
+                          backendAPIURL + this.driver_detail?.profile_image
+                        "
+                        *ngIf="
+                          this.driver_detail?.profile_image != '' &&
+                          this.driver_detail?.profile_image !== undefined &&
+                          this.driver_detail?.profile_image !== null
+                        "
+                      />
+                    </ng-container>
+                  </div>
+
+                  <div class="col-9">
+                    <div class="title-5-new4 text-color-black-shade3 mb-7">
+                      <span
+                        style="
+                          font-family: Gilroy;
+                          font-weight: 600;
+                          font-size: 13px;
+                          line-height: 15.6px;
+                          letter-spacing: 0%;
+                          color: #000000;
+                        "
+                        >Employees</span
+                      >: On your payroll, paid based on the number of hours they
+                      have driven.
+                    </div>
+                    <div class="title-5-new4 text-color-black-shade3 mb-7">
+                      <span
+                        style="
+                          font-family: Gilroy;
+                          font-weight: 600;
+                          font-size: 13px;
+                          line-height: 15.6px;
+                          letter-spacing: 0%;
+                          color: #000000;
+                        "
+                        >Freelance Drivers</span
+                      >: Invoice you based on submitted hour sheets.
+                    </div>
+
+                    <div class="border-div2 p-3">
+                      <div
+                        class="d-flex title-5-new4 text-color-black-shade3 mb-7"
+                        style="justify-content: space-between"
+                      >
+                        Set <span class="text-danger-1">*</span>
+                      </div>
+                      <div
+                        class="d-flex align-items-center"
+                        style="justify-content: space-between"
+                      >
+                        <div class="d-flex p-3 align-items-center">
+                          <div class="title-11 text-color-black-shade2">
+                            Employee
+                          </div>
+                          <input
+                            type="checkbox"
+                            value="1"
+                            formControlName="is_default"
+                            class="mycheckbox3 ml-18"
+                          />
+                        </div>
+                        <div class="d-flex">
+                          <div class="title-11 text-color-black-shade2">
+                            Freelancer
+                          </div>
+                          <input
+                            type="checkbox"
+                            value="1"
+                            formControlName="is_default"
+                            class="mycheckbox3 ml-18"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="title-5-new4 text-color-black-shade3 mb-7">
+                      Set default hour rate, you can always modify this when
+                      assigning tickets to the driver
+                    </div>
+                    <div
+                      class="title-11 text-color-black-shade2 text-right d-flex justify-content-between align-items-center"
+                    >
+                      <div
+                        class="title-11 text-color-black-shade2 text-right pl-1"
+                      >
+                        Default hour rate
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          min="0"
+                          value="{{ this.driver_rate }}"
+                          style="
+                            width: 150px;
+                            padding: 8px;
+                            border: 1px solid #17a1fa;
+                            border-radius: 5px;
+                          "
+                          id="driver_hour_rate"
+                          placeholder="$ ___,__ "
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="border-div2 mb-9"
+              *ngIf="
+                driver_detail?.is_accepted == 0 &&
+                driver_detail?.invitation_code != ''
+              "
+            >
+              <div class="d-flex justify-content-between custom-padding17">
+                <div>
+                  <div class="title-5-new4 text-color-black-shade3 mb-7">
+                    Phone number
+                  </div>
+                  <div class="title-11 text-color-black-shade2">
+                    {{ driver_detail?.contact_number }}
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="title-5-new4 text-color-black-shade3 mb-7 text-right"
+                  >
+                    Email address
+                  </div>
+                  <div class="title-11 text-color-black-shade2 text-right">
+                    {{ driver_detail?.email }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="myhr2"></div>
+              <div
+                class="d-flex justify-content-between custom-padding17"
+                style="background: #d9d9d9"
+              >
+                <div>
+                  <img
+                    class="user-profile-pic"
+                    [src]="'../../assets/images/no-image.png'"
+                  />
+                </div>
+                <div>
+                  <div
+                    class="title-5-new4 text-color-black-shade3 mb-7 text-right"
+                  >
+                    Set default hour rate, you can<br />
+                    always modify this when <br />assigning tickets to the
+                    driver
+                  </div>
+                  <div
+                    class="title-11 text-color-black-shade2 text-right d-flex justify-content-between"
+                  >
+                    <div
+                      class="title-11 text-color-black-shade2 text-right pl-1"
+                    >
+                      Default <br />hour rate
+                    </div>
+                    <div>
+                      <input
+                        type="number"
+                        min="0"
+                        [value]="driver_rate"
+                        style="
+                          width: 100px;
+                          padding: 8px;
+                          border: 1px solid #17a1fa;
+                          border-radius: 5px;
+                          background: #d9d9d9 !important;
+                        "
+                        id="driver_hour_rate"
+                        placeholder="$ ___,__ "
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="title-5-new4 text-color-black-shade3 mt-5 mb-25">
+              Set default truck and trailer for quicker dispatching
+            </div>
+            <div class="row mb-5" *ngIf="driver_detail?.is_active == 1">
+              <div class="col-md-6">
+                <div class="mb-6">
+                  <div class="input-div getinputfield">
+                    <div
+                      class="myinput-new"
+                      *ngIf="this.driver_detail?.default_truck"
+                    >
+                      {{ this.driver_detail?.default_truck?.truck_nickname }}
+                    </div>
+                    <div
+                      class="myinput-new"
+                      *ngIf="!this.driver_detail?.default_truck"
+                      style="font-weight: normal; font-family: 'Gilroy'"
+                    >
+                      Default Truck
+                    </div>
+
+                    <img
+                    src="../../assets/icons/arrow-down-updated.svg"
+                      class="icon-center-right"
+                    />
+                    <div
+                      class="input-popup-div truck-div"
+                      style="display: none"
+                    >
+                      <div
+                        class="title-5-new2 text-color-black-shade5 mb-3"
+                        style="text-align: left"
+                      >
+                        Set default
+                      </div>
+
+                      <ng-container *ngFor="let truck of this.trucks_list">
+                        <div
+                          class="d-flex justify-content-between mb-10"
+                          style="
+                            width: 200px;
+                            height: 24px;
+                            padding-top: 2px;
+                            padding-right: 5px;
+                            padding-bottom: 2px;
+                            padding-left: 5px;
+                            gap: 10px;
+                            border-radius: 5px;
+                            background: #CAEAFF;
+                            box-shadow: 0px 4px 4px 0px #00000040;
+
+
+                          "
+                          (click)="setTruck(truck)"
+                        >
+                          <div
+                            [ngClass]="
+                              truck?.id == this.driver_detail?.default_truck?.id
+                                ? ' selected-truck'
+                                : 'title-5-new  text-black'
+                            "
+                            style="margin-bottom: 4px !important"
+                          >
+                            {{ truck?.truck_nickname }}
+                          </div>
+                        </div>
+                      </ng-container>
+                      <div
+                        type="text"
+                        class="myinput"
+                        style="
+                            display: flex;
+                      justify-content: space-between;
+                        "
+                        (click)="this.goToStep('truck-listing', 'truck')"
+                        data-toggle="modal"
+                        data-target="#newTruck"
+                      >
+                        Add
+                        <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        style="margin-left: 8px"
+                        width="17px"
+                      />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-6">
+                  <div class="input-div getinputfield">
+                    <div
+                      class="myinput-new"
+                      *ngIf="this.driver_detail?.default_trailer"
+                    >
+                      {{
+                        this.driver_detail?.default_trailer?.trailer_nickname
+                      }}
+                    </div>
+                    <div
+                      class="myinput-new"
+                      *ngIf="!this.driver_detail?.default_trailer"
+                      style="font-weight: normal; font-family: 'Gilroy'"
+                    >
+                      Default Trailer
+                    </div>
+                    <img
+                    src="../../assets/icons/arrow-down-updated.svg"
+                      class="icon-center-right"
+                    />
+                    <div
+                      class="input-popup-div trailer-div"
+                      style="display: none"
+                    >
+                      <div
+                        class="title-5-new2 text-color-black-shade5 mb-3"
+                        style="text-align: left"
+                      >
+                        Set default
+                      </div>
+
+                      <ng-container *ngFor="let trailer of this.trailers_list">
+                        <div
+                          class="d-flex justify-content-between mb-10"
+                          (click)="setTrailer(trailer)"
+                          style="
+                          width: 200px;
+                          height: 24px;
+                          padding-top: 2px;
+                          padding-right: 5px;
+                          padding-bottom: 2px;
+                          padding-left: 5px;
+                          gap: 10px;
+                          border-radius: 5px;
+                          background: #CAEAFF;
+                          box-shadow: 0px 4px 4px 0px #00000040;
+                        "
+                        >
+                          <div
+                            [ngClass]="
+                              trailer?.id ==
+                              this.driver_detail?.default_trailer?.id
+                                ? 'selected-truck'
+                                : 'title-5-new text-black '
+                            "
+                            style="margin-bottom: 4px !important"
+                          >
+                            {{ trailer?.trailer_nickname }}
+                          </div>
+                        </div>
+                      </ng-container>
+                      <div
+                        class="myinput"
+                        style="
+                        display: flex;
+                  justify-content: space-between;"
+
+                  (click)="this.goToStep('trailer-listing', 'trailer')"
+                        data-toggle="modal"
+                        data-target="#newTruck"
+                      >
+                        Add
+                        <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        style="margin-left: 8px"
+                        width="17px"
+                      />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="row mb-5"
+              *ngIf="
+                driver_detail?.is_accepted == 0 &&
+                driver_detail?.invitation_code != ''
+              "
+              style="background: #d9d9d9"
+            >
+              <div class="col-md-6">
+                <div class="">
+                  <div
+                    class="input-div getinputfield"
+                    style="
+                      background: none !important;
+                      height: 50px !important;
+                      border: 1px solid #e1e1e1 !important;
+                    "
+                  >
+                    <div
+                      class="myinput-new"
+                      *ngIf="this.driver_detail?.default_truck"
+                    >
+                      {{ this.driver_detail?.default_truck?.truck_nickname }}
+                    </div>
+                    <div
+                      class="myinput-new"
+                      *ngIf="!this.driver_detail?.default_truck"
+                      style="font-weight: normal; font-family: 'Gilroy'"
+                    >
+                      Default Truck
+                    </div>
+
+                    <img
+                      src="../../assets/icons/arrow-down-updated.svg"
+                      class="icon-center-right"
+                    />
+                    <!-- <div
+                      class="input-popup-div truck-div"
+                      style="display: none"
+                    >
+                      <div
+                        class="title-5-new2 text-color-black-shade5 mb-3"
+                        style="text-align: left"
+                      >
+                        Set default
+                      </div>
+
+                      <ng-container *ngFor="let truck of this.trucks_list">
+                        <div
+                          class="d-flex justify-content-between mb-2px"
+                          (click)="setTruck(truck)"
+                        >
+                          <div
+                            [ngClass]="
+                              truck?.id == this.driver_detail?.default_truck?.id
+                                ? ' selected-truck'
+                                : 'title-5-new  text-black'
+                            "
+                            style="margin-bottom: 4px !important"
+                          >
+                            {{ truck?.truck_nickname }}
+                          </div>
+                        </div>
+                      </ng-container>
+                      <div
+                        type="text"
+                        class="myinput"
+                        (click)="this.goToStep('truck-listing', 'truck')"
+                        data-toggle="modal"
+                        data-target="#newTruck"
+                      >
+                        Add
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="">
+                  <div
+                    class="input-div getinputfield"
+                    style="
+                      background: none !important;
+                      height: 50px !important;
+                      border: 1px solid #e1e1e1 !important;
+                    "
+                  >
+                    <div
+                      class="myinput-new"
+                      *ngIf="this.driver_detail?.default_trailer"
+                    >
+                      {{
+                        this.driver_detail?.default_trailer?.trailer_nickname
+                      }}
+                    </div>
+                    <div
+                      class="myinput-new"
+                      *ngIf="!this.driver_detail?.default_trailer"
+                      style="font-weight: normal; font-family: 'Gilroy'"
+                    >
+                      Default Trailer
+                    </div>
+                    <img
+                      src="../../assets/icons/arrow-down-updated.svg"
+                      class="icon-center-right"
+                    />
+                    <!-- <div
+                      class="input-popup-div trailer-div"
+                      style="display: none"
+                    >
+                      <div
+                        class="title-5-new2 text-color-black-shade5 mb-3"
+                        style="text-align: left"
+                      >
+                        Set default
+                      </div>
+
+                      <ng-container *ngFor="let trailer of this.trailers_list">
+                        <div
+                          class="d-flex justify-content-between mb-2px"
+                          (click)="setTrailer(trailer)"
+                        >
+                          <div
+                            [ngClass]="
+                              trailer?.id ==
+                              this.driver_detail?.default_trailer?.id
+                                ? 'selected-truck'
+                                : 'title-5-new text-black '
+                            "
+                            style="margin-bottom: 4px !important"
+                          >
+                            {{ trailer?.trailer_nickname }}
+                          </div>
+                        </div>
+                      </ng-container>
+                      <div
+                        class="myinput"
+                        (click)="this.goToStep('trailer-listing', 'trailer')"
+                        data-toggle="modal"
+                        data-target="#newTruck"
+                      >
+                        Add
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="driver-details-title mt-5 mb-7"
+              *ngIf="driver_detail?.is_active == 1"
+            >
+              Driving details
+            </div>
+            <div
+              class="border-div2 mb-25"
+              *ngIf="driver_detail?.is_active == 1"
+            >
+              <div class="d-flex justify-content-between custom-padding17">
+                <div>
+                  <div class="title-5-new4 text-color-black-shade3 mb-7">
+                    Closed tickets in last 30 days
+                  </div>
+                  <div class="title-11 text-color-black-shade2">
+                    {{ driver_detail?.last_30_days_closed }}
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="title-5-new4 text-color-black-shade3 mb-7 text-right"
+                  >
+                    Next Job
+                  </div>
+                  <div class="title-11 text-color-black-shade2 text-right">
+                    <ng-container *ngIf="driver_detail?.next_job_date">
+                      {{ driver_detail?.next_job_date }} /
+                      {{ driver_detail?.next_job_time }}
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr2"></div>
+
+              <div class="d-flex justify-content-between custom-padding17">
+                <div>
+                  <div class="title-5-new4 text-color-black-shade3 mb-7">
+                    Declined tickets in last 30 days
+                  </div>
+                  <div class="title-11 text-color-black-shade2">
+                    {{ driver_detail?.last_30_days_declined }}
+                  </div>
+                </div>
+                <div>
+                  <div
+                    class="title-5-new4 text-color-black-shade3 mb-7 text-right"
+                  >
+                    Hours driven this month
+                  </div>
+                  <div class="title-11 text-color-black-shade2 text-right">
+                    {{ driver_detail?.last_30_days_declined }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="row align-items-center"
+              *ngIf="driver_detail?.is_active == 1"
+            >
+              <div class="col-2"></div>
+              <div class="col-3">
+                <button
+                  class="mybtn title-13 mybtn-back-blue2 text-white p-8 m-0"
+                  (click)="updateDriver()"
+                  *ngIf="!loading_update"
+                >
+                  Update
+                </button>
+                <button
+                  class="mybtn title-13 mybtn-back-blue2 text-white p-8 m-0"
+                  type="button"
+                  *ngIf="loading_update"
+                >
+                  Processing...
+                </button>
+              </div>
+              <div class="col-1"></div>
+              <div class="col-3">
+                <div class="position-relative modal-div">
+                  <button
+                    class="mybtn title-13 p-8 m-0 w-auto btnaction bg-white br-red text-tc btnremove"
+                    type="button"
+                    *ngIf="!this.is_loading_removing"
+                  >
+                    Remove
+                  </button>
+                  <button
+                    class="mybtn title-13 p-8 m-0 w-auto btnaction bg-white border-blue text-tc"
+                    disabled
+                    type="button"
+                    *ngIf="this.is_loading_removing"
+                  >
+                    Removing...
+                  </button>
+                  <div class="delete-modal">
+                    <ng-container
+                      *ngIf="driver_detail?.email !== this.loggedinUser?.email"
+                    >
+                      <div class="title-3-delete mb-12 text-center">
+                        Confirmation
+                      </div>
+                      <div class="title-5-new2 mb-17 text-center">
+                        Remove {{ driver_detail?.full_name }} from the list?
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <button
+                          class="mybtn title-13 mybtn-back-blue2 text-white p-8 w-auto btnaction"
+                          type="button"
+                          style="
+                            width: 70px !important;
+                            border: 1px solid #17a1fa;
+                          "
+                          (click)="deleteDriver(this.driver_detail?.id)"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          class="mybtn title-13 p-8 w-auto btnaction bg-white border-blue text-tc"
+                          type="button"
+                          style="
+                            width: 70px !important;
+                            border: 1px solid #17a1fa;
+                          "
+                        >
+                          No
+                        </button>
+                      </div>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="
+                        driver_detail?.email === this.loggedinUser?.email &&
+                        this.loggedinUser?.role_id == 6
+                      "
+                    >
+                      <div class="title-3-delete mb-12 text-center">
+                        You cant delete yourself
+                      </div>
+
+                      <div class="text-center" align="center">
+                        <button
+                          class="mybtn title-13 p-8 w-auto btnaction bg-white border-blue text-tc"
+                          type="button"
+                        >
+                          Back
+                        </button>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- for the pending driverr -->
+            <div
+              class="row align-items-center"
+              *ngIf="
+                driver_detail?.is_accepted == 0 &&
+                driver_detail?.invitation_code != ''
+              "
+            >
+              <div class="col-3"></div>
+              <div class="col-3">
+                <button
+                  class="mybtn title-13 mybtn-back-blue2 text-white p-8 m-0"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  type="button"
+                >
+                  Close
+                </button>
+              </div>
+
+              <div class="col-5">
+                <div class="position-relative modal-div">
+                  <button
+                    class="mybtn title-13 p-8 m-0 w-auto btnaction bg-white br-red text-tc btnremove"
+                    type="button"
+                    *ngIf="!this.is_loading_removing"
+                  >
+                    Cancel and remove
+                  </button>
+                  <button
+                    class="mybtn title-13 p-8 m-0 w-auto btnaction bg-white border-blue text-tc"
+                    disabled
+                    type="button"
+                    *ngIf="this.is_loading_removing"
+                  >
+                    Canceling...
+                  </button>
+                  <div class="delete-modal">
+                    <ng-container
+                      *ngIf="driver_detail?.email !== this.loggedinUser?.email"
+                    >
+                      <div class="title-3-delete mb-12 text-center">
+                        Confirmation
+                      </div>
+                      <div class="title-5-new2 mb-17 text-center">
+                        Remove {{ driver_detail?.full_name }} from the list?
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <button
+                          class="mybtn title-13 mybtn-back-blue2 text-white p-8 w-auto btnaction"
+                          type="button"
+                          style="
+                            width: 70px !important;
+                            border: 1px solid #17a1fa;
+                          "
+                          (click)="deleteDriver(this.driver_detail?.id)"
+                        >
+                          Yes
+                        </button>
+                        <button
+                          class="mybtn title-13 p-8 w-auto btnaction bg-white border-blue text-tc"
+                          type="button"
+                          style="
+                            width: 70px !important;
+                            border: 1px solid #17a1fa;
+                          "
+                        >
+                          No
+                        </button>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="tab-pane fade"
+            id="hoursheet"
+            role="tabpanel"
+            aria-labelledby="nav-hoursheet-tab"
+          >
+            <app-hour-sheets> </app-hour-sheets>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade come-from-modal right show"
+  id="newTruck"
+  tabindex="-1 "
+  role="dialog "
+  aria-labelledby="myModalLabel "
+>
+  <div class="modal-dialog max-width-50px" role="document ">
+    <div class="modal-content border-15px plr-50px">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12" *ngIf="current_step == 'truck-listing'">
+            <div class="heading-new-project pb-2 mb-38">
+              Truck / trailer information
+            </div>
+
+            <div
+              class="row"
+              style="
+                margin-left: 2rem !important;
+                margin-right: 2rem !important;
+              "
+            >
+              <div class="col-md-5 p-0 p-0-sm">
+                <div
+                  class="your-adding bg-blue2 goto-truck-listing active text-white"
+                  (click)="goToStep('truck-listing', 'truck')"
+                >
+                  Truck
+                </div>
+                <div class="myhr3px mb-14"></div>
+              </div>
+              <div class="col-md-2 p-0 p-0-sm"></div>
+              <div class="col-md-5 p-0 p-0-sm">
+                <div
+                  class="your-adding goto-truck-listing tc-text-color"
+                  (click)="goToStep('trailer-listing', 'trailer')"
+                >
+                  Trailer
+                </div>
+              </div>
+            </div>
+
+            <form
+              [formGroup]="truckForm"
+              (ngSubmit)="onSaveTruck()"
+              class="trailer-form tc-form"
+            >
+              <div class="row m-0">
+                <div class="col-md-6 padding-left-0 p-0-sm">
+                  <span *ngIf="truckNicknameError != ''" class="text-danger">{{
+                    truckNicknameError
+                  }}</span>
+                  <label class="field text-field required_field">
+                    <input
+                      class="field__input"
+                      placeholder="Type here"
+                      value=""
+                      formControlName="truck_nickname"
+                    />
+                    <span class="field__label-wrap">
+                      <span class="field__label">Truck name</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-6 padding-right-0 p-0-sm">
+                  <span
+                    *ngIf="truckLicensePlateError != ''"
+                    class="text-danger"
+                    >{{ truckLicensePlateError }}</span
+                  >
+                  <label class="field text-field required_field">
+                    <input
+                      class="field__input"
+                      placeholder="xxx-xxx"
+                      value=""
+                      formControlName="truck_license_plate"
+                    />
+                    <span class="field__label-wrap">
+                      <span class="field__label">License plate</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="row m-0">
+                <div class="col-md-6 padding-left-0 p-0-sm">
+                  <span *ngIf="truckTypeError != ''" class="text-danger">{{
+                    truckTypeError
+                  }}</span>
+                  <label class="field text-field required_field">
+                    <select
+                      class="field__input"
+                      formControlName="truck_type"
+                      [(ngModel)]="this.truck_type"
+                    >
+                      <option value="Single">Single</option>
+                      <option value="Tandem">Tandem</option>
+                      <option value="Tridem">Tridem</option>
+                      <option value="Quad-Axle">Quad-Axle</option>
+                    </select>
+                    <span class="field__label-wrap">
+                      <span class="field__label">Truck type</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-6 padding-right-0 p-0-sm">
+                  <span *ngIf="truckColorError != ''" class="text-danger">{{
+                    truckColorError
+                  }}</span>
+                  <label class="field text-field">
+                    <input
+                      class="field__input"
+                      placeholder="Type here"
+                      value=""
+                      formControlName="truck_color"
+                    />
+
+                    <span class="field__label-wrap">
+                      <span class="field__label">Truck color</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-12 p-0 p-0-sm">
+                  <span
+                    *ngIf="truckWeightCapacityError != ''"
+                    class="text-danger"
+                    >{{ truckWeightCapacityError }}</span
+                  >
+                  <span
+                    *ngIf="truckWeightCapacityUnitError != ''"
+                    class="text-danger"
+                    >{{ truckWeightCapacityUnitError }}</span
+                  >
+                  <label class="field text-field">
+                    <input
+                      class="field__input"
+                      placeholder="Enter"
+                      value=""
+                      formControlName="weight_capacity"
+                    />
+                    <select
+                      class="selectlist-addon"
+                      formControlName="weight_capacity_unit"
+                      [(ngModel)]="this.truck_weight"
+                    >
+                      <option value="ton">ton</option>
+                      <option value="lb">lb</option>
+                      <option value="lb2">lb2</option>
+                    </select>
+                    <span class="field__label-wrap">
+                      <span class="field__label">Truck capacity in weight</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-12 p-0 p-0-sm">
+                  <span
+                    *ngIf="truckVolumeCapacityError != ''"
+                    class="text-danger"
+                    >{{ truckVolumeCapacityError }}</span
+                  >
+                  <span
+                    *ngIf="truckVolumeCapacityUnitError != ''"
+                    class="text-danger"
+                    >{{ truckVolumeCapacityUnitError }}</span
+                  >
+                  <label class="field text-field">
+                    <input
+                      class="field__input"
+                      placeholder="Enter"
+                      value=""
+                      formControlName="volume_capacity"
+                    />
+                    <select
+                      class="selectlist-addon"
+                      formControlName="volume_capacity_unit"
+                      [(ngModel)]="this.truck_volumn"
+                    >
+                      <option value="m2">m2</option>
+                    </select>
+                    <span class="field__label-wrap">
+                      <span class="field__label">Truck capacity in volume</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <br />
+              <br />
+              <div class="d-flex m-0 btn-div" align="center">
+                <div class="padding-left-0 p-0-sm">
+                  <button
+                    class="btn-back goto-dashboard-setup-1"
+                    data-dismiss="modal"
+                  >
+                    Back
+                  </button>
+                </div>
+                <div class="padding-right-0 p-0-sm">
+                  <button
+                    class="mybtn bg-medium-blue text-white"
+                    type="submit"
+                    *ngIf="!is_truck_loading"
+                  >
+                    Add truck
+                  </button>
+                  <button
+                    class="mybtn bg-medium-blue text-white"
+                    type="submit"
+                    *ngIf="is_truck_loading"
+                    disabled
+                  >
+                    Processing..
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-12" *ngIf="current_step == 'trailer-listing'">
+            <div class="heading-new-project pb-2 mb-38">
+              Truck / trailer information
+            </div>
+
+            <div
+              class="row"
+              style="
+                margin-left: 2rem !important;
+                margin-right: 2rem !important;
+              "
+            >
+              <div class="col-md-5 p-0 p-0-sm">
+                <div
+                  class="your-adding goto-truck-listing tc-text-color"
+                  (click)="goToStep('truck-listing', 'truck')"
+                >
+                  Truck
+                </div>
+              </div>
+              <div class="col-md-2 p-0 p-0-sm"></div>
+              <div class="col-md-5 p-0 p-0-sm">
+                <div
+                  class="your-adding bg-blue2 goto-truck-listing active text-white"
+                  (click)="goToStep('trailer-listing', 'trailer')"
+                >
+                  Trailer
+                </div>
+                <div class="myhr3px mb-14"></div>
+              </div>
+            </div>
+
+            <form
+              [formGroup]="trailerForm"
+              (ngSubmit)="onSaveTrailer()"
+              class="trailer-form tc-form"
+            >
+              <div class="row m-0">
+                <div class="col-md-6 padding-left-0 p-0-sm">
+                  <span
+                    *ngIf="trailerNicknameError != ''"
+                    class="text-danger"
+                    >{{ trailerNicknameError }}</span
+                  >
+                  <label class="field text-field required_field">
+                    <input
+                      class="field__input"
+                      placeholder="Type here"
+                      value=""
+                      formControlName="trailer_nickname"
+                    />
+                    <span class="field__label-wrap">
+                      <span class="field__label">Trailer name</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-6 padding-right-0 p-0-sm">
+                  <span
+                    *ngIf="trailerLicensePlateError != ''"
+                    class="text-danger"
+                    >{{ trailerLicensePlateError }}</span
+                  >
+                  <label class="field text-field required_field">
+                    <input
+                      class="field__input"
+                      placeholder="xxx-xxx"
+                      value=""
+                      formControlName="trailer_license_plate"
+                    />
+                    <span class="field__label-wrap">
+                      <span class="field__label">License plate</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-6 padding-left-0 p-0-sm">
+                  <span *ngIf="trailerTypeError != ''" class="text-danger">{{
+                    trailerTypeError
+                  }}</span>
+                  <label class="field text-field required_field">
+                    <select
+                      class="field__input"
+                      formControlName="trailer_type"
+                      [(ngModel)]="this.trailer_type"
+                    >
+                      <option value="Pony">Pony</option>
+                      <option value="Tri Pony">Tri Pony</option>
+                      <option value="Quad (wagon)">Quad (wagon)</option>
+                      <option value="Transfer">Transfer</option>
+                    </select>
+                    <span class="field__label-wrap">
+                      <span class="field__label">Trailer type</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-6 p-0 p-0-sm"></div>
+                <div class="col-md-12 p-0 p-0-sm">
+                  <span
+                    *ngIf="trailerWeightCapacityError != ''"
+                    class="text-danger"
+                    >{{ trailerWeightCapacityError }}</span
+                  >
+                  <label class="field text-field">
+                    <input
+                      class="field__input"
+                      placeholder="10"
+                      value="Enter"
+                      formControlName="weight_capacity"
+                    />
+                    <select
+                      class="selectlist-addon"
+                      formControlName="weight_capacity_unit"
+                      [(ngModel)]="this.trailer_weight"
+                    >
+                      <option value="ton" selected>ton</option>
+                      <option value="lb">lb</option>
+                      <option value="lb2">lb2</option>
+                    </select>
+                    <span class="field__label-wrap">
+                      <span class="field__label"
+                        >Trailer capacity in weight</span
+                      >
+                    </span>
+                  </label>
+                </div>
+                <div class="col-md-12 p-0 p-0-sm">
+                  <span
+                    *ngIf="trailerVolumeCapacityError != ''"
+                    class="text-danger"
+                    >{{ trailerVolumeCapacityError }}</span
+                  >
+                  <label class="field text-field">
+                    <input
+                      class="field__input"
+                      placeholder="Enter"
+                      formControlName="volume_capacity"
+                    />
+                    <select
+                      class="selectlist-addon"
+                      formControlName="volume_capacity_unit"
+                      [(ngModel)]="this.trailer_volumn"
+                    >
+                      <option value="m2">m2</option>
+                    </select>
+                    <span class="field__label-wrap">
+                      <span class="field__label"
+                        >Trailer capacity in volume</span
+                      >
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <br />
+              <br />
+              <div class="d-flex m-0 btn-div" align="center">
+                <div class="padding-left-0">
+                  <button
+                    class="btn-back goto-dashboard-setup-1"
+                    data-dismiss="modal"
+                  >
+                    Back
+                  </button>
+                </div>
+                <div class="padding-right-0">
+                  <button
+                    class="mybtn bg-medium-blue text-white"
+                    type="submit"
+                    *ngIf="!is_trailer_loading"
+                  >
+                    Add trailer
+                  </button>
+                  <button
+                    class="mybtn bg-medium-blue text-white"
+                    type="submit"
+                    *ngIf="is_trailer_loading"
+                    disabled
+                  >
+                    Processing..
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3636 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content p-10px">
+      <!-- <div class="title-11 text-black-shade text-center mb-12">
+                Closed tickets
+            </div> -->
+      <div class="main-inner-body-container mt-15px">
+        <div
+          class="row setting-content-page border-div mt_10 mb_15"
+          style="padding-bottom: 15px !important"
+        >
+          <div
+            class="col-md-4"
+            style="display: flex; align-content: center; flex-wrap: wrap"
+          >
+            <img _ngcontent-fbu-c48="" src="assets/icons/closedd.svg" />
+            <div class="heading-1-400 text-black-shade mt-1 ml-2">
+              Closed tickets
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div
+              class="d-flex justify-content-between align-items-center float-right"
+            >
+              <div class="ml-3">
+                <nav>
+                  <div
+                    class="nav nav-pills nav-fill ticket-tabs"
+                    id="nav-tab"
+                    role="tablist"
+                  >
+                    <a
+                      class="nav-item nav-link active changeCalendar ml-2 text_center text_bold mb-0"
+                      id="nav-close-tickets-tab"
+                      data-type="close-tickets-detail"
+                      data-toggle="tab"
+                      [routerLink]="'/tc-closed-tickets'"
+                      role="tab"
+                      aria-controls="nav-home"
+                      aria-selected="true"
+                      >Closed tickets</a
+                    >
+                    <a
+                      class="nav-item nav-link changeCalendar ml-2 text_center text_bold mb-0"
+                      id="nav-declined-tickets-tab"
+                      data-type="declined-tickets-detail"
+                      data-toggle="tab"
+                      [routerLink]="'/tc-declined-tickets'"
+                      role="tab"
+                      aria-controls="nav-profile"
+                      aria-selected="false"
+                      >Declined tickets</a
+                    >
+                    <a
+                      class="nav-item nav-link changeCalendar ml-2 text_center text_bold mb-0"
+                      id="nav-cancelled-tickets-tab"
+                      data-type="cancelled-tickets-detail"
+                      data-toggle="tab"
+                      [routerLink]="'/tc-cancelled-tickets'"
+                      role="tab"
+                      aria-controls="nav-profile"
+                      aria-selected="false"
+                      >Cancelled tickets</a
+                    >
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row setting-content-page border-div mb_15 inner_main_shadow"
+          *ngIf="this.is_free_trial != 'YES'; else TrialBlock"
+        >
+          <div class="col-md-6">
+            <div class="setting-content-page custom-padding2">
+              <div
+                class="title-11 text-black-shade text-center title-21 pb-3 pl-2"
+              >
+                Monthly approved tickets and DispatchProX tickets usage
+              </div>
+              <app-closed-ticket-graph></app-closed-ticket-graph>
+              <!-- <img src="../../assets/icons/graph6.svg" class="img" width="89%"> -->
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div
+              class="setting-content-page custom-padding2"
+              *ngIf="this.total_without_tragget_tickets > 0"
+            >
+              <div class="title-11 text-black-shade text-center mb-27 title-21">
+                Number of closed tickets without DispatchProX tickets
+              </div>
+              <div class="text-center mb-3 title_22">
+                These {{ this.total_without_tragget_tickets }} closed tickets
+                are not available <br />
+                for tracking, your invoicing or billing
+              </div>
+              <div align="center" class="mb-3">
+                <div class="da-number-div da-number-div2 da-number-div-red">
+                  <div class="da-number3">
+                    {{ this.total_without_tragget_tickets }}
+                  </div>
+                </div>
+              </div>
+              <div class="text-center mb-3 title_22">
+                Tickets will be available on next subscription <br />
+                period. You can increase your subscription size or <br />
+                buy single tickets to get them in use immediately
+              </div>
+              <div align="center">
+                <button
+                  class="mybtn2 text-white buy_tic_btn"
+                  type="button"
+                  [routerLink]="'/tc-tragget-plans'"
+                >
+                  Buy tickets
+                </button>
+              </div>
+              <br />
+            </div>
+            <div
+              class="setting-content-page custom-padding2"
+              *ngIf="this.total_without_tragget_tickets < 1"
+            >
+              <div class="title-11 text-black-shade text-center mb-27 title-21">
+                Number of closed tickets without DispatchProX tickets
+              </div>
+              <div align="center" class="mb-38">
+                <div class="da-number-div da-number-div2 da-number-div-green">
+                  <div class="da-number3 text-color-green">0</div>
+                </div>
+              </div>
+              <br />
+              <div class="text-center mb-3 title_22">
+                Tickets will be available on next subscription <br />
+                period. You can increase your subscription size or <br />
+                buy single tickets to get them in use immediately
+              </div>
+              <div align="center">
+                <button
+                  class="mybtn2 text-white buy_tic_btn"
+                  type="button"
+                  [routerLink]="'/tc-tragget-tickets'"
+                  style="padding: 0px !important"
+                >
+                  DispatchProX tickets
+                </button>
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+        <ng-template #TrialBlock>
+          <app-tc-trial-screen-closed-tickets></app-tc-trial-screen-closed-tickets>
+        </ng-template>
+
+        <div class="row setting-content-page border-div mb_10 inner_main_shadow">
+          <div class="col-md-12">
+            <div class="setting-content-page custom-padding3">
+              <div class="row pr-3 pl-1">
+                <div class="col-md-3">
+                  <div class="dashboard-title mb-6 title-21">
+                    Approved Closed tickets
+                  </div>
+                  <div class="mb-6 text_2">Click the line to see details</div>
+                </div>
+
+                <div class="col-md-2 pr-1 pl-1">
+                  <label class="field text-field">
+                    <input
+                      class="field__input height-43px filter_btns"
+                      (change)="changeDate($event)"
+                      placeholder="All"
+                      value=""
+                      type="date"
+                      style="padding-right: 0 !important"
+                    />
+                    <span class="field__label-wrap">
+                      <span
+                        class="field__label field__label2"
+                        style="
+                          font-size: 13px !important;
+                          color: rgba(104, 105, 109, 1);
+                          margin-top: -5px !important;
+                          margin-left: -6px !important;
+                        "
+                        >Filter by date</span
+                      >
+                    </span>
+                  </label>
+                </div>
+
+                <div class="col-md-2 px-1">
+                  <div
+                    class="input-div  getinputfield1 {{
+                      !this.search_Customer_selected?.id ? 'border-blue' : ''
+                    }} cur_p"
+                  >
+                    <div class="title-5-new2 text-color-black-shade5 text-left">
+                      Filter by Customer
+                    </div>
+                    <div
+                      class="myinput-new selected sa_select"
+                      *ngIf="!this.search_Customer_selected?.id"
+                    >
+                      Select
+                    </div>
+                    <div
+                      class="myinput-new selected sa_selected_filter"
+                      *ngIf="this.search_Customer_selected?.full_name != null"
+                    >
+                      {{ this.search_Customer_selected.company_name }}
+                    </div>
+                    <img
+                      src="../../assets/images/dropdown.svg"
+                      class="icon-center-right"
+                    />
+                    <div
+                      class="input-popup-div1 cust_drop companies_list"
+                      style="display: none"
+                    >
+                      <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                        Customer
+                      </div>
+                      <div class="title-18 text-right mb-2px d-none">
+                        Default
+                      </div>
+                      <div
+                        (click)="onSelectChange('')"
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          [ngClass]="
+                            !this.search_Customer_selected?.id
+                              ? 'title-5-new33'
+                              : 'title-5-new33 text-color-black-shade7'
+                          "
+                        >
+                          All
+                        </div>
+                      </div>
+                      <ng-container *ngFor="let company of this.cc_list">
+                        <div
+                          (click)="onSelectChange(company)"
+                          class="d-flex justify-content-between mb-5px list-item"
+                          *ngIf="company?.id"
+                        >
+                          <div
+                            *ngIf="company?.id"
+                            [ngClass]="
+                              this.search_Customer_selected?.id == company.id
+                                ? 'title-5-new33 title-5-new33_active'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            {{ company.company_name }}
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="col-md-2 px-1">
+                                    <label class="field text-field">
+                                        <select class="field__input icon-none height-43px filter_btns" (change)="onSelectChange($event)">
+                                            <option value="">All</option>
+                                            <option *ngFor="let cc of cc_list; let i = index" [attr.data-index]="i">
+                                                {{ cc?.company_name }}
+                                            </option>
+                                        </select>
+
+                                        <i class="fa fa-caret-down input-icon-right" aria-hidden="true" style=" color: rgba(136, 137, 139, 1) !important; font-size: 22px; " ></i>
+                                        <span class="field__label-wrap">
+                                            <span class="field__label field__label2" style="font-size: 13px !important;color: rgba(104, 105, 109, 1);  margin-top: -5px !important; margin-left: -6px !important;">Filter by Customer</span>
+                                        </span>
+                                    </label>
+                                </div> -->
+
+                <div class="col-md-2 px-1">
+                  <div
+                    class="input-div  getinputfield {{
+                      !this.selected_project?.id ? 'border-blue' : ''
+                    }} cur_p"
+                  >
+                    <div class="title-5-new2 text-color-black-shade5 text-left">
+                      Filter by Project
+                    </div>
+                    <div
+                      class="myinput-new selected sa_select"
+                      *ngIf="!this.selected_project?.id"
+                    >
+                      Select
+                    </div>
+                    <div
+                      class="myinput-new selected sa_selected_filter"
+                      *ngIf="this.selected_project?.project_name != null"
+                    >
+                      {{ this.selected_project.project_name }}
+                    </div>
+                    <img
+                      src="../../assets/images/dropdown.svg"
+                      class="icon-center-right"
+                    />
+                    <div
+                      class="input-popup-div cust_drop companies_list"
+                      style="display: none"
+                    >
+                      <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                        Project
+                      </div>
+                      <div class="title-18 text-right mb-2px d-none">
+                        Default
+                      </div>
+                      <div
+                        (click)="handleFilterByProject('')"
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          [ngClass]="
+                            !this.selected_project?.id
+                              ? 'title-5-new33'
+                              : 'title-5-new33 text-color-black-shade7'
+                          "
+                        >
+                          All
+                        </div>
+                      </div>
+                      <ng-container *ngFor="let company of this.project_list">
+                        <div
+                          (click)="
+                            handleFilterByProject(
+                              company?.id + company.project_name
+                            )
+                          "
+                          class="d-flex justify-content-between mb-5px list-item"
+                          *ngIf="company?.id"
+                        >
+                          <div
+                            *ngIf="company?.id"
+                            [ngClass]="
+                              this.selected_project?.id == company.id
+                                ? 'title-5-new33 title-5-new33_active'
+                                : 'title-5-new33 text-color-black-shade7'
+                            "
+                          >
+                            {{ company.project_name }}
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-md-2 px-1">
+                                    <label class="field text-field">
+                                        <select class="field__input height-43px icon-none filter_btns" (change)="handleFilterByProject($event)">
+                                            <option value="">All</option>
+                                            <option *ngFor="let project of this.project_list" [value]="project?.id+project.project_name">{{project.project_name}}</option>
+
+                                        </select>
+                                        <i class="fa fa-caret-down input-icon-right" aria-hidden="true"  style=" color: rgba(136, 137, 139, 1) !important; font-size: 22px; "></i>
+                                        <span class="field__label-wrap">
+                                            <span class="field__label field__label2 " style="font-size: 13px !important; color: rgba(104, 105, 109, 1);  margin-top: -5px !important; margin-left: -6px !important;">Filter by project</span>
+                                        </span>
+                                    </label>
+                                </div> -->
+                <div class="col-md-3 px-1">
+                  <div class="position-relative">
+                    <label class="field text-field">
+                      <input
+                        class="field__input height-43px filter_btns"
+                        placeholder="Search"
+                        value=""
+                        type="text"
+                        (ngModelChange)="searchBy($event)"
+                        [(ngModel)]="this.search_by"
+                        #searchby
+                      />
+                      <span class="field__label-wrap">
+                        <span
+                          class="field__label field__label2"
+                          style="
+                            font-size: 14px !important;
+                            color: #000000;
+                            font-family: 'Gilroy-Bold';
+                          "
+                          >Search ticket</span
+                        >
+                      </span>
+                    </label>
+                    <div class="topright2">
+                      <img
+                        src="../assets/icons/search-a.svg"
+                        (click)="searchBy(searchby.value)"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- <div class="col-md-3 pl-2">
+                                        <div class="position-relative">
+                                            <label class="field text-field">
+                                                <input class="field__input" placeholder="Search" (change)="searchBy(searchby.value)"  type="text" [(ngModel)]="this.search_by" #searchby>
+                                                <span class="field__label-wrap">
+                                                <span class="field__label">Search vendor</span>
+                                                </span>
+                                            </label>
+                                            <div class="topright">
+                                                <img src="../assets/icons/search-a.svg" (click)="searchBy(searchby.value)">
+                                            </div>
+                                        </div>
+
+                                    </div> -->
+                </div>
+              </div>
+              <div class="row mb-41">
+                <div class="col-md-12">
+                  <div class="table-responsive">
+                    <table class="table mytable">
+                      <thead>
+                        <tr>
+                          <th class="py-0" (click)="sortBy('ticket_id')">
+                            <span
+                              >Ticket ID <img src="../assets/icons/swap.svg"
+                            /></span>
+                          </th>
+                          <!-- <th (click)="sortBy('dispatch_date')"><span>Date <img  src="../assets/icons/swap.svg"></span></th> -->
+                          <th class="py-0"><span>Customer</span></th>
+                          <!-- <th (click)="sortBy('project_id')"><span>Project <img  src="../assets/icons/swap.svg"></span></th> -->
+                          <th class="py-0">
+                            Description (driver- licence plate- round qty)
+                          </th>
+                          <th class="py-0"><span>Date </span></th>
+                          <th class="py-0">Hours</th>
+                          <th class="py-0">Rounds</th>
+                          <th class="py-0">Subtotal</th>
+                          <th class="py-0">
+                            <img
+                              src="../../../../../assets/icons/t-normal.svg"
+                              style="margin-top: 1px !important"
+                            />
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngIf="
+                            this.is_free_trial == 'NO' &&
+                            this.total_without_tragget_tickets > 0
+                          "
+                          [class]="
+                            this.total_without_tragget_tickets > 0
+                              ? 'without-tragget-ticket-row'
+                              : ''
+                          "
+                        >
+                          <td colspan="5">
+                            <div class="d-flex">
+                              <div class="d-flex align-items-center">
+                                <div class="grey-bg-img grey-count-text">
+                                  {{ this.total_without_tragget_tickets }}
+                                </div>
+                                <div class="grey-without-text ml-2">
+                                  <span class="grey-without-text-bold">
+                                    over your subscription
+                                  </span>
+                                  - Tickets deducted next month’s subscription
+                                  on your renewal date
+                                  {{
+                                    this.tragget_ticket_data?.renewal_date
+                                      ? this.tragget_ticket_data?.renewal_date
+                                      : ""
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td colspan="2">
+                            <span class="float-right d-flex align-items-center">
+                              <span class="border-1px-grey mr-3">{{
+                                this.total_without_tragget_tickets
+                              }}</span>
+                              <img
+                                src="assets/icons/grey-without-tragget-cross.svg"
+                                class="mr-3"
+                              />
+
+                              <img
+                                src="assets/icons/grey-without-tragget-t.svg"
+                                class="mr-3"
+                              />
+                            </span>
+                          </td>
+                        </tr>
+                        <ng-container
+                          *ngIf="ticket_list?.length > 0; else elseRow"
+                        >
+                          <tr
+                            *ngFor="let ticket of ticket_list"
+                            (click)="setDetailTicket(ticket)"
+                            data-toggle="modal"
+                            data-target="#myModal"
+                          >
+                            <ng-container *ngIf="!ticket?.tc_ticket">
+                              <td class="td_custom">
+                                <div class="custom_button_ticket">
+                                  {{ ticket?.ticket?.ticket_no }}
+
+                                </div>
+                              </td>
+                              <td>
+                                <ng-container>
+                                  {{getCustomer(ticket?.ticket?.trucking_company_requests)}}
+                                </ng-container>
+
+                              </td>
+                              <td>
+                                {{
+                                  ticket?.ticket?.driver_ticket?.driver
+                                    ?.full_name
+                                }}
+                                -
+                                {{
+                                  ticket?.ticket?.driver_ticket?.truck
+                                    ?.truck_license_plate
+                                }}
+                                -
+                                {{
+                                  ticket?.ticket?.ticket_truck_type_rounds
+                                    ?.length
+                                }}
+                                rounds
+                              </td>
+                              <td>
+                                {{
+                                  this.time_conversion(ticket, 1).convertedDate
+                                    ? this.formatDate(
+                                        this.time_conversion(ticket, 1)
+                                          .convertedDate
+                                      )
+                                    : this.formatDate(
+                                        ticket?.ticket?.ticket_date
+                                      )
+                                }}
+                              </td>
+                              <td>
+                                <span
+                                  *ngIf="
+                                    ticket?.ticket?.status == 'Approved' &&
+                                    ticket?.ticket?.driver_ticket
+                                      ?.approver_time != '' &&
+                                    ((ticket?.ticket?.driver_ticket
+                                      ?.trucking_company_id == this.user_id &&
+                                      ticket?.rate_type == 'round') ||
+                                      ticket?.rate_type == 'hour')
+                                  "
+                                >
+                                  {{
+                                    ticket?.ticket?.driver_ticket?.approver_time
+                                      ? parseHour(
+                                          ticket?.ticket?.driver_ticket
+                                            ?.approver_time
+                                        )
+                                      : ""
+                                  }}
+                                </span>
+
+                                <span
+                                  *ngIf="
+                                    ticket?.ticket?.status == 'Approved' &&
+                                    (ticket?.ticket?.driver_ticket
+                                      ?.approver_time == '' ||
+                                      ticket?.ticket?.driver_ticket
+                                        ?.approver_time == 'null' ||
+                                      ticket?.ticket?.driver_ticket
+                                        ?.approver_time == null) &&
+                                    ((ticket?.ticket?.driver_ticket
+                                      ?.trucking_company_id == this.user_id &&
+                                      ticket?.rate_type == 'round') ||
+                                      ticket?.rate_type == 'hour')
+                                  "
+                                >
+                                  {{
+                                    parseDriverTime(
+                                      ticket?.ticket?.driver_ticket
+                                        ?.driver_hours,
+                                      ticket?.ticket?.driver_ticket
+                                        ?.driver_minutes
+                                    )
+                                  }}
+                                </span>
+                                <span
+                                  *ngIf="
+                                    !(
+                                      (ticket?.ticket?.driver_ticket
+                                        ?.trucking_company_id == this.user_id &&
+                                        ticket?.rate_type == 'round') ||
+                                      ticket?.rate_type == 'hour'
+                                    )
+                                  "
+                                  >-</span
+                                >
+                              </td>
+                              <td>
+                                <span *ngIf="ticket?.rate_type == 'round'">
+                                  {{ this.getTotalTicketRounds(ticket) }}
+                                </span>
+                                <span *ngIf="ticket?.rate_type != 'round'"
+                                  >-</span
+                                >
+                              </td>
+
+                              <td>
+                                ${{
+                                  this.Sub_Total_Cal(
+                                    ticket?.ticket?.driver_ticket
+                                      ?.approver_time != "" &&
+                                      ticket?.ticket?.driver_ticket
+                                        ?.approver_time
+                                      ? parseHour(
+                                          ticket?.ticket?.driver_ticket
+                                            ?.approver_time
+                                        )
+                                      : ticket?.ticket?.driver_ticket
+                                          ?.approver_time == "" ||
+                                        ticket?.ticket?.driver_ticket
+                                          ?.approver_time == "null" ||
+                                        ticket?.ticket?.driver_ticket
+                                          ?.approver_time == null
+                                      ? parseDriverTime(
+                                          ticket?.ticket?.driver_ticket
+                                            ?.driver_hours,
+                                          ticket?.ticket?.driver_ticket
+                                            ?.driver_minutes
+                                        )
+                                      : "",
+                                    ticket?.ticket?.trucking_company_requests,
+                                    ticket?.ticket?.ticket_no
+                                  )
+                                }}
+                              </td>
+
+                              <td>
+                                <ng-container
+                                  *ngFor="
+                                    let usage of ticket?.ticket
+                                      ?.tragget_ticket_usages
+                                  "
+                                >
+                                  <ng-container
+                                    *ngIf="
+                                      usage?.is_free_trial &&
+                                      usage?.is_free_trial == 'YES' &&
+                                      usage?.user_id == this.user_id
+                                    "
+                                  >
+                                    <img
+                                      src="../../../../../assets/icons/t-trial.svg"
+                                    />
+                                  </ng-container>
+
+                                  <ng-container
+                                    *ngIf="
+                                      usage?.is_free_trial &&
+                                      usage?.is_free_trial == 'NO' &&
+                                      usage?.user_plan?.plan_id == 2 &&
+                                      usage?.user_id == this.user_id
+                                    "
+                                  >
+                                    <img
+                                      src="../../../../../assets/icons/t-orange.png"
+                                    />
+                                  </ng-container>
+                                  <ng-container
+                                    *ngIf="
+                                      usage?.is_free_trial &&
+                                      usage?.is_free_trial == 'NO' &&
+                                      usage?.user_plan?.plan_id == 1 &&
+                                      usage?.user_id == this.user_id
+                                    "
+                                  >
+                                    <img
+                                      src="../../../../../assets/icons/t-blue.svg"
+                                    />
+                                  </ng-container>
+                                </ng-container>
+                              </td>
+                            </ng-container>
+                            <ng-container
+                              *ngIf="
+                                ticket?.tc_ticket && ticket?.tc_ticket == 'YES'
+                              "
+                            >
+                              <td class="td_custom">
+                                <div class="custom_button_ticket">
+                                  {{ ticket?.ticket?.ticket_no }}
+                                </div>
+                              </td>
+                              <td>
+                                <div
+                                  *ngIf="
+                                    ticket.dispatch_by?.id ==
+                                      ticket.dispatch_to?.id &&
+                                      ticket.dispatch_to_id == this.user_id;
+                                    else Block2B
+                                  "
+                                >
+                                  {{
+                                    ticket?.ticket?.customer
+                                      ? ticket?.ticket?.customer?.company_name
+                                        ? ticket?.ticket?.customer?.company_name
+                                        : ticket?.ticket?.customer?.full_name
+                                      : ticket?.ticket?.tc_customer
+                                          ?.company_name
+                                      ? ticket?.ticket?.tc_customer
+                                          ?.company_name
+                                      : ""
+                                  }}
+                                </div>
+                                <ng-template #Block2B>
+                                  <ng-container
+                                    *ngIf="
+                                      ticket?.ticket
+                                        ?.trucking_company_requests &&
+                                      ticket?.ticket?.trucking_company_requests
+                                        .length > 0
+                                    "
+                                  >
+                                    <ng-container
+                                      *ngFor="
+                                        let reqDetail of ticket?.ticket
+                                          ?.trucking_company_requests
+                                      "
+                                    >
+                                      <ng-container
+                                        *ngIf="
+                                          reqDetail.dispatch_by?.id !==
+                                            this.user_id &&
+                                          reqDetail.dispatch_by !== null &&
+                                          reqDetail.dispatch_to_id ==
+                                            this.user_id &&
+                                          reqDetail?.dispatch_by_id !=
+                                            reqDetail?.dispatch_to_id
+                                        "
+                                      >
+                                        {{
+                                          reqDetail?.dispatch_by?.company_name
+                                        }}
+                                      </ng-container>
+                                    </ng-container>
+                                  </ng-container>
+                                </ng-template>
+                              </td>
+                              <td>
+                                {{
+                                  ticket?.ticket?.driver_ticket?.driver
+                                    ?.full_name
+                                }}
+                                -
+                                {{
+                                  ticket?.ticket?.driver_ticket?.truck
+                                    ?.truck_license_plate
+                                }}
+                                -
+                                {{
+                                  ticket?.ticket?.ticket_truck_type_rounds
+                                    ?.length
+                                }}
+                                rounds
+                              </td>
+                              <!-- <td>{{ticket?.ticket?.ticket_date}}</td> -->
+                              <td>
+                                {{
+                                  this.time_conversion(ticket, 1).convertedDate
+                                    ? this.formatDate(
+                                        this.time_conversion(ticket, 1)
+                                          .convertedDate
+                                      )
+                                    : this.formatDate(
+                                        ticket?.ticket?.ticket_date
+                                      )
+                                }}
+                              </td>
+
+                              <td>
+                                <span
+                                  *ngIf="
+                                    ticket?.ticket?.status == 'Approved' &&
+                                    ticket?.ticket?.driver_ticket
+                                      ?.approver_time != '' &&
+                                    ticket?.ticket?.driver_ticket
+                                      ?.trucking_company_id == this.user_id
+                                  "
+                                >
+                                  {{
+                                    ticket?.ticket?.driver_ticket?.approver_time
+                                      ? parseHour(
+                                          ticket?.ticket?.driver_ticket
+                                            ?.approver_time
+                                        )
+                                      : ""
+                                  }}
+                                </span>
+
+                                <span
+                                  *ngIf="
+                                    ticket?.ticket?.status == 'Approved' &&
+                                    (ticket?.ticket?.driver_ticket
+                                      ?.approver_time == '' ||
+                                      ticket?.ticket?.driver_ticket
+                                        ?.approver_time == 'null' ||
+                                      ticket?.ticket?.driver_ticket
+                                        ?.approver_time == null) &&
+                                    ticket?.ticket?.driver_ticket
+                                      ?.trucking_company_id == this.user_id
+                                  "
+                                >
+                                  {{
+                                    parseDriverTime(
+                                      ticket?.ticket?.driver_ticket
+                                        ?.driver_hours,
+                                      ticket?.ticket?.driver_ticket
+                                        ?.driver_minutes
+                                    )
+                                  }}
+                                </span>
+                                <span
+                                  *ngIf="
+                                    ticket?.ticket?.driver_ticket
+                                      ?.trucking_company_id != this.user_id
+                                  "
+                                  >-</span
+                                >
+                              </td>
+                              <td>
+                                <span
+                                  *ngIf="
+                                    ticket?.ticket?.driver_ticket
+                                      ?.trucking_company_id != this.user_id
+                                  "
+                                >
+                                  {{ this.getTotalTicketRounds(ticket) }}
+                                </span>
+                                <span
+                                  *ngIf="
+                                    ticket?.ticket?.driver_ticket
+                                      ?.trucking_company_id == this.user_id
+                                  "
+                                  >-</span
+                                >
+                              </td>
+                              <td>
+                                ${{
+                                  this.Sub_Total_Cal(
+                                    ticket?.ticket?.driver_ticket
+                                      ?.approver_time != "" &&
+                                      ticket?.ticket?.driver_ticket
+                                        ?.approver_time
+                                      ? parseHour(
+                                          ticket?.ticket?.driver_ticket
+                                            ?.approver_time
+                                        )
+                                      : ticket?.ticket?.driver_ticket
+                                          ?.approver_time == "" ||
+                                        ticket?.ticket?.driver_ticket
+                                          ?.approver_time == "null" ||
+                                        ticket?.ticket?.driver_ticket
+                                          ?.approver_time == null
+                                      ? parseDriverTime(
+                                          ticket?.ticket?.driver_ticket
+                                            ?.driver_hours,
+                                          ticket?.ticket?.driver_ticket
+                                            ?.driver_minutes
+                                        )
+                                      : "",
+                                    ticket?.ticket?.trucking_company_requests,
+                                    ticket?.ticket?.ticket_no
+                                  )
+                                }}
+                              </td>
+                              <td>
+                                <ng-container
+                                  *ngFor="
+                                    let usage of ticket?.ticket
+                                      ?.tragget_ticket_usages
+                                  "
+                                >
+                                  <ng-container
+                                    *ngIf="
+                                      usage?.is_free_trial &&
+                                      usage?.is_free_trial == 'YES' &&
+                                      usage?.user_id == this.user_id
+                                    "
+                                  >
+                                    <img
+                                      src="../../../../../assets/icons/t-trial.svg"
+                                    />
+                                  </ng-container>
+
+                                  <ng-container
+                                    *ngIf="
+                                      usage?.is_free_trial &&
+                                      usage?.is_free_trial == 'NO' &&
+                                      usage?.user_plan?.plan_id == 2 &&
+                                      usage?.user_id == this.user_id
+                                    "
+                                  >
+                                    <img
+                                      src="../../../../../assets/icons/t-orange.png"
+                                    />
+                                  </ng-container>
+                                  <ng-container
+                                    *ngIf="
+                                      usage?.is_free_trial &&
+                                      usage?.is_free_trial == 'NO' &&
+                                      usage?.user_plan?.plan_id == 1 &&
+                                      usage?.user_id == this.user_id
+                                    "
+                                  >
+                                    <img
+                                      src="../../../../../assets/icons/t-blue.svg"
+                                    />
+                                  </ng-container>
+                                </ng-container>
+                              </td>
+                            </ng-container>
+                          </tr>
+                        </ng-container>
+                        <ng-template #elseRow>
+                          <tr>
+                            <td
+                              colspan="10"
+                              class="text-center"
+                              *ngIf="!is_loading"
+                            >
+                              <h4>No closed tickets to show.</h4>
+                            </td>
+                            <td
+                              colspan="10"
+                              class="text-center"
+                              *ngIf="is_loading"
+                            >
+                              <h4>Loading Closed Tickets List.</h4>
+                            </td>
+                          </tr>
+                        </ng-template>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="width-64">
+                    <label class="field text-field">
+                      <select
+                        class="field__input bg-light-grey3 no-border height-34px with-auto custom-padding"
+                        (change)="this.handlePerPage($event)"
+                      >
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-10">
+                  <div
+                    class="mypagination-div"
+                    *ngIf="ticket_pagination?.total > 0"
+                  >
+                    <a
+                      style="cursor: pointer; min-width: 56px !important"
+                      (click)="changePage(ticket_pagination.current_page - 1)"
+                      [ngClass]="
+                        ticket_pagination.first_page == this.page
+                          ? 'mypagination '
+                          : 'mypagination disable'
+                      "
+                      class="px-1"
+                      >Previous</a
+                    >
+                    <ng-container *ngFor="let item of ticket_pagination?.links">
+                      <a
+                        style="cursor: pointer"
+                        *ngIf="notSkip(item.label)"
+                        [ngClass]="
+                          item.active ? 'mypagination active' : 'mypagination'
+                        "
+                        (click)="changePage(parsePage(item.label.toString()))"
+                        >{{ item.label }}</a
+                      >
+                    </ng-container>
+                    <a
+                      style="cursor: pointer"
+                      (click)="changePage(ticket_pagination.current_page + 1)"
+                      [ngClass]="
+                        this.page == ticket_pagination.last_page
+                          ? 'mypagination disable px-1'
+                          : 'mypagination next px-1'
+                      "
+                      >Next</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade come-from-modal right"
+  id="myModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-ticket modal-bg-white">
+      <div
+        class="modal-body"
+        *ngIf="requestDetail?.tc_ticket && requestDetail?.tc_ticket == 'YES'"
+      >
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="title-9 text-grey-shade2 mb-3px">Ticket IDs</div>
+            <div class="dashboard-title">
+              {{ this.requestDetail?.ticket?.ticket_no }}
+            </div>
+          </div>
+          <div
+            *ngIf="activeTab === 'ticket-detail'"
+            style="padding-left: 30%; padding-bottom: 5px"
+          >
+            <ng-container
+              *ngFor="
+                let usage of this.requestDetail?.ticket?.tragget_ticket_usages
+              "
+            >
+              <ng-container
+                *ngIf="
+                  usage?.is_free_trial &&
+                  usage?.is_free_trial == 'YES' &&
+                  usage?.user_id == this.user_id
+                "
+              >
+                <img src="../../../../../assets/icons/t-trial.svg" />
+              </ng-container>
+
+              <ng-container
+                *ngIf="
+                  usage?.is_free_trial &&
+                  usage?.is_free_trial == 'NO' &&
+                  usage?.user_plan?.plan_id == 2 &&
+                  usage?.user_id == this.user_id
+                "
+              >
+                <img src="../../../../../assets/icons/t-orange.png" />
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  usage?.is_free_trial &&
+                  usage?.is_free_trial == 'NO' &&
+                  usage?.user_plan?.plan_id == 1 &&
+                  usage?.user_id == this.user_id
+                "
+              >
+                <img src="../../../../../assets/icons/t-blue.svg" />
+              </ng-container>
+            </ng-container>
+          </div>
+          <div>
+            <!-- *ngIf="this.requestDetail?.ticket?.required_paper_ticket_id=='YES'" -->
+
+            <img
+              (click)="this.showTicketImage()"
+              src="../assets/icons/a_camera_icon.svg"
+              height="20"
+              class="mr-1 cursor-pointer"
+            />
+            <button
+              [ngClass]="
+                this.getStatusClass(this.requestDetail?.ticket?.status)
+              "
+            >
+              {{ this.requestDetail?.ticket?.status }}
+            </button>
+          </div>
+        </div>
+        <br />
+        <nav class="d-flex justify-content-between">
+          <div
+            class="nav nav-pills nav-fill width-fit-content"
+            id="nav-tab"
+            role="tablist"
+          >
+            <a
+              class="nav-item nav-link active tab_btnn txt_cntr"
+              id="nav-home-tab"
+              data-toggle="tab"
+              href="#ticket-detail"
+              role="tab"
+              aria-controls="nav-home"
+              aria-selected="true"
+              (click)="setActiveTab('ticket-detail')"
+              >Ticket details</a
+            >
+            <a
+              class="nav-item nav-link ml-3 tab_btnn txt_cntr"
+              id="nav-profile-tab"
+              data-toggle="tab"
+              href="#round-detail"
+              role="tab"
+              aria-controls="nav-profile"
+              aria-selected="false"
+              (click)="setActiveTab('round-detail')"
+              >Job details</a
+            >
+          </div>
+          <div class="" align="right">
+            <div class="title-52 text-grey-shade2 text-right">Date</div>
+            <div class="title-5-new">
+              {{
+                this.time_conversion(this.requestDetail, 1).convertedDate
+                  ? this.time_conversion(this.requestDetail, 1).convertedDate
+                  : this.requestDetail?.ticket.ticket_date
+              }}
+            </div>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="ticket-detail"
+            role="tabpanel"
+            aria-labelledby="nav-home-tab"
+          >
+            <div class="ticket-detail-div bg-light-yellow2 no-border">
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-8"></div>
+                    <div class="title-10 text-black-shade2 title-21">
+                      {{
+                        this.requestDetail?.ticket?.customer
+                          ? this.requestDetail?.ticket?.customer?.company_name
+                          : this.requestDetail?.ticket?.tc_customer
+                              ?.company_name
+                      }}
+                    </div>
+                  </div>
+                  <div class="col-6" align="right">
+                    <div class="title-52 text-grey-shade2 text-right">
+                      Project
+                    </div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail.ticket?.project
+                          ? this.requestDetail.ticket?.project?.project_name
+                          : this.requestDetail.ticket?.tc_project?.project_name
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="myhr"></div>
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="title-52 text-grey-shade2">Job number</div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail?.ticket?.project
+                          ? this.requestDetail.ticket?.project?.job_number
+                          : this.requestDetail?.ticket?.tc_project?.job_number
+                      }}
+                    </div>
+                  </div>
+                  <div class="col-6" align="right">
+                    <div class="title-5 text-grey-shade2 text-right">
+                      Project address
+                    </div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail.ticket?.project
+                          ? this.requestDetail.ticket?.project?.project_location
+                          : this.requestDetail.ticket?.tc_project
+                              ?.project_location
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr"></div>
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="title-52 text-grey-shade2">Job Approver</div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail?.ticket?.approver
+                          ? this.requestDetail?.ticket?.approver?.full_name
+                          : this.requestDetail?.ticket?.tc_approver?.full_name
+                      }}
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      *ngIf="this.requestDetail?.ticket?.status == 'Accepted'"
+                    ></div>
+                    <div
+                      *ngIf="this.requestDetail?.ticket?.status == 'Approved'"
+                    >
+                      <div class="title-5 text-right">
+                        Approved: Date / Time / Rate
+                      </div>
+                      <div class="title-5-new text-right">
+                        {{
+                          this.time_conversion2(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.approved_at,
+                            3
+                          ).convertedDate && this.time_conversion2(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.approved_at,
+                            3
+                          ).convertedDate !='Invalid date'
+                            ? this.time_conversion2(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.approved_at,
+                                3
+                              ).convertedDate
+                            : (this.requestDetail?.ticket?.driver_ticket
+                                ?.approved_at | date : "shortDate")
+                        }}
+
+                        /
+                        {{
+                          this.time_conversion2(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.approved_at,
+                            3
+                          ).convertedTime &&  this.time_conversion2(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.approved_at,
+                            3
+                          ).convertedTime !='Invalid date'
+                            ? this.time_conversion2(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.approved_at,
+                                3
+                              ).convertedTime
+                            : (this.requestDetail?.ticket?.driver_ticket
+                                ?.approved_at | date : "shortTime")
+                        }}
+                        /
+                        {{
+                          this.requestDetail?.rate_per_hour
+                            ? "$" + this.requestDetail?.rate_per_hour
+                            : ""
+                        }}
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="
+                        this.requestDetail?.ticket?.status != 'Approved' &&
+                        this.requestDetail?.dispatch_by?.account_type ==
+                          'Customer' &&
+                        this.requestDetail?.dispatch_by?.id ==
+                          this.requestDetail?.ticket?.user_id
+                      "
+                    >
+                      <div class="title-5 text-right">Hour Rate</div>
+                      <div class="title-5-new text-right">
+                        {{
+                          this.requestDetail?.rate_per_hour
+                            ? "$" + this.requestDetail?.rate_per_hour
+                            : ""
+                        }}/hr
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                *ngIf="
+                  this.requestDetail?.dispatch_by?.account_type == 'Customer' &&
+                  this.requestDetail?.dispatch_by?.id ==
+                    this.requestDetail?.ticket?.user_id
+                "
+              >
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="title-52 text-grey-shade2">Dispatcher</div>
+                      <div class="title-5-new">
+                        {{ this.requestDetail?.dispatch_by?.full_name }}
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Contact #
+                      </div>
+                      <div class="title-5-new text-right">
+                        {{ this.requestDetail?.dispatch_by?.contact_number }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="myhr"></div>
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="title-5">Description</div>
+                    <div class="stats-status">
+                      {{ this.requestDetail?.ticket?.description }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--Customer-->
+            <ng-container
+              *ngIf="
+                this.requestDetail?.ticket?.trucking_company_requests &&
+                this.requestDetail?.ticket?.trucking_company_requests.length > 0
+              "
+            >
+              <ng-container
+                *ngFor="
+                  let reqDetail of this.requestDetail?.ticket
+                    ?.trucking_company_requests
+                "
+              >
+                <div
+                  class="ticket-detail-div bg-white"
+                  *ngIf="
+                    reqDetail.dispatch_by?.id !== this.user_id &&
+                    reqDetail.dispatch_by !== null &&
+                    reqDetail.dispatch_by?.account_type != 'Customer' &&
+                    reqDetail.dispatch_to_id == this.user_id
+                  "
+                >
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">Customer</div>
+                        <div class="title-5-new">
+                          {{ reqDetail?.dispatch_by?.company_name }}
+                        </div>
+                      </div>
+                      <div class="col-6" align="right">
+                        <div
+                          class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                        >
+                          Hour rate
+                        </div>
+                        <div class="title-5-new text-right">
+                          ${{ reqDetail?.rate_per_hour }}/hr
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="myhr"></div>
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">Dispatcher</div>
+                        <div class="title-5-new">
+                          {{ reqDetail?.dispatch_by?.full_name }}
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Contact #
+                        </div>
+                        <div class="title-5-new text-right">
+                          {{ reqDetail?.dispatch_by?.contact_number }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <!-- vendor -->
+            <ng-container
+              *ngIf="
+                this.requestDetail?.ticket?.trucking_company_requests &&
+                this.requestDetail?.ticket?.trucking_company_requests.length > 0
+              "
+            >
+              <ng-container
+                *ngFor="
+                  let reqDetail of this.requestDetail?.ticket
+                    ?.trucking_company_requests
+                "
+              >
+                <div
+                  class="ticket-detail-div bg-white"
+                  *ngIf="
+                    reqDetail.id !== this.requestDetail?.id &&
+                    reqDetail.dispatch_by_id == this.user_id
+                  "
+                >
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">Vendor</div>
+                        <div class="title-5-new">
+                          {{ reqDetail?.dispatch_to?.company_name }}
+                        </div>
+                      </div>
+                      <div class="col-6" align="right">
+                        <div
+                          class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                        >
+                          Hour rate
+                        </div>
+                        <div class="title-5-new text-right">
+                          ${{ reqDetail?.rate_per_hour }}/hr
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="myhr"></div>
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">
+                          Accepted by:
+                        </div>
+                        <div class="title-5-new">
+                          <ng-container *ngIf="reqDetail?.is_accepted == 1">
+                            {{ reqDetail?.accepted_by?.full_name }}
+                          </ng-container>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Contact #
+                        </div>
+                        <div class="title-5-new text-right">
+                          {{ reqDetail?.accepted_by?.contact_number }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <!-- driver/truck -->
+            <div class="ticket-detail-div mybtn-back-pink no-border">
+              <!-- For Pending Status-->
+              <ng-container
+                *ngIf="
+                  this.requestDetail?.ticket?.status == 'Pending' &&
+                  !this.requestDetail?.ticket?.driver_ticket
+                "
+              >
+                <!-- truck detail -->
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="title-52 text-grey-shade2">Truck type</div>
+                      <div class="title-5-new">
+                        {{ this.requestDetail?.ticket?.ticket_truck_type }}
+                      </div>
+                    </div>
+
+                    <div class="col-6" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Trailer type
+                      </div>
+                      <div class="title-5-new">
+                        {{ this.requestDetail?.ticket?.ticket_trailer_type }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="title-52 text-grey-shade2">Start time</div>
+                      <div class="title-5-new">
+                        <img
+                          src="../../assets/icons/time-squar.svg"
+                          width="11px"
+                          class="mt-minus-3px"
+                        />
+                        {{
+                          this.requestDetail?.ticket_truck_type
+                            ?.ticket_truck_type_rounds &&
+                          this.requestDetail?.ticket_truck_type
+                            ?.ticket_truck_type_rounds[0]
+                            ? this.requestDetail?.ticket_truck_type
+                                ?.ticket_truck_type_rounds[0]?.start_time
+                            : ""
+                        }}
+                      </div>
+                    </div>
+
+                    <div class="col-6" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Truck interval
+                      </div>
+                      <div class="title-5-new">
+                        {{ this.requestDetail?.ticket?.interval_between_truck
+                        }}<img
+                          src="../../assets/icons/time-squar.svg"
+                          width="11px"
+                          class="mt-minus-3px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <!-- truck detail -->
+              <ng-container
+                *ngIf="
+                  (this.requestDetail?.ticket?.status == 'Pending' &&
+                    this.requestDetail?.ticket?.driver_ticket) ||
+                  this.requestDetail?.ticket?.status == 'Accepted' ||
+                  this.requestDetail?.ticket?.status == 'Driving'
+                "
+              >
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-52 text-grey-shade2">Truck name</div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.truck
+                            ?.truck_nickname
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="center">
+                      <div class="title-52 text-grey-shade2 text-center">
+                        Truck type
+                      </div>
+                      <div class="title-5-new text-center">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.truck
+                            ?.truck_type
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        License plate
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.truck
+                            ?.truck_license_plate
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-container
+                  *ngIf="
+                    this.requestDetail?.ticket?.driver_ticket?.trailer &&
+                    this.requestDetail?.ticket?.driver_ticket?.trailer
+                      ?.trailer_nickname
+                  "
+                >
+                  <div class="myhr"></div>
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="title-52 text-grey-shade2">
+                          Trailer name
+                        </div>
+                        <div class="title-5-new">
+                          {{
+                            this.requestDetail?.ticket?.driver_ticket?.trailer
+                              ?.trailer_nickname
+                          }}
+                        </div>
+                      </div>
+                      <div class="col-4" align="center">
+                        <div class="title-52 text-grey-shade2 text-center">
+                          Trailer type
+                        </div>
+                        <div class="title-5-new text-center">
+                          {{
+                            this.requestDetail?.ticket?.driver_ticket?.trailer
+                              ?.trailer_type
+                          }}
+                        </div>
+                      </div>
+                      <div class="col-4" align="right">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          License plate
+                        </div>
+                        <div class="title-5-new">
+                          {{
+                            this.requestDetail?.ticket?.driver_ticket?.trailer
+                              ?.trailer_license_plate
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <!-- driver detail -->
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-52 text-grey-shade2">Driver</div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.driver
+                            ?.full_name
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="center">
+                      <div class="title-52 text-grey-shade2 text-center">
+                        {{
+                          this.requestDetail?.ticket?.status == "Driving"
+                            ? "Job started"
+                            : "Start time"
+                        }}
+                      </div>
+                      <div
+                        class="title-5-new text-center"
+                        *ngIf="
+                          this.requestDetail?.ticket?.status == 'Accepted' ||
+                          (this.requestDetail?.ticket?.status == 'Pending' &&
+                            this.requestDetail?.ticket?.driver_ticket)
+                        "
+                      >
+                        <img
+                          src="../../assets/icons/time-squar.svg"
+                          width="11px"
+                          class="mt-minus-3px"
+                        />
+                        {{ this.requestDetail?.ticket?.ticket_time }}
+                      </div>
+                      <div
+                        class="title-5-new text-center"
+                        *ngIf="this.requestDetail?.ticket?.status == 'Driving'"
+                      >
+                        <img
+                          src="../../assets/icons/time-squar.svg"
+                          width="11px"
+                          class="mt-minus-3px"
+                        />
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.started_at
+                            | date : "shortTime"
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Rounds
+                      </div>
+                      <div class="title-5-new">
+                        <!-- <img src="../../assets/icons/restart.svg" width="15px" class="mt-minus-3px">  -->
+                        {{ this.total_rounds }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  this.requestDetail?.ticket?.status == 'Approved' ||
+                  this.requestDetail?.ticket?.status == 'Completed'
+                "
+              >
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6" align="left">
+                      <div class="title-52 text-grey-shade2">Job started</div>
+                      <div class="title-5-new">
+                        {{
+                          this.time_conversion(this.requestDetail, 1)
+                            .convertedTime
+                            ? this.time_conversion(this.requestDetail, 1)
+                                .convertedTime
+                            : (this.requestDetail?.ticket?.driver_ticket
+                                ?.started_at | date : "shortTime")
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-6" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Job total
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          parseJobTotal(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.total_time
+                          )
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6" align="left">
+                      <div class="title-52 text-grey-shade2">Driver</div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.driver
+                            ?.full_name
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-6" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Driver total
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.rate_type == "round"
+                            ? getTotalTicketRounds(this.requestDetail)
+                            : parseDriverTime(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_hours,
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_minutes
+                              )
+                        }}
+                        {{
+                          this.requestDetail?.rate_type == "round"
+                            ? "rounds"
+                            : ""
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+            <!-- <div class="ticket-detail-div">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="title-5">Truck name</div>
+                                        <div class="title-5-new">
+
+                                            {{this.requestDetail?.ticket?.driver_ticket?.truck?.truck_nickname}}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-4" align="center">
+                                        <div class="title-5 text-center">No. of rounds</div>
+                                        <div class="title-5-new text-center">{{this.requestDetail?.ticket?.ticket_truck_type_rounds.length}}</div>
+                                    </div>
+                                    <div class="col-4" align="right">
+                                        <div class="title-5 text-right">Truck type</div>
+                                        <div class="title-5-new">    {{this.requestDetail?.ticket?.driver_ticket?.truck?.truck_type}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <ng-container *ngIf="this.requestDetail?.ticket?.status == 'Accepted' || this.requestDetail?.ticket?.status == 'Driving' || this.requestDetail?.ticket?.status == 'Completed'">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="title-5">Date</div>
+                                            <div class="title-5-new">{{this.requestDetail?.ticket?.driver_ticket?.started_at | date:'shortDate'}}</div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5 text-right">Time</div>
+                                            <div class="title-5-new">{{this.requestDetail?.ticket?.driver_ticket?.started_at | date:'shortTime'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="title-5">Driver</div>
+                                            <div class="title-5-new">{{this.requestDetail?.ticket?.driver_ticket?.driver?.full_name}}</div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5 text-right">Truck License </div>
+                                            <div class="title-5-new">{{this.requestDetail?.ticket?.driver_ticket?.truck?.truck_license_plate}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </ng-container>
+
+                        </div> -->
+          </div>
+          <div
+            class="tab-pane fade"
+            id="round-detail"
+            role="tabpanel"
+            aria-labelledby="nav-profile-tab"
+          >
+            <div class="title-52 text-grey-shade2">Job summary</div>
+            <div
+              class="ticket-detail-div"
+              *ngIf="
+                this.requestDetail?.ticket?.status == 'Approved' ||
+                this.requestDetail?.ticket?.status == 'Completed'
+              "
+            >
+              <div class="p-10px pt-1">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="title-52 text-grey-shade2">Truck name</div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail?.ticket?.driver_ticket?.truck
+                          ?.truck_nickname
+                      }}
+                    </div>
+                  </div>
+                  <div class="col-4" align="center">
+                    <div class="title-52 text-grey-shade2 text-center">
+                      Truck type
+                    </div>
+                    <div class="title-5-new text-center">
+                      {{
+                        this.requestDetail?.ticket?.driver_ticket?.truck
+                          ?.truck_type
+                      }}
+                    </div>
+                  </div>
+                  <div class="col-4" align="right">
+                    <div class="title-52 text-grey-shade2 text-right">
+                      License plate
+                    </div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail?.ticket?.driver_ticket?.truck
+                          ?.truck_license_plate
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-container
+                *ngIf="
+                  this.requestDetail?.ticket?.driver_ticket?.trailer &&
+                  this.requestDetail?.ticket?.driver_ticket?.trailer
+                    ?.trailer_nickname
+                "
+              >
+                <div class="myhr"></div>
+                <div class="p-10px pt-1">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-52 text-grey-shade2">Trailer name</div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.trailer
+                            ?.trailer_nickname
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="center">
+                      <div class="title-52 text-grey-shade2 text-center">
+                        Trailer type
+                      </div>
+                      <div class="title-5-new text-center">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.trailer
+                            ?.trailer_type
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        License plate
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.trailer
+                            ?.trailer_license_plate
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div class="myhr"></div>
+
+              <div class="p-10px pt-1">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="title-52 text-grey-shade2">Job started</div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail?.ticket?.driver_ticket?.started_at
+                          | date : "shortTime"
+                      }}
+                    </div>
+                  </div>
+                  <div class="col-4" align="center">
+                    <div class="title-52 text-grey-shade2 text-center">
+                      Rounds
+                    </div>
+                    <div class="title-5-new text-center">
+                      <!-- <img src="../../assets/icons/restart.svg" width="15px" class="mt-minus-3px"> -->
+                      {{ this.total_rounds }}
+                    </div>
+                  </div>
+                  <div class="col-4" align="right">
+                    <div class="title-52 text-grey-shade2 text-right">
+                      Job total
+                    </div>
+                    <div class="title-5-new text-right">
+                      {{
+                        this.parseJobTotal2(
+                          this.requestDetail?.ticket?.driver_ticket?.total_time
+                        )
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <div class="ticket-detail-div mb-16">
+              <div class="p-10px py-1">
+                <div class="row">
+                  <div class="col-md-3 mr-1">
+                    <div class="title-52 text-grey-shade2">Driver total</div>
+                    <div class="title-5-new pt-2">
+                      <b>
+                        {{
+                          this.requestDetail?.rate_type == "round"
+                            ? getTotalTicketRounds(this.requestDetail)
+                            : parseDriverTime(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_hours,
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_minutes
+                              )
+                        }}
+                        {{
+                          this.requestDetail?.rate_type == "round"
+                            ? "rounds"
+                            : ""
+                        }}
+                      </b>
+                    </div>
+                  </div>
+                  <div
+                    class="col-7 ticket-detail-div px-2 ml-4 mt-0"
+                    style="
+                      display: flex;
+                      align-content: center;
+                      flex-wrap: wrap;
+                      min-height: 55px;
+                    "
+                  >
+                    <div class="title-52 text-grey-shade2 pt-1">
+                      Driver notes:
+                    </div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail?.ticket?.driver_ticket
+                          ?.notes_for_approver
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr"></div>
+              <div class="p-10px py-1">
+                <div class="row">
+                  <div class="col-md-3 mr-1">
+                    <div class="title-52 text-grey-shade2">
+                      Approved
+                      {{
+                        this.requestDetail?.rate_type == "round"
+                          ? "rounds"
+                          : "hours"
+                      }}
+                    </div>
+                    <div class="title-5-new pt-2">
+                      <b>
+                        {{
+                          this.requestDetail?.rate_type == "round"
+                            ? this.requestDetail?.ticket?.driver_ticket
+                                ?.approver_rounds
+                              ? this.requestDetail?.ticket?.driver_ticket
+                                  ?.approver_rounds
+                              : getTotalTicketRounds(this.requestDetail)
+                            : this.requestDetail?.ticket?.driver_ticket
+                                ?.approver_time
+                            ? parseHour(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.approver_time
+                              )
+                            : parseDriverTime(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_hours,
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_minutes
+                              )
+                        }}
+                        {{
+                          this.requestDetail?.rate_type == "round"
+                            ? "rounds"
+                            : ""
+                        }}
+                      </b>
+                    </div>
+                  </div>
+                  <div
+                    class="col-8 ticket-detail-div px-2 ml-4 mt-0"
+                    style="
+                      display: flex;
+                      align-content: center;
+                      flex-wrap: wrap;
+                      min-height: 55px;
+                    "
+                  >
+                    <div class="title-52 text-grey-shade2 pt-1">
+                      Appprover notes:
+                    </div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail?.ticket?.driver_ticket
+                          ?.approver_notes
+                          ? this.requestDetail?.ticket?.driver_ticket
+                              ?.approver_notes
+                          : ""
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="mb-4"
+              *ngIf="
+                this.requestDetail?.ticket?.status == 'Approved' ||
+                this.requestDetail?.ticket?.status == 'Completed'
+              "
+            >
+              <!-- Approved , Download PDF-->
+              <div
+                class="p-10x"
+                *ngIf="this.requestDetail?.ticket?.status == 'Approved'"
+              >
+                <div class="row">
+                  <div class="col-12 text-center" align="center">
+                    <button
+                      (click)="handlePDFDownload(this.requestDetail)"
+                      type="button"
+                      class="mt-1 mybtn2 text-white dowloadd_btn"
+                      *ngIf="!is_downloading"
+                      style="
+                        width: 136px;
+                        height: 35px;
+                        border-radius: 5px !important;
+                        padding: 0px !important;
+                      "
+                    >
+                      Download
+                      <img
+                        src="../../assets/icons/a_download.svg"
+                        width="20px"
+                        class="mt-minus-3px ml-3"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="mt-1 mybtn2 text-white dowloadd_btn"
+                      *ngIf="is_downloading"
+                      disbaled
+                    >
+                      Processing...
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ng-container
+              *ngFor="
+                let round of this.requestDetail?.ticket
+                  ?.ticket_truck_type_rounds.length > 0
+                  ? this.requestDetail?.ticket?.ticket_truck_type_rounds
+                  : this.requestDetail?.ticket_truck_type
+                      ?.ticket_truck_type_rounds
+                  ? this.requestDetail?.ticket_truck_type
+                      ?.ticket_truck_type_rounds
+                  : []
+              "
+            >
+              <ng-container
+                *ngIf="
+                  (this.requestDetail?.ticket?.status != 'Completed' &&
+                    this.requestDetail?.ticket?.status != 'Approved') ||
+                  ((this.requestDetail?.ticket?.status == 'Completed' ||
+                    this.requestDetail?.ticket?.status == 'Approved') &&
+                    round.driver_start_time &&
+                    round.round_time)
+                "
+              >
+                <div
+                  [class]="
+                    this.requestDetail?.ticket?.status == 'Driving' &&
+                    round.driver_start_time != '' &&
+                    round.driver_start_time &&
+                    round.driver_start_time != null &&
+                    (round.end_time == '' ||
+                      !round.end_time ||
+                      round.end_time == null)
+                      ? 'title-5 mybtn bg-dark-yellow  width-fit-content btn-text-very-small2 text-white'
+                      : 'title-5'
+                  "
+                >
+                  <span class="text-center round_btn">
+                    Round {{ round.round_no }}
+                  </span>
+                </div>
+                <div class="ticket-detail-div mb-16">
+                  <div class="p-10px pt-1">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="title-52 text-grey-shade2 pb-1">
+                          Material taken out
+                        </div>
+                        <div class="title-5-new">
+                          {{ round.material_taken_out }}
+                        </div>
+                      </div>
+                      <div class="col-md-6" align="right">
+                        <div class="title-52 text-grey-shade2 text-right pb-1">
+                          Dump site
+                        </div>
+                        <div class="title-5-new">{{ round.dump_site }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="myhr"></div>
+                  <div class="p-10px pt-1">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2 pb-1">
+                          Round started
+                        </div>
+                        <div class="title-5-new">
+                          {{
+                            this.time_conversion2(round.driver_start_time, 3)
+                              .convertedTime
+                              ? this.time_conversion2(
+                                  round.driver_start_time,
+                                  3
+                                ).convertedTime
+                              : (round.driver_start_time | date : "shortTime")
+                          }}
+                        </div>
+                      </div>
+                      <div class="col-6" align="right">
+                        <div class="title-52 text-grey-shade2 text-right pb-1">
+                          Round total
+                        </div>
+                        <div class="title-5-new text-right">
+                          {{
+                            round.round_time && round.round_time !== null
+                              ? round.round_time + "m"
+                              : ""
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="round?.haulback">
+                    <div class="myhr"></div>
+                    <div class="p-10px pt-1 grey-div">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="title-52 text-grey-shade2 pb-1">
+                            Haul back - pickup site
+                          </div>
+                          <div class="title-5-new">
+                            {{
+                              round?.haulback?.pickup_location_address
+                                ? round?.haulback?.pickup_location_address
+                                : round?.haulback?.pickup_location_name
+                            }}
+                          </div>
+                        </div>
+                        <div class="col-6" align="right">
+                          <div
+                            class="title-52 text-grey-shade2 text-right pb-1"
+                          >
+                            Material in
+                          </div>
+                          <div class="title-5-new text-right">
+                            {{ round?.haulback?.material_in }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="myhr"></div>
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ng-container *ngIf="round?.haulback">
+                          <div class="title-52 text-black font-size-14 pb-1">
+                            Haul back notes:
+                            {{ round?.haulback?.haulback_notes }}
+                          </div>
+                        </ng-container>
+                        <div class="title-52 text-black font-size-14 pb-1">
+                          Driver: {{ round?.driver_notes }}
+                        </div>
+                        <div class="title-5-new"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br />
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body" *ngIf="!requestDetail?.tc_ticket">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <div class="title-9 text-grey-shade2 mb-3px">Ticket IDs</div>
+            <div class="dashboard-title">
+              {{ this.requestDetail?.ticket?.ticket_no }}
+            </div>
+          </div>
+          <div
+            div
+            *ngIf="activeTab === 'ticket-detail'"
+            style="padding-left: 30%; padding-bottom: 5px"
+          >
+            <ng-container
+              *ngFor="
+                let usage of this.requestDetail?.ticket?.tragget_ticket_usages
+              "
+            >
+              <ng-container
+                *ngIf="
+                  usage?.is_free_trial &&
+                  usage?.is_free_trial == 'YES' &&
+                  usage?.user_id == this.user_id
+                "
+              >
+                <img src="../../../../../assets/icons/t-trial.svg" />
+              </ng-container>
+
+              <ng-container
+                *ngIf="
+                  usage?.is_free_trial &&
+                  usage?.is_free_trial == 'NO' &&
+                  usage?.user_plan?.plan_id == 2 &&
+                  usage?.user_id == this.user_id
+                "
+              >
+                <img src="../../../../../assets/icons/t-orange.png" />
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  usage?.is_free_trial &&
+                  usage?.is_free_trial == 'NO' &&
+                  usage?.user_plan?.plan_id == 1 &&
+                  usage?.user_id == this.user_id
+                "
+              >
+                <img src="../../../../../assets/icons/t-blue.svg" />
+              </ng-container>
+            </ng-container>
+          </div>
+          <div>
+            <img
+              (click)="showTicketImage()"
+              *ngIf="
+                this.requestDetail?.ticket?.required_paper_ticket_id == 'YES'
+              "
+              src="../assets/icons/a_camera_icon.svg"
+              height="20"
+              class="mr-1 cursor-pointer"
+            />
+            <button
+              [ngClass]="
+                this.getStatusClass(this.requestDetail?.ticket?.status)
+              "
+            >
+              {{ this.requestDetail?.ticket?.status }}
+            </button>
+          </div>
+        </div>
+        <br />
+        <nav class="d-flex justify-content-between">
+          <div
+            class="nav nav-pills nav-fill width-fit-content"
+            id="nav-tab"
+            role="tablist"
+          >
+            <a
+              class="nav-item nav-link active txt_cntr"
+              id="nav-home-tab"
+              data-toggle="tab"
+              href="#ticket-detail"
+              role="tab"
+              aria-controls="nav-home"
+              aria-selected="true"
+              (click)="setActiveTab('ticket-detail')"
+              >Ticket details</a
+            >
+            <a
+              class="nav-item nav-link ml-3 txt_cntr"
+              id="nav-profile-tab"
+              data-toggle="tab"
+              href="#round-detail"
+              role="tab"
+              aria-controls="nav-profile"
+              aria-selected="false"
+              (click)="setActiveTab('round-detail')"
+              >Job details</a
+            >
+          </div>
+          <div class="" align="right">
+            <div class="title-52 text-grey-shade2 text-right">Date</div>
+            <div class="title-5-new">
+              {{ this.requestDetail?.ticket.ticket_date }}
+            </div>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="ticket-detail"
+            role="tabpanel"
+            aria-labelledby="nav-home-tab"
+          >
+            <div class="ticket-detail-div bg-light-yellow2 no-border">
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-8"></div>
+                    <div class="title-10 text-black-shade2 title-21">
+                      {{ this.requestDetail?.ticket?.user?.company_name }}
+                    </div>
+                  </div>
+                  <div class="col-6" align="right">
+                    <div class="title-52 text-grey-shade2 text-right">
+                      Project
+                    </div>
+                    <div class="title-5-new">
+                      {{ this.requestDetail?.project?.project_name }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="myhr"></div>
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="title-52 text-grey-shade2">Job number</div>
+                    <div class="title-5-new">
+                      {{ this.requestDetail?.project?.job_number }}
+                    </div>
+                  </div>
+                  <div class="col-6" align="right">
+                    <div class="title-5 text-grey-shade2 text-right">
+                      Project address
+                    </div>
+                    <div class="title-5-new">
+                      {{ this.requestDetail?.project?.project_location }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr"></div>
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="title-52 text-grey-shade2">Job Approver</div>
+                    <div class="title-5-new">
+                      {{ this.requestDetail?.approver?.full_name }}
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div
+                      *ngIf="this.requestDetail?.ticket?.status == 'Accepted'"
+                    ></div>
+                    <div
+                      *ngIf="this.requestDetail?.ticket?.status == 'Approved'"
+                    >
+                      <div class="title-5 text-right">
+                        Approved: Date / Time / Rate
+                      </div>
+                      <div class="title-5-new text-right">
+                        {{
+                          this.time_conversion2(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.approved_at,
+                            3
+                          ).convertedDate && this.time_conversion2(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.approved_at,
+                            3
+                          ).convertedDate !='Invalid date'
+                            ? this.time_conversion2(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.approved_at,
+                                3
+                              ).convertedDate
+                            : (this.requestDetail?.ticket?.driver_ticket
+                                ?.approved_at | date : "shortDate")
+                        }}
+                        /
+                        {{
+                          this.time_conversion2(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.approved_at,
+                            3
+                          ).convertedTime &&    this.time_conversion2(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.approved_at,
+                            3
+                          ).convertedTime !='Invalid date'
+                            ? this.time_conversion2(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.approved_at,
+                                3
+                              ).convertedTime
+                            : (this.requestDetail?.ticket?.driver_ticket
+                                ?.approved_at | date : "shortTime")
+                        }}
+                        /
+                        {{
+                          this.requestDetail?.rate_per_hour
+                            ? "$" + this.requestDetail?.rate_per_hour
+                            : ""
+                        }}
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="
+                        this.requestDetail?.ticket?.status != 'Approved' &&
+                        this.requestDetail?.dispatch_by?.account_type ==
+                          'Customer' &&
+                        this.requestDetail?.dispatch_by?.id ==
+                          this.requestDetail?.ticket?.user_id
+                      "
+                    >
+                      <div class="title-5 text-right">Hour Rate</div>
+                      <div class="title-5-new text-right">
+                        {{
+                          this.requestDetail?.rate_per_hour
+                            ? "$" + this.requestDetail?.rate_per_hour
+                            : ""
+                        }}/hr
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                *ngIf="
+                  this.requestDetail?.dispatch_by?.account_type == 'Customer' &&
+                  this.requestDetail?.dispatch_by?.id ==
+                    this.requestDetail?.ticket?.user_id
+                "
+              >
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="title-52 text-grey-shade2">Dispatcher</div>
+                      <div class="title-5-new">
+                        {{ this.requestDetail?.dispatch_by?.full_name }}
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Contact #
+                      </div>
+                      <div class="title-5-new text-right">
+                        {{ this.requestDetail?.dispatch_by?.contact_number }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="myhr"></div>
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="title-5">Description</div>
+                    <div class="stats-status">
+                      {{ this.requestDetail?.ticket?.description }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-container
+              *ngIf="
+                this.requestDetail?.ticket?.trucking_company_requests &&
+                this.requestDetail?.ticket?.trucking_company_requests.length > 0
+              "
+            >
+              <ng-container
+                *ngFor="
+                  let reqDetail of this.requestDetail?.ticket
+                    ?.trucking_company_requests
+                "
+              >
+                <!--Customer-->
+
+                <div
+                  class="ticket-detail-div bg-white"
+                  *ngIf="
+                    reqDetail.dispatch_by !== null &&
+                    reqDetail.dispatch_by?.account_type != 'Customer' &&
+                    reqDetail.dispatch_to_id == this.user_id
+                  "
+                >
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">Customer</div>
+                        <div class="title-5-new">
+                          {{ reqDetail?.dispatch_by?.company_name }}
+                        </div>
+                      </div>
+                      <div class="col-6" align="right">
+                        <div
+                          class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                        >
+                          Hour rate
+                        </div>
+                        <div class="title-5-new text-right">
+                          ${{ reqDetail?.rate_per_hour }}/
+                          {{ reqDetail?.rate_type == "round" ? "round" : "hr" }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="myhr"></div>
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">Dispatcher</div>
+                        <div class="title-5-new">
+                          {{ reqDetail?.dispatch_by?.full_name }}
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Contact #
+                        </div>
+                        <div class="title-5-new text-right">
+                          {{ reqDetail?.dispatch_by?.contact_number }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <ng-container
+              *ngIf="
+                this.requestDetail?.ticket?.trucking_company_requests &&
+                this.requestDetail?.ticket?.trucking_company_requests.length > 0
+              "
+            >
+              <ng-container
+                *ngFor="
+                  let reqDetail of this.requestDetail?.ticket
+                    ?.trucking_company_requests
+                "
+              >
+                <!-- vendor -->
+                <div
+                  class="ticket-detail-div bg-white"
+                  *ngIf="
+                    reqDetail.id !== this.requestDetail?.id &&
+                    reqDetail.dispatch_by_id == this.user_id
+                  "
+                >
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">Vendor</div>
+                        <div class="title-5-new">
+                          {{ reqDetail?.dispatch_to?.company_name }}
+                        </div>
+                      </div>
+                      <div class="col-6" align="right">
+                        <div
+                          class="title-52 text-grey-shade2 text-grey-shade2 text-right"
+                        >
+                          Hour rate
+                        </div>
+                        <div class="title-5-new text-right">
+                          ${{ reqDetail?.rate_per_hour }}/{{
+                            reqDetail?.rate_type == "round" ? "round" : "hr"
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="myhr"></div>
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2">
+                          Accepted by:
+                        </div>
+                        <div class="title-5-new">
+                          <ng-container *ngIf="reqDetail?.is_accepted == 1">
+                            {{ reqDetail?.accepted_by?.full_name }}
+                          </ng-container>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          Contact #
+                        </div>
+                        <div class="title-5-new text-right">
+                          {{ reqDetail?.accepted_by?.contact_number }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <!-- driver/truck -->
+            <div class="ticket-detail-div mybtn-back-pink no-border">
+              <!-- For Pending Status-->
+              <ng-container
+                *ngIf="
+                  this.requestDetail?.ticket?.status == 'Pending' &&
+                  !this.requestDetail?.ticket?.driver_ticket
+                "
+              >
+                <!-- truck detail -->
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="title-52 text-grey-shade2">Truck type</div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket_truck_type
+                            ?.project_combination &&
+                          this.requestDetail?.ticket_truck_type
+                            ?.project_combination?.truck
+                            ? this.requestDetail?.ticket_truck_type
+                                ?.project_combination?.truck?.name
+                            : this.requestDetail?.ticket_truck_type
+                                ?.project_truck
+                            ? this.requestDetail?.ticket_truck_type
+                                ?.project_truck.name
+                            : ""
+                        }}
+                      </div>
+                    </div>
+
+                    <div class="col-6" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Trailer type
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket_truck_type?.project_trailer
+                            ? this.requestDetail?.ticket_truck_type
+                                ?.project_trailer.name
+                            : ""
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="title-52 text-grey-shade2">Start time</div>
+                      <div class="title-5-new">
+                        <img
+                          src="../../assets/icons/time-squar.svg"
+                          width="11px"
+                          class="mt-minus-3px"
+                        />
+                        {{
+                          this.requestDetail?.ticket_truck_type
+                            ?.ticket_truck_type_rounds &&
+                          this.requestDetail?.ticket_truck_type
+                            ?.ticket_truck_type_rounds[0]
+                            ? this.requestDetail?.ticket_truck_type
+                                ?.ticket_truck_type_rounds[0]?.start_time
+                            : ""
+                        }}
+                      </div>
+                    </div>
+
+                    <div class="col-6" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Truck interval
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket_truck_type
+                            ?.ticket_truck_type_rounds &&
+                          this.requestDetail?.ticket_truck_type
+                            ?.ticket_truck_type_rounds[0]
+                            ? this.requestDetail?.ticket_truck_type
+                                ?.ticket_truck_type_rounds[0]
+                                ?.interval_between_truck
+                            : ""
+                        }}<img
+                          src="../../assets/icons/time-squar.svg"
+                          width="11px"
+                          class="mt-minus-3px"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <!-- truck detail -->
+              <ng-container
+                *ngIf="
+                  (this.requestDetail?.ticket?.status == 'Pending' &&
+                    this.requestDetail?.ticket?.driver_ticket) ||
+                  this.requestDetail?.ticket?.status == 'Accepted' ||
+                  this.requestDetail?.ticket?.status == 'Driving'
+                "
+              >
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-52 text-grey-shade2">Truck name</div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.truck
+                            ?.truck_nickname
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="center">
+                      <div class="title-52 text-grey-shade2 text-center">
+                        Truck type
+                      </div>
+                      <div class="title-5-new text-center">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.truck
+                            ?.truck_type
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        License plate
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.truck
+                            ?.truck_license_plate
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-container
+                  *ngIf="
+                    this.requestDetail?.ticket?.driver_ticket?.trailer &&
+                    this.requestDetail?.ticket?.driver_ticket?.trailer
+                      ?.trailer_nickname
+                  "
+                >
+                  <div class="myhr"></div>
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="title-52 text-grey-shade2">
+                          Trailer name
+                        </div>
+                        <div class="title-5-new">
+                          {{
+                            this.requestDetail?.ticket?.driver_ticket?.trailer
+                              ?.trailer_nickname
+                          }}
+                        </div>
+                      </div>
+                      <div class="col-4" align="center">
+                        <div class="title-52 text-grey-shade2 text-center">
+                          Trailer type
+                        </div>
+                        <div class="title-5-new text-center">
+                          {{
+                            this.requestDetail?.ticket?.driver_ticket?.trailer
+                              ?.trailer_type
+                          }}
+                        </div>
+                      </div>
+                      <div class="col-4" align="right">
+                        <div class="title-52 text-grey-shade2 text-right">
+                          License plate
+                        </div>
+                        <div class="title-5-new">
+                          {{
+                            this.requestDetail?.ticket?.driver_ticket?.trailer
+                              ?.trailer_license_plate
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <!-- driver detail -->
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-52 text-grey-shade2">Driver</div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.driver
+                            ?.full_name
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="center">
+                      <div class="title-52 text-grey-shade2 text-center">
+                        {{
+                          this.requestDetail?.ticket?.status == "Driving"
+                            ? "Job started"
+                            : "Start time"
+                        }}
+                      </div>
+                      <div
+                        class="title-5-new text-center"
+                        *ngIf="
+                          this.requestDetail?.ticket?.status == 'Accepted' ||
+                          (this.requestDetail?.ticket?.status == 'Pending' &&
+                            this.requestDetail?.ticket?.driver_ticket)
+                        "
+                      >
+                        <img
+                          src="../../assets/icons/time-squar.svg"
+                          width="11px"
+                          class="mt-minus-3px"
+                        />
+                        {{ this.requestDetail?.ticket?.ticket_time }}
+                      </div>
+                      <div
+                        class="title-5-new text-center"
+                        *ngIf="this.requestDetail?.ticket?.status == 'Driving'"
+                      >
+                        <img
+                          src="../../assets/icons/time-squar.svg"
+                          width="11px"
+                          class="mt-minus-3px"
+                        />
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.started_at
+                            | date : "shortTime"
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Rounds
+                      </div>
+                      <div class="title-5-new">
+                        <!-- <img src="../../assets/icons/restart.svg" width="15px" class="mt-minus-3px"> -->
+                        {{ this.total_rounds }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  this.requestDetail?.ticket?.status == 'Approved' ||
+                  this.requestDetail?.ticket?.status == 'Completed'
+                "
+              >
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6" align="left">
+                      <div class="title-52 text-grey-shade2">Job started</div>
+                      <div class="title-5-new">
+                        {{
+                          this.time_conversion(this.requestDetail, 1)
+                            .convertedTime
+                            ? this.time_conversion(this.requestDetail, 1)
+                                .convertedTime
+                            : (this.requestDetail?.ticket?.driver_ticket
+                                ?.started_at | date : "shortTime")
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-6" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Job total
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          parseJobTotal(
+                            this.requestDetail?.ticket?.driver_ticket
+                              ?.total_time
+                          )
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-6" align="left">
+                      <div class="title-52 text-grey-shade2">Driver</div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.driver
+                            ?.full_name
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-6" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        Driver total
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.rate_type == "round"
+                            ? getTotalTicketRounds(this.requestDetail)
+                            : parseDriverTime(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_hours,
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_minutes
+                              )
+                        }}
+                        {{
+                          this.requestDetail?.rate_type == "round"
+                            ? "rounds"
+                            : ""
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+
+            <!-- <div class="ticket-detail-div">
+                            <div class="p-10px">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="title-5">Truck name</div>
+                                        <div class="title-5-new">
+
+                                            {{this.requestDetail?.ticket?.driver_ticket?.truck?.truck_nickname}}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-4" align="center">
+                                        <div class="title-5 text-center">No. of rounds</div>
+                                        <div class="title-5-new text-center">{{this.requestDetail?.ticket?.ticket_truck_type_rounds.length}}</div>
+                                    </div>
+                                    <div class="col-4" align="right">
+                                        <div class="title-5 text-right">Truck type</div>
+                                        <div class="title-5-new">    {{this.requestDetail?.ticket?.driver_ticket?.truck?.truck_type}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myhr"></div>
+                            <ng-container *ngIf="this.requestDetail?.ticket?.status == 'Accepted' || this.requestDetail?.ticket?.status == 'Driving' || this.requestDetail?.ticket?.status == 'Completed'">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="title-5">Date</div>
+                                            <div class="title-5-new">{{this.requestDetail?.ticket?.driver_ticket?.started_at | date:'shortDate'}}</div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5 text-right">Time</div>
+                                            <div class="title-5-new">{{this.requestDetail?.ticket?.driver_ticket?.started_at | date:'shortTime'}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="title-5">Driver</div>
+                                            <div class="title-5-new">{{this.requestDetail?.ticket?.driver_ticket?.driver?.full_name}}</div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="title-5 text-right">Truck License </div>
+                                            <div class="title-5-new">{{this.requestDetail?.ticket?.driver_ticket?.truck?.truck_license_plate}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </ng-container>
+
+                        </div> -->
+          </div>
+          <div
+            class="tab-pane fade"
+            id="round-detail"
+            role="tabpanel"
+            aria-labelledby="nav-profile-tab"
+          >
+            <div
+              class="ticket-detail-div"
+              *ngIf="
+                this.requestDetail?.ticket?.status == 'Approved' ||
+                this.requestDetail?.ticket?.status == 'Completed'
+              "
+            >
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="title-52 text-grey-shade2">Truck name</div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail?.ticket?.driver_ticket?.truck
+                          ?.truck_nickname
+                      }}
+                    </div>
+                  </div>
+                  <div class="col-4" align="center">
+                    <div class="title-52 text-grey-shade2 text-center">
+                      Truck type
+                    </div>
+                    <div class="title-5-new text-center">
+                      {{
+                        this.requestDetail?.ticket?.driver_ticket?.truck
+                          ?.truck_type
+                      }}
+                    </div>
+                  </div>
+                  <div class="col-4" align="right">
+                    <div class="title-52 text-grey-shade2 text-right">
+                      License plate
+                    </div>
+                    <div class="title-5-new">
+                      {{
+                        this.requestDetail?.ticket?.driver_ticket?.truck
+                          ?.truck_license_plate
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-container
+                *ngIf="
+                  this.requestDetail?.ticket?.driver_ticket?.trailer &&
+                  this.requestDetail?.ticket?.driver_ticket?.trailer
+                    ?.trailer_nickname
+                "
+              >
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-52 text-grey-shade2">Trailer name</div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.trailer
+                            ?.trailer_nickname
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="center">
+                      <div class="title-52 text-grey-shade2 text-center">
+                        Trailer type
+                      </div>
+                      <div class="title-5-new text-center">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.trailer
+                            ?.trailer_type
+                        }}
+                      </div>
+                    </div>
+                    <div class="col-4" align="right">
+                      <div class="title-52 text-grey-shade2 text-right">
+                        License plate
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket?.trailer
+                            ?.trailer_license_plate
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <div class="myhr"></div>
+
+              <div class="p-10px">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="title-52 text-grey-shade2">Job started</div>
+                    <div class="title-5-new">
+                      {{
+                        this.time_conversion(this.requestDetail, 1)
+                          .convertedTime
+                          ? this.time_conversion(this.requestDetail, 1)
+                              .convertedTime
+                          : (this.requestDetail?.ticket?.driver_ticket
+                              ?.started_at | date : "shortTime")
+                      }}
+                    </div>
+                  </div>
+                  <div class="col-4" align="center">
+                    <div class="title-52 text-grey-shade2 text-center">
+                      Rounds
+                    </div>
+                    <div class="title-5-new text-center">
+                      <!-- <img src="../../assets/icons/restart.svg" width="15px" class="mt-minus-3px">  -->
+                      {{ this.total_rounds }}
+                    </div>
+                  </div>
+                  <div class="col-4" align="right">
+                    <div class="title-52 text-grey-shade2 text-right">
+                      Job total
+                    </div>
+                    <div class="title-5-new text-right">
+                      {{
+                        this.parseJobTotal2(
+                          this.requestDetail?.ticket?.driver_ticket?.total_time
+                        )
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div
+              class=""
+              *ngIf="
+                this.requestDetail?.ticket?.status == 'Approved' ||
+                this.requestDetail?.ticket?.status == 'Completed'
+              "
+            >
+              <br />
+              <div class="borderr">
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-52 text-grey-shade2">Driver Total</div>
+                      <div class="title-5-new">
+                        <b>
+                          {{
+                            this.requestDetail?.rate_type == "round"
+                              ? getTotalTicketRounds(this.requestDetail)
+                              : parseDriverTime(
+                                  this.requestDetail?.ticket?.driver_ticket
+                                    ?.driver_hours,
+                                  this.requestDetail?.ticket?.driver_ticket
+                                    ?.driver_minutes
+                                )
+                          }}
+                          {{
+                            this.requestDetail?.rate_type == "round"
+                              ? "rounds"
+                              : ""
+                          }}
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="col-7 ticket-detail-div min-height-50 txt_cntr2"
+                    >
+                      <div class="title-52 text-grey-shade2 pt-1">
+                        Driver notes:
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket
+                            ?.notes_for_approver
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="p-10px">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="title-52 text-grey-shade2">
+                        Approved
+                        {{
+                          this.requestDetail?.rate_type == "round"
+                            ? "rounds"
+                            : "hours"
+                        }}
+                      </div>
+                      <div class="title-5-new">
+                        <b
+                          *ngIf="
+                            this.requestDetail?.ticket?.status == 'Completed'
+                          "
+                        >
+                          Waiting for
+                          {{ this.requestDetail?.approver?.full_name }}
+                        </b>
+                        <b
+                          *ngIf="
+                            this.requestDetail?.ticket?.status == 'Approved'
+                          "
+                        >
+                          <span
+                            *ngIf="
+                              this.requestDetail?.ticket?.status ==
+                                'Approved' &&
+                              this.requestDetail?.rate_type == 'hour' &&
+                              this.requestDetail?.ticket?.driver_ticket
+                                ?.approver_time != '' &&
+                              this.requestDetail?.ticket?.driver_ticket
+                                ?.approver_time != null
+                            "
+                          >
+                            {{
+                              this.requestDetail?.ticket?.driver_ticket
+                                ?.approver_time
+                                ? parseHour(
+                                    this.requestDetail?.ticket?.driver_ticket
+                                      ?.approver_time
+                                  )
+                                : ""
+                            }}
+                            hr
+                          </span>
+
+                          <span
+                            *ngIf="
+                              this.requestDetail?.ticket?.status ==
+                                'Approved' &&
+                              this.requestDetail?.rate_type == 'hour' &&
+                              (this.requestDetail?.ticket?.driver_ticket
+                                ?.approver_time == '' ||
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.approver_time == 'null' ||
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.approver_time == null)
+                            "
+                          >
+                            {{
+                              parseDriverTime(
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_hours,
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.driver_minutes
+                              )
+                            }}
+                            hr
+                          </span>
+
+                          <span
+                            *ngIf="
+                              this.requestDetail?.ticket?.status ==
+                                'Approved' &&
+                              this.requestDetail?.rate_type == 'round' &&
+                              this.requestDetail?.ticket?.driver_ticket
+                                ?.approver_rounds != ''
+                            "
+                          >
+                            {{
+                              this.requestDetail?.ticket?.driver_ticket
+                                ?.approver_rounds
+                                ? this.requestDetail?.ticket?.driver_ticket
+                                    ?.approver_rounds
+                                : ""
+                            }}
+                            rounds
+                          </span>
+
+                          <span
+                            *ngIf="
+                              this.requestDetail?.ticket?.status ==
+                                'Approved' &&
+                              this.requestDetail?.rate_type == 'round' &&
+                              (this.requestDetail?.ticket?.driver_ticket
+                                ?.approver_rounds == '' ||
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.approver_rounds == 'null' ||
+                                this.requestDetail?.ticket?.driver_ticket
+                                  ?.approver_rounds == null)
+                            "
+                          >
+                            {{ getTotalTicketRounds(this.requestDetail) }}
+                            rounds
+                          </span>
+                        </b>
+                      </div>
+                    </div>
+                    <div
+                      class="col-7 ticket-detail-div min-height-50 txt_cntr2"
+                    >
+                      <div class="title-52 text-grey-shade2 pt-1">
+                        Approver notes :
+                      </div>
+                      <div class="title-5-new">
+                        {{
+                          this.requestDetail?.ticket?.driver_ticket
+                            ?.approver_notes
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Approved , Download PDF-->
+              <div
+                class="p-10x"
+                *ngIf="this.requestDetail?.ticket?.status == 'Approved'"
+              >
+                <div class="row">
+                  <div
+                    class="col-12 text-center my-2 py-2"
+                    align="center"
+                    style="height: 60px"
+                  >
+                    <button
+                      (click)="handlePDFDownload(this.requestDetail)"
+                      type="button"
+                      class="mt-1 mybtn2 text-white dowloadd_btn"
+                      *ngIf="!is_downloading"
+                    >
+                      Download
+                      <img
+                        src="../../assets/icons/a_download.svg"
+                        width="20px"
+                        class="mt-minus-3px ml-3"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="mt-1 mybtn2 text-white dowloadd_btn"
+                      *ngIf="is_downloading"
+                      disbaled
+                    >
+                      Processing...
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-container
+              *ngFor="
+                let round of this.requestDetail?.ticket
+                  ?.ticket_truck_type_rounds.length > 0
+                  ? this.requestDetail?.ticket?.ticket_truck_type_rounds
+                  : this.requestDetail?.ticket_truck_type
+                      ?.ticket_truck_type_rounds
+                  ? this.requestDetail?.ticket_truck_type
+                      ?.ticket_truck_type_rounds
+                  : []
+              "
+            >
+              <ng-container
+                *ngIf="
+                  (this.requestDetail?.ticket?.status != 'Completed' &&
+                    this.requestDetail?.ticket?.status != 'Approved') ||
+                  ((this.requestDetail?.ticket?.status == 'Completed' ||
+                    this.requestDetail?.ticket?.status == 'Approved') &&
+                    round.driver_start_time &&
+                    round.round_time)
+                "
+              >
+                <div
+                  [class]="
+                    this.requestDetail?.ticket?.status == 'Driving' &&
+                    round.driver_start_time != '' &&
+                    round.driver_start_time &&
+                    round.driver_start_time != null &&
+                    (round.end_time == '' ||
+                      !round.end_time ||
+                      round.end_time == null)
+                      ? 'title-5 mybtn bg-dark-yellow  width-fit-content btn-text-very-small2 text-white'
+                      : 'title-5'
+                  "
+                >
+                  <span class="text-center round_btn">
+                    Round {{ round.round_no }}
+                  </span>
+                </div>
+                <div class="ticket-detail-div mb-16">
+                  <div class="p-10px pt-1">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="title-52 text-grey-shade2 pb-1">
+                          Material taken out
+                        </div>
+                        <div class="title-5-new">
+                          {{ round.material_taken_out }}
+                        </div>
+                      </div>
+                      <div class="col-md-6" align="right">
+                        <div class="title-52 text-grey-shade2 text-right pb-1">
+                          Dump site
+                        </div>
+                        <div class="title-5-new">{{ round.dump_site }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="myhr"></div>
+                  <div class="p-10px pt-1">
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="title-52 text-grey-shade2 pb-1">
+                          Round started
+                        </div>
+                        <div class="title-5-new">
+                          {{
+                            this.time_conversion2(round.driver_start_time, 3)
+                              .convertedTime
+                              ? this.time_conversion2(
+                                  round.driver_start_time,
+                                  3
+                                ).convertedTime
+                              : (round.driver_start_time | date : "shortTime")
+                          }}
+                        </div>
+                      </div>
+                      <div class="col-6" align="right">
+                        <div class="title-52 text-grey-shade2 text-right pb-1">
+                          Round total
+                        </div>
+                        <div class="title-5-new text-right">
+                          {{
+                            round.round_time && round.round_time !== null
+                              ? round.round_time + "m"
+                              : ""
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="round?.haulback">
+                    <div class="myhr"></div>
+                    <div class="p-10px pt-1 grey-div">
+                      <div class="row">
+                        <div class="col-6">
+                          <div class="title-52 text-grey-shade2 pb-1">
+                            Haul back - pickup site
+                          </div>
+                          <div class="title-5-new">
+                            {{
+                              round?.haulback?.pickup_location_address
+                                ? round?.haulback?.pickup_location_address
+                                : round?.haulback?.pickup_location_name
+                            }}
+                          </div>
+                        </div>
+                        <div class="col-6" align="right">
+                          <div
+                            class="title-52 text-grey-shade2 text-right pb-1"
+                          >
+                            Material in
+                          </div>
+                          <div class="title-5-new text-right">
+                            {{ round?.haulback?.material_in }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="myhr"></div>
+                  <div class="p-10px">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <ng-container *ngIf="round?.haulback">
+                          <div class="title-52 text-black font-size-14 pb-1">
+                            Haul back notes:
+                            {{ round?.haulback?.haulback_notes }}
+                          </div>
+                        </ng-container>
+                        <div class="title-52 text-black font-size-14 pb-1">
+                          Driver: {{ round?.driver_notes }}
+                        </div>
+                        <div class="title-5-new"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br />
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade come-from-modal right"
+  id="myModalGetCamera"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-image">
+      <div class="modal-body">
+        <div class="d-flex justify-content-between align-items-center mb-17">
+          <div class="d-flex align-items-center">
+            <input
+              type="checkbox"
+              name=""
+              [checked]="
+                this.loggedinUser?.open_paper_ticket_photo == 'YES'
+                  ? true
+                  : false
+              "
+              id=""
+              value="1"
+              (change)="checkOpenTicketPhoto($event)"
+            />
+            <div class="text-13px-semibold2 ml-15">Open as defaut option</div>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <div>
+              <img src="../../assets/icons/camera-grey.png" alt="" />
+            </div>
+            <div class="div-4 ml-15 cursor-pointer">
+              <img
+                src="../../assets/icons/arrow-right-blue.png"
+                alt=""
+                (click)="closeModal2()"
+                data-dismiss="modal"
+                data-db-dismiss="modal"
+              />
+            </div>
+          </div>
+        </div>
+        <ng-container
+          *ngIf="
+            this.requestDetail?.ticket?.paper_ticket_photo;
+            else elseBlockPhoto
+          "
+        >
+          <img
+            [src]="
+              this.paperImageURL +
+              this.requestDetail?.ticket?.paper_ticket_photo
+            "
+            alt=""
+            width="100%"
+          />
+        </ng-container>
+        <ng-template #elseBlockPhoto>
+          <div class="div-grey-bg">
+            <div class="border-div">
+              <div class="sub-div">
+                <div class="text-13px-semibold text-grey mb-4">
+                  No picture available
+                </div>
+              </div>
+              <div class="myhr-1px"></div>
+              <div class="sub-div">
+                <div
+                  class="row d-flex align-items-center justify-content-between"
+                >
+                  <div class="col-6 pr-2">
+                    <div class="text-13px-semibold2 text-grey">
+                      Ticket completed by
+                    </div>
+                    <div class="title-5 text-bold text-dark">
+                      {{ this.requestDetail?.ticket?.approver?.full_name }} /
+                      {{ this.requestDetail?.ticket?.user?.full_name }}
+                    </div>
+                  </div>
+
+                  <div class="col-6 text-right pl-2">
+                    <div class="text-13px-semibold2 text-grey">Date / Time</div>
+                    <div class="title-5 text-bold text-dark text-right">
+                      {{ this.requestDetail?.ticket?.ticket_date }} /
+                      {{ this.requestDetail?.ticket?.ticket_time }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

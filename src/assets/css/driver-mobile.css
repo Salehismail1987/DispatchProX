@@ -1,0 +1,1005 @@
+@font-face {
+    font-family: 'Gilroy';
+    src: url('../fonts/Gilroy-Regular/Gilroy-Regular.woff') format('woff2'), url('../fonts/Gilroy-Regular/Gilroy-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy-Bold';
+    src: url('../fonts/Gilroy-Bold/Gilroy-Bold.woff') format('woff2'), url('../fonts/Gilroy-Bold/Gilroy-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy-SemiBold';
+    src: url('../fonts/Gilroy-SemiBold/Gilroy-SemiBold.woff') format('woff2'), url('../fonts/Gilroy-SemiBold/Gilroy-SemiBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AvertaStd-Bold';
+    src: url('../fonts/AvertaStd-Bold/AvertaStd-Bold.woff') format('woff2'), url('../fonts/AvertaStd-Bold/AvertaStd-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background: #FAFAFA !important;
+}
+
+.ml-23 {
+    margin-left: 23px;
+}
+
+.width-200 {
+    width: 200px;
+}
+
+.width-133 {
+    width: 133px;
+}
+
+.justify-content-space-evenly {
+    justify-content: space-evenly;
+}
+
+.width-fit-content {
+    width: fit-content;
+}
+
+.width-fill-available {
+    width: -webkit-fill-available !important;
+}
+
+.br-10 {
+    border-radius: 10px !important;
+}
+
+.br-8 {
+    border-radius: 8px !important;
+}
+
+.br-5 {
+    border-radius: 5px !important;
+}
+
+.hr-dash {
+    border-bottom: 1px dashed #68696D;
+}
+
+.myhr {
+    border-bottom: 1px solid #0000001a;
+}
+
+.bg-yellow {
+    background: #F4BE1B !important;
+}
+
+.bg-yellow2 {
+    background: #FFF8B8 !important;
+}
+
+.bg-pink {
+    background: #FDD7E4 !important;
+}
+
+.bg-green {
+    background: #33D1A2 !important;
+}
+
+.bg-blue {
+    background: #17A1FA !important;
+}
+
+.bg-grey {
+    background: #ECECEC !important;
+}
+
+.bg-grey2 {
+    background: #FAFAFA !important;
+}
+
+.bg-dark-grey {
+    background: #D9D9D9 !important;
+}
+
+.bg-very-light-grey {
+    background: #f6f6f699 !important;
+}
+
+.calendar-colors {
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+}
+
+.calendar-colors.default-col {
+    border: 1px solid #000000;
+}
+
+.calendar-colors-div {
+    display: flex;
+    align-items: center;
+    width: 33%;
+}
+
+.mycheckbox {
+    width: 20px;
+    height: 20px;
+}
+
+.mycheckbox2 {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #0000001a;
+    border-radius: 10px;
+}
+
+.text-black-shade {
+    /* color: #111727; 0.5*/
+    color: #11172780;
+}
+
+.text-black-shade2 {
+    color: #111727;
+}
+
+.text-black-shade3 {
+    color: #68696D;
+}
+
+.text-black-shade4 {
+    color: #282D40;
+}
+
+.text-black-shade5 {
+    /* color: #0B1E26; 0.4*/
+    color: #0b1e2666;
+}
+
+.text-black-shade6 {
+    color: rgba(17, 23, 39, 0.5);
+}
+
+.text-black-shade7 {
+    /* color: #0B1E26; 0.6*/
+    color: #0b1e2699;
+}
+
+.text-black-shade8 {
+    color: #88898B;
+}
+
+.text-pink {
+    color: #EC7DA3;
+}
+
+.single-instruction {
+    display: flex;
+}
+
+.single-instruction i {
+    margin-top: 7px;
+    color: #FDD7E4;
+}
+
+.single-instruction i.active {
+    color: #FA4646;
+}
+
+.instructions-text {
+    font-family: 'Gilroy-Medium';
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 31px;
+    color: rgba(17, 23, 39, 0.5);
+    padding-left: 10px;
+}
+
+.myinput2 {
+    font-family: 'Gilroy' !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 15px !important;
+    line-height: 14px !important;
+    color: #000000 !important;
+    background: #FFFFFF !important;
+    border-radius: 10px !important;
+    padding: 23px 23px 23px 20px !important;
+    border: none !important;
+    width: 100%;
+    height: auto !important;
+}
+
+.myinput3 {
+    border: 1px solid #E1E1E1;
+    border-radius: 5px;
+    width: 100%;
+    height: auto !important;
+}
+
+.input-preappend-number {
+    border: none;
+    border-radius: 10px 0 0 10px;
+    background: #ECECEC;
+    padding: 0 10px;
+}
+
+.custom-border-radius {
+    border-radius: 0 10px 10px 0 !important;
+}
+
+.custom-padding {
+    padding: 16px 17px 0 17px !important;
+}
+
+.custom-padding2 {
+    padding: 11px 17px !important;
+}
+
+.custom-padding3 {
+    padding: 12px 17px 12px 11px !important;
+}
+
+.custom-padding4 {
+    padding: 16px 8px 0 17px !important;
+}
+
+.custom-padding5 {
+    padding: 12px 42px !important;
+}
+
+.custom-padding6 {
+    padding: 16px 45px 16px 52px !important;
+}
+
+.custom-padding7 {
+    padding: 15px 36px !important;
+}
+
+.custom-padding8 {
+    padding: 13px 22px 13px 26px !important;
+}
+
+.custom-padding9 {
+    padding: 0px 41px 80px 39px !important;
+}
+
+.custom-padding10 {
+    padding: 49px 21px 31px 21px !important;
+}
+
+.custom-padding11 {
+    padding: 21px 40px !important;
+}
+
+.custom-padding12 {
+    padding: 0px 17px 0 21px !important;
+}
+
+.custom-padding13 {
+    padding: 0px 9px 0 16px !important;
+}
+
+.custom-padding14 {
+    padding: 4px 5px !important;
+}
+
+.custom-padding15 {
+    padding: 7px 11px !important;
+}
+
+.custom-padding16 {
+    padding: 0px 17px !important;
+}
+
+.custom-padding17 {
+    padding: 0px 18px !important;
+}
+
+.ticket-detail-div {
+    border: 3px solid #0000001a;
+    border-radius: 4px;
+    padding: 10px 13px 34px 11px;
+}
+
+.myinput {
+    font-family: 'Gilroy' !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 13px !important;
+    line-height: 15px !important;
+    color: rgba(17, 23, 39, 0.5) !important;
+}
+
+.no-filter {
+    filter: none !important;
+}
+
+.title-1 {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 15px;
+    line-height: 18px;
+}
+
+.title-2 {
+    font-family: 'Gilroy-Bold';
+    font-size: 20px;
+    line-height: 23px;
+}
+
+.title-3 {
+    font-family: 'Gilroy-Bold';
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.title-4 {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.title-5 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.title-6 {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.title-6-new {
+    font-family: 'Gilroy-Bold';
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.title-7 {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 17px;
+    line-height: 20px;
+}
+
+.title-8 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 20px;
+}
+
+.title-9 {
+    font-family: 'Gilroy-Bold';
+    font-size: 17px;
+    line-height: 20px;
+}
+
+.title-10 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 20px;
+}
+
+.title-11 {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 18px;
+    line-height: 29px;
+}
+
+.title-11-2 {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.title-12 {
+    font-family: 'Gilroy-Bold';
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.title-13 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.title-14 {
+    font-family: 'Gilroy-Bold';
+    font-size: 19px;
+    line-height: 22px;
+}
+
+.title-15 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+}
+
+.title-16 {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 19px;
+    line-height: 19px;
+}
+
+.title-17 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.title-18 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+}
+
+.title-19 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+}
+
+.title-20 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.title-21 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 21px;
+}
+
+.otpinput {
+    border: 1px solid #CDD4DB;
+    border-radius: 10px;
+    width: 46px;
+    height: 46px;
+    text-align: center;
+}
+
+.heading-text {
+    position: absolute;
+    top: 38%;
+    width: 100%;
+}
+
+.time-hours {
+    list-style: none;
+    padding: 0;
+}
+
+.time-div {
+    background: rgba(253, 215, 228, 0.2);
+    padding: 15px;
+    text-align: center;
+    width: fit-content;
+}
+
+.time-hours li {
+    
+    text-align: center !important;
+    font-family: 'Gilroy-Medium';
+    font-size: 15px;
+    line-height: 18px;
+    color: #68696D;
+    padding: 7px 0;
+}
+
+.time-hours .active {
+    font-family: 'Gilroy-Bold';
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+}
+
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 28px 19px 28px;
+}
+
+.header-bar2 {
+    padding: 28px 28px 35px 23px;
+}
+
+.notification-div {
+    margin-left: 15px;
+    margin-right: 12px;
+}
+
+.notification {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 15px 37px 8px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.ticket-div {
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    margin: 0 20px;
+    padding: 22px 0px 32px 0px;
+}
+
+.nav-tabs {
+    margin-left: 21px;
+    margin-right: 21px;
+}
+
+.camera-img-div {
+    width: 35px;
+    height: 35px;
+    background: #fff;
+    border-radius: 100%;
+    padding-top: 3px;
+    position: absolute;
+    bottom: -15px;
+    right: -10px;
+}
+
+.img-camera-div {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.div-grey {
+    background: #E8EBEE;
+    border-radius: 8px;
+    padding: 11px 17px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-tabs {
+    border-bottom: none !important;
+}
+
+.ticket-tabs li {
+    padding: 11px 8px 11px 10px;
+    background: #E8EBEE;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+}
+
+.ticket-tabs li.active {
+    background: #FDD7E4;
+    position: relative;
+}
+
+.ticket-tabs li.active:after {
+    content: "";
+    border-bottom: 5px solid #FDD7E4;
+    position: absolute;
+    width: 89%;
+    bottom: -15px;
+}
+
+.ticket-tabs li a {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 18px;
+    line-height: 21px;
+    color: #111727;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.ticket-datetime {
+    background: #d9d9d980;
+    border-radius: 10px;
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 20px;
+    text-align: center;
+    padding: 11px 5px;
+    margin: 0 17px;
+    position: relative;
+}
+
+.padding-17-7 {
+    padding: 20px 7px !important;
+}
+
+.div3column div {
+    width: 33%;
+    padding: 10px 7px;
+}
+
+.border-left-right {
+    border-left: 1px solid #D9D9D9;
+    border-right: 1px solid #D9D9D9;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.border-pink {
+    border: 2px solid #FDD7E4;
+}
+
+.mybtn {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 29px;
+    text-align: center;
+    color: #EC7DA3;
+    border: 1px solid #EC7DA3;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 10px;
+    padding: 16px;
+    width: 100%;
+    background-color: #fff;
+}
+
+.btn-decline {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 18px;
+    line-height: 29px;
+    text-align: center;
+    color: #F73333;
+    border: 1px solid #F73333;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 12px 18px;
+    border: none;
+}
+
+.btn-accept {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 18px;
+    line-height: 29px;
+    text-align: center;
+    color: #000;
+    border: 1px solid #FDD7E4;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    background-color: #FDD7E4;
+    border-radius: 10px;
+    padding: 12px 18px;
+    border: none;
+    position: relative;
+}
+
+.btn-accept-Gilroy {
+    font-family: 'Gilroy';
+}
+
+.btn {
+    font-family: 'Gilroy' !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 18px !important;
+    line-height: 29px !important;
+    /* or 161% */
+    text-align: center !important;
+    color: #0B1E26 !important;
+    padding: 12px 35px;
+    border: none;
+    position: relative;
+    border-radius: 10px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.btn2 {
+    font-family: 'Gilroy-SemiBold' !important;
+    background: #FFFFFF !important;
+    border-radius: 7px !important;
+    color: #282D40 !important;
+}
+
+.btn-padding {
+    padding: 17px 0 14px 0 !important;
+}
+
+.btn-padding2 {
+    padding: 15px 0 16px 0 !important;
+}
+
+.btn-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.btn-icon2 {
+    position: absolute;
+    top: 17px;
+    right: 10px;
+}
+
+.btn-icon3 {
+    position: absolute;
+    top: 22px;
+    right: 11px;
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 13px;
+    right: 10px;
+}
+
+.bottom-right2 {
+    position: absolute;
+    bottom: 3px;
+    right: 10px;
+}
+
+.bottom-right3 {
+    position: absolute;
+    bottom: -2px;
+    right: 2px;
+}
+
+.bottom-right4 {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.required_field:after {
+    content: "*";
+    position: absolute;
+    top: 0;
+    right: -10px;
+    color: #F73333;
+}
+
+.required_field2:after {
+    content: "*";
+    position: absolute;
+    top: 0;
+    right: -2px;
+    color: #F73333;
+}
+
+.height-47px {
+    height: 47px !important;
+}
+
+.height-38px {
+    height: 38px;
+}
+
+.input-popup-div {
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 14px;
+    padding: 9px 10px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: none;
+}
+
+.job-total-div {
+    background: #E8EBEE;
+    border-radius: 8px;
+    padding: 13px 25px 12px 22px;
+    text-align: center;
+}
+
+.driver-total-div {
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+    padding: 13px 25px 12px 22px;
+    position: relative;
+    text-align: center;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
+
+.btn-padding {
+    padding: 15px 38px !important;
+}
+
+.rounds {
+    border: 1px solid #68696D;
+    border-radius: 10px;
+    padding: 11px 5px;
+    text-align: center;
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: #68696D;
+    margin-bottom: 31px;
+}
+
+.roundsdiv div:first-child {
+    /* width: 35%; */
+}
+
+.roundsdiv div:last-child {
+    width: 65%;
+}
+
+.dumpsites {
+    list-style: none;
+    padding: 0px 10px;
+    font-family: 'Gilroy';
+    font-size: 17px;
+    line-height: 20px;
+    color: #68696D;
+}
+
+.dumpsites li {
+    padding: 7px;
+}
+
+.dumpsites .active {
+    font-family: 'Gilroy-Bold';
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+}
+
+.counter {
+    background: #D9D9D9;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+    line-height: 23px;
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 15px;
+    text-align: center;
+    color: #130F26;
+}
+
+.vertical-alignment-helper {
+    display: table;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    /* This makes sure that we can still click outside of the modal to close it */
+}
+
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events: none;
+}
+
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width: inherit;
+    max-width: inherit;
+    /* For Bootstrap 4 - to avoid the modal window stretching full width */
+    height: inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+}
+
+.modal-backdrop.fade {
+    opacity: 0.5 !important;
+}
+
+.modal-dialog {
+    padding: 0 20px;
+}
+
+.modal-content {
+    border-radius: 10px !important;
+}
+
+.empty-round {
+    background: #E8EBEE;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+    margin: 0 14px;
+    margin-bottom: 35px;
+}
+
+.empty-round-white {
+    background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    border-radius: 10px;
+    padding: 18px 8px;
+}
+
+.div-1 {
+    border: 1px solid #E1E1E1;
+}
+
+.div-2 {
+    border: 1px solid #FDD7E4;
+    border-radius: 5px;
+    padding: 4px 8px;
+}
+
+.calendar-main-div {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 10px;
+    margin: 56px 14px 27px 13px;
+    padding: 24px 12px 28px 13px;
+}
+
+.border-div {
+    border: 1px solid #D9D9D9;
+    border-radius: 8px;
+}
+
+.calendar-div {
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    padding: 26px 13px 23px 20px;
+}
+
+.custom-checkbox {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -o-appearance: none;
+    outline: none;
+    content: none;
+}
+
+.custom-checkbox:before {
+    font-family: "FontAwesome";
+    content: "\f00c";
+    font-size: 22px;
+    color: transparent !important;
+    display: block;
+    text-align: center;
+}
+
+.custom-checkbox:checked:before {
+    color: black !important;
+}

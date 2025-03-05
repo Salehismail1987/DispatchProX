@@ -1,0 +1,68 @@
+@import url('../../../../assets/css/dashboard-style.css');
+.user-profile-pic{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 33%;
+    border: 3px solid white;
+}
+.userinfo-2{
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    /* identical to box height */
+
+    text-align: right;
+
+    color: #111727;
+
+    opacity: 0.5;
+}
+.header-content{
+    justify-content: end !important;
+}
+
+#sidebarCollapse{
+    display: none;
+}
+@media screen and (max-width: 770px) {
+    #sidebarCollapse{
+        display: block;
+    }
+
+    .header-content{
+        justify-content: space-between !important;
+    }
+}
+
+.cursor-pointer{
+    cursor:pointer
+}
+
+.border-top-icon{
+  background: #FFFFFF;
+    border: 1px solid #E1E1E1;
+    border-radius: 5px;
+}
+
+.box-shadow{
+  box-shadow: 0px 4px 4px 0px #00000040 inset;
+
+}
+
+
+.icon-svg {
+  box-shadow: 0px 4px 4px 0px #00000040;
+
+}
+.plr-5px{
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.mydropdown-img{
+  border: none !important;
+  border-radius: 5px;
+  margin-top: 5px;
+}

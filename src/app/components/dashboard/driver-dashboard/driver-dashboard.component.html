@@ -1,0 +1,543 @@
+<div class="bg-white">
+        
+<ng-container *ngIf="screen == 'mobile'">
+    <app-dashboard-top-header-driver [is_dashboard]="true" [header_text]="this.header_text"></app-dashboard-top-header-driver>
+  
+    <div class="title-3 ml-10 mb-19">{{this.date_today | date:'EEEE'}}, {{this.date_today | date:'shortDate'}}</div>
+    <!-- Normal Driving-->
+    <div class="notification-div" *ngIf="this.dashboard_data && this.dashboard_data.current_job && this.dashboard_data?.is_current_tc=='NO' && this.dashboard_data.current_job.id !='' && this.dashboard_data.current_job.ticket?.status=='Driving'">
+        <div class="notification bg-yellow"  [routerLink]="['/inprogress-job-detail',this.dashboard_data?.current_job?.id]">
+            <div>
+                <div class="title-3 text-white mb-24">Ticket ID: {{this.dashboard_data?.current_job?.ticket?.ticket_no}}</div>
+                <div class="title-3 text-white">
+                    <ng-container *ngIf="this.dashboard_data?.current_job?.ticket?.ticket_truck_type_rounds ">
+                        <ng-container *ngIf="this.current_round >0">
+                            Round   {{this.current_round}} in progress
+                        </ng-container>
+                        <ng-container *ngIf="this.current_round <1">
+                            Driving
+                        </ng-container>
+                    </ng-container> 
+                </div>
+            </div>
+            <div>
+                <img src="../assets/driver-images-mobile/restart-a.svg" alt="NA">
+            </div>
+        </div>
+    </div>
+
+    <!--Freelance Driving-->
+    <div class="notification-div" *ngIf="this.dashboard_data && this.dashboard_data.current_job  && this.dashboard_data?.is_current_tc=='NO' && this.dashboard_data.current_job.id !='' && this.dashboard_data?.is_current_self_dispatched && this.dashboard_data.current_job?.status=='Driving'">
+        <div class="notification bg-yellow"  [routerLink]="['/freelance-inprogress-detail',this.dashboard_data?.current_job?.id]">
+            <div>
+                <div class="title-3 text-white mb-24">Ticket ID: {{this.dashboard_data?.current_job?.ticket_no}}</div>
+                <div class="title-3 text-white">
+                    <ng-container *ngIf="this.rounds ">
+                        <ng-container *ngIf="this.current_round >0">
+                            Round   {{this.current_round}} in progress
+                        </ng-container>
+                        <ng-container *ngIf="this.current_round <1">
+                            Driving
+                        </ng-container>
+                    </ng-container> 
+                </div>
+            </div>
+            <div>
+                <img src="../assets/driver-images-mobile/restart-a.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+     <!--Freelance Driving-->
+     <div class="notification-div" *ngIf="this.dashboard_data && this.dashboard_data.current_job  && this.dashboard_data?.is_current_tc=='NO' && this.dashboard_data.current_job.id !='' && this.dashboard_data?.is_current_self_dispatched && this.dashboard_data.current_job?.status=='Accepted'">
+        <div class="notification bg-yellow2"  [routerLink]="['/freelance-accepted-detail',this.dashboard_data?.current_job?.id]">
+            <div>
+                <div class="title-4 mb-24">Current <span class="ml-1">{{this.dashboard_data?.current_job?.ticket_date | date:"MMMM d"}}</span></div>
+                <div class="title-5">Ticket ID: {{this.dashboard_data?.current_job?.ticket_no}}.</div>
+               
+            </div>
+            <div>
+                <img src="../assets/driver-images-mobile/Done_b.svg" alt="">
+            </div>
+        </div>
+    </div>
+        <!--Pending Current Normal -->
+        <ng-container *ngIf="this.dashboard_data && this.dashboard_data?.current_job?.id && this.dashboard_data?.current_job?.ticket?.status=='Pending' && this.dashboard_data?.is_current_tc=='NO'">
+            <div class="notification-div" >
+                <div class="notification bg-grey">
+                    <div>
+                        <div class="title-4 mb-24">New Request {{this.dashboard_data?.current_job?.ticket?.ticket_date | date:"EEEE d"}}.</div>
+                        <div class="title-4 color-lightgrey">Ticket ID: {{this.dashboard_data?.current_job?.ticket?.ticket_no}}
+                        </div>
+                    </div>
+                    <div>
+                        <img  [routerLink]="['/request-job-detail',this.dashboard_data?.current_job.id]" src="../assets/driver-images-mobile/request.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    
+        <!--Pending Current TC-->
+        <ng-container *ngIf="this.dashboard_data && this.dashboard_data?.current_job?.id && this.dashboard_data?.current_job?.ticket?.status=='Pending' && this.dashboard_data?.is_current_tc=='YES'">
+            <div class="notification-div" >
+                <div class="notification bg-grey">
+                    <div>
+                        <div class="title-4 mb-24">New Request {{this.dashboard_data?.current_job?.ticket?.ticket_date | date:"EEEE d"}}.</div>
+                        <div class="title-4 color-lightgrey">Ticket ID: {{this.dashboard_data?.current_job?.ticket?.ticket_no}} 
+                        </div>
+                    </div>
+                    <div>
+                        <img  [routerLink]="['/tc-request-job-detail',this.dashboard_data?.current_job.id]" src="../assets/driver-images-mobile/request.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    
+    <!-- TC Driving-->
+    <div class="notification-div" *ngIf="this.dashboard_data && this.dashboard_data.current_job && this.dashboard_data?.is_current_tc=='YES' && this.dashboard_data.current_job.id !='' && this.dashboard_data.current_job.ticket?.status=='Driving'">
+        <div class="notification bg-yellow"  [routerLink]="['/tc-inprogress-job-detail',this.dashboard_data?.current_job?.id]">
+            <div>
+                <div class="title-3 text-white mb-24">Ticket ID: {{this.dashboard_data?.current_job?.ticket?.ticket_no}}</div>
+                <div class="title-3 text-white">
+                    <ng-container *ngIf="this.dashboard_data?.current_job?.ticket?.ticket_truck_type_rounds ">
+                        <ng-container *ngIf="this.current_round >0">
+                            Round   {{this.current_round}} in progress
+                        </ng-container>
+                        <ng-container *ngIf="this.current_round <1">
+                            Driving
+                        </ng-container>
+                    </ng-container> 
+                </div>
+            </div>
+            <div>
+                <img src="../assets/driver-images-mobile/restart-a.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- Freelance  Approved -->
+    <ng-container *ngIf="this.dashboard_data && this.dashboard_data.current_job && this.dashboard_data.current_job.id !=''&& this.dashboard_data.is_current_tc=='NO' && this.dashboard_data.current_job?.status=='Approved' && this.dashboard_data?.is_current_self_dispatched">
+        <div class="notification-div" >
+            <div class="notification bg-approved" [routerLink]="['/freelance-approved-detail',this.dashboard_data.current_job.id]">
+                <div>
+                  
+                    <div class="title-4 mb-24">Ticket ID: {{this.dashboard_data.current_job?.ticket_no}}.</div>
+                    <div class="title-4 ">Approved at [{{this.dashboard_data.current_job?.approved_at | date:"h:mm a"}}]</div>
+                </div>
+                <div>
+                    <img src="../assets/driver-images-mobile/appr.svg" alt="" >
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- Normal Approved-->
+    <ng-container *ngIf="this.dashboard_data && this.dashboard_data.current_job && this.dashboard_data.current_job.id !='' && this.dashboard_data?.is_current_tc=='NO' && this.dashboard_data.current_job.ticket?.status=='Approved'">
+        <div class="notification-div" >
+            <div class="notification bg-approved" [routerLink]="['/approved-job-detail',this.dashboard_data.current_job.id]">
+                <div>
+                  
+                    <div class="title-4 mb-24">Ticket ID: {{this.dashboard_data.current_job?.ticket?.ticket_no}}.</div>
+                    <div class="title-4 ">Approved at [{{this.dashboard_data.current_job?.approved_at | date:"h:mm a"}}]</div>
+                </div>
+                <div>
+                    <img src="../assets/driver-images-mobile/appr.svg" alt="" >
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    
+    <!--TC Approved -->
+    <ng-container *ngIf="this.dashboard_data && this.dashboard_data.current_job && this.dashboard_data.current_job.id !='' && this.dashboard_data?.is_current_tc=='YES' && this.dashboard_data.current_job.ticket?.status=='Approved'">
+        <div class="notification-div" >
+            <div class="notification bg-approved" [routerLink]="['/tc-approved-job-detail',this.dashboard_data.current_job.id]">
+                <div>
+                  
+                    <div class="title-4 mb-24">Ticket ID: {{this.dashboard_data.current_job?.ticket?.ticket_no}}.</div>
+                    <div class="title-4 ">Approved at [{{this.dashboard_data.current_job?.approved_at | date:"h:mm a"}}]</div>
+                </div>
+                <div>
+                    <img src="../assets/driver-images-mobile/appr.svg" alt="" >
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- Normal Completed-->
+    <ng-container *ngIf="this.dashboard_data && this.dashboard_data.current_job && this.dashboard_data.current_job.id !='' && this.dashboard_data.is_current_tc=='NO' && this.dashboard_data.current_job.ticket?.status=='Completed'">
+        <div class="notification-div" >
+            <div class="notification bg-completed" [routerLink]="['/completed-job-detail',this.dashboard_data.current_job?.id]">
+                <div>
+                    <div class="title-4 mb-24">Ticket ID: {{this.dashboard_data.current_job?.ticket?.ticket_no}}.</div>
+                    <div class="title-4 ">Sent for approval [{{this.dashboard_data.current_job?.ended_at | date:"h:mm a"}}]  </div>
+                </div>
+                <div>
+                    <img src="../assets/driver-images-mobile/completed.svg" alt="" >
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- TC Completed-->
+    <ng-container *ngIf="this.dashboard_data && this.dashboard_data.current_job && this.dashboard_data.current_job.id !='' && this.dashboard_data?.is_current_tc=='YES' && this.dashboard_data.current_job.ticket?.status=='Completed'">
+        <div class="notification-div" >
+            <div class="notification bg-completed" [routerLink]="['/tc-completed-job-detail',this.dashboard_data.current_job?.id]">
+                <div>
+                    <div class="title-4 mb-24">Ticket ID: {{this.dashboard_data.current_job?.ticket?.ticket_no}}.</div>
+                    <div class="title-4 ">Sent for approval [{{this.dashboard_data.current_job?.ended_at | date:"h:mm a"}}]  </div>
+                </div>
+                <div>
+                    <img src="../assets/driver-images-mobile/completed.svg" alt="" >
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    
+    <!-- Current Normal Accepted-->
+    <div class="notification-div" *ngIf="this.dashboard_data && this.dashboard_data?.current_job?.id && this.dashboard_data?.is_current_tc=='NO' && this.dashboard_data?.current_job?.ticket?.status=='Accepted'">
+        <div class="notification bg-yellow2"  [routerLink]="['/accepted-job-detail',this.dashboard_data?.current_job?.id]">
+            <div>
+                <div class="title-4 mb-24">Current <span class="ml-1">{{this.dashboard_data?.current_job?.ticket?.ticket_date | date:"MMMM d"}}</span></div>
+                <div class="title-5">Ticket ID: {{this.dashboard_data?.current_job?.ticket?.ticket_no}}.</div>
+            </div>
+            <div>
+                <img src="../assets/driver-images-mobile/Done_b.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- TC Current Accepted-->
+    <div class="notification-div" *ngIf="this.dashboard_data && this.dashboard_data?.current_job?.id && this.dashboard_data?.is_current_tc=='YES' && this.dashboard_data?.current_job?.ticket?.status=='Accepted'">
+        <div class="notification bg-yellow2"  [routerLink]="['/tc-accepted-job-detail',this.dashboard_data?.current_job?.id]">
+            <div>
+                <div class="title-4 mb-24">Next <span class="ml-1">{{this.dashboard_data?.current_job?.ticket?.ticket_date | date:"MMMM d"}}</span></div>
+                <div class="title-5">Ticket ID: {{this.dashboard_data?.current_job?.ticket?.ticket_no}}.</div>
+            </div>
+            <div>
+                <img src="../assets/driver-images-mobile/Done_b.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="this.dashboard_data && !this.dashboard_data?.current_job">
+        <div class="notification-div" >
+            <div class="notification notificationnn bg-pink text-center text-align-center" >
+                <div>
+                    <div class="title-4 fnt-17">
+                        No jobs today 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- Next Normal Accepted-->
+    <div class="notification-div" *ngIf="this.dashboard_data && this.dashboard_data?.next_job?.id && this.dashboard_data?.is_next_tc=='NO' && this.dashboard_data?.next_job?.ticket?.status=='Accepted'">
+        <div class="notification bg-yellow2"  [routerLink]="['/accepted-job-detail',this.dashboard_data?.next_job?.id]">
+            <div>
+                <div class="title-4 mb-24">Next <span class="ml-1">{{this.dashboard_data?.next_job?.ticket?.ticket_date | date:"MMMM d"}}</span></div>
+                <div class="title-5">Ticket ID: {{this.dashboard_data?.next_job?.ticket?.ticket_no}}.</div>
+            </div>
+            <div>
+                <img src="../assets/driver-images-mobile/Done_b.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- TC Next Accepted-->
+    <div class="notification-div" *ngIf="this.dashboard_data && this.dashboard_data?.next_job?.id && this.dashboard_data?.is_next_tc=='YES' && this.dashboard_data?.next_job?.ticket?.status=='Accepted'">
+        <div class="notification bg-yellow2"  [routerLink]="['/tc-accepted-job-detail',this.dashboard_data?.next_job?.id]">
+            <div>
+                <div class="title-4 mb-24">Next <span class="ml-1">{{this.dashboard_data?.next_job?.ticket?.ticket_date | date:"MMMM d"}}</span></div>
+                <div class="title-5">Ticket ID: {{this.dashboard_data?.next_job?.ticket?.ticket_no}}.</div>
+            </div>
+            <div>
+                <img src="../assets/driver-images-mobile/Done_b.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- Freelance Next Accepted -->
+    <div class="notification-div" *ngIf="this.dashboard_data && this.dashboard_data?.next_job?.id && this.dashboard_data?.is_next_tc=='NO' &&  this.dashboard_data?.next_job?.status=='Accepted' && this.dashboard_data?.is_next_self_dispatched">
+        <div class="notification bg-yellow2"  [routerLink]="['/freelance-accepted-detail',this.dashboard_data?.next_job?.id]">
+            <div>
+                <div class="title-4 mb-24">Next <span class="ml-1">{{this.dashboard_data?.next_job?.ticket_date | date:"MMMM d"}}</span></div>
+                <div class="title-5">Ticket ID: {{this.dashboard_data?.next_job?.ticket_no}}.</div>
+            </div>
+            <div>
+                <img src="../assets/driver-images-mobile/Done_b.svg" alt="">
+            </div>
+        </div>
+    </div>
+
+    
+    <!--Pending Next Normal -->
+    <ng-container *ngIf="this.dashboard_data && this.dashboard_data?.next_job?.id && this.dashboard_data?.next_job?.ticket?.status=='Pending' && this.dashboard_data?.is_next_tc=='NO'">
+        <div class="notification-div" >
+            <div class="notification bg-grey">
+                <div>
+                    <div class="title-4 mb-24">New Request {{this.dashboard_data?.next_job?.ticket?.ticket_date | date:"EEEE d"}}.</div>
+                    <div class="title-4 color-lightgrey">Ticket ID: {{this.dashboard_data?.next_job?.ticket?.ticket_no}} 
+                    </div>
+                </div>
+                <div>
+                    <img  [routerLink]="['/request-job-detail',this.dashboard_data?.next_job.id]" src="../assets/driver-images-mobile/request.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <!--Pending Next TC-->
+    <ng-container *ngIf="this.dashboard_data && this.dashboard_data?.next_job?.id && this.dashboard_data?.next_job?.ticket?.status=='Pending' && this.dashboard_data?.is_next_tc=='YES'">
+        <div class="notification-div" >
+            <div class="notification bg-grey">
+                <div>
+                    <div class="title-4 mb-24">New Request {{this.dashboard_data?.next_job?.ticket?.ticket_date | date:"EEEE d"}}.</div>
+                    <div class="title-4 color-lightgrey">Ticket ID: {{this.dashboard_data?.next_job?.ticket?.ticket_no}} 
+                    </div>
+                </div>
+                <div>
+                    <img  [routerLink]="['/tc-request-job-detail',this.dashboard_data?.next_job.id]" src="../assets/driver-images-mobile/request.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="this.dashboard_data && !this.dashboard_data?.next_job">
+        <div class="notification-div" >
+            <div class="notification notificationnn bg-pink">
+                <div>
+                    <div class="title-4 fnt-17">
+                        No jobs scheduled 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="this.dashboard_data && this.dashboard_data?.notifications?.length<1">
+        <div class="notification-div">
+            <div class="notification border-pink" style="height: 80px;
+            background: white;" >
+                <div></div>
+                <div>
+                </div>
+            </div>
+    
+        </div>
+        
+    </ng-container>
+    <ng-container *ngIf="this.dashboard_data && this.dashboard_data?.notifications?.length>0">
+        <div class="notification-div" *ngFor="let notification of this.dashboard_data?.notifications">
+         
+            <div *ngIf="!notification?.is_self_dispatched && notification?.is_tc_ticket=='NO'" class="notification border-pink bg-white"  (click)="redirectNotification(notification, notification?.driver_ticket_id)">
+                <div></div>
+                <div>
+                    <!-- <div class="title-3 text-center mb-14 text-black-shade2">Notifications</div> -->
+                    <div class="title-4 text-center text-black-shade d-flex align-items-center mb-2">
+                        <img src="../assets/driver-images-mobile/Done.png" style="height: 24px;"  alt="" *ngIf="notification?.notification_icon=='double-tick'">
+                        <img src="../assets/driver-images-mobile/alarm-red.svg" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && notification?.overlaping_driver_ticket_id">
+                        <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && !notification?.overlaping_driver_ticket_id "> 
+                        <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='clock' && !notification?.overlaping_driver_ticket_id "> 
+                        <span class="ml-10">
+                            <span class="title-3 text-center mb-14 text-black-shade2">{{notification?.notification_title}}</span>
+                            <br/>
+                            {{notification?.notification_description}} 
+                            <br/>
+                            <span class="text-danger" *ngIf="notification?.overlaping_driver_ticket_id && notification?.overlapping_driver_ticket?.ticket">
+                                {{notification?.overlapping_driver_ticket && notification?.overlapping_driver_ticket.ticket? 'Overlapping '+notification?.overlapping_driver_ticket.ticket?.ticket_no :''}}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <ng-container >
+
+                
+                        <img  src="../assets/driver-images-mobile/arrow-right-white.png">
+                    </ng-container>
+                </div>
+            </div>
+            <div *ngIf="notification?.is_self_dispatched && notification?.is_tc_ticket=='NO'" class="notification border-pink bg-white"  (click)="redirectNotification(notification, notification?.freelance_driver_ticket_id)">
+                <div></div>
+                <div>
+                    <!-- <div class="title-3 text-center mb-14 text-black-shade2">Notifications</div> -->
+                    <div class="title-4 text-center text-black-shade d-flex align-items-center mb-2">
+                        <img src="../assets/driver-images-mobile/Done.png" style="height: 24px;"  alt="" *ngIf="notification?.notification_icon=='double-tick'">
+                        <img src="../assets/driver-images-mobile/alarm-red.svg" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && notification?.overlaping_driver_ticket_id">
+                        <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && !notification?.overlaping_driver_ticket_id "> 
+                        <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='clock' && !notification?.overlaping_driver_ticket_id "> 
+                        <span class="ml-10">
+                            <span class="title-3 text-center mb-14 text-black-shade2">{{notification?.notification_title}}</span>
+                            <br/>
+                            {{notification?.notification_description}} 
+                            <br/>
+                            <span class="text-danger" *ngIf="notification?.freelance_overlapping_driver_ticket
+                            && notification?.freelance_overlapping_driver_ticket?.ticket_no">
+                                {{notification?.freelance_overlapping_driver_ticket && notification?.freelance_overlapping_driver_ticket.ticket_no? 'Overlapping '+notification?.freelance_overlapping_driver_ticket?.ticket_no :''}}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <ng-container >
+
+                
+                        <img  src="../assets/driver-images-mobile/arrow-right-white.png">
+                    </ng-container>
+                </div>
+            </div>
+
+            <div *ngIf="notification?.is_tc_ticket=='YES'" class="notification border-pink bg-white"  (click)="redirectTcNotification(notification, notification?.tc_driver_ticket_id)">
+                <div></div>
+                <div>
+                    <!-- <div class="title-3 text-center mb-14 text-black-shade2">Notifications</div> -->
+                    <div class="title-4 text-center text-black-shade d-flex align-items-center mb-2">
+                        <img src="../assets/driver-images-mobile/Done.png" style="height: 24px;"  alt="" *ngIf="notification?.notification_icon=='double-tick'">
+                        <img src="../assets/driver-images-mobile/alarm-red.svg" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && notification?.tc_overlapping_driver_ticket_id">
+                        <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && !notification?.tc_overlapping_driver_ticket_id "> 
+                        <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='clock' && !notification?.tc_overlapping_driver_ticket_id "> 
+                        <span class="ml-10">
+                            <span class="title-3 text-center mb-14 text-black-shade2">{{notification?.notification_title}}</span>
+                            <br/>
+                            {{notification?.notification_description}} 
+                            <br/>
+                            <span class="text-danger" *ngIf="notification?.tc_overlapping_driver_ticket
+                            && notification?.tc_overlapping_driver_ticket?.ticket?.ticket_no">
+                                {{notification?.tc_overlapping_driver_ticket && notification?.tc_overlapping_driver_ticket?.ticket?.ticket_no? 'Overlapping '+notification?.tc_overlapping_driver_ticket?.ticket?.ticket_no :''}}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <ng-container >
+
+                
+                        <img  src="../assets/driver-images-mobile/arrow-right-white.png">
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+ 
+    <div class="calendar-main-div">
+        <!-- <label class="d-flex align-items-center">
+            <input type="checkbox" value="1" (change)="checkLegend($event)" class=" showhidelegends" [checked]="this.is_legend_hidden"> 
+            <span class="title-18 pl-2 checkmark">Hide Legend</span>
+        </label> -->
+        <div class="d-flex justify-content-between align-items-center pl-10">
+            <div class="title-4">Job Schedule</div>
+            <div>
+                <label class="custom-checkbox">
+                    <input  type="checkbox" value="1" (change)="checkLegend($event)" class=" showhidelegends" [checked]="this.is_legend_hidden" />
+                    <span class="checkmark"></span> <span>Hide Legend</span>
+                  </label>
+            </div>
+        </div>
+        <div class="calendar-div">
+            <div class="legends-div" *ngIf="!is_legend_hidden">
+                <div class="d-flex justify-content-between mb-7">
+                    <div class="calendar-colors-div">
+                        <div class="calendar-colors bg-dark-grey"></div>
+                        <div class="title-19 pl-7">Pending</div>
+                    </div>
+                    <div class="calendar-colors-div">
+                        <div class="calendar-colors bg-yellow2"></div>
+                        <div class="title-19 pl-7">Accepted</div>
+                    </div>
+                    <div class="calendar-colors-div">
+                        <div class="calendar-colors bg-yellow"></div>
+                        <div class="title-19 pl-7">Driving</div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mb-44">
+                    <div class="calendar-colors-div">
+                        <div class="calendar-colors bg-green"></div>
+                        <div class="title-19 pl-7">Completed</div>
+                    </div>
+                    <div class="calendar-colors-div">
+                        <div class="calendar-colors bg-blue"></div>
+                        <div class="title-19 pl-7">Approved</div>
+                    </div>
+                    <div class="calendar-colors-div">
+                        <div class="calendar-colors default-col"></div>
+                        <div class="title-19 pl-7">Today</div>
+                    </div>
+                </div>
+            </div>
+            <div id="jobs-data" style="display: none;">
+                {{ this.datejobs | json}}
+            </div>
+            <div id="pnlEventCalendar" style="width:100%; border:none; margin-top: -20px" (click)="getVal()"></div>
+            <!-- <p>selected date: <b><span id="lblEventCalendar">[date]</span></b></p> -->
+        </div>
+    </div>
+    <div class="pb-1"></div>
+
+<div class="modal fade " *ngIf="!this.show_reason && this.ticket_to_decline && this.ticket_to_decline?.id!='' && this.ticket_to_decline !=null" style="display: block;padding-top: 40%;background: #0000005c;"  id="removeUserModal" tabindex="-1" role="dialog" aria-labelledby="companyeditLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                              
+                  
+                    <div class="dashboard-title " align="center"> Are you sure that you want to decline this job?</div>
+                    <br/>
+                
+                <div class="row " >
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 p-3" style="display:flex;justify-content: center;" align="center">
+                        <div >
+                            <button data-dismissle="modal" class="mybtn bg-pink width-fit-content mybtn-padding" (click)="getReason(this.ticket_to_decline)" >Yes</button>
+                        </div>
+                    
+                        <div  class="ml-2">
+                            <button data-dismissle="modal" class=" ml-2 mybtn  btn-border-pink   width-fit-content mybtn-border mybtn-padding" (click)="cancelDecline()" >No</button>
+                        </div>
+                    </div>
+                
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade "*ngIf="this.show_reason && this.ticket_to_decline && this.ticket_to_decline?.id!='' && this.ticket_to_decline !=null" style="display: block;padding-top: 40%;background: #0000002c;"  id="changeApprover" tabindex="-1" role="dialog" aria-labelledby="companyeditLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                    <div class="dashboard-title " align="center">Reason for declining the job?</div>
+                    <br/>
+                    <div class="row mb-14 mt-2" align="center">               
+                       
+
+                        <div class="col-md-12" >
+                            <span class="text-danger" *ngIf="reason_error!=''">{{reason_error}}</span>
+                            <textarea placeholder="Type here..." (change)="setReason($event)" class="form-control" rows="4"></textarea>
+                        </div>
+
+                    </div>
+              
+                <br/>
+              
+                <div class="row " align="center">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6" style="display:flex;justify-content: center;" align="center">
+                        <div >
+                            <button *ngIf="!loading_reject" data-dismissle="modal" class="mybtn bg-pink width-fit-content mybtn-padding" (click)="declineHandler()" >Decline</button>
+                            <button *ngIf="loading_reject"  class="mybtn bg-pink width-fit-content mybtn-padding" disableds >Processing..</button>
+                        </div>
+                    
+                        <div >
+                            <button data-dismissle="modal" class=" ml-2 mybtn btn-border-pink   width-fit-content mybtn-border mybtn-padding" (click)="cancelDecline()" >Cancel</button>
+                        </div>
+                    </div>
+                
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

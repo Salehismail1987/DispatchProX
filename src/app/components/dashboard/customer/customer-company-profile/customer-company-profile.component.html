@@ -1,0 +1,704 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="main-inner-body-container mt-15px">
+        <div class="project-profile-header-container">
+          <div class="profile_heading_div1">
+            <div class="project-profile-header-left d-flex align-items-center">
+              <img
+                src="./assets/images/cc-icon.svg"
+                alt="project-profile-file-icon"
+              />
+              <div class="heading-1-400 text-color-black">
+                {{ this.loggedinUser?.company_name }}
+              </div>
+            </div>
+          </div>
+          <app-customer-profile-nav
+            [current_nav]="'company_profile'"
+          ></app-customer-profile-nav>
+        </div>
+        <div class="main-project-setting-container inner_main_shadow">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="page-heading-title mb-5">Company details</div>
+            </div>
+            <div
+              class="col-md-5 d-flex justify-content-end"
+              style="height: 40px !important"
+            >
+              <!-- <button type="button" class="title-14 styled-button openOptionModal d-flex" (click)="showOptions()"  *ngIf="!is_loading_cancel">
+                                <img src="assets/images/stop-icon.svg" class="leftsidebtn"> <div>Get tickets</div></button> -->
+              <button
+                class="title-14 styled-button openOptionModal"
+                style="border-radius: 5px !important"
+                [routerLink]="'/customer-setup'"
+              >
+                <div class="d-flex align-items-cente">
+                  <img
+                    src="./assets/images/cust-settings-icon.svg"
+                    width="20px"
+                    alt="project-profile-tracker-icon"
+                  />
+                  <div
+                    class="heading-5-400 text-color-black ml-8px col text-center"
+                  >
+                    Setup
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <form
+            [formGroup]="setCompanyForm"
+            (ngSubmit)="saveCompanyProfile()"
+            enctype="multipart/form-data"
+          >
+            <div class="row mt-20">
+              <div class="col-md-7">
+                <div class="p-0 row">
+                  <div class="col-md-5">
+                    <div class="div-image d-flex align-items-center">
+                      <div
+                        class="bg-profile-container d-flex justify-content-center align-items-center"
+                      >
+                        <img
+                          src="../assets/images/default-company-profile.svg"
+                          class=""
+                          *ngIf="
+                            !this.customer_details?.company_profile_image ||
+                            this.customer_details?.company_profile_image == ''
+                          "
+                        />
+                        <img
+                          class="user-profile-pic"
+                          [src]="
+                            backendAPIURL +
+                            this.customer_details?.company_profile_image
+                          "
+                          *ngIf="
+                            this.customer_details?.company_profile_image !==
+                              undefined &&
+                            this.customer_details?.company_profile_image !==
+                              null &&
+                            this.customer_details?.company_profile_image != ''
+                          "
+                        />
+                      </div>
+                      <div
+                        class="p-3 profile-text"
+                        (click)="logoFileInput.click()"
+                      >
+                        Upload<br />
+                        Company logo
+                        <input
+                          id="logo-file-input"
+                          hidden
+                          type="file"
+                          [multiple]="false"
+                          [accept]="'image/jpeg, image/png'"
+                          (change)="uploadimage($event)"
+                          #logoFileInput
+                          formControlName="profile_image"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-7 company-info-div">
+                    <div
+                      class="updatemodal"
+                      style="position: absolute; width: 100%"
+                    >
+                      <div
+                        tabindex="-1"
+                        class="modal fade"
+                        style="position: relative !important"
+                        id="editProfile"
+                        aria-labelledby="editProfile"
+                        aria-modal="true"
+                        role="dialog"
+                      >
+                        <div class="modal-dialog margin-auto">
+                          <div class="modal-content modal-bg-white">
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-11 row ml-1 mb-2 pr-0">
+                                  <div class="col-12 text-center">
+                                    <div
+                                      class="heading-5-400 text-color-111727 text-center"
+                                    >
+                                      Edit contact details
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-1">
+                                  <button
+                                    type="button"
+                                    data-bs-dismiss="modal"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                    class="my-modal-close border-0 bg-transparent shadow-none"
+                                  >
+                                    <img
+                                      src="./assets/images/cross_2.svg"
+                                      alt="Close"
+                                      style="
+                                        width: 14px;
+                                        height: 14px;
+                                        margin-top: -10px;
+                                        margin-right: -15px;
+                                      "
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-12 mt-3">
+                                  <div class="col-md-12">
+                                    <span
+                                      *ngIf="companyNameError != ''"
+                                      class="text-danger"
+                                      >{{ companyNameError }}</span
+                                    >
+                                    <div
+                                      class="project-profile-input-container bdr-none"
+                                    >
+                                      <div
+                                        class="d-flex justify-content-space-between align-items-center"
+                                      >
+                                        <div
+                                          class="heading-8-400 text-color-grey"
+                                        >
+                                          Company name
+                                        </div>
+                                        <div
+                                          class="heading-4-400-semi text-color-F63333 h-15px ml-10px mb-1"
+                                        >
+                                          *
+                                        </div>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        placeholder=""
+                                        formControlName="company_name"
+                                        (input)="changeFull($event)"
+                                        [ngModel]="
+                                          this.loggedinUser?.company_name
+                                        "
+                                        class="form-control project-profile-inputtt dumpsite_address text-grey"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-6 mt-3">
+                                  <div class="col-md-12">
+                                    <span
+                                      *ngIf="businessNoError != ''"
+                                      class="text-danger"
+                                      >{{ businessNoError }}</span
+                                    >
+                                    <div
+                                      class="project-profile-input-container bdr-none"
+                                    >
+                                      <div
+                                        class="d-flex justify-content-space-between align-items-center"
+                                      >
+                                        <div
+                                          class="heading-8-400 text-color-grey"
+                                        >
+                                          Business number
+                                        </div>
+                                        <div
+                                          class="heading-4-400-semi text-color-F63333 h-15px ml-10px mb-1"
+                                        >
+                                          *
+                                        </div>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        placeholder=""
+                                        formControlName="business_no"
+                                        [ngModel]="
+                                          this.customer_details &&
+                                          this.customer_details.business_no &&
+                                          this.customer_details.business_no !==
+                                            null &&
+                                          this.customer_details.business_no !=
+                                            'null'
+                                            ? this.customer_details.business_no
+                                            : ''
+                                        "
+                                        class="form-control project-profile-inputtt dumpsite_address text-grey field__input3"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-6 mt-3">
+                                  <div class="col-md-12">
+                                    <span
+                                      *ngIf="wbscNoError != ''"
+                                      class="text-danger"
+                                      >{{ wbscNoError }}</span
+                                    >
+                                    <div
+                                      class="project-profile-input-container bdr-none"
+                                    >
+                                      <div
+                                        class="d-flex justify-content-space-between align-items-center"
+                                      >
+                                        <div
+                                          class="heading-8-400 text-color-grey"
+                                        >
+                                          Work safety number
+                                        </div>
+                                        <div
+                                          class="heading-4-400-semi text-color-F63333 h-15px ml-10px mb-1"
+                                        >
+                                          *
+                                        </div>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        placeholder=""
+                                        formControlName="wsbc_no"
+                                        [ngModel]="
+                                          this.customer_details &&
+                                          this.customer_details.wsbc_no &&
+                                          this.customer_details.wsbc_no !==
+                                            null &&
+                                          this.customer_details.wsbc_no !=
+                                            'null'
+                                            ? this.customer_details.wsbc_no
+                                            : ''
+                                        "
+                                        class="form-control project-profile-inputtt dumpsite_address text-grey text-right field__input3"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                  <div class="col-md-12">
+                                    <div
+                                      class="project-profile-input-container bdr-none"
+                                    >
+                                      <div
+                                        class="d-flex justify-content-end align-items-center text-right"
+                                      >
+                                        <div
+                                          class="heading-8-400 text-color-grey"
+                                        >
+                                          Website
+                                        </div>
+                                      </div>
+                                      <input
+                                        type="text"
+                                        placeholder=""
+                                        formControlName="website"
+                                        class="form-control project-profile-inputtt dumpsite_address text-grey field__input3 text-right"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-12 row center mt-4">
+                                  <div class="col-4"></div>
+                                  <div class="col-4">
+                                    <button
+                                      *ngIf="!is_loading"
+                                      type="submit"
+                                      class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                                    >
+                                      Update
+                                    </button>
+                                    <button
+                                      *ngIf="is_loading"
+                                      type="button"
+                                      disabled
+                                      class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                                    >
+                                      Updating...
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row p-0">
+                      <div
+                        class="col-12 mb-2 cursor-pointer"
+                        data-toggle="modal"
+                        data-target="#editProfile"
+                      >
+                        <label class="field fieldd required_fieldd mb-1">
+                          <input
+                            class="field__input field__inputt name-input cursor-pointer"
+                            type="text"
+                            [readonly]="true"
+                            value="{{ this.loggedinUser?.company_name }}"
+                          />
+                          <span class="field__label-wrap">
+                            <span class="field__label cust-label"
+                              >Company name</span
+                            >
+                          </span>
+                        </label>
+                      </div>
+
+                      <div
+                        class="col-6 pr-6px mb-2 cursor-pointer"
+                        data-toggle="modal"
+                        data-target="#editProfile"
+                      >
+                        <label class="field fieldd required_fieldd pr-0">
+                          <input
+                            class="field__input field__input3 pr-3 cursor-pointer"
+                            type="text"
+                            [readonly]="true"
+                            placeholder=""
+                            [value]="
+                              this.customer_details &&
+                              this.customer_details.business_no &&
+                              this.customer_details.business_no !== null &&
+                              this.customer_details.business_no != 'null'
+                                ? this.customer_details.business_no
+                                : ''
+                            "
+                          />
+                          <span class="field__label-wrap">
+                            <span class="field__label field__label2"
+                              >Business number</span
+                            >
+                          </span>
+                        </label>
+                      </div>
+
+                      <div
+                        class="col-6 pl-6px mb-2 cursor-pointer"
+                        data-toggle="modal"
+                        data-target="#editProfile"
+                      >
+                        <label
+                          class="field fieldd required_fieldd cursor-pointer"
+                        >
+                          <input
+                            class="field__input field__input3 pr-3"
+                            type="text"
+                            [readonly]="true"
+                            placeholder=""
+                            [value]="
+                              this.customer_details &&
+                              this.customer_details.wsbc_no &&
+                              this.customer_details.wsbc_no !== null &&
+                              this.customer_details.wsbc_no != 'null'
+                                ? this.customer_details.wsbc_no
+                                : ''
+                            "
+                          />
+                          <span class="field__label-wrap">
+                            <span class="field__label field__label2"
+                              >Work safety number</span
+                            >
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-md-5">
+                <div style="position: absolute; width: 100%">
+                  <div
+                    tabindex="-1"
+                    class="modal fade"
+                    style="position: relative !important"
+                    id="changeAddress"
+                    aria-labelledby="changeAddress"
+                    aria-modal="true"
+                    role="dialog"
+                  >
+                    <div class="modal-dialog margin-auto">
+                      <div class="modal-content modal-bg-white">
+                        <div class="modal-body address-modal">
+                          <div class="row">
+                            <div class="col-11 row ml-1 mb-2 pr-0">
+                              <div class="col-12 text-center">
+                                <div
+                                  class="heading-5-400 text-color-111727 text-center"
+                                >
+                                  Add/update address
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-1">
+                              <button
+                                type="button"
+                                data-bs-dismiss="modal"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                class="my-modal-close border-0 bg-transparent shadow-none"
+                              >
+                                <img
+                                  src="./assets/images/cross_2.svg"
+                                  alt="Close"
+                                  style="
+                                    width: 14px;
+                                    height: 14px;
+                                    margin-top: -10px;
+                                    margin-right: -15px;
+                                  "
+                                />
+                              </button>
+                            </div>
+                          </div>
+                          <div class="row mt-1">
+                            <div class="col-6">
+                              <span
+                                *ngIf="addressError != ''"
+                                class="text-danger"
+                                >{{ addressError }}</span
+                              >
+                              <div class="title-52 text-grey-shade2">
+                                Street
+                              </div>
+                              <div class="position-relative required_field11">
+                                <img
+                                  src="../../assets/icons/pencile.svg"
+                                  alt=""
+                                  width="17px"
+                                  class="top-right-icon2"
+                                />
+                                <input
+                                  type="text"
+                                  formControlName="address"
+                                  class="field-input2"
+                                  [ngModel]="
+                                    this.customer_details &&
+                                    this.customer_details.address &&
+                                    this.customer_details.address !== null &&
+                                    this.customer_details.address != 'null'
+                                      ? this.customer_details.address
+                                      : ''
+                                  "
+                                  placeholder="Type here"
+                                />
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <span
+                                *ngIf="cityError != ''"
+                                class="text-danger"
+                                >{{ cityError }}</span
+                              >
+                              <div class="title-52 text-grey-shade2 text-right">
+                                City/Town
+                              </div>
+                              <div class="position-relative required_field12">
+                                <img
+                                  src="../../assets/icons/pencile.svg"
+                                  alt=""
+                                  width="17px"
+                                  class="top-left-icon2"
+                                />
+                                <input
+                                  type="text"
+                                  formControlName="city"
+                                  class="field-input2 text-right"
+                                  [ngModel]="
+                                    this.customer_details &&
+                                    this.customer_details.city &&
+                                    this.customer_details.city !== null &&
+                                    this.customer_details.city != 'null'
+                                      ? this.customer_details.city
+                                      : ''
+                                  "
+                                  placeholder="Type here"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row mt-2">
+                            <div class="col-4">
+                              <span
+                                *ngIf="countryError != ''"
+                                class="text-danger"
+                                >{{ countryError }}</span
+                              >
+                              <div class="title-52 text-grey-shade2">
+                                Country
+                              </div>
+                              <div class="position-relative required_field11">
+                                <select
+                                  formControlName="country"
+                                  (change)="setCountry($event)"
+                                  [ngModel]="this.country"
+                                  [value]="
+                                    this.country &&
+                                    this.country !== null &&
+                                    this.country != 'null'
+                                      ? this.country
+                                      : ''
+                                  "
+                                  class="field-input2"
+                                >
+                                  <option
+                                    value="Canada"
+                                    [selected]="this.country == 'Canada'"
+                                  >
+                                    Canada
+                                  </option>
+                                  <option
+                                    value="USA"
+                                    [selected]="this.country == 'USA'"
+                                  >
+                                    USA
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-4">
+                              <span
+                                *ngIf="provinceError != ''"
+                                class="text-danger"
+                                >{{ provinceError }}</span
+                              >
+                              <div
+                                class="title-52 text-grey-shade2 text-center"
+                              >
+                                Province/State
+                              </div>
+                              <div class="position-relative required_field11">
+                                <select
+                                  type="text"
+                                  class="field-input2"
+                                  [ngModel]="this.province"
+                                  formControlName="province"
+                                >
+                                  <ng-container
+                                    *ngIf="this.country == 'Canada'"
+                                  >
+                                    <option
+                                      *ngFor="let pro of this.canada_provinces"
+                                      value="{{ pro }}"
+                                      [selected]="pro == this.province"
+                                    >
+                                      {{ pro }}
+                                    </option>
+                                  </ng-container>
+
+                                  <ng-container *ngIf="this.country == 'USA'">
+                                    <option
+                                      *ngFor="let pro of this.usa_provinces"
+                                      value="{{ pro }}"
+                                      [selected]="pro == this.province"
+                                    >
+                                      {{ pro }}
+                                    </option>
+                                  </ng-container>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-4">
+                              <div class="title-52 text-grey-shade2 text-right">
+                                Postal Code
+                              </div>
+                              <div class="position-relative">
+                                <img
+                                  src="../../assets/icons/pencile.svg"
+                                  alt=""
+                                  width="17px"
+                                  class="top-left-icon2"
+                                />
+                                <input
+                                  type="text"
+                                  placeholder="V8K K0L"
+                                  [ngModel]="
+                                    this.company_details &&
+                                    this.company_details.post_code &&
+                                    this.company_details.post_code !== null &&
+                                    this.company_details.post_code != 'null'
+                                      ? this.company_details.post_code
+                                      : ''
+                                  "
+                                  formControlName="post_code"
+                                  class="field-input2 text-right"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row mt-3">
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                              <button
+                                *ngIf="!is_loading"
+                                type="submit"
+                                class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                              >
+                                Update
+                              </button>
+                              <button
+                                *ngIf="is_loading"
+                                type="button"
+                                disabled
+                                class="mybtn mybtn-back-yellow width-fit-content mybtn-padding text-black"
+                              >
+                                Updating...
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 ml-4">
+                    <label class="field fieldd">
+                      <input
+                        class="field__input field__inputt field__input3"
+                        type="text"
+                        [readonly]="true"
+                        value="{{ this.full_address }}"
+                      />
+                      <span class="field__label-wrap">
+                        <span class="field__label">Address</span>
+                      </span>
+                      <img
+                        data-target="#changeAddress"
+                        data-toggle="modal"
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        width="17px"
+                        class="top-right-icon22 cursor-pointer"
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="row mt-20">
+            <div class="col-md-12">
+              <div class="myhr3px"></div>
+            </div>
+          </div>
+          <div class="row mt-20">
+            <div class="col-md-7">
+              <div class="page-heading-title">Notifications</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,2695 @@
+<div class="project-profile-body-container inner_main_shadow">
+  <div class="row my-row3 mb-5">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4 col-sm-12 project-profile-col">
+          <div class="project-profile-input-container">
+            <div
+              class="d-flex justify-content-between align-items-center w-100"
+            >
+              <div *ngIf="this.duration_type == 'Total'">
+                <div class="project-profile-label-container">
+                  <div class="heading-8-400 text-color-grey">Start date</div>
+                </div>
+                <input
+                  type="date"
+                  class="form-control project-profile-input"
+                  id="floatingInputValue"
+                  placeholder="Start date"
+                  (input)="startDateChange($event)"
+                  value="{{ this.start_date | date : 'yyyy-MM-dd' }}"
+                />
+              </div>
+              <div *ngIf="this.duration_type == 'Daily'">
+                <div class="project-profile-label-container">
+                  <div class="heading-8-400 text-color-grey">Date</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control project-profile-input"
+                  id="floatingInputValue"
+                  placeholder="Date"
+                  value="{{ this.current_date }}"
+                />
+              </div>
+              <div *ngIf="this.duration_type == 'Weekly'">
+                <div class="project-profile-label-container">
+                  <div class="heading-8-400 text-color-grey">Week</div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control project-profile-input width-100px"
+                  id="floatingInputValue"
+                  placeholder="Week"
+                  value="{{ getWeekString() }}"
+                />
+              </div>
+
+              <div class="d-flex" *ngIf="this.duration_type == 'Daily'">
+                <img
+                  class="cursor-pointer"
+                  [src]="
+                    compareDates(
+                      current_date | date : 'yyyy-MM-dd',
+                      today | date : 'yyyy-MM-dd'
+                    )
+                      ? './assets/images/arrow-left-yellow.svg'
+                      : './assets/images/arrow-left-grey.svg'
+                  "
+                  alt=""
+                  (click)="prevDate()"
+                />
+                <!-- <img class="cursor-pointer" src="./assets/images/arrow-left-grey.svg" alt="N/A" (click)="prevDate()"> -->
+                <img
+                  [src]="
+                    compareDates(
+                      current_date | date : 'yyyy-MM-dd',
+                      today | date : 'yyyy-MM-dd'
+                    )
+                      ? './assets/images/arrow-right-grey.svg'
+                      : './assets/images/arrow-right-yellow.svg'
+                  "
+                  alt=""
+                  class="ml-2px cursor-pointer"
+                  (click)="nextDate()"
+                />
+              </div>
+
+              <div class="d-flex" *ngIf="this.duration_type == 'Weekly'">
+                <img
+                  class="cursor-pointer"
+                  [src]="
+                    compareDates2((current_date | date : 'yyyy-MM-dd') ?? '')
+                      ? './assets/images/arrow-left-yellow.svg'
+                      : './assets/images/arrow-left-grey.svg'
+                  "
+                  alt=""
+                  (click)="prevDate()"
+                />
+                <img
+                  [src]="
+                    compareDates2((current_date | date : 'yyyy-MM-dd') ?? '')
+                      ? './assets/images/arrow-right-grey.svg'
+                      : './assets/images/arrow-right-yellow.svg'
+                  "
+                  alt=""
+                  class="ml-2px cursor-pointer"
+                  (click)="nextDate()"
+                />
+              </div>
+
+              <div class="" *ngIf="this.duration_type == 'Total'">
+                <div class="heading-8-400 text-color-grey">Days</div>
+                <div class="project-profile-input text-center">
+                  <div class="pt-2">
+                    {{ this.days_diff }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12 project-profile-col">
+          <div class="mainpopupdiv position-relative">
+            <div class="project-profile-input-container openpop curser-pointer">
+              <div
+                class="d-flex justify-content-between align-items-center w-100"
+              >
+                <div class="w-fill-available">
+                  <div class="project-profile-label-container mb-2">
+                    <div class="heading-8-400 text-color-grey">
+                      Filter by vendor
+                    </div>
+                  </div>
+                  <div class="heading-5-400-semi text-color-black mb-2">
+                    {{
+                      trucking_company?.company_name
+                        ? trucking_company?.company_name
+                        : "All"
+                    }}
+                  </div>
+                </div>
+                <div class="">
+                  <img src="./assets/images/arrow-down-grey2.svg" alt="" />
+                </div>
+              </div>
+            </div>
+
+            <div class="inapp-popup">
+              <div class="text-popup-close mb-2">
+                Vendor
+                <span class="float-right closepop cursor-pointer"
+                  ><i class="fa fa-close mr-1 mt-1"></i
+                ></span>
+              </div>
+              <div>
+                <div
+                  class="heading-5-400 text-color-68696D p-1 br-5px mb-1 cursor-pointer"
+                  (click)="setTC_All()"
+                >
+                  All
+                </div>
+                <ng-container *ngFor="let trucking of trucking_companies_list">
+                  <div
+                    class="heading-5-400 text-color-88898B p-1 bg-color-FDF9D9 br-5px mb-1 cursor-pointer bg-item-list"
+                    (click)="setTC(trucking)"
+                  >
+                    {{ trucking?.company_name }}
+                  </div>
+                </ng-container>
+                <div
+                  class="heading-5-400 text-color-88898B p-1 text-center border-grey mb-1 cursor-pointer"
+                  (click)="showModal('invite-people')"
+                >
+                  Not on the list?
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12 project-profile-col">
+          <div class="mainpopupdiv position-relative">
+            <div class="project-profile-input-container openpop curser-pointer">
+              <div
+                class="d-flex justify-content-between align-items-center w-100"
+              >
+                <div class="w-fill-available">
+                  <div class="project-profile-label-container mb-2">
+                    <div class="heading-8-400 text-color-grey">
+                      Filter by approver
+                    </div>
+                  </div>
+                  <div class="heading-5-400-semi text-color-black mb-2">
+                    {{ approver?.full_name ? approver?.full_name : "Select" }}
+                  </div>
+                </div>
+                <div class="">
+                  <img src="./assets/images/arrow-down-grey2.svg" alt="" />
+                </div>
+              </div>
+            </div>
+
+            <div class="inapp-popup">
+              <div class="text-popup-close mb-2">
+                Approver
+                <span class="float-right closepop cursor-pointer"
+                  ><i class="fa fa-close mr-1 mt-1"></i
+                ></span>
+              </div>
+              <div>
+                <div
+                  class="heading-5-400 text-color-68696D p-1 br-5px mb-1 cursor-pointer bg-item-list"
+                  (click)="setApprover(this.loggedinUser)"
+                >
+                  {{ this.loggedinUser?.full_name }}
+                </div>
+                <ng-container *ngFor="let item of approver_list">
+                  <div
+                    class="heading-5-400 text-color-88898B p-1 bg-color-FDF9D9 br-5px mb-1 cursor-pointer bg-item-list"
+                    (click)="setApprover(item)"
+                  >
+                    {{ item?.full_name }}
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <ul
+        class="nav nav-tabs my-nav-tabs justify-content-end"
+        id="myTab"
+        role="tablist"
+      >
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link {{ this.duration_type == 'Daily' ? 'active' : '' }}"
+            id="daily-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#daily"
+            type="button"
+            role="tab"
+            aria-controls="daily"
+            aria-selected="true"
+            (click)="setDuration('Daily')"
+          >
+            <div class="d-flex align-items-center justify-content-center w-118">
+              <div
+                class="col-2 pl-0 d-flex justify-content-center align-items-center"
+              >
+                <img
+                  src="./assets/images/24-hours.svg"
+                  width="24px"
+                  alt="project-profile-file-icon"
+                />
+              </div>
+              <div class="heading-5-400 text-color-black col text-center">
+                Daily
+              </div>
+            </div>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link {{
+              this.duration_type == 'Weekly' ? 'active' : ''
+            }}"
+            id="weekly-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#weekly"
+            type="button"
+            role="tab"
+            aria-controls="weekly"
+            aria-selected="false"
+            (click)="setDuration('Weekly')"
+          >
+            <div class="d-flex align-items-cente w-116">
+              <img
+                src="./assets/images/7-days.svg"
+                width="20px"
+                alt="project-profile-tracker-icon"
+              />
+              <div class="heading-5-400 text-color-black col text-center">
+                Weekly
+              </div>
+            </div>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link {{ this.duration_type == 'Total' ? 'active' : '' }}"
+            id="total-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#total"
+            type="button"
+            role="tab"
+            aria-controls="total"
+            aria-selected="false"
+            (click)="setDuration('Total')"
+          >
+            <div class="d-flex align-items-cente w-116">
+              <img
+                src="./assets/images/sigma.svg"
+                width="20px"
+                alt="project-profile-tracker-icon"
+              />
+              <div class="heading-5-400 text-color-black col text-center">
+                Total
+              </div>
+            </div>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row mb-3 my-row2">
+    <div class="col-lg-4 col-md-6">
+      <div class="bg-color-FAFAFA border-grey p-3">
+        <div class="row my-row">
+          <div class="col-md-4">
+            <div
+              class="heading-12-400-normal text-color-black mb-3 text-center"
+            >
+              Load count
+            </div>
+            <div
+              class="heading-5-400 text-color-black text-center border-FFF8B8-5px bg-white p-1 br-10px"
+            >
+              {{ this.tracker_stats?.loads_count | number : "1.0-2" }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              class="heading-12-400-normal text-color-black mb-3 text-center"
+            >
+              Volume Count
+            </div>
+            <!-- <div class="heading-5-400 text-color-black text-center border-FFF8B8-5px bg-white p-1 br-10px">{{this.tracker_stats?.volumn_count ? this.tracker_stats?.volumn_count+' m3':'0 m3'}} </div> -->
+            <div
+              class="heading-5-400 text-color-black text-center border-FFF8B8-5px bg-white p-1 br-10px"
+            >
+              {{
+                this.tracker_stats?.volumn_count
+                  ? (this.tracker_stats.volumn_count | number : "1.0-2") + " m3"
+                  : "0 m3"
+              }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div
+              class="heading-12-400-normal text-color-black mb-3 text-center"
+            >
+              Cost
+            </div>
+            <div
+              class="heading-5-400 text-color-black text-center border-FFF8B8-5px bg-white p-1 br-10px"
+            >
+              ${{
+                this.tracker_stats?.tickets_costs != null
+                  ? (this.tracker_stats.tickets_costs | number : "1.2-2")
+                  : "0.00"
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <div class="bg-color-FAFAFA border-grey p-3">
+        <div class="heading-12-400-normal text-color-black mb-3 text-center">
+          Search
+        </div>
+        <div class="d-flex justify-content-center">
+          <div
+            class="heading-5-400 text-color-black text-center border-D9D9D9-5px bg-white p-1 br-100px box-shadow search-bagdes cursor-pointer"
+            (click)="setSearchStatus('Pending')"
+          >
+            {{
+              this.tracker_stats?.tickets_counts?.pending_count
+                ? this.tracker_stats?.tickets_counts?.pending_count
+                : 0
+            }}
+          </div>
+          <div
+            class="heading-5-400 text-color-black text-center border-FFF8B8-5px bg-white p-1 br-100px box-shadow search-bagdes cursor-pointer"
+            (click)="setSearchStatus('Accepted')"
+          >
+            {{
+              this.tracker_stats?.tickets_counts?.accepted_count
+                ? this.tracker_stats?.tickets_counts?.accepted_count
+                : 0
+            }}
+          </div>
+          <div
+            class="heading-5-400 text-color-black text-center border-F4BE1B-5px bg-white p-1 br-100px box-shadow search-bagdes cursor-pointer"
+            (click)="setSearchStatus('Driving')"
+          >
+            {{
+              this.tracker_stats?.tickets_counts?.inprogress_count
+                ? this.tracker_stats?.tickets_counts?.inprogress_count
+                : 0
+            }}
+          </div>
+          <div
+            class="heading-5-400 text-color-black text-center border-33D1A2-5px bg-white p-1 br-100px box-shadow search-bagdes cursor-pointer"
+            (click)="setSearchStatus('Completed')"
+          >
+            {{
+              this.tracker_stats?.tickets_counts?.completed_count
+                ? this.tracker_stats?.tickets_counts?.completed_count
+                : 0
+            }}
+          </div>
+          <div
+            class="heading-5-400 text-color-black text-center border-17A1FA-5px bg-white p-1 br-100px box-shadow search-bagdes cursor-pointer"
+            (click)="setSearchStatus('Approved')"
+          >
+            {{
+              this.tracker_stats?.tickets_counts?.approved_count
+                ? this.tracker_stats?.tickets_counts?.approved_count
+                : 0
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table tracting-table">
+      <tr>
+        <th>Ticket ID</th>
+        <th>Trucking company</th>
+        <th>Driver name</th>
+        <th>Truck type</th>
+        <th>License plate</th>
+        <th class="text-center">Round in progress</th>
+        <th>#of rounds</th>
+      </tr>
+      <tr
+        *ngIf="
+          !this.loading && this.page < 2 && this.tracker_tickts?.length < 1
+        "
+      >
+        <td colspan="8">
+          <div class="text-align-center">No tickets found.</div>
+        </td>
+      </tr>
+      <tr
+        *ngIf="this.page < 2 && this.loading && this.tracker_tickts?.length < 1"
+      >
+        <td colspan="8">
+          <div class="col-md-12 text-center text-align-center">
+            Loading tickets...
+          </div>
+        </td>
+      </tr>
+
+      <ng-container
+        *ngIf="
+          (!this.loading || this.page > 1) && this.tracker_tickts?.length > 0
+        "
+      >
+        <tr *ngFor="let ticket of this.tracker_tickts">
+          <td
+            class="cursor-pointer"
+            data-target="#myModal"
+            data-toggle="modal"
+            (click)="this.setDetailTicket(ticket)"
+          >
+            {{ ticket?.ticket_no }}
+          </td>
+          <td
+            class="cursor-pointer"
+            data-target="#myModal"
+            data-toggle="modal"
+            (click)="this.setDetailTicket(ticket)"
+          >
+            {{ ticket.trucking_company?.company_name }}
+          </td>
+          <td
+            class="cursor-pointer"
+            data-target="#myModal"
+            data-toggle="modal"
+            (click)="this.setDetailTicket(ticket)"
+          >
+            {{ ticket?.driver_ticket?.driver?.full_name }}
+          </td>
+          <td
+            class="cursor-pointer"
+            data-target="#myModal"
+            data-toggle="modal"
+            (click)="this.setDetailTicket(ticket)"
+          >
+            <span *ngIf="ticket.tc_ticket && ticket.tc_ticket == 'YES'">
+              {{ ticket.ticket_truck_type }}
+            </span>
+            <span *ngIf="!ticket.tc_ticket">
+              {{
+                ticket.ticket_truck_type?.project_combination
+                  ? ticket.ticket_truck_type?.project_combination?.nickname
+                  : ticket.ticket_truck_type?.project_truck
+                  ? ticket.ticket_truck_type?.project_truck?.name +
+                    (ticket.ticket_truck_type?.project_trailer
+                      ? " - " + ticket.ticket_truck_type?.project_trailer?.name
+                      : "")
+                  : ""
+              }}
+            </span>
+          </td>
+          <td
+            class="cursor-pointer"
+            data-target="#myModal"
+            data-toggle="modal"
+            (click)="this.setDetailTicket(ticket)"
+          >
+            {{ ticket?.driver_ticket?.truck?.truck_license_plate }}
+          </td>
+          <td class="text-center d-flex justify-content-center">
+            <ng-container
+              *ngIf="
+                ticket?.ticket_truck_type_rounds?.length > 0;
+                else BlockNoRounds
+              "
+            >
+              <ng-container *ngIf="ticket?.status == 'Pending'">
+                <div class="progress_rounds">
+                  <ng-container
+                    *ngFor="
+                      let round of ticket?.ticket_truck_type_rounds;
+                      index as index
+                    "
+                  >
+                    <div
+                      class="single_progress_rounds active bg-color-pending status-btn2 text-status-darker cursor-pointer"
+                      *ngIf="index == 0"
+                    >
+                      {{ ticket?.status }}
+                    </div>
+                    <div
+                      class="single_progress_rounds"
+                      *ngIf="index != 0"
+                    ></div>
+                  </ng-container>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="ticket?.status == 'Approved'">
+                <div class="progress_rounds">
+                  <ng-container
+                    *ngFor="
+                      let round of ticket?.ticket_truck_type_rounds;
+                      index as index
+                    "
+                  >
+                    <!-- <div class="single_progress_rounds bg-color-33D1A2" *ngIf="index != (ticket?.ticket_truck_type_rounds?.length-1)"></div>
+                                        <div class="single_progress_rounds active status-btn2 text-white bg-color-17A1FA" *ngIf="index == (ticket?.ticket_truck_type_rounds?.length-1)">{{ticket?.status}}</div> -->
+
+                    <div
+                      class="single_progress_rounds bg-color-33D1A2"
+                      *ngIf="
+                        round?.driver_start_time != null &&
+                        round?.end_time != null &&
+                        round?.id !=
+                          getLastDoneRound(ticket?.ticket_truck_type_rounds)?.id
+                      "
+                    ></div>
+                    <div
+                      class="single_progress_rounds active status-btn2 bg-color-17A1FA text-white cursor-pointer"
+                      *ngIf="
+                        round?.driver_start_time != null &&
+                        round?.end_time != null &&
+                        round?.id ==
+                          getLastDoneRound(ticket?.ticket_truck_type_rounds)?.id
+                      "
+                    >
+                      {{ ticket?.status }}
+                    </div>
+                    <div
+                      class="single_progress_rounds"
+                      *ngIf="
+                        !(
+                          round?.driver_start_time != null &&
+                          round?.end_time != null
+                        )
+                      "
+                    ></div>
+                  </ng-container>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="ticket?.status == 'Completed'">
+                <div class="progress_rounds">
+                  <ng-container
+                    *ngFor="
+                      let round of ticket?.ticket_truck_type_rounds;
+                      index as index
+                    "
+                  >
+                    <div
+                      class="single_progress_rounds bg-color-33D1A2"
+                      *ngIf="
+                        round?.driver_start_time != null &&
+                        round?.end_time != null &&
+                        round?.id !=
+                          getLastDoneRound(ticket?.ticket_truck_type_rounds)?.id
+                      "
+                    ></div>
+                    <div
+                      class="single_progress_rounds active status-btn2 bg-color-33D1A2 text-white cursor-pointer"
+                      *ngIf="
+                        round?.driver_start_time != null &&
+                        round?.end_time != null &&
+                        round?.id ==
+                          getLastDoneRound(ticket?.ticket_truck_type_rounds)?.id
+                      "
+                      (click)="getLastRound(ticket, 'userInCompletedNewModal')"
+                    >
+                      {{ ticket?.status }}
+                    </div>
+                    <div
+                      class="single_progress_rounds"
+                      *ngIf="
+                        !(
+                          round?.driver_start_time != null &&
+                          round?.end_time != null
+                        )
+                      "
+                    ></div>
+                    <div class="modal-status-container">
+                      <div
+                        class="modal fade"
+                        style="position: relative !important"
+                        [id]="'userInCompletedNewModal' + ticket?.ticket_no"
+                        tabindex="-1"
+                        [attr.aria-labelledby]="
+                          'userInCompletedNewModal' + ticket?.ticket_no
+                        "
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <div class="row" style="width: 104%">
+                                <div class="col-3">
+                                  <!-- <div class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2" *ngIf="getRoundInProgress(this.ticket_detail)?.id==this.selected_round?.id">Round {{this.selected_round?.round_no}}</div> -->
+                                  <div
+                                    class="heading-12-400-normal text-white bg-color-33D1A2 br-5px text-center p-2 w-100px mb-2"
+                                  >
+                                    Completed
+                                  </div>
+                                </div>
+
+                                <div class="col-8 row ml-1 mb-2 pr-0">
+                                  <div
+                                    class="col-7 d-flex justify-content-center"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-111727 d-flex align-items-center"
+                                    >
+                                      {{
+                                        this.ticket_detail?.driver_ticket
+                                          ?.driver?.full_name
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-5 d-flex align-items-center justify-content-end"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-111727 text-right"
+                                      style="
+                                        padding: 3px;
+                                        border: 1px solid rgba(104, 105, 109, 1);
+                                        background-color: rgba(
+                                          253,
+                                          215,
+                                          228,
+                                          1
+                                        );
+                                        color: rgba(104, 105, 109, 1);
+                                        font-size: 14px;
+                                      "
+                                    >
+                                      {{
+                                        this.ticket_detail?.driver_ticket?.truck
+                                          ?.truck_license_plate
+                                      }}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-1">
+                                  <button
+                                    type="button"
+                                    (click)="
+                                      closee(ticket, 'userInCompletedNewModal')
+                                    "
+                                    class="my-modal-close border-0 bg-transparent shadow-none"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <img
+                                      src="./assets/images/cross_2.svg"
+                                      alt="Close"
+                                      style="
+                                        width: 24px;
+                                        height: 24px;
+                                        margin-top: -10px;
+                                        margin-right: -15px;
+                                      "
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+
+                              <!-- <button type="button" class="btn-close my-modal-close " data-dismiss="modal"  data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <div class="heading-12-400-normal text-white bg-color-33D1A2 br-5px text-center p-2 w-100px mb-2">Completed</div> -->
+                              <div class="border-grey cp-5">
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6"
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2"
+                                    >
+                                      Material out
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2"
+                                    >
+                                      {{ this.last_round?.material_taken_out }}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                    >
+                                      Dump site
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2 text-right"
+                                    >
+                                      {{ this.last_round?.dump_site }}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="myhr mb-1"></div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6 mb-1"
+                                >
+                                  <div class="">
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2 text-left"
+                                    >
+                                      Job total
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2 text-left"
+                                    >
+                                      {{
+                                        this.ticket_detail?.driver_ticket &&
+                                        this.ticket_detail?.driver_ticket
+                                          ?.driver_hours
+                                          ? this.ticket_detail?.driver_ticket
+                                              ?.driver_hours + "hrs"
+                                          : ""
+                                      }}
+                                      {{
+                                        this.ticket_detail?.driver_ticket &&
+                                        this.ticket_detail?.driver_ticket
+                                          ?.driver_minutes
+                                          ? this.ticket_detail?.driver_ticket
+                                              ?.driver_minutes + "m "
+                                          : ""
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex justify-content-between align-items-center bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer"
+                                    data-bs-dismiss="modal"
+                                    data-dismiss="modal"
+                                    data-toggle="modal"
+                                    data-target="#myModal"
+                                    (click)="
+                                      closee(ticket, 'userInCompletedNewModal');
+                                      setDetailTicket(this.ticket_detail)
+                                    "
+                                  >
+                                    <img
+                                      src="./assets/images/approve.svg"
+                                      alt=""
+                                    />
+                                    <div
+                                      class="heading-5-400 text-color-black mr-2"
+                                    >
+                                      Approve ticket
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="myhr mb-1"></div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6"
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-600 text-color-88898B mb-1"
+                                    >
+                                      Driver :{{ last_round?.driver_notes }}
+                                    </div>
+                                    <div
+                                      class="heading-8-600 text-color-88898B mb-1"
+                                    >
+                                      Approver :
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="ticket?.status == 'Accepted'">
+                <div class="progress_rounds">
+                  <ng-container
+                    *ngFor="
+                      let round of ticket?.ticket_truck_type_rounds;
+                      index as index
+                    "
+                  >
+                    <div
+                      class="single_progress_rounds active status-btn2 bg-color-FFF8B8 text-status-darker cursor-pointer"
+                      *ngIf="index == 0"
+                      (click)="getLastRound(ticket, 'userAcceptedModal')"
+                    >
+                      {{ ticket?.status }}
+                    </div>
+                    <div
+                      class="single_progress_rounds"
+                      *ngIf="index != 0"
+                    ></div>
+                    <div class="modal-status-container">
+                      <div
+                        class="modal fade"
+                        style="position: relative !important"
+                        [id]="'userAcceptedModal' + ticket?.ticket_no"
+                        tabindex="-1"
+                        [attr.aria-labelledby]="
+                          'userAcceptedModal' + ticket?.ticket_no
+                        "
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <div class="row" style="width: 104%">
+                                <div class="col-3">
+                                  <div
+                                    class="heading-12-400-normal text-color-black bg-color-FFF8B8 br-5px text-center p-2 w-100px mb-2"
+                                  >
+                                    Accepted
+                                  </div>
+                                </div>
+
+                                <div class="col-8 row ml-1 mb-2 pr-0">
+                                  <div
+                                    class="col-7 d-flex justify-content-center"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-111727 d-flex align-items-center"
+                                    >
+                                      {{
+                                        this.ticket_detail?.driver_ticket
+                                          ?.driver?.full_name
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-5 d-flex align-items-center justify-content-end"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-111727 text-right"
+                                      style="
+                                        padding: 3px;
+                                        border: 1px solid rgba(104, 105, 109, 1);
+                                        background-color: rgba(
+                                          253,
+                                          215,
+                                          228,
+                                          1
+                                        );
+                                        color: rgba(104, 105, 109, 1);
+                                        font-size: 14px;
+                                      "
+                                    >
+                                      {{
+                                        this.ticket_detail?.driver_ticket?.truck
+                                          ?.truck_license_plate
+                                      }}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-1">
+                                  <button
+                                    type="button"
+                                    class="my-modal-close border-0 bg-transparent shadow-none"
+                                    data-dismiss="modal"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <img
+                                      src="./assets/images/cross_2.svg"
+                                      alt="Close"
+                                      style="
+                                        width: 24px;
+                                        height: 24px;
+                                        margin-top: -10px;
+                                        margin-right: -15px;
+                                      "
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+
+                              <div class="border-grey cp-5">
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6"
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2"
+                                    >
+                                      Material out
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2"
+                                    >
+                                      {{
+                                        this.ticket_detail
+                                          ?.ticket_truck_type_rounds[0]
+                                          ?.material_taken_out
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                    >
+                                      Dump site
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2 text-right"
+                                    >
+                                      {{
+                                        this.ticket_detail
+                                          ?.ticket_truck_type_rounds[0]
+                                          ?.dump_site
+                                      }}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="myhr mb-1"></div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6 mb-1"
+                                >
+                                  <div
+                                    class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer"
+                                    (click)="handleStartJob(ticket)"
+                                    data-bs-dismiss="modal"
+                                  >
+                                    <div class="heading-5-400 text-color-black">
+                                      Start job
+                                    </div>
+                                    <img
+                                      src="./assets/images/refresh.svg"
+                                      alt=""
+                                    />
+                                  </div>
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                    >
+                                      Round total
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2 text-right"
+                                    >
+                                      0hrs 00m
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="myhr mb-1"></div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6"
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-600 text-color-88898B mb-1"
+                                    >
+                                      Driver :
+                                      {{ this.selected_round?.driver_notes }}
+                                    </div>
+                                    <div
+                                      class="heading-8-600 text-color-88898B mb-1"
+                                    >
+                                      Approver :
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+
+              <ng-container
+                *ngIf="ticket?.status == 'Driving' && getAllRoundDone(ticket)"
+              >
+                <div class="progress_rounds">
+                  <ng-container
+                    *ngFor="
+                      let round of ticket?.ticket_truck_type_rounds;
+                      index as index
+                    "
+                  >
+                    <div
+                      class="single_progress_rounds bg-color-33D1A2"
+                      *ngIf="
+                        index != ticket?.ticket_truck_type_rounds?.length - 1
+                      "
+                    ></div>
+                    <div
+                      class="single_progress_rounds active status-btn2 text-white bg-color-F4BE1B"
+                      (click)="setRound(ticket, round)"
+                      *ngIf="
+                        index == ticket?.ticket_truck_type_rounds?.length - 1
+                      "
+                    >
+                      {{ ticket?.status }}
+                    </div>
+                    <div style="position: absolute; width: 30%">
+                      <div
+                        class="modal fade"
+                        style="position: relative !important"
+                        [id]="'userInProgressModal' + ticket?.ticket_no"
+                        tabindex="-1"
+                        [attr.aria-labelledby]="
+                          'userInProgressModal' + ticket?.ticket_no
+                        "
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-body" style="padding: 8px">
+                              <div class="row" style="width: 104%">
+                                <div class="col-3">
+                                  <div
+                                    class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2"
+                                    *ngIf="
+                                      getRoundInProgress(this.ticket_detail)
+                                        ?.id == this.selected_round?.id
+                                    "
+                                  >
+                                    Round {{ this.selected_round?.round_no }}
+                                  </div>
+                                  <div
+                                    class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2"
+                                    *ngIf="
+                                      !getRoundInProgress(this.ticket_detail) &&
+                                      this.getRoundToStart(this.ticket_detail)
+                                        ?.id == this.selected_round?.id
+                                    "
+                                  >
+                                    Round {{ this.selected_round?.round_no }}
+                                  </div>
+                                  <div
+                                    class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2"
+                                    *ngIf="getAllRoundDone(this.ticket_detail)"
+                                  >
+                                    Round {{ this.selected_round?.round_no }}
+                                  </div>
+                                </div>
+
+                                <div class="col-8 row ml-1 mb-2 pr-0">
+                                  <div
+                                    class="col-7 d-flex justify-content-center"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-111727 d-flex align-items-center"
+                                    >
+                                      {{
+                                        this.ticket_detail?.driver_ticket
+                                          ?.driver?.full_name
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-5 d-flex align-items-center justify-content-end"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-111727 text-right"
+                                      style="
+                                        padding: 3px;
+                                        border: 1px solid rgba(104, 105, 109, 1);
+                                        background-color: rgba(
+                                          253,
+                                          215,
+                                          228,
+                                          1
+                                        );
+                                        color: rgba(104, 105, 109, 1);
+                                        font-size: 14px;
+                                      "
+                                    >
+                                      {{
+                                        this.ticket_detail?.driver_ticket?.truck
+                                          ?.truck_license_plate
+                                      }}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-1">
+                                  <button
+                                    type="button"
+                                    (click)="
+                                      closee(ticket, 'userInProgressModal')
+                                    "
+                                    class="my-modal-close border-0 bg-transparent shadow-none"
+                                    data-dismiss="modal"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <img
+                                      src="./assets/images/cross_2.svg"
+                                      alt="Close"
+                                      style="
+                                        width: 24px;
+                                        height: 24px;
+                                        margin-top: -10px;
+                                        margin-right: -15px;
+                                      "
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+
+                              <div class="border-grey cp-5">
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6"
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2"
+                                    >
+                                      Material out
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2"
+                                    >
+                                      {{
+                                        this.selected_round?.material_taken_out
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                    >
+                                      Dump site
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2 text-right"
+                                    >
+                                      {{ this.selected_round?.dump_site }}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="myhr mb-1"></div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6 mb-1 mr-1"
+                                  *ngIf="
+                                    getRoundInProgress(this.ticket_detail)
+                                      ?.id == this.selected_round?.id
+                                  "
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2"
+                                    >
+                                      Round started
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2"
+                                    >
+                                      {{
+                                        this.selected_round?.driver_start_time
+                                          | date : "h:mm a"
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-2"
+                                    (click)="
+                                      handleEndRound(
+                                        this.getRoundInProgress(
+                                          this.ticket_detail
+                                        )
+                                      );
+                                      closee(ticket, 'userInProgressModal')
+                                    "
+                                    data-bs-dismiss="modal"
+                                  >
+                                    <div
+                                      class="col-2"
+                                      style="margin-left: -15px"
+                                    >
+                                      <img
+                                        src="./assets/images/stop.svg"
+                                        alt=""
+                                      />
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-black col-9"
+                                    >
+                                      End round
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6 mb-1 mr-2"
+                                  *ngIf="getAllRoundDone(this.ticket_detail)"
+                                >
+                                  <div
+                                    class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer ml-2"
+                                    (click)="
+                                      handleAddRound();
+                                      closee(ticket, 'userInProgressModal')
+                                    "
+                                    data-bs-dismiss="modal"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-black pl-3 pt-1"
+                                    >
+                                      Add round
+                                    </div>
+                                    <img
+                                      src="./assets/images/add_round.svg"
+                                      alt="NA"
+                                    />
+                                  </div>
+                                  <div
+                                    class="bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-1"
+                                    (click)="
+                                      handleEndJob();
+                                      closee(ticket, 'userInProgressModal')
+                                    "
+                                    data-bs-dismiss="modal"
+                                  >
+                                    <div
+                                      class="col-2"
+                                      style="margin-left: -15px"
+                                    >
+                                      <img
+                                        src="./assets/images/stop.svg"
+                                        alt=""
+                                      />
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-black d-flex justify-content-center align-items-center col-10 pr-0"
+                                    >
+                                      End Job
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6 mb-1 ml-1"
+                                  *ngIf="
+                                    !this.getRoundInProgress(
+                                      this.ticket_detail
+                                    ) &&
+                                    this.getRoundToStart(this.ticket_detail)
+                                      ?.id == this.selected_round?.id
+                                  "
+                                >
+                                  <div
+                                    class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row ml-2"
+                                    (click)="
+                                      handleStartRound(
+                                        this.getRoundToStart(this.ticket_detail)
+                                      );
+                                      closee(ticket, 'userInProgressModal')
+                                    "
+                                    data-bs-dismiss="modal"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-black col-9 pr-0"
+                                    >
+                                      Start round
+                                      {{
+                                        this.getRoundToStart(this.ticket_detail)
+                                          ?.round_no
+                                      }}
+                                    </div>
+                                    <div class="col-2 pl-0">
+                                      <img
+                                        src="./assets/images/refresh.svg"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div
+                                    *ngIf="this.selected_round?.round_no == 1"
+                                  >
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                    >
+                                      Round total
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2 text-right"
+                                    >
+                                      {{
+                                        this.selected_round?.round_time
+                                          ? this.selected_round?.round_time
+                                          : "0hrs 00m"
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    *ngIf="this.selected_round?.round_no > 1"
+                                  >
+                                    <div
+                                      class="bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-2"
+                                      (click)="
+                                        handleEndJob();
+                                        closee(ticket, 'userInProgressModal')
+                                      "
+                                      data-bs-dismiss="modal"
+                                    >
+                                      <div
+                                        class="col-2"
+                                        style="margin-left: -15px"
+                                      >
+                                        <img
+                                          src="./assets/images/stop.svg"
+                                          alt=""
+                                        />
+                                      </div>
+                                      <div
+                                        class="heading-5-400 text-color-black d-flex justify-content-center align-items-center col-10 pr-0"
+                                      >
+                                        End Job
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="myhr mb-1"></div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6"
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-600 text-color-88898B mb-1"
+                                    >
+                                      Driver :
+                                      {{ this.selected_round?.driver_notes }}
+                                    </div>
+                                    <div
+                                      class="heading-8-600 text-color-88898B mb-1"
+                                    >
+                                      Approver :
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="ticket?.status == 'Driving' && !getAllRoundDone(ticket)"
+              >
+                <div class="progress_rounds">
+                  <ng-container
+                    *ngFor="
+                      let round of ticket?.ticket_truck_type_rounds;
+                      index as index
+                    "
+                  >
+                    <div
+                      class="single_progress_rounds bg-color-33D1A2"
+                      *ngIf="round?.driver_start_time && round?.end_time"
+                    ></div>
+                    <div
+                      class="single_progress_rounds active status-btn2 text-white bg-color-F4BE1B"
+                      *ngIf="
+                        getRoundInProgress(ticket)?.id == round?.id;
+                        else Block2
+                      "
+                      (click)="setRound_2(ticket, round)"
+                    >
+                      {{ ticket?.status }}
+                    </div>
+                    <div class="modal-status-container">
+                      <div
+                        class="modal fade"
+                        style="position: relative !important"
+                        [id]="'userInProgressModal_2' + ticket?.ticket_no"
+                        tabindex="-1"
+                        [attr.aria-labelledby]="
+                          'userInProgressModal_2' + ticket?.ticket_no
+                        "
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-body" style="padding: 8px">
+                              <div class="row" style="width: 104%">
+                                <div class="col-3">
+                                  <div
+                                    class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2"
+                                    *ngIf="
+                                      getRoundInProgress(this.ticket_detail)
+                                        ?.id == this.selected_round?.id
+                                    "
+                                  >
+                                    Round{{ this.selected_round?.round_no }}
+                                  </div>
+                                  <div
+                                    class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2"
+                                    *ngIf="
+                                      !getRoundInProgress(this.ticket_detail) &&
+                                      this.getRoundToStart(this.ticket_detail)
+                                        ?.id == this.selected_round?.id
+                                    "
+                                  >
+                                    Round{{ this.selected_round?.round_no }}
+                                  </div>
+                                  <div
+                                    class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2"
+                                    *ngIf="getAllRoundDone(this.ticket_detail)"
+                                  >
+                                    Round{{ this.selected_round?.round_no }}
+                                  </div>
+                                </div>
+
+                                <div class="col-8 row ml-1 mb-2 pr-0">
+                                  <div
+                                    class="col-7 d-flex justify-content-center"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-111727 d-flex align-items-center"
+                                    >
+                                      {{
+                                        this.ticket_detail?.driver_ticket
+                                          ?.driver?.full_name
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-5 d-flex align-items-center justify-content-end"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-111727 text-right"
+                                      style="
+                                        padding: 3px;
+                                        border: 1px solid rgba(104, 105, 109, 1);
+                                        background-color: rgba(
+                                          253,
+                                          215,
+                                          228,
+                                          1
+                                        );
+                                        color: rgba(104, 105, 109, 1);
+                                        font-size: 14px;
+                                      "
+                                    >
+                                      {{
+                                        this.ticket_detail?.driver_ticket?.truck
+                                          ?.truck_license_plate
+                                      }}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="col-1">
+                                  <button
+                                    type="button"
+                                    (click)="
+                                      closee(ticket, 'userInProgressModal_2')
+                                    "
+                                    class="my-modal-close border-0 bg-transparent shadow-none"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    <img
+                                      src="./assets/images/cross_2.svg"
+                                      alt="Close"
+                                      style="
+                                        width: 24px;
+                                        height: 24px;
+                                        margin-top: -10px;
+                                        margin-right: -15px;
+                                      "
+                                    />
+                                  </button>
+                                </div>
+                              </div>
+
+                              <div class="border-grey cp-5">
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6"
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2"
+                                    >
+                                      Material out
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2"
+                                    >
+                                      {{
+                                        this.selected_round?.material_taken_out
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                    >
+                                      Dump site
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2 text-right"
+                                    >
+                                      {{ this.selected_round?.dump_site }}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="myhr mb-1"></div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6 mb-1 mr-1"
+                                  *ngIf="
+                                    getRoundInProgress(this.ticket_detail)
+                                      ?.id == this.selected_round?.id
+                                  "
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2"
+                                    >
+                                      Round started
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2"
+                                    >
+                                      {{
+                                        this.selected_round?.driver_start_time
+                                          | date : "h:mm a"
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-2"
+                                    (click)="
+                                      handleEndRound(
+                                        this.getRoundInProgress(
+                                          this.ticket_detail
+                                        )
+                                      );
+                                      closee(ticket, 'userInProgressModal_2')
+                                    "
+                                    data-bs-dismiss="modal"
+                                  >
+                                    <div
+                                      class="col-2"
+                                      style="margin-left: -15px"
+                                    >
+                                      <img
+                                        src="./assets/images/stop.svg"
+                                        alt=""
+                                      />
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-black col-9"
+                                    >
+                                      End round
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6 mb-1 mr-2"
+                                  *ngIf="getAllRoundDone(this.ticket_detail)"
+                                >
+                                  <div
+                                    class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer ml-2"
+                                    (click)="
+                                      handleAddRound();
+                                      closee(ticket, 'userInProgressModal_2')
+                                    "
+                                    data-bs-dismiss="modal"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-black pl-3 pt-1"
+                                    >
+                                      Add round
+                                    </div>
+                                    <img
+                                      src="./assets/images/add_round.svg"
+                                      alt="NA"
+                                    />
+                                  </div>
+                                  <div
+                                    class="bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-1"
+                                    (click)="
+                                      handleEndJob();
+                                      closee(ticket, 'userInProgressModal_2')
+                                    "
+                                    data-bs-dismiss="modal"
+                                  >
+                                    <div
+                                      class="col-2"
+                                      style="margin-left: -15px"
+                                    >
+                                      <img
+                                        src="./assets/images/stop.svg"
+                                        alt=""
+                                      />
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-black d-flex justify-content-center align-items-center col-10 pr-0"
+                                    >
+                                      End Job
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6 mb-1 ml-1"
+                                  *ngIf="
+                                    !this.getRoundInProgress(
+                                      this.ticket_detail
+                                    ) &&
+                                    this.getRoundToStart(this.ticket_detail)
+                                      ?.id == this.selected_round?.id
+                                  "
+                                >
+                                  <div
+                                    class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row ml-2"
+                                    (click)="
+                                      handleStartRound(
+                                        this.getRoundToStart(this.ticket_detail)
+                                      )
+                                    "
+                                    (click)="
+                                      closee(ticket, 'userInProgressModal_2')
+                                    "
+                                    data-bs-dismiss="modal"
+                                  >
+                                    <div
+                                      class="heading-5-400 text-color-black col-9 pr-0"
+                                    >
+                                      Start round
+                                      {{
+                                        this.getRoundToStart(this.ticket_detail)
+                                          ?.round_no
+                                      }}
+                                    </div>
+                                    <div class="col-2 pl-0">
+                                      <img
+                                        src="./assets/images/refresh.svg"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div
+                                    *ngIf="this.selected_round?.round_no == 1"
+                                  >
+                                    <div
+                                      class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                    >
+                                      Round total
+                                    </div>
+                                    <div
+                                      class="heading-5-400 text-color-111727 mb-2 text-right"
+                                    >
+                                      {{
+                                        this.selected_round?.round_time
+                                          ? this.selected_round?.round_time
+                                          : "0hrs 00m"
+                                      }}
+                                    </div>
+                                  </div>
+                                  <div
+                                    *ngIf="this.selected_round?.round_no > 1"
+                                  >
+                                    <div
+                                      class="bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-2"
+                                      (click)="
+                                        handleEndJob();
+                                        closee(ticket, 'userInProgressModal_2')
+                                      "
+                                      data-bs-dismiss="modal"
+                                    >
+                                      <div
+                                        class="col-2"
+                                        style="margin-left: -15px"
+                                      >
+                                        <img
+                                          src="./assets/images/stop.svg"
+                                          alt=""
+                                        />
+                                      </div>
+                                      <div
+                                        class="heading-5-400 text-color-black d-flex justify-content-center align-items-center col-10 pr-0"
+                                      >
+                                        End Job
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="myhr mb-1"></div>
+                                <div
+                                  class="d-flex justify-content-between align-items-center cp-6"
+                                >
+                                  <div>
+                                    <div
+                                      class="heading-8-600 text-color-88898B mb-1"
+                                    >
+                                      Driver :
+                                      {{ this.selected_round?.driver_notes }}
+                                    </div>
+                                    <div
+                                      class="heading-8-600 text-color-88898B mb-1"
+                                    >
+                                      Approver :
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <ng-template #Block2>
+                      <ng-container
+                        *ngIf="
+                          !getRoundInProgress(ticket) &&
+                            getRoundToStart(ticket);
+                          else Block3
+                        "
+                      >
+                        <div
+                          class="single_progress_rounds active bg-color-F4BE1B status-btn2 text-white else {{
+                            round?.round_no
+                          }}"
+                          *ngIf="
+                            getRoundToStart(ticket)?.id == round?.id;
+                            else Block3
+                          "
+                          (click)="setRound_2(ticket, round)"
+                        >
+                          {{ ticket?.status }}
+                        </div>
+                      </ng-container>
+                      <ng-template #Block3>
+                        <div
+                          class="single_progress_rounds"
+                          *ngIf="
+                            ((round?.driver_start_time == '' ||
+                              !round?.driver_start_time) &&
+                              getRoundInProgress(ticket)?.id != round?.id &&
+                              getRoundToStart(ticket)?.id != round?.id &&
+                              (round?.end_time == '' || !round?.end_time) &&
+                              getLastRoundId(ticket) != round?.id) ||
+                            (getLastRoundId(ticket) == round?.id &&
+                              getRoundToStart(ticket)?.id != round?.id &&
+                              getRoundInProgress(ticket)?.id != round?.id) ||
+                            (getLastRoundId(ticket) != round?.id &&
+                              getRoundToStart(ticket)?.id == round?.id &&
+                              getRoundInProgress(ticket)?.id != round?.id) ||
+                            (getLastRoundId(ticket) == round?.id &&
+                              getRoundToStart(ticket)?.id == round?.id &&
+                              getRoundInProgress(ticket)?.id != round?.id)
+                          "
+                        ></div>
+                      </ng-template>
+                    </ng-template>
+                  </ng-container>
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-template #BlockNoRounds>
+              <div class="progress_rounds">
+              <button
+                [ngClass]="getStatusClass(ticket.status) + ' status-btn2'"
+                *ngIf="ticket?.status == 'Accepted'"
+                (click)="showModalTicket(ticket, 'userAcceptedModal')"
+              >
+                {{ ticket.status }}
+              </button>
+              <button
+                [ngClass]="getStatusClass(ticket.status) + ' status-btn2'"
+                *ngIf="ticket?.status == 'Driving'"
+                (click)="showModalTicket(ticket, 'userInProgressModal')"
+              >
+                {{ ticket.status }}
+              </button>
+
+                <div class="modal-status-container">
+                  <div
+                    class="modal fade"
+                    style="position: relative !important"
+                    [id]="'userAcceptedModal' + ticket?.ticket_no"
+                    tabindex="-1"
+                    [attr.aria-labelledby]="
+                      'userAcceptedModal' + ticket?.ticket_no
+                    "
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                          <div class="row" style="width: 104%">
+                            <div class="col-3">
+                              <div
+                                class="heading-12-400-normal text-color-black bg-color-FFF8B8 br-5px text-center p-2 w-100px mb-2"
+                              >
+                                Accepted
+                              </div>
+                            </div>
+
+                            <div class="col-8 row ml-1 mb-2 pr-0">
+                              <div class="col-7 d-flex justify-content-center">
+                                <div
+                                  class="heading-5-400 text-color-111727 d-flex align-items-center"
+                                >
+                                  {{
+                                    this.ticket_detail?.driver_ticket?.driver
+                                      ?.full_name
+                                  }}
+                                </div>
+                              </div>
+                              <div
+                                class="col-5 d-flex align-items-center justify-content-end"
+                              >
+                                <div
+                                  class="heading-5-400 text-color-111727 text-right"
+                                  style="
+                                    padding: 3px;
+                                    border: 1px solid rgba(104, 105, 109, 1);
+                                    background-color: rgba(253, 215, 228, 1);
+                                    color: rgba(104, 105, 109, 1);
+                                    font-size: 14px;
+                                  "
+                                >
+                                  {{
+                                    this.ticket_detail?.driver_ticket?.truck
+                                      ?.truck_license_plate
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-1">
+                              <button
+                                type="button"
+                                (click)="closee(ticket, 'userAcceptedModal')"
+                                class="my-modal-close border-0 bg-transparent shadow-none"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <img
+                                  src="./assets/images/cross_2.svg"
+                                  alt="Close"
+                                  style="
+                                    width: 24px;
+                                    height: 24px;
+                                    margin-top: -10px;
+                                    margin-right: -15px;
+                                  "
+                                />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div class="border-grey cp-5">
+                            <div
+                              class="d-flex justify-content-between align-items-center cp-6"
+                            >
+                              <div>
+                                <div
+                                  class="heading-8-400 text-color-111727-opacity mb-2"
+                                >
+                                  Material out
+                                </div>
+                                <div
+                                  class="heading-5-400 text-color-111727 text-left mb-2"
+                                >
+                                  {{
+                                    this.ticket_detail
+                                      ?.ticket_truck_type_rounds[0]
+                                      ?.material_taken_out
+                                      ? this.ticket_detail
+                                          ?.ticket_truck_type_rounds[0]
+                                          ?.material_taken_out
+                                      : "--"
+                                  }}
+                                </div>
+                              </div>
+                              <div>
+                                <div
+                                  class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                >
+                                  Dump site
+                                </div>
+                                <div
+                                  class="heading-5-400 text-color-111727 mb-2 text-right"
+                                >
+                                  {{
+                                    this.ticket_detail
+                                      ?.ticket_truck_type_rounds[0]?.dump_site
+                                      ? this.ticket_detail
+                                          ?.ticket_truck_type_rounds[0]
+                                          ?.dump_site
+                                      : "--"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                            <div class="myhr mb-1"></div>
+                            <div
+                              class="d-flex justify-content-between align-items-center cp-6 mb-1"
+                            >
+                              <div
+                                class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer"
+                                (click)="handleStartJob(ticket)"
+                                data-bs-dismiss="modal"
+                              >
+                                <div class="heading-5-400 text-color-black">
+                                  Start job
+                                </div>
+                                <img src="./assets/images/refresh.svg" alt="" />
+                              </div>
+                              <div>
+                                <div
+                                  class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                >
+                                  Round total
+                                </div>
+                                <div
+                                  class="heading-5-400 text-color-111727 mb-2 text-right"
+                                >
+                                  0hrs 00m
+                                </div>
+                              </div>
+                            </div>
+                            <div class="myhr mb-1"></div>
+                            <div
+                              class="d-flex justify-content-between align-items-center cp-6"
+                            >
+                              <div>
+                                <div
+                                  class="heading-8-600 text-color-88898B mb-1"
+                                >
+                                  Driver :
+                                  {{ this.selected_round?.driver_notes }}
+                                </div>
+                                <div
+                                  class="heading-8-600 text-color-88898B mb-1"
+                                >
+                                  Approver :
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="modal fade"
+                    style="position: relative !important"
+                    [id]="'userInProgressModal' + ticket?.ticket_no"
+                    tabindex="-1"
+                    [attr.aria-labelledby]="
+                      'userInProgressModal' + ticket?.ticket_no
+                    "
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                          <div class="row" style="width: 104%">
+                            <div class="col-3">
+                              <div
+                                class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2"
+                              >
+                                Driving
+                              </div>
+                            </div>
+
+                            <div class="col-8 row ml-1 mb-2 pr-0">
+                              <div class="col-7 d-flex justify-content-center">
+                                <div
+                                  class="heading-5-400 text-color-111727 d-flex align-items-center"
+                                >
+                                  {{
+                                    this.ticket_detail?.driver_ticket?.driver
+                                      ?.full_name
+                                  }}
+                                </div>
+                              </div>
+                              <div
+                                class="col-5 d-flex align-items-center justify-content-end"
+                              >
+                                <div
+                                  class="heading-5-400 text-color-111727 text-right"
+                                  style="
+                                    padding: 3px;
+                                    border: 1px solid rgba(104, 105, 109, 1);
+                                    background-color: rgba(253, 215, 228, 1);
+                                    color: rgba(104, 105, 109, 1);
+                                    font-size: 14px;
+                                  "
+                                >
+                                  {{
+                                    this.ticket_detail?.driver_ticket?.truck
+                                      ?.truck_license_plate
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="col-1">
+                              <button
+                                type="button"
+                                (click)="closee(ticket, 'userInProgressModal')"
+                                class="my-modal-close border-0 bg-transparent shadow-none"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <img
+                                  src="./assets/images/cross_2.svg"
+                                  alt="Close"
+                                  style="
+                                    width: 24px;
+                                    height: 24px;
+                                    margin-top: -10px;
+                                    margin-right: -15px;
+                                  "
+                                />
+                              </button>
+                            </div>
+                          </div>
+
+                          <div class="border-grey cp-5">
+                            <div
+                              class="d-flex justify-content-between align-items-center cp-6"
+                              *ngIf="!this.show_add_round"
+                            >
+                              <div>
+                                <div
+                                  class="heading-8-400 text-color-111727-opacity mb-2"
+                                >
+                                  Material out
+                                </div>
+                                <div
+                                  class="heading-5-400 text-color-111727 text-left mb-2"
+                                >
+                                  {{
+                                    this.ticket_detail
+                                      ?.ticket_truck_type_rounds[0]
+                                      ?.material_taken_out
+                                      ? this.ticket_detail
+                                          ?.ticket_truck_type_rounds[0]
+                                          ?.material_taken_out
+                                      : "--"
+                                  }}
+                                </div>
+                              </div>
+                              <div>
+                                <div
+                                  class="heading-8-400 text-color-111727-opacity mb-2 text-right"
+                                >
+                                  Dump site
+                                </div>
+                                <div
+                                  class="heading-5-400 text-color-111727 mb-2 text-right"
+                                >
+                                  {{
+                                    this.ticket_detail
+                                      ?.ticket_truck_type_rounds[0]?.dump_site
+                                      ? this.ticket_detail
+                                          ?.ticket_truck_type_rounds[0]
+                                          ?.dump_site
+                                      : "--"
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row cp-6" *ngIf="this.show_add_round">
+                              <div class="col-6">
+                                <div
+                                  class="d-flex justify-content-between align-items-center"
+                                >
+                                  <div
+                                    class="heading-8-400 text-color-111727-opacity mb-2"
+                                  >
+                                    Material out
+                                  </div>
+                                  <div class="required-input-icon">*</div>
+                                </div>
+                                <input
+                                  class="add-round-field {{
+                                    this.new_material_out ? '' : 'no-value'
+                                  }} mb-1 text-input-field pl-2"
+                                  type="text"
+                                  placeholder="Type here."
+                                  (change)="setNewMaterialOut($event)"
+                                  value="{{ this.new_material_out }}"
+                                />
+                              </div>
+                              <div class="col-6">
+                                <div
+                                  class="d-flex justify-content-flex-end align-items-center"
+                                >
+                                  <div
+                                    class="heading-8-400 text-color-111727-opacity mb-2 mr-1 text-right"
+                                  >
+                                    Dump site
+                                  </div>
+                                  <div class="required-input-icon">*</div>
+                                </div>
+
+                                <div
+                                  class="mainpopupdiv position-relative mb-1 mt-1 pl-2"
+                                >
+                                  <div
+                                    class="project-profile-input-container openpop curser-pointer add-round-field {{
+                                      this.new_dumpsite ? '' : 'no-value'
+                                    }}"
+                                  >
+                                    <div
+                                      class="d-flex justify-content-between align-items-center w-100"
+                                    >
+                                      <div class="w-fill-available text-left">
+                                        <div
+                                          class="heading-5-400-semi text-color-black mb-2"
+                                        >
+                                          {{
+                                            new_dumpsite?.dump_site
+                                              ? new_dumpsite?.dump_site
+                                              : "Select"
+                                          }}
+                                        </div>
+                                      </div>
+                                      <div class="">
+                                        <img
+                                          src="./assets/images/arrow-down-grey2.svg"
+                                          alt=""
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="inapp-popup">
+                                    <div
+                                      class="text-popup-close mb-2 text-left"
+                                    >
+                                      Dump site
+                                      <span
+                                        class="float-right closepop cursor-pointer"
+                                        ><i class="fa fa-close mr-1 mt-1"></i
+                                      ></span>
+                                    </div>
+                                    <div class="text-left">
+                                      <ng-container
+                                        *ngFor="
+                                          let item of this.project?.dump_sites
+                                        "
+                                      >
+                                        <div
+                                          class="heading-5-400 text-color-88898B p-1 bg-color-FDF9D9 br-5px mb-1 cursor-pointer bg-item-list closepop"
+                                          (click)="setNewDumpsite(item)"
+                                        >
+                                          {{ item?.dump_site }}
+                                        </div>
+                                      </ng-container>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- <div class="heading-5-400 text-color-111727 mb-2 text-right">{{this.ticket_detail?.ticket_truck_type_rounds[0]?.dump_site ? this.ticket_detail?.ticket_truck_type_rounds[0]?.dump_site:'--'}}</div> -->
+                              </div>
+                            </div>
+                            <div class="myhr mb-1"></div>
+                            <div
+                              class="d-flex justify-content-between align-items-center cp-6 mb-1"
+                              *ngIf="!this.show_add_round"
+                            >
+                              <div
+                                class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer"
+                                (click)="showAddRound()"
+                              >
+                                <div class="heading-5-400 text-color-black">
+                                  Add round
+                                </div>
+                                <img src="./assets/images/refresh.svg" alt="" />
+                              </div>
+
+                              <div
+                                class="bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-1"
+                                (click)="
+                                  handleEndJob();
+                                  closee(ticket, 'userInProgressModal')
+                                "
+                                data-bs-dismiss="modal"
+                              >
+                                <div class="col-2" style="margin-left: -15px">
+                                  <img src="./assets/images/stop.svg" alt="" />
+                                </div>
+                                <div
+                                  class="heading-5-400 text-color-black d-flex justify-content-center align-items-center col-10 pr-0"
+                                >
+                                  End Job
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="d-flex justify-content-between align-items-center cp-6 mb-1"
+                              *ngIf="this.show_add_round"
+                            >
+                              <div></div>
+                              <div
+                                class="bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-1"
+                                *ngIf="
+                                  this.new_dumpsite && this.new_material_out
+                                "
+                                (click)="
+                                  hanldeAddRound();
+                                  closee(ticket, 'userInProgressModal')
+                                "
+                                data-bs-dismiss="modal"
+                              >
+                                <div
+                                  class="heading-5-400 text-color-black d-flex justify-content-center align-items-center col-9 pr-0"
+                                >
+                                  Add Round
+                                </div>
+                                <div class="col-2">
+                                  <img
+                                    src="./assets/icons/round-add-refresh.svg"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+
+                              <div
+                                class="bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-1 disabled-add-round"
+                                *ngIf="
+                                  !this.new_dumpsite || !this.new_material_out
+                                "
+                              >
+                                <div
+                                  class="heading-5-400 text-color-black d-flex justify-content-center align-items-center col-9 pr-0"
+                                >
+                                  Add Round
+                                </div>
+                                <div class="col-2">
+                                  <img
+                                    src="./assets/icons/round-add-refresh.svg"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="myhr mb-1"></div>
+                            <div
+                              class="d-flex justify-content-between align-items-center cp-6"
+                            >
+                              <div>
+                                <div
+                                  class="heading-8-600 text-color-88898B mb-1"
+                                >
+                                  Driver :
+                                  {{ this.selected_round?.driver_notes }}
+                                </div>
+                                <div
+                                  class="heading-8-600 text-color-88898B mb-1"
+                                >
+                                  Approver :
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  [ngClass]="getStatusClass(ticket.status) + ' status-btn2'"
+                  *ngIf="
+                    ticket?.status != 'Accepted' && ticket?.status != 'Driving'
+                  "
+                >
+                  {{ ticket.status }}
+                </button>
+              </div>
+            </ng-template>
+          </td>
+
+          <td
+            data-target="#myModal"
+            data-toggle="modal"
+            (click)="this.setDetailTicket(ticket)"
+          >
+            {{ getDoneRounds(ticket?.ticket_truck_type_rounds) }}/{{
+              ticket?.ticket_truck_type_rounds?.length
+            }}
+          </td>
+          <!-- <td (click)="this.setDetailTicket(ticket)" class="cursor-pointer">
+                        <div [ngClass]="getStatusClass(ticket.status)" data-toggle="modal" data-target="#myModal">{{ticket?.status}}</div>
+                    </td> -->
+        </tr>
+      </ng-container>
+
+      <!-- <tr>
+                <td>BC0002209</td>
+                <td>ACB Wheels</td>
+                <td>Devon Lane</td>
+                <td>Tridem</td>
+                <td>TRD-9483</td>
+                <td>
+                    <div class="progress_rounds">
+                        <div class="single_progress_rounds active bg-color-FFF8B8" data-bs-toggle="modal" data-bs-target="#userAcceptedModal"></div>
+                        <div class="single_progress_rounds "></div>
+                        <div class="single_progress_rounds "></div>
+                        <div class="single_progress_rounds "></div>
+                    </div>
+                </td>
+                <td>0/5</td>
+                <td>
+                    <div class="heading-12-400-normal text-color-black bg-color-FFF8B8 br-5px text-center p-2 w-100px">Accepted</div>
+                </td>
+            </tr>
+            <tr>
+                <td>BC0002209</td>
+                <td>ACB Wheels</td>
+                <td>Devon Lane</td>
+                <td>Tridem</td>
+                <td>TRD-9483</td>
+                <td>
+                    <div class="progress_rounds">
+                        <div class="single_progress_rounds active bg-color-F4BE1B"></div>
+                        <div class="single_progress_rounds "></div>
+                        <div class="single_progress_rounds "></div>
+                        <div class="single_progress_rounds "></div>
+                    </div>
+                </td>
+                <td>0/5</td>
+                <td>
+                    <div class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px">Driving</div>
+                </td>
+            </tr>
+            <tr>
+                <td>BC0002209</td>
+                <td>ACB Wheels</td>
+                <td>Devon Lane</td>
+                <td>Tridem</td>
+                <td>TRD-9483</td>
+                <td>
+                    <div class="progress_rounds">
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds active bg-color-F4BE1B"></div>
+                        <div class="single_progress_rounds "></div>
+                    </div>
+                </td>
+                <td>2/3</td>
+                <td>
+                    <div class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px">Driving</div>
+                </td>
+            </tr>
+            <tr>
+                <td>BC0002209</td>
+                <td>ACB Wheels</td>
+                <td>Devon Lane</td>
+                <td>Tridem</td>
+                <td>TRD-9483</td>
+                <td>
+                    <div class="progress_rounds">
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds active bg-color-33D1A2" data-bs-toggle="modal" data-bs-target="#userInCompletedNewModal"></div>
+                    </div>
+                </td>
+                <td>4/4</td>
+                <td>
+                    <div class="heading-12-400-normal text-white bg-color-33D1A2 br-5px text-center p-2 w-100px">Completed</div>
+                </td>
+            </tr>
+            <tr>
+                <td>BC0002209</td>
+                <td>ACB Wheels</td>
+                <td>Devon Lane</td>
+                <td>Tridem</td>
+                <td>TRD-9483</td>
+                <td>
+                    <div class="progress_rounds">
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds active bg-color-17A1FA"></div>
+                    </div>
+                </td>
+                <td>5/5</td>
+                <td>
+                    <div class="heading-12-400-normal text-white bg-color-17A1FA br-5px text-center p-2 w-100px">Approved</div>
+                </td>
+            </tr>
+            <tr>
+                <td>BC0002209</td>
+                <td>ACB Wheels</td>
+                <td>Devon Lane</td>
+                <td>Tridem</td>
+                <td>TRD-9483</td>
+                <td>
+                    <div class="progress_rounds">
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds bg-color-33D1A2"></div>
+                        <div class="single_progress_rounds active bg-color-17A1FA"></div>
+                    </div>
+                </td>
+                <td>5/5</td>
+                <td>
+                    <div class="heading-12-400-normal text-white bg-color-17A1FA br-5px text-center p-2 w-100px">Approved</div>
+                </td>
+            </tr> -->
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div
+        class="mypagination-div float-right"
+        *ngIf="ticket_pagination?.total > 0"
+      >
+        <a
+          style="cursor: pointer"
+          (click)="changePage(ticket_pagination.current_page - 1)"
+          [ngClass]="
+            ticket_pagination.first_page == this.page
+              ? 'mypagination '
+              : 'mypagination disable'
+          "
+          class=""
+          >Previous</a
+        >
+        <ng-container *ngFor="let item of ticket_pagination?.links">
+          <a
+            style="cursor: pointer"
+            *ngIf="notSkip(item.label)"
+            [ngClass]="item.active ? 'mypagination active' : 'mypagination'"
+            (click)="changePage(parsePage(item.label.toString()))"
+            >{{ item.label }}</a
+          >
+        </ng-container>
+
+        <a
+          style="cursor: pointer"
+          (click)="changePage(ticket_pagination.current_page + 1)"
+          [ngClass]="
+            this.page == ticket_pagination.last_page
+              ? 'mypagination '
+              : 'mypagination next'
+          "
+          >Next</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-customer-ticket-popup
+  (listing)="this.getProjectTrackingData()"
+  [ticketDetail]="this.ticket_detail"
+  [roundId]="0"
+>
+</app-customer-ticket-popup>
+
+<app-invite-people-form
+  *ngIf="this.current_modal == 'invite-people'"
+  [current_modal]="this.current_modal"
+  (showModl)="showModal($event)"
+  (setAct)="setActive($event)"
+></app-invite-people-form>
+
+<!-- <div class="modal fade" id="userInCompletedNewModal" tabindex="-1" aria-labelledby="userInCompletedNewModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close my-modal-close " data-dismiss="modal"  data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="heading-12-400-normal text-white bg-color-33D1A2 br-5px text-center p-2 w-100px mb-2">Completed</div>
+                <div class="border-grey cp-5">
+                    <div class="d-flex justify-content-between align-items-center cp-6">
+                        <div>
+                            <div class="heading-8-400 text-color-111727-opacity mb-2">Material out</div>
+                            <div class="heading-5-400 text-color-111727 mb-2">{{this.last_round?.material_taken_out}}</div>
+                        </div>
+                        <div>
+                            <div class="heading-8-400 text-color-111727-opacity mb-2 text-right">Dump site</div>
+                            <div class="heading-5-400 text-color-111727 mb-2 text-right">{{this.last_round?.dump_site}}</div>
+                        </div>
+                    </div>
+                    <div class="myhr mb-1"></div>
+                    <div class="d-flex justify-content-between align-items-center cp-6 mb-1">
+
+                        <div class="">
+                            <div class="heading-8-400 text-color-111727-opacity mb-2 text-left">Job total</div>
+                            <div class="heading-5-400 text-color-111727 mb-2 text-left">{{this.ticket_detail?.driver_ticket && this.ticket_detail?.driver_ticket?.driver_hours ? this.ticket_detail?.driver_ticket?.driver_hours+'hrs':''}} {{this.ticket_detail?.driver_ticket && this.ticket_detail?.driver_ticket?.driver_minutes ? this.ticket_detail?.driver_ticket?.driver_minutes+'m ':''}}</div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer" data-bs-dismiss="modal"  data-dismiss="modal" data-toggle="modal" data-target="#myModal" (click)="setDetailTicket(this.ticket_detail)">
+                            <img src="./assets/images/approve.svg" alt="">
+                            <div class="heading-5-400 text-color-black mr-2">Approve ticket</div>
+                        </div>
+                    </div>
+                    <div class="myhr mb-1"></div>
+                    <div class="d-flex justify-content-between align-items-center cp-6">
+                        <div>
+                            <div class="heading-8-600 text-color-88898B mb-1">Driver :{{last_round?.driver_notes}} </div>
+                            <div class="heading-8-600 text-color-88898B mb-1">Approver : </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- <div class="modal fade" id="userAcceptedModal" tabindex="-1" aria-labelledby="userAcceptedModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close my-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="heading-12-400-normal text-color-black bg-color-FFF8B8 br-5px text-center p-2 w-100px mb-2">Accepted</div>
+                <div class="border-grey cp-5">
+                    <div class="d-flex justify-content-between align-items-center cp-6">
+                        <div>
+                            <div class="heading-8-400 text-color-111727-opacity mb-2">Material out</div>
+                            <div class="heading-5-400 text-color-111727 mb-2">{{this.ticket_detail?.ticket_truck_type_rounds[0]?.material_taken_out}}</div>
+                        </div>
+                        <div>
+                            <div class="heading-8-400 text-color-111727-opacity mb-2 text-right">Dump site</div>
+                            <div class="heading-5-400 text-color-111727 mb-2 text-right">{{this.ticket_detail?.ticket_truck_type_rounds[0]?.dump_site}}</div>
+                        </div>
+                    </div>
+                    <div class="myhr mb-1"></div>
+                    <div class="d-flex justify-content-between align-items-center cp-6 mb-1">
+                        <div class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer" (click)="handleStartJob()">
+                            <div class="heading-5-400 text-color-black">Start job</div>
+                            <img src="./assets/images/refresh.svg" alt="">
+                        </div>
+                        <div>
+                            <div class="heading-8-400 text-color-111727-opacity mb-2 text-right">Round total</div>
+                            <div class="heading-5-400 text-color-111727 mb-2 text-right">0hrs 00m</div>
+                        </div>
+                    </div>
+                    <div class="myhr mb-1"></div>
+                    <div class="d-flex justify-content-between align-items-center cp-6">
+                        <div>
+                            <div class="heading-8-600 text-color-88898B mb-1">Driver : {{this.selected_round?.driver_notes}}</div>
+                            <div class="heading-8-600 text-color-88898B mb-1">Approver : </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="modal fade" id="userInProgressModal" tabindex="-1" aria-labelledby="userInProgressModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-0" style="padding: 8px;">
+                <div class="row " style="width: 104%;">
+
+                    <div class="col-3">
+                        <div class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2" *ngIf="getRoundInProgress(this.ticket_detail)?.id==this.selected_round?.id">Round {{this.selected_round?.round_no}}</div>
+                        <div class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2" *ngIf="!getRoundInProgress(this.ticket_detail) && this.getRoundToStart(this.ticket_detail)?.id==this.selected_round?.id">Round {{this.selected_round?.round_no}}</div>
+                        <div class="heading-12-400-normal text-white bg-color-F4BE1B br-5px text-center p-2 w-100px mb-2" *ngIf="getAllRoundDone(this.ticket_detail)">Round {{this.selected_round?.round_no}}</div>
+
+                    </div>
+
+                    <div class="col-8 row ml-1 mb-2 pr-0">
+                        <div class="col-7 d-flex justify-content-center ">
+                            <div class="heading-5-400 text-color-111727 d-flex align-items-center ">{{this.ticket_detail?.driver_ticket?.driver?.full_name}} </div>
+                        </div>
+                        <div class="col-5 d-flex align-items-center justify-content-end">
+                            <div class="heading-5-400 text-color-111727  text-right" style="padding: 3px;; border: 1px solid rgba(104, 105, 109, 1); background-color: rgba(253, 215, 228, 1); color: rgba(104, 105, 109, 1); font-size: 14px;">{{this.ticket_detail?.driver_ticket?.truck?.truck_license_plate}}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-1">
+                        <button type="button" class="my-modal-close border-0 bg-transparent shadow-none" data-bs-dismiss="modal" aria-label="Close">
+                            <img src="./assets/images/cross_2.svg" alt="Close" style="width: 24px; height: 24px; margin-top: -10px; margin-right: -15px; ">
+                        </button>
+                    </div>
+
+
+                </div>
+
+
+                <div class="border-grey cp-5">
+                    <div class="d-flex justify-content-between align-items-center cp-6">
+                        <div>
+                            <div class="heading-8-400 text-color-111727-opacity mb-2">Material out</div>
+                            <div class="heading-5-400 text-color-111727 mb-2">{{this.selected_round?.material_taken_out}}</div>
+                        </div>
+                        <div>
+                            <div class="heading-8-400 text-color-111727-opacity mb-2 text-right">Dump site</div>
+                            <div class="heading-5-400 text-color-111727 mb-2 text-right">{{this.selected_round?.dump_site}}</div>
+                        </div>
+                    </div>
+                    <div class="myhr mb-1"></div>
+                    <div class="d-flex justify-content-between align-items-center cp-6 mb-1  mr-1" *ngIf="getRoundInProgress(this.ticket_detail)?.id==this.selected_round?.id">
+                        <div>
+                            <div class="heading-8-400 text-color-111727-opacity mb-2">Round started</div>
+                            <div class="heading-5-400 text-color-111727 mb-2">{{this.selected_round?.driver_start_time | date:'h:mm a'}}</div>
+                        </div>
+                        <div class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row  mr-2" (click)="handleEndRound(this.getRoundInProgress(this.ticket_detail))">
+                            <div class="col-2 " style="margin-left: -15px;">
+                                <img src="./assets/images/stop.svg" alt="">
+                            </div>
+                            <div class="heading-5-400 text-color-black col-9 ">End round</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center cp-6 mb-1 mr-2" *ngIf="getAllRoundDone(this.ticket_detail)">
+
+
+                            <div class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer  ml-2" (click)=" handleAddRound()">
+                                <div class="heading-5-400 text-color-black pl-3 pt-1" >Add round</div>
+                                <img src="./assets/images/add_round.svg" alt="NA">
+                            </div>
+                            <div class="bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row mr-1" (click)="handleEndJob()">
+                                <div class="col-2" style="margin-left: -15px;">
+                                    <img src="./assets/images/stop.svg" alt="">
+                                </div>
+                                <div class="heading-5-400 text-color-black d-flex justify-content-center align-items-center col-10 pr-0">End Job</div>
+                            </div>
+
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center cp-6 mb-1 ml-1" *ngIf="!this.getRoundInProgress(this.ticket_detail) && this.getRoundToStart(this.ticket_detail)?.id==this.selected_round?.id">
+                        <div class="d-flex justify-content-between bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row ml-2"  (click)="handleStartRound(this.getRoundToStart(this.ticket_detail))">
+                            <div class="heading-5-400 text-color-black col-9 pr-0 ">Start round {{this.getRoundToStart(this.ticket_detail)?.round_no}}</div>
+                            <div class="col-2 pl-0">
+                                <img src="./assets/images/refresh.svg" alt="">
+                            </div>
+                        </div>
+                        <div *ngIf="this.selected_round?.round_no==1">
+                            <div class="heading-8-400 text-color-111727-opacity mb-2 text-right">Round total</div>
+                            <div class="heading-5-400 text-color-111727 mb-2 text-right">{{this.selected_round?.round_time? this.selected_round?.round_time:'0hrs 00m'}}</div>
+                        </div>
+                        <div *ngIf="this.selected_round?.round_no>1">
+
+                            <div class=" bg-color-FFF8B8 br-5px p-2 width-166 cursor-pointer row  mr-2" (click)="handleEndJob()">
+                                <div class="col-2" style="margin-left: -15px;">
+                                    <img src="./assets/images/stop.svg" alt="">
+                                </div>
+                                <div class="heading-5-400 text-color-black d-flex justify-content-center align-items-center col-10 pr-0">End Job</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="myhr mb-1"></div>
+                    <div class="d-flex justify-content-between align-items-center cp-6">
+                        <div>
+                            <div class="heading-8-600 text-color-88898B mb-1">Driver : {{this.selected_round?.driver_notes}}</div>
+                            <div class="heading-8-600 text-color-88898B mb-1">Approver :</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

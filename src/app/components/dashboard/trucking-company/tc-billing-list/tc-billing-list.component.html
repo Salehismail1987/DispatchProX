@@ -1,0 +1,728 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="project-profile-header-container">
+        <div class="profile_heading_div1">
+          <div
+            class="project-profile-header-left d-flex align-items-center ml-0"
+          >
+            <img
+              src="./assets/icons/billing-icon.svg"
+              alt="project-profile-file-icon"
+            />
+            <div class="heading-1-400 text-color-black">Billing status</div>
+          </div>
+        </div>
+        <div>
+          <nav>
+            <div
+              class="nav nav-pills nav-fill ticket-tabs"
+              id="nav-tab"
+              role="tablist"
+            >
+              <a
+                class="nav-item btn-nav nav-link {{
+                  this.current_tab == 'billed' ? 'active' : ''
+                }}"
+                (click)="changeTab('billed')"
+                id="nav-home-tab"
+                data-toggle="tab"
+                href="#bill-billed"
+                role="tab"
+                aria-controls="nav-home"
+                aria-selected="true"
+              >
+                <div class="d-flex justify-content-space-between">
+                  <img
+                    src="{{
+                      this.current_tab != 'billed'
+                        ? 'assets/icons/invoiced-blue.svg'
+                        : 'assets/icons/invoiced-white.svg'
+                    }}"
+                  />
+                  <div class="mr-5">Bills</div>
+                </div>
+              </a>
+              <a
+                class="nav-item btn-nav nav-link {{
+                  this.current_tab == 'unbilled' ? 'active' : ''
+                }} mr-0"
+                (click)="changeTab('unbilled')"
+                id="nav-profile-tab"
+                data-toggle="tab"
+                href="#bill-unbilled"
+                role="tab"
+                aria-controls="nav-profile"
+                aria-selected="true"
+              >
+                <div class="d-flex justify-content-space-between">
+                  <img
+                    src="{{
+                      this.current_tab != 'unbilled'
+                        ? 'assets/icons/un-invoiced-blue.svg'
+                        : 'assets/icons/un-invoiced-white.svg'
+                    }}"
+                  />
+
+                  <div class="mr-3">Un-billed</div>
+                </div>
+              </a>
+            </div>
+          </nav>
+          <!-- <button class="mybtn mybtn-default text-blue btn-nav ml-2" (click)="this.toLocation('/customer-tc-invoices')">Customers</button> -->
+        </div>
+      </div>
+      <div class="main-project-setting-container inner_main_shadow">
+        <!-- Filters Contaainer-->
+        <div class="row mt-50px">
+          <div class="col-md-3 col-padding-l">
+            <div class="main-project-setting-header-left">
+              <div class="heading-2-300 text-color-111727">
+                {{
+                  this.current_tab == "billed"
+                    ? "Received bills"
+                    : "Approved tickets"
+                }}
+              </div>
+              <div class="text-2-300">Click line to see details</div>
+            </div>
+          </div>
+          <div class="col-md-2 col-padding-rl"></div>
+          <div class="col-md-7 col-padding-r">
+            <div class="row">
+              <div class="col-md-3" *ngIf="this.current_tab != 'billed'"></div>
+              <div class="col-md-3 col-padding-rl">
+                <div
+                  class="input-div  getinputfield {{
+                    !this.selected_company?.id ? 'border-blue' : ''
+                  }}"
+                >
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Vendor
+                  </div>
+                  <div
+                    class="myinput-new selected"
+                    *ngIf="!this.selected_company?.id"
+                  >
+                    All
+                  </div>
+                  <div
+                    class="myinput-new selected"
+                    *ngIf="selected_company?.company_name != null"
+                  >
+                    {{
+                      selected_company?.company_name
+                        ? selected_company?.company_name
+                        : ""
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/images/dropdown.svg"
+                    class="icon-center-right"
+                  />
+                  <div
+                    class="input-popup-div companies_list"
+                    style="display: none"
+                  >
+                    <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                      Vendor
+                    </div>
+                    <div class="title-18 text-right mb-2px d-none">Default</div>
+                    <div
+                      class="d-flex justify-content-between mb-5px list-item"
+                    >
+                      <div
+                        (click)="handleFilterByCompanyAll()"
+                        [ngClass]="
+                          !this.selected_company?.id
+                            ? 'title-5-new'
+                            : 'title-5-new text-color-black-shade7'
+                        "
+                      >
+                        All
+                      </div>
+                    </div>
+                    <ng-container *ngFor="let company of this.companies_list">
+                      <div
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          (click)="handleFilterByCompany(company)"
+                          [ngClass]="
+                            this.selected_company?.id == company.id
+                              ? 'title-5-new'
+                              : 'title-5-new text-color-black-shade7'
+                          "
+                        >
+                          {{ company?.company_name }}
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-padding-rl">
+                <div
+                  class="input-div  getinputfield {{
+                    !this.selected_project?.id ? 'border-blue' : ''
+                  }}"
+                >
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Project
+                  </div>
+                  <div
+                    class="myinput-new selected"
+                    *ngIf="!this.selected_project?.id"
+                  >
+                    All
+                  </div>
+                  <div
+                    class="myinput-new selected"
+                    *ngIf="selected_project?.project_name != null"
+                  >
+                    {{
+                      selected_project?.project_name
+                        ? selected_project?.project_name
+                        : ""
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/images/dropdown.svg"
+                    class="icon-center-right"
+                  />
+                  <div
+                    class="input-popup-div project_list"
+                    style="display: none"
+                  >
+                    <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                      Project
+                    </div>
+                    <div class="title-18 text-right mb-2px d-none">Default</div>
+                    <div
+                      class="d-flex justify-content-between mb-5px list-item"
+                    >
+                      <div
+                        (click)="handleFilterByProjectAll()"
+                        [ngClass]="
+                          !this.selected_project?.id
+                            ? 'title-5-new'
+                            : 'title-5-new text-color-black-shade7'
+                        "
+                      >
+                        All
+                      </div>
+                    </div>
+                    <ng-container *ngFor="let project of this.project_list">
+                      <div
+                        class="d-flex justify-content-between mb-5px list-item"
+                      >
+                        <div
+                          (click)="handleFilterByProject(project)"
+                          [ngClass]="
+                            this.selected_project?.id == project.id
+                              ? 'title-5-new'
+                              : 'title-5-new text-color-black-shade7'
+                          "
+                        >
+                          {{ project?.project_name }}
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class=" col-md-3 {{
+                  this.current_tab != 'billed'
+                    ? ' col-padding-r'
+                    : ' col-padding-rl'
+                }} selmonthtype"
+              >
+                <label class="field text-field" id="select-month">
+                  <input type="hidden" class="filter_date" />
+                  <div class="field__input height-48px cursor-pointer">
+                    {{
+                      this.selected_monthly != "" && this.selected_year != ""
+                        ? this.selected_monthly
+                        : "All time"
+                    }}
+                  </div>
+
+                  <i
+                    class="fa fa-caret-down input-icon-right"
+                    aria-hidden="true"
+                  ></i>
+                  <span class="field__label-wrap">
+                    <span class="field__label field__label2"
+                      >Filter by month</span
+                    >
+                  </span>
+                </label>
+                <div class="selectcontroldiv2 selectmonth">
+                  <div class="calendareyeardiv">
+                    <div>
+                      <img
+                        src="../assets/icons/cal-arrow-left.svg"
+                        (click)="decYear(this.selected_year)"
+                      />
+                    </div>
+                    <div class="calendareyear">{{ this.selected_year }}</div>
+                    <div>
+                      <img
+                        src="../assets/icons/cal-arrow-right.svg"
+                        (click)="incYear(this.selected_year)"
+                      />
+                    </div>
+                  </div>
+                  <ul class="calendarlist">
+                    <li data-month="1" (click)="setMonth('January')">
+                      January
+                    </li>
+                    <li data-month="2" (click)="setMonth('February')">
+                      February
+                    </li>
+                    <li data-month="3" (click)="setMonth('March')">March</li>
+                    <li data-month="4" (click)="setMonth('April')">April</li>
+                    <li data-month="5" (click)="setMonth('May')">May</li>
+                    <li data-month="6" (click)="setMonth('June')">June</li>
+                    <li data-month="7" (click)="setMonth('July')">July</li>
+                    <li data-month="8" (click)="setMonth('August')">August</li>
+                    <li data-month="9" (click)="setMonth('September')">
+                      September
+                    </li>
+                    <li data-month="10" (click)="setMonth('October')">
+                      October
+                    </li>
+                    <li data-month="11" (click)="setMonth('November')">
+                      November
+                    </li>
+                    <li data-month="12" (click)="setMonth('December')">
+                      December
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div
+                class="col-md-3 col-padding-r button-container"
+                *ngIf="this.current_tab == 'billed'"
+              >
+                <button
+                  class="mybtn3 w-100 btn-nav mt-min-15px"
+                  data-toggle="modal"
+                  data-target="#modal-addbill"
+                >
+                  Add bill
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade  {{
+              this.current_tab == 'billed' ? 'show active' : ''
+            }}"
+            id="bill-billed"
+            role="tabpanel"
+            aria-labelledby="nav-home-tab"
+          >
+            <!-- Filters Listing -->
+            <div class="table-responsive project-setting-page-table">
+              <table class="table mt-15px">
+                <thead class="table-light project-setting-table-header">
+                  <tr class="header-row">
+                    <th class="project-settings-table-header text-left">
+                      <div class="heading-8-400 text-color-grey">
+                        Invoice number
+                      </div>
+                    </th>
+                    <th class="project-settings-table-header text-left">
+                      <div class="heading-8-400 text-color-grey">Vendor</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Date</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">
+                        Billing cycle
+                      </div>
+                    </th>
+
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">
+                        # of tickets
+                      </div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Hours</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Rounds</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Subtotal</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Tax</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Total</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="this.billings?.length > 0">
+                    <ng-container *ngFor="let bill of billings">
+                      <tr
+                        data-toggle="modal"
+                        data-target="#myModalDetail2"
+                        (click)="setInvoice(bill)"
+                      >
+                        <td class="text-center">
+                          <div class="invoiced-div">
+                            {{ bill.invoice_no }}
+                          </div>
+                        </td>
+                        <td class="text-left">
+                          {{ bill.invoice_by?.company_name }}
+                        </td>
+                        <td class="text-center">
+                          {{ bill.invoice_date | date : "d-MM-YYYY" }}
+                        </td>
+                        <td class="text-center">
+                          {{ bill.invoice_period_type }}
+                        </td>
+                        <td class="text-center">{{ bill.total_tickets }}</td>
+
+                        <td class="text-center">
+                          {{ bill.hours ? bill.hours : "-" }}
+                        </td>
+                        <td class="text-center">
+                          {{ bill.rounds ? bill.rounds : "-" }}
+                        </td>
+
+                        <td class="text-center">
+                          {{ bill.subtotal | currency }}
+                        </td>
+                        <td class="text-center">
+                          {{ bill.tax_amount | currency }}
+                        </td>
+                        <td class="text-center">{{ bill.total | currency }}</td>
+                      </tr>
+                    </ng-container>
+                    <tr class="bg-grey">
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="display-period">
+                        <span
+                          class="text-semibold-16-400 text-align-right text-right float-left"
+                        >
+                          Summary:
+                        </span>
+                        <div class="white-container d-inline-block ml-2 mr-5re">
+                          <label class="label-qty"> Invoicing month </label>
+                          <div class="text-semibold-16-400">
+                            <span id="cal-0">
+                              {{
+                                this.selected_monthly
+                                  ? this.selected_monthly
+                                  : "All time"
+                              }}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <div
+                          class="white-container d-inline-block"
+                          align="center"
+                        >
+                          <label class="label-qty"> Ticket #</label>
+                          <div class="text-semibold-16-400">
+                            {{ billings_data?.total_tickets }}
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <div
+                          class="white-container d-inline-block"
+                          align="center"
+                        >
+                          <label class="label-qty"> Hours</label>
+                          <div class="text-semibold-16-400">
+                            {{
+                              billings_data?.hours
+                                ? billings_data?.hours + " hr"
+                                : "-"
+                            }}
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <div
+                          class="white-container d-inline-block"
+                          align="center"
+                        >
+                          <label class="label-qty"> Rounds</label>
+                          <div class="text-semibold-16-400">
+                            {{
+                              billings_data?.rounds
+                                ? billings_data?.rounds
+                                : "-"
+                            }}
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="text-center">
+                        <div
+                          class="white-container d-inline-block"
+                          align="center"
+                        >
+                          <label class="label-qty"> Subtotal</label>
+                          <div class="text-semibold-16-400">
+                            {{ billings_data?.subtotal | currency }}
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <div
+                          class="white-container d-inline-block"
+                          align="center"
+                        >
+                          <label class="label-qty"> Tax</label>
+                          <div class="text-semibold-16-400">
+                            {{ billings_data?.tax_amount | currency }}
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <div
+                          class="white-container d-inline-block"
+                          align="center"
+                        >
+                          <label class="label-qty"> Total</label>
+                          <div class="text-semibold-16-400">
+                            {{ billings_data?.total | currency }}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container
+                    *ngIf="this.billings?.length < 1 || this.loading_bills"
+                  >
+                    <tr>
+                      <td colspan="7" *ngIf="!this.loading_bills">
+                        No bills found
+                      </td>
+                      <td colspan="7" *ngIf="this.loading_bills">
+                        Fetching bills..
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade {{
+              this.current_tab == 'unbilled' ? 'show active' : ''
+            }}"
+            id="bill-unbilled"
+            role="tabpanel"
+            aria-labelledby="nav-profile-tab"
+          >
+            <!-- Filters Listing -->
+            <div class="table-responsive project-setting-page-table">
+              <table class="table mt-15px">
+                <thead class="table-light project-setting-table-header">
+                  <tr class="header-row">
+                    <th class="project-settings-table-header text-left">
+                      <div class="heading-8-400 text-color-grey">Ticket ID</div>
+                    </th>
+                    <th class="project-settings-table-header text-left">
+                      <div class="heading-8-400 text-color-grey">Vendor</div>
+                    </th>
+                    <th class="project-settings-table-header text-left">
+                      <div class="heading-8-400 text-color-grey">Project</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">
+                        Description (driver- licence plate- round qty)
+                      </div>
+                    </th>
+
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Date</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Hours</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Rounds</div>
+                    </th>
+                    <th class="project-settings-table-header text-center">
+                      <div class="heading-8-400 text-color-grey">Subtotal</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container
+                    *ngIf="unbilled_tickets && loading != 'unbilled_tickets'"
+                  >
+                    <ng-container *ngFor="let ticket of unbilled_tickets">
+                      <tr
+                        (click)="setDetail(ticket)"
+                        data-toggle="modal"
+                        data-target="#myModalTicket"
+                      >
+                        <td class="text-center">
+                          <div class="invoiced-div">
+                            {{ ticket?.ticket_no }}
+                          </div>
+                        </td>
+                        <td class="text-left">
+                          {{ ticket?.dispatch_to?.company_name }}
+                        </td>
+                        <td class="text-left">
+                          {{ ticket?.project?.project_name }}
+                        </td>
+                        <td class="text-center">
+                          {{ ticket?.driver_ticket?.driver?.full_name }}
+                          -
+                          {{
+                            ticket?.driver_ticket?.truck?.truck_license_plate
+                          }}
+                          -
+                          {{ this.total_rounds }} rounds
+                        </td>
+                        <td class="text-center">{{ ticket?.ticket_date }}</td>
+
+                        <td class="text-center">
+                          {{ ticket?.hour ? ticket?.hour + " hr" : "-" }}
+                        </td>
+                        <td class="text-center">
+                          {{ ticket?.round ? ticket?.round : "-" }}
+                        </td>
+                        <td class="text-center">
+                          {{ ticket?.subtotal | currency }}
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <tr class="bg-grey">
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="display-period">
+                        <span
+                          class="text-semibold-16-400 text-align-right text-right float-left"
+                        >
+                          Summary:
+                        </span>
+                        <div class="white-container d-inline-block ml-2 mr-5re">
+                          <label class="label-qty"> Invoicing month </label>
+                          <div class="text-semibold-16-400">
+                            <span id="cal-0">
+                              {{
+                                this.selected_monthly
+                                  ? this.selected_monthly
+                                  : "All time"
+                              }}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="text-center">
+                        <div
+                          class="white-container d-inline-block"
+                          align="center"
+                        >
+                          <label class="label-qty"> Hours</label>
+                          <div class="text-semibold-16-400">
+                            {{
+                              unbilled_tickets_data?.hours
+                                ? unbilled_tickets_data?.hours + " hr"
+                                : "-"
+                            }}
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="text-center">
+                        <div
+                          class="white-container d-inline-block"
+                          align="center"
+                        >
+                          <label class="label-qty"> Rounds</label>
+                          <div class="text-semibold-16-400">
+                            {{
+                              unbilled_tickets_data?.rounds
+                                ? unbilled_tickets_data?.rounds
+                                : "-"
+                            }}
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="text-center">
+                        <div
+                          class="white-container d-inline-block"
+                          align="center"
+                        >
+                          <label class="label-qty"> Subtotal</label>
+                          <div class="text-semibold-16-400">
+                            {{ unbilled_tickets_data?.total | currency }}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <ng-container
+                    *ngIf="!unbilled_tickets && loading != 'unbilled_tickets'"
+                  >
+                    <tr>
+                      <th colspan="7" class="text-center">No tickets found.</th>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="loading == 'unbilled_tickets'">
+                    <tr>
+                      <th colspan="7" class="text-center">
+                        Fetching tickets...
+                      </th>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-tc-approved-popup
+  [ticketDetail]="this.ticketDetail"
+  *ngIf="ticketDetail"
+></app-tc-approved-popup>
+
+<app-tc-billing-popup
+  [edited_invoice]="this.edited_invoice"
+  [gst]="this.gst"
+  *ngIf="edited_invoice"
+></app-tc-billing-popup>
+<app-tc-add-bill
+  [all_companies]="all_companies_list"
+  (getBillings)="this.getBillings()"
+></app-tc-add-bill>

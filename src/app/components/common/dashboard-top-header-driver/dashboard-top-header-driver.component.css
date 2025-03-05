@@ -1,0 +1,44 @@
+@import url("../../../../assets/css/mobile-dashboard.css");
+@import url("../../../../assets/css/driver-mobile.css");
+@import url("../../../../assets/css/margins.css");
+
+.w-50px{
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+}
+
+.header-bar {
+    padding: 10px 10px 20px 10px !important;
+}
+  
+.text-black-shade {
+    color: #68696D;
+}
+
+.custom-modal-content{
+    height: auto;
+    max-height: calc(104vh - 60px);
+    overflow-y: auto;
+    width: 100%;
+    border-radius: 0.01rem !important;
+}
+
+.tragget-header-menu-modal .modal-body {
+    padding: 15px 15px !important;
+}
+
+
+.bg-white{
+    background: #FFFFFF !important;
+}
+
+.title-6{
+    font-family: 'Gilroy-SemiBold';
+font-size: 24px;
+font-weight: 400;
+line-height: 29.4px;
+text-align: left;
+color: #000000;
+
+}

@@ -1,0 +1,73 @@
+<div class="wrapper"> 
+    <app-dashboard-header  [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header ></app-dashboard-top-header>
+    <div class="body-content body-content-4">
+        <div class="row">
+            <div class="col-md-5 col-lg-4">
+                <app-tc-profile-nav [loggedinUser]="this.loggedInUser" [current]="'notification-settings'"></app-tc-profile-nav>
+            </div>
+            <div class="col-md-7 col-lg-8">                
+                <div class="setting-content-page border-div">
+                    <div class="dashboard-title mb-25">Notifications</div>
+                    <div class="dashbord-inner-div">
+                        <form [formGroup]="settingForm" (ngSubmit)="onSaveSetting()">
+
+                            <div class="title-10 mb-22">Receive notifications about:</div>
+                            <div class="d-flex mb-24">
+                                <div class="form-check">
+                                    <input class="form-check-input checkbox-size" formControlName="loggin_loginout_info" checked="{{this.setting && this.setting?.loggin_loginout_info == 1 ? true :false}}" type="checkbox" value="1" id="flexCheckDefault">
+                                </div>
+                                <div class="title-11 ml-16 mt-5px">Logging in and logging out information</div>
+                            </div>
+                            <div class="d-flex mb-24">
+                                <div class="form-check">
+                                    <input class="form-check-input checkbox-size" formControlName="request_for_dispatching"  checked="{{this.setting && this.setting?.request_for_dispatching == 1 ? true :false}}" type="checkbox" value="1" id="flexCheckDefault">
+                                </div>
+                                <div class="title-11 ml-16 mt-5px">Requests for Dispatching</div>
+                            </div>
+                            <div class="d-flex mb-24">
+                                <div class="form-check">
+                                    <input class="form-check-input checkbox-size" formControlName="reminders_subscription_ending"  checked="{{this.setting && this.setting?.reminders_subscription_ending == 1 ? true :false}}" type="checkbox" value="1" id="flexCheckDefault">
+                                </div>
+                                <div class="title-11 ml-16 mt-5px">Reminders for Subscription period ending.</div>
+                            </div>
+                            <div class="d-flex mb-29">
+                                <div class="form-check">
+                                    <input class="form-check-input checkbox-size" formControlName="tickets_dispatched"  checked="{{this.setting && this.setting?.tickets_dispatched == 1 ? true :false}}" type="checkbox" value="1" id="flexCheckDefault">
+                                </div>
+                                <div class="title-11 ml-16 mt-5px">Tickets dispatched.</div>
+                            </div>
+                            <div class="title-10 mb-22">How Do you want to receive notifications:</div>
+                            <div class="d-flex mb-24">
+                                <div class="form-check">
+                                    <input class="form-check-input checkbox-size" formControlName="in_app" type="checkbox" value="1" id="flexCheckDefault"  checked="{{this.setting && this.setting?.in_app == 1 ? true :false}}">
+                                </div>
+                                <div class="title-11 ml-16 mt-5px">In-app</div>
+                            </div>
+                            <div class="d-flex mb-24">
+                                <div class="form-check">
+                                    <input class="form-check-input checkbox-size" formControlName="via_email" type="checkbox" value="1" id="flexCheckDefault"  checked="{{this.setting && this.setting?.via_email == 1 ? true :false}}">
+                                </div>
+                                <div class="title-11 ml-16 mt-5px">Via Email</div>
+                            </div>
+                            <div class="d-flex mb-24">
+                                <div class="form-check">
+                                    <input class="form-check-input checkbox-size" formControlName="via_sms" type="checkbox" value="1" id="flexCheckDefault"  checked="{{this.setting && this.setting?.via_sms == 1 ? true :false}}">
+                                </div>
+                                <div class="title-11 ml-16 mt-5px">Via SMS</div>
+                            </div>
+                            <input type="hidden" formControlName="user_id" />
+                            <div align="center">
+                                <button type="submit" class="mybtn mybtn-back-blue2 width-fit-content text-white mybtn-padding mybtn-box-shadow" *ngIf="!loading" >Apply</button>
+                                <button type="submit" class="mybtn mybtn-back-blue2 width-fit-content text-white mybtn-padding mybtn-box-shadow" disabled *ngIf="loading">Saving...</button>
+                            </div>
+                        </form>
+                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

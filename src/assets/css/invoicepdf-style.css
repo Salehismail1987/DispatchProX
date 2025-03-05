@@ -1,0 +1,234 @@
+@font-face {
+    font-family: 'Gilroy';
+    src: url('../fonts/Gilroy-Regular/Gilroy-Regular.woff') format('woff2'), url('../fonts/Gilroy-Regular/Gilroy-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy-Bold';
+    src: url('../fonts/Gilroy-Bold/Gilroy-Bold.woff') format('woff2'), url('../fonts/Gilroy-Bold/Gilroy-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy-SemiBold';
+    src: url('../fonts/Gilroy-SemiBold/Gilroy-SemiBold.woff') format('woff2'), url('../fonts/Gilroy-SemiBold/Gilroy-SemiBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AvertaStd-Bold';
+    src: url('../fonts/AvertaStd-Bold/AvertaStd-Bold.woff') format('woff2'), url('../fonts/AvertaStd-Bold/AvertaStd-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Recoleta';
+    src: url('../fonts/Recoleta-Regular/Recoleta-Regular.woff2') format('woff2'), url('../fonts/Recoleta-Regular/Recoleta-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../fonts/Lato-Regular/Lato-Regular.woff2') format('woff2'), url('../fonts/Lato-Regular/Lato-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.mr-48 {
+    margin-right: 48px;
+}
+
+.ml-9 {
+    margin-left: 9px;
+}
+
+.ml-5px {
+    margin-left: 5px !important;
+}
+
+.ml-25px {
+    margin-left: 25px !important;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-3px {
+    margin-bottom: 3px;
+}
+
+.mb-6px {
+    margin-bottom: 6px;
+}
+
+.mb-7px {
+    margin-bottom: 7px;
+}
+
+.mb-10px {
+    margin-bottom: 10px;
+}
+
+.mb-40px {
+    margin-bottom: 40px;
+}
+
+.mb-20px {
+    margin-bottom: 20px;
+}
+
+.mb-52px {
+    margin-bottom: 52px;
+}
+
+.mb-51px {
+    margin-bottom: 51px;
+}
+
+.mb-44 {
+    margin-bottom: 44px;
+}
+
+.width-239px {
+    width: 239px;
+}
+
+.width-127px {
+    width: 127px;
+}
+
+.bg-light-grey {
+    background: #F6F8FA;
+}
+
+.header-content {
+    margin-left: 50px;
+}
+
+.right-div {
+    padding: 18px 0 11px 18px;
+}
+
+.color-black-shade-1 {
+    color: rgb(0 0 0 / 50%);
+}
+
+.title-1 {
+    font-family: 'Recoleta';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 19px;
+}
+
+.title-2 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 135%;
+}
+
+.title-3 {
+    font-family: 'Gilroy-Bold';
+    font-size: 10px;
+    line-height: 135%;
+}
+
+.title-4 {
+    font-family: 'Lato';
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.desc-1 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 135%;
+}
+
+.desc-2 {
+    font-family: 'Gilroy-Bold';
+    font-size: 8px;
+    line-height: 135%;
+}
+
+.desc-3 {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 135%;
+}
+
+.address-div {
+    padding: 16px 57px;
+}
+
+.table-content {
+    padding: 0 21px 38px 26px;
+}
+
+.mytable {
+    width: 100%;
+}
+
+.mytable tr th {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 8px;
+    line-height: 135%;
+    background: #F6F8FA;
+    padding: 3px 18px;
+}
+
+.mytable tr td {
+    font-family: 'Gilroy-SemiBold';
+    font-size: 9px;
+    line-height: 11px;
+    color: #68696D;
+    padding: 14px 0px 10px 0px;
+    text-align: center;
+}
+
+.mytable tr {
+    border-bottom: 1px solid rgb(0 0 0 / 10%);
+}
+
+.mytable tr td:nth-child(3) {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 10px;
+    color: #68696D;
+}
+
+.mytable tr td:last-child {
+    font-family: 'Gilroy-Bold';
+    font-size: 9px;
+    line-height: 11px;
+    color: #282D40;
+}
+
+.footer-div {
+    background: #F6F8FA;
+    padding: 18px 39px 21px 44px;
+}
+
+.summery-div {
+    width: 198px;
+    padding: 25px 23px 21px 20px;
+    background: rgba(31, 73, 125, 0.04);
+}

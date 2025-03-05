@@ -1,0 +1,630 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+
+    <div class="body-content">
+      <div class="head-title-tabs border-div mb_15">
+        <div class="d-flex align-items-center">
+          <img
+            src="./assets/icons/requests-icon-2.svg"
+            alt="project-profile-file-icon"
+          />
+
+          <div class="dashboard-title ml-2 mb-0">
+            Accept/Decline truck requests
+          </div>
+        </div>
+        <div class="width-90-md">
+          <nav>
+            <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+              <button
+                type="button"
+                class="nav-item nav-link active"
+                aria-controls="nav-home"
+                aria-selected="true"
+              >
+                <div>Accept/Decline</div>
+                <div class="count count-requests">
+                  {{ this.menu_counts?.requests }}
+                </div>
+              </button>
+              <button
+                type="button"
+                class="nav-item nav-link"
+                id="nav-profile-tab"
+                (click)="redirecToDispatchList()"
+                aria-controls="nav-profile"
+                aria-selected="false"
+              >
+                <div>Tickets to dispatch</div>
+                <div
+                  class="count count-dispatch"
+                  [ngClass]="{ abc: temporaryClassApplied }"
+                >
+                  {{ this.pending_dispatches }}
+                </div>
+              </button>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <div class="setting-content-page border-div inner_main_shadow">
+        <div class="row filters-div mb-4 mt-5">
+          <div class="W_H_25 pl-3 ml-2">
+            <div class="dashboard-title mb-0">All job requests</div>
+            <div class="sec_heading">Click the line to see details</div>
+          </div>
+          <div class="W_H_16 pr-2">
+            <label class="field text-field">
+              <input
+                class="field__input"
+                placeholder=""
+                value=""
+                type="date"
+                (change)="changeDate($event)"
+                style="font-family: 'Gilroy-Bold'; font-size: 14px"
+              />
+              <span class="field__label-wrap">
+                <span class="field__label sec_heading_2 head_txt"
+                  >Filter by date</span
+                >
+              </span>
+            </label>
+          </div>
+          <div class="W_H_16 pr-2">
+            <div
+              class="input-div  getinputfield1 {{
+                !this.search_companies ? 'border-blue' : ''
+              }} cur_p "
+            >
+              <div class="title-5-new2 text-color-black-shade5 text-left">
+                Filter by Customer
+              </div>
+              <div
+                class="myinput-new selected sa_select"
+                *ngIf="!this.search_companies"
+              >
+                Select
+              </div>
+              <div
+                class="myinput-new sa_selected_filter selected"
+                *ngIf="this.search_companies"
+              >
+                {{ this.search_companies_name }}
+              </div>
+              <img
+                src="../../assets/images/dropdown.svg"
+                class="icon-center-right"
+              />
+              <div
+                class="input-popup-div1 cust_drop companies_list"
+                style="display: none"
+              >
+                <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                  Customer
+                </div>
+                <div class="title-18 text-right mb-2px d-none">Default</div>
+                <div
+                  (click)="handleCompany('', '')"
+                  class="d-flex justify-content-between mb-5px list-item"
+                >
+                  <div
+                    [ngClass]="
+                      !this.search_companies
+                        ? 'title-5-new33'
+                        : 'title-5-new33 text-color-black-shade7'
+                    "
+                  >
+                    All
+                  </div>
+                </div>
+                <ng-container *ngFor="let company of this.companies_list">
+                  <div
+                    (click)="handleCompany(company.id, company.company_name)"
+                    class="d-flex justify-content-between mb-5px list-item"
+                    *ngIf="company?.id"
+                  >
+                    <div
+                      *ngIf="company?.id"
+                      [ngClass]="
+                        this.search_companies == company.id
+                          ? 'title-5-new33 title-5-new33_active'
+                          : 'title-5-new33 text-color-black-shade7'
+                      "
+                    >
+                      {{ company.company_name }}
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="W_H_16 pr-2 " >
+                        <label class="field text-field">
+                            <select class="field__input icon-none" (change)="this.handleCompany($event, '')">
+                                <option value="">All</option>
+                                <option *ngFor="let company of this.companies_list" [value]="company.id" >
+                                    {{company?.company_name ? company?.company_name :'' }}
+                                </option>
+                            </select>
+                            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                            <span class="field__label-wrap">
+                                <span class="field__label sec_heading_2 head_txt" >Filter by Customer</span>
+                            </span>
+                        </label>
+                    </div> -->
+          <div class="W_H_16 pr-2">
+            <div
+              class="input-div  getinputfield {{
+                !this.search_project ? 'border-blue' : ''
+              }} cur_p"
+            >
+              <div class="title-5-new2 text-color-black-shade5 text-left">
+                Filter by project
+              </div>
+              <div
+                class="myinput-new selected sa_select"
+                *ngIf="!this.search_project"
+              >
+                Select
+              </div>
+              <div
+                class="myinput-new sa_selected_filter selected"
+                *ngIf="this.search_project"
+              >
+                {{ this.search_project_name }}
+              </div>
+              <img
+                src="../../assets/images/dropdown.svg"
+                class="icon-center-right"
+              />
+              <div
+                class="input-popup-div cust_drop companies_list"
+                style="display: none"
+              >
+                <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                  Projects
+                </div>
+                <div class="title-18 text-right mb-2px d-none">Default</div>
+                <div
+                  (click)="handleFilterByProject('')"
+                  class="d-flex justify-content-between mb-5px list-item cur_p"
+                >
+                  <div
+                    [ngClass]="
+                      !this.search_project
+                        ? 'title-5-new33'
+                        : 'title-5-new33 text-color-black-shade7'
+                    "
+                  >
+                    All
+                  </div>
+                </div>
+                <ng-container *ngFor="let project of this.project_list">
+                  <div
+                    (click)="
+                      handleFilterByProject(project.id + project.project_name)
+                    "
+                    class="d-flex justify-content-between mb-5px list-item"
+                    *ngIf="project?.id"
+                  >
+                    <div
+                      *ngIf="project?.id"
+                      [ngClass]="
+                        this.search_project == project.id
+                          ? 'title-5-new33 title-5-new33_active'
+                          : 'title-5-new33 text-color-black-shade7'
+                      "
+                    >
+                      {{ project.project_name }}
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="W_H_16  pr-2 " >
+                        <label class="field text-field">
+                            <select class="field__input icon-none" (change)="handleFilterByProject($event)">
+                                
+                                <option value="">All</option>
+                                <option *ngFor="let project of this.project_list" [value]="project.id+project.project_name">{{project.project_name}}</option>
+                            </select>
+                            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                            <span class="field__label-wrap">
+                                <span class="field__label sec_heading_2 head_txt" >Filter by project</span>
+                            </span>
+                        </label>
+                    </div> -->
+
+          <div class="W_H_25 pr-2">
+            <div class="position-relative">
+              <label class="field text-field">
+                <input
+                  class="field__input"
+                  placeholder="Search"
+                  value=""
+                  type="text"
+                  (ngModelChange)="searchBy($event)"
+                  type="text"
+                  [(ngModel)]="this.search_by"
+                  #searchby
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label sec_heading_2 head_txt"
+                    >Search request</span
+                  >
+                </span>
+              </label>
+              <div class="topright search_icon">
+                <img
+                  src="../../assets/icons/search-a.svg"
+                  (click)="searchBy(searchby.value)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            class="tab-pane fade show active"
+            id="accept-reject"
+            role="tabpanel"
+            aria-labelledby="nav-home-tab"
+          >
+            <div class="row">
+              <div class="col-md-12">
+                <div class="table-responsive">
+                  <table class="table mytable">
+                    <thead>
+                      <tr>
+                        <th
+                          class="text-left"
+                          style="
+                            width: 29% !important;
+                            padding-left: 10px !important;
+                          "
+                          (click)="sortBy('customer_id')"
+                        >
+                          Customer
+                          <!-- <span><img src="../assets/icons/swap.svg"> </span> -->
+                        </th>
+                        <th
+                          class="text-left"
+                          style="
+                            width: 17% !important;
+                            padding-left: 12px !important;
+                          "
+                          (click)="sortBy('project_id')"
+                        >
+                          Project
+                        </th>
+                        <th
+                          style="width: 8% !important"
+                          (click)="sortBy('number_of_trucks')"
+                        >
+                          Number of trucks
+                        </th>
+                        <th
+                          style="width: 8% !important"
+                          (click)="sortBy('ticket_truck_type_id')"
+                        >
+                          Truck type
+                        </th>
+                        <th
+                          style="width: 11% !important"
+                          (click)="sortBy('dispatch_date')"
+                        >
+                          Date
+                        </th>
+                        <th
+                          style="width: 10% !important"
+                          (click)="sortBy('rate_per_hour')"
+                        >
+                          Job rate
+                        </th>
+                        <!-- <th style="width: 10% !important" >Job location </th> -->
+                        <th
+                          style="width: 17% !important"
+                          (click)="sortBy('approver_id')"
+                        >
+                          Job approver(s)
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container
+                        *ngIf="ticket_list?.length > 0; else elseRow"
+                      >
+                        <ng-container *ngFor="let ticket of ticket_list">
+                          <tr
+                            *ngIf="ticket?.tc_ticket == 'YES'"
+                            (click)="setDetailTicket(ticket)"
+                            [ngClass]="
+                              (ticket?.ticket?.rejected_driver_ticket &&
+                                ticket?.ticket?.rejected_driver_ticket?.length >
+                                  0 &&
+                                ticket?.ticket?.rejected_driver_ticket[0]
+                                  ?.trucking_company_id == this.user_id) ||
+                              (ticket?.tickets_rejected &&
+                                ticket?.tickets_rejected.length > 0 &&
+                                ticket?.tickets_rejected[0]?.dispatch_by_id ==
+                                  this.user_id)
+                                ? 'bg-declined-row'
+                                : ''
+                            "
+                            data-toggle="modal"
+                            data-target="#myModal"
+                          >
+                            <td class="text-left">
+                              <img
+                                *ngIf="
+                                  (ticket?.ticket?.rejected_driver_ticket &&
+                                    ticket?.ticket?.rejected_driver_ticket
+                                      ?.length > 0 &&
+                                    ticket?.ticket?.rejected_driver_ticket[0]
+                                      ?.trucking_company_id == this.user_id) ||
+                                  (ticket?.tickets_rejected &&
+                                    ticket?.tickets_rejected.length > 0 &&
+                                    ticket?.tickets_rejected[0]
+                                      ?.dispatch_by_id == this.user_id)
+                                "
+                                src="assets/driver-images-mobile/red-circle.svg"
+                                style="margin-left: -5px"
+                              />
+
+                              {{
+                                ticket.ticket?.customer
+                                  ? ticket?.ticket?.customer?.company_name
+                                    ? ticket?.ticket?.customer?.company_name
+                                    : ticket?.ticket?.customer?.full_name
+                                  : ticket?.ticket?.tc_customer?.company_name
+                                  ? ticket?.ticket?.tc_customer?.company_name
+                                  : ticket?.ticket?.tc_customer?.full_name
+                              }}
+                            </td>
+                            <td class="text-left">
+                              {{
+                                ticket.project
+                                  ? ticket.project?.project_name
+                                  : ticket.tc_project?.project_name
+                              }}
+                            </td>
+                            <td>{{ ticket?.tickets_to_accept.length }}</td>
+                            <td>
+                              <ng-container
+                                *ngIf="
+                                  ticket.ticket?.driver_ticket &&
+                                    ticket.ticket?.driver_ticket?.truck
+                                      ?.truck_type != '';
+                                  else checkBlock
+                                "
+                              >
+                                {{
+                                  ticket.ticket?.driver_ticket?.truck
+                                    ?.truck_type
+                                }}
+                              </ng-container>
+                              <ng-template #checkBlock>
+                                {{ ticket?.ticket?.ticket_truck_type }}
+                                {{
+                                  ticket?.ticket?.ticket_trailer_type
+                                    ? " - " +
+                                      ticket?.ticket?.ticket_trailer_type
+                                    : ""
+                                }}
+                              </ng-template>
+                            </td>
+
+                            <td>
+                              {{
+                                this.time_conversion(ticket, 1).convertedDate
+                                  ? this.time_conversion(ticket, 1)
+                                      .convertedDate
+                                  : ticket?.ticket?.ticket_date
+                              }}
+                            </td>
+
+                            <td>
+                              ${{ ticket?.rate_per_hour }} /
+                              {{ ticket?.rate_type }}
+                            </td>
+                            <!-- <td>{{ticket.project ? ticket.project?.project_location: ticket.tc_project?.project_location}}</td> -->
+                            <td>
+                              {{
+                                ticket.ticket?.approver
+                                  ? ticket.ticket?.approver?.full_name
+                                  : ticket.ticket?.tc_approver?.full_name
+                              }}
+                            </td>
+                          </tr>
+                          <tr
+                            *ngIf="!ticket.tc_ticket"
+                            (click)="setDetailTicket(ticket)"
+                            [ngClass]="
+                              (ticket?.ticket?.rejected_driver_ticket &&
+                                ticket?.ticket?.rejected_driver_ticket?.length >
+                                  0 &&
+                                ticket?.ticket?.rejected_driver_ticket[0]
+                                  ?.trucking_company_id == this.user_id) ||
+                              (ticket?.tickets_rejected &&
+                                ticket?.tickets_rejected.length > 0 &&
+                                ticket?.tickets_rejected[0]?.dispatch_by_id ==
+                                  this.user_id)
+                                ? 'bg-declined-row'
+                                : ''
+                            "
+                            data-toggle="modal"
+                            data-target="#myModal"
+                          >
+                            <td class="text-left">
+                              <img
+                                *ngIf="
+                                  (ticket?.ticket?.rejected_driver_ticket &&
+                                    ticket?.ticket?.rejected_driver_ticket
+                                      ?.length > 0 &&
+                                    ticket?.ticket?.rejected_driver_ticket[0]
+                                      ?.trucking_company_id == this.user_id) ||
+                                  (ticket?.tickets_rejected &&
+                                    ticket?.tickets_rejected.length > 0 &&
+                                    ticket?.tickets_rejected[0]
+                                      ?.dispatch_by_id == this.user_id)
+                                "
+                                src="assets/driver-images-mobile/red-circle.svg"
+                                style="margin-left: -5px"
+                              />
+                              {{
+                                ticket.project?.user?.company_name
+                                  ? ticket.project?.user?.company_name
+                                  : ticket.project?.user?.full_name
+                              }}
+                            </td>
+                            <td class="text-left">
+                              {{ ticket.project?.project_name }}
+                            </td>
+                            <td>{{ ticket?.tickets_to_accept.length }}</td>
+                            <td>
+                              <ng-container
+                                *ngIf="
+                                  ticket.ticket?.driver_ticket &&
+                                    ticket.ticket?.driver_ticket?.truck
+                                      ?.truck_type != '';
+                                  else checkBlock
+                                "
+                              >
+                                {{
+                                  ticket.ticket?.driver_ticket?.truck
+                                    ?.truck_type
+                                }}
+                              </ng-container>
+                              <ng-template #checkBlock>
+                                {{
+                                  ticket?.ticket_truck_type?.project_combination
+                                    ? ticket?.ticket_truck_type
+                                        ?.project_combination?.truck?.name +
+                                      (ticket?.ticket_truck_type
+                                        ?.project_combination?.trailer?.name
+                                        ? " - " +
+                                          ticket?.ticket_truck_type
+                                            ?.project_combination?.trailer?.name
+                                        : "")
+                                    : ticket?.ticket_truck_type?.project_truck
+                                    ? ticket?.ticket_truck_type?.project_truck
+                                        ?.name +
+                                      (ticket?.ticket_truck_type
+                                        ?.project_trailer?.name
+                                        ? " - " +
+                                          ticket?.ticket_truck_type
+                                            ?.project_trailer?.name
+                                        : "")
+                                    : ""
+                                }}
+                              </ng-template>
+                            </td>
+
+                            <td>
+                              {{
+                                this.time_conversion(ticket, 1).convertedDate
+                                  ? this.time_conversion(ticket, 1)
+                                      .convertedDate
+                                  : ticket?.ticket?.ticket_date
+                              }}
+                            </td>
+                            <td>
+                              ${{ ticket?.rate_per_hour }} /
+                              {{ ticket?.rate_type }}
+                            </td>
+                            <td>{{ ticket.approver?.full_name }}</td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                      <ng-template #elseRow>
+                        <tr>
+                          <td
+                            colspan="10"
+                            class="text-center"
+                            *ngIf="!is_loading"
+                          >
+                            <h4>No requests to show.</h4>
+                          </td>
+                          <td
+                            colspan="10"
+                            class="text-center"
+                            *ngIf="is_loading"
+                          >
+                            <h4>Loading Requests List.</h4>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <label class="field text-field">
+                  <select
+                    class="field__input bg-grey"
+                    (change)="this.handlePerPage($event)"
+                  >
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </label>
+              </div>
+              <div class="col-md-10">
+                <div
+                  class="mypagination-div"
+                  *ngIf="ticket_pagination?.total > 0"
+                >
+                  <a
+                    style="cursor: pointer"
+                    (click)="changePage(ticket_pagination.current_page - 1)"
+                    [ngClass]="
+                      ticket_pagination.first_page == this.page
+                        ? 'mypagination '
+                        : 'mypagination disable'
+                    "
+                    class=""
+                    >Previous</a
+                  >
+                  <ng-container *ngFor="let item of ticket_pagination?.links">
+                    <a
+                      style="cursor: pointer"
+                      *ngIf="notSkip(item.label)"
+                      [ngClass]="
+                        item.active ? 'mypagination active' : 'mypagination'
+                      "
+                      (click)="changePage(parsePage(item.label.toString()))"
+                      >{{ item.label }}</a
+                    >
+                  </ng-container>
+
+                  <a
+                    style="cursor: pointer"
+                    (click)="changePage(ticket_pagination.current_page + 1)"
+                    [ngClass]="
+                      this.page == ticket_pagination.last_page
+                        ? 'mypagination '
+                        : 'mypagination next'
+                    "
+                    >Next</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-company-requests-popup
+  (listing)="handleListingEvent(); getTicketListing()"
+  [requestDetail]="requestDetail"
+></app-company-requests-popup>

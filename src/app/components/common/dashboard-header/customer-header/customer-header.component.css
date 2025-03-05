@@ -1,0 +1,79 @@
+@import url("../../../../../assets/css/dashboard-style.css");
+
+#sidebar ul li a {
+  margin-bottom: 10px !important;
+  margin-left: 15px !important;
+  padding-left: 10px !important;
+  max-width: 220px !important;
+  padding-top: 7.5px !important;
+  padding-bottom: 7.5px !important;
+  border-radius: 5px;
+  border: 0.5px solid #e1e1e1;
+  background: #fafafa;
+}
+
+#sidebar ul li a span {
+  padding-left: 10px !important;
+  color: #68696d !important;
+}
+.border-menu {
+  border-bottom: 1px solid #d8d8d8 !important;
+  padding-bottom: 0px !important;
+  margin-bottom: 10px !important;
+}
+
+.header-logo img {
+  width: 200px;
+}
+
+.arrow img {
+  width: 20px;
+}
+
+.arrow {
+  float: right;
+}
+
+.active-link {
+  border-radius: 5px !important;
+  border: 0.5px solid #e1e1e1;
+  background: #fff8b8;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.heading_li_a {
+  border: none !important;
+  padding-right: 0px !important;
+}
+
+#sidebar ul .active-menu a {
+  color: #000 !important;
+}
+
+#sidebar ul .active-menu a.active-link span {
+  color: #000 !important;
+}
+
+#sidebar ul .active-menu a .stroke-property path {
+  stroke: #68696d;
+}
+
+#sidebar ul .active-menu a .fill-property {
+  fill: #68696d;
+}
+
+#sidebar ul li a .stroke-property path {
+  stroke: #68696d;
+}
+
+#sidebar ul li a .fill-property {
+  fill: #68696d;
+}
+
+#sidebar ul .active-menu a.active-link .stroke-property path {
+  stroke: #000;
+}
+
+#sidebar ul .active-menu a.active-link .fill-property {
+  fill: #000;
+}

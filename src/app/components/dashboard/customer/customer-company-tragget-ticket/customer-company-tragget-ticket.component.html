@@ -1,0 +1,784 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content p-0">
+      <div class="main-inner-body-container mt-15px">
+        <div class="project-profile-header-container">
+          <div class="profile_heading_div1">
+            <div class="project-profile-header-left d-flex align-items-center">
+              <img
+                src="./assets/images/cc-icon.svg"
+                alt="project-profile-file-icon"
+              />
+              <div class="heading-1-400 text-color-black">
+                {{ this.loggedinUser?.company_name }}
+              </div>
+            </div>
+          </div>
+          <app-customer-profile-nav
+            [current_nav]="'tragget-ticket-profile'"
+          ></app-customer-profile-nav>
+        </div>
+        <div class="main-project-setting-container inner_main_shadow">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="page-heading-title mb-5">DispatchProX tickets</div>
+            </div>
+            <div
+              class="col-md-5 d-flex justify-content-end"
+              style="height: 40px !important"
+            >
+              <!-- <button type="button" class="title-14 styled-button openOptionModal d-flex" (click)="showOptions()"  *ngIf="!is_loading_cancel">
+                                <img src="assets/images/stop-icon.svg" class="leftsidebtn"> <div>Get tickets</div></button> -->
+              <button
+                class="title-14 styled-button openOptionModal"
+                style="border-radius: 5px !important"
+                [routerLink]="'/cust-tragget-tickets'"
+              >
+                <div class="d-flex align-items-cente">
+                  <img
+                    src="./assets/images/cust-tragget-tickets-icon.svg"
+                    width="20px"
+                    alt="project-profile-tracker-icon"
+                  />
+                  <div
+                    class="heading-5-400 text-color-black ml-8px col text-center"
+                  >
+                    Get tickets
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-lg-12">
+              <form enctype="multipart/form-data">
+                <div class="">
+                  <div class="row boundryClass">
+                    <div class="col-md-8">
+                      <div class="row">
+                        <!-- Column 1 -->
+                        <div class="col-md-4 pr-2">
+                          <div class="text-center">
+                            <div class="dashboard-title profile-title">
+                              Current subscription
+                            </div>
+                          </div>
+                          <div>
+                            <div align="center" class="mb-sm-20">
+                              <div
+                                [class]="
+                                  'da-number-div da-number-div-box-shadow subs_border_color'
+                                "
+                              >
+                                <div class="da-number4">
+                                  {{
+                                    this.profile_tragget_data?.tickets_per_month
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Column 2 -->
+                        <div class="col-md-4 pr-2">
+                          <div class="text-center">
+                            <div class="dashboard-title profile-title">
+                              Monthly cost
+                            </div>
+                          </div>
+                          <div>
+                            <div align="center" class="mb-sm-20">
+                              <div
+                                [class]="
+                                  'da-number-div da-profile da-number-div-box-shadow subs_border_color'
+                                "
+                              >
+                                <div class="da-number4">
+                                  ${{
+                                    this.profile_tragget_data?.cost_per_month
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Column 3 -->
+                        <div class="col-md-4 pr-2">
+                          <div class="text-center">
+                            <div class="dashboard-title profile-title">
+                              Renewal date
+                            </div>
+                          </div>
+                          <div>
+                            <div align="center" class="mb-sm-20">
+                              <div
+                                [class]="
+                                  'da-number-div da-profile da-number-div-box-shadow subs_border_color'
+                                "
+                              >
+                                <div class="da-number4">
+                                  {{
+                                    this.profile_tragget_data?.renewal_date_day
+                                  }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!--Section 2 -->
+          <div class="row">
+            <div class="col-md-7">
+              <div class="page-heading-title mb-3">
+                History of Subscription Plans
+              </div>
+            </div>
+            <div class="col-md-5"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table vendorTable" border="0" style="border: 0">
+                <tbody>
+                  <tr style="border: 0">
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 20%"
+                    >
+                      <div class="profile-table-head text-left">Plan</div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 20%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Billing Cycle
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 20%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Download Receipt
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 40%"
+                    >
+                      <div class="profile-table-head text-center"></div>
+                    </td>
+                  </tr>
+
+                  <ng-container
+                    *ngIf="
+                      this.profile_tragget_data?.subscriptions_data;
+                      else elseBlock
+                    "
+                  >
+                    <ng-container
+                      *ngFor="
+                        let sub of this.profile_tragget_data
+                          ?.subscriptions_data;
+                        let idx = index
+                      "
+                    >
+                      <tr *ngIf="idx < 2">
+                        <td>
+                          <div class="profile-table-value text-left">
+                            {{ sub?.plan_title }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-center profile-table-value">
+                            {{ sub?.cycle_started_date }} -
+                            {{ sub?.cycle_renewal_date }}
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="text-center profile-table-value cursor-pointer"
+                          >
+                            <span
+                              *ngIf="sub?.invoice_id == downloading_invoice_id"
+                            >
+                              Downloading...</span
+                            >
+                            <img
+                              *ngIf="sub?.invoice_id != downloading_invoice_id"
+                              src="assets/icons/download-profile.svg"
+                              alt="An example SVG image"
+                              class="down_icon"
+                              (click)="downloadInvoicePDF(sub?.invoice_id)"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #elseBlock>
+                    <tr>
+                      <td colspan="3">No subscriptions data.</td>
+                    </tr>
+                  </ng-template>
+
+                  <tr
+                    style="border: 0px !important"
+                    *ngIf="
+                      this.profile_tragget_data?.subscriptions_data &&
+                      this.profile_tragget_data?.subscriptions_data?.length > 2
+                    "
+                  >
+                    <td colspan="3" style="width: 55%">
+                      <div class="text-center float-right" (click)="showMore()">
+                        <button class="styled-button" type="button">
+                          <strong>More</strong>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <div class="modal-backdrop" style="display: none">
+                    <div class="more-modal">
+                      <!--Section 2 -->
+                      <div class="row pb-3">
+                        <div class="col-md-7">
+                          <div class="page-heading-title">
+                            History of Subscription Plans
+                          </div>
+                        </div>
+
+                        <div
+                          class="col-md-5 d-flex justify-content-end"
+                          style="height: 40px !important"
+                        >
+                          <button
+                            class="title-14 styled-button openOptionModal"
+                            style="border-radius: 5px !important"
+                          >
+                            <div
+                              class="heading-5-400 text-color-black ml-8px col text-center"
+                              (click)="closeMore()"
+                            >
+                              Close
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <table
+                            class="table vendorTable"
+                            border="0"
+                            style="border: 0"
+                          >
+                            <tbody>
+                              <tr style="border: 0">
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-left">
+                                    Plan
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-center">
+                                    Billing Cycle
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-center">
+                                    Download Receipt
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div
+                                    class="profile-table-head text-center"
+                                  ></div>
+                                </td>
+                              </tr>
+
+                              <!-- <ng-container *ngFor="let sub of this.profile_tragget_data?.subscriptions_data;let idx = index">
+                                    <tr>
+                                        <td>
+                                            <div class="profile-table-value text-left">
+                                                {{sub?.plan_title}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center profile-table-value">
+                                                
+                                                {{sub?.cycle_started_date}} - {{sub?.cycle_renewal_date}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-center profile-table-value cursor-pointer">
+                                                <span *ngIf="sub?.invoice_id == downloading_invoice_id"> Downloading...</span>
+                                                <img *ngIf=" sub?.invoice_id != downloading_invoice_id" src="assets/icons/download-profile.svg" alt="An example SVG image" class="down_icon" (click)="downloadInvoicePDF(sub?.invoice_id)">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container> -->
+                              <ng-container
+                                *ngFor="
+                                  let sub of subscriptions;
+                                  let idx = index
+                                "
+                              >
+                                <tr>
+                                  <td>
+                                    <div class="profile-table-value text-left">
+                                      {{ sub?.plan_title }}
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div
+                                      class="text-center profile-table-value"
+                                    >
+                                      {{ sub?.cycle_started_date }} -
+                                      {{ sub?.cycle_renewal_date }}
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div
+                                      class="text-center profile-table-value cursor-pointer"
+                                    >
+                                      <span
+                                        *ngIf="
+                                          sub?.invoice_id ==
+                                          downloading_invoice_id
+                                        "
+                                        >Downloading...</span
+                                      >
+                                      <img
+                                        *ngIf="
+                                          sub?.invoice_id !=
+                                          downloading_invoice_id
+                                        "
+                                        src="assets/icons/download-profile.svg"
+                                        alt="Download"
+                                        class="down_icon"
+                                        (click)="
+                                          downloadInvoicePDF(sub?.invoice_id)
+                                        "
+                                      />
+                                    </div>
+                                  </td>
+                                </tr>
+                              </ng-container>
+
+                              <div class="pagination-controls">
+                                <a
+                                  style="cursor: pointer"
+                                  (click)="changePage(currentPage - 1)"
+                                  class="buton"
+                                  [ngClass]="{ disabled: currentPage === 1 }"
+                                  >Previous</a
+                                >
+                                <ng-container *ngFor="let page of pages">
+                                  <a
+                                    style="cursor: pointer"
+                                    class="counter"
+                                    [ngClass]="{
+                                      activee: currentPage === page
+                                    }"
+                                    (click)="changePage(page)"
+                                    >{{ page }}</a
+                                  >
+                                </ng-container>
+                                <a
+                                  style="cursor: pointer"
+                                  (click)="changePage(currentPage + 1)"
+                                  class="buton"
+                                  [ngClass]="{
+                                    disabled: currentPage === totalPages()
+                                  }"
+                                  >Next</a
+                                >
+                              </div>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!--Section 3 -->
+          <div class="row">
+            <div class="col-md-7">
+              <div class="page-heading-title mb-3">
+                History of Single DispatchProX Ticket
+              </div>
+            </div>
+            <div class="col-md-5"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table vendorTable" border="0" style="border: 0">
+                <tbody>
+                  <tr style="border: 0">
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 20%"
+                    >
+                      <div class="profile-table-head text-left">Plan</div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 20%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Purchase Date
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 20%"
+                    >
+                      <div class="profile-table-head text-center">
+                        Download Receipt
+                      </div>
+                    </td>
+                    <td
+                      class="project-settings-table-header"
+                      style="width: 40%"
+                    ></td>
+                  </tr>
+
+                  <ng-container
+                    *ngIf="
+                      this.profile_tragget_data?.single_tickets_data;
+                      else elseBlock
+                    "
+                  >
+                    <ng-container
+                      *ngFor="
+                        let ten of this.profile_tragget_data
+                          ?.single_tickets_data;
+                        let idx = index
+                      "
+                    >
+                      <tr *ngIf="idx < 2">
+                        <td>
+                          <div class="profile-table-value text-left">
+                            {{ ten?.plan_title }}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-center profile-table-value">
+                            {{ ten?.purchased_date }}
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            class="text-center profile-table-value cursor-pointer"
+                          >
+                            <span
+                              *ngIf="ten?.invoice_id == downloading_invoice_id"
+                            >
+                              Downloading...</span
+                            >
+                            <img
+                              *ngIf="ten?.invoice_id != downloading_invoice_id"
+                              src="assets/icons/download-profile.svg"
+                              alt="An example SVG image"
+                              class="down_icon"
+                              (click)="downloadInvoicePDF(ten?.invoice_id)"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                  <ng-template #elseBlock>
+                    <tr>
+                      <td colspan="3">No single tickets data.</td>
+                    </tr>
+                  </ng-template>
+                  <tr
+                    style="border: 0px !important"
+                    *ngIf="
+                      this.profile_tragget_data?.single_tickets_data &&
+                      this.profile_tragget_data?.single_tickets_data?.length > 2
+                    "
+                  >
+                    <td colspan="3" style="width: 55%">
+                      <div
+                        class="text-center float-right"
+                        (click)="showMore2()"
+                      >
+                        <button class="styled-button" type="button">
+                          <strong>More</strong>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <div class="modal-backdrop2" style="display: none">
+                    <div class="more-modal">
+                      <!--Section 2 -->
+                      <div class="row pb-3">
+                        <div class="col-md-7">
+                          <div class="page-heading-title">
+                            History of Single DispatchProX Ticket
+                          </div>
+                        </div>
+
+                        <div
+                          class="col-md-5 d-flex justify-content-end"
+                          style="height: 40px !important"
+                        >
+                          <button
+                            class="title-14 styled-button openOptionModal"
+                            style="border-radius: 5px !important"
+                          >
+                            <div
+                              class="heading-5-400 text-color-black ml-8px col text-center"
+                              (click)="closeMore2()"
+                            >
+                              Close
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <table
+                            class="table vendorTable"
+                            border="0"
+                            style="border: 0"
+                          >
+                            <tbody>
+                              <tr style="border: 0">
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-left">
+                                    Plan
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 20%"
+                                >
+                                  <div class="profile-table-head text-center">
+                                    Purchase Date
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 25%"
+                                >
+                                  <div class="profile-table-head text-center">
+                                    Download Receipt
+                                  </div>
+                                </td>
+                                <td
+                                  class="project-settings-table-header"
+                                  style="width: 30%"
+                                >
+                                  <div
+                                    class="profile-table-head text-center"
+                                  ></div>
+                                </td>
+                              </tr>
+
+                              <ng-container
+                                *ngFor="
+                                  let sub of subscriptions2;
+                                  let idx = index
+                                "
+                              >
+                                <tr>
+                                  <td>
+                                    <div class="profile-table-value text-left">
+                                      {{ sub?.plan_title }}
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div
+                                      class="text-center profile-table-value"
+                                    >
+                                      {{ sub?.purchased_date }}
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div
+                                      class="text-center profile-table-value cursor-pointer"
+                                    >
+                                      <span
+                                        *ngIf="
+                                          sub?.invoice_id ==
+                                          downloading_invoice_id
+                                        "
+                                        >Downloading...</span
+                                      >
+                                      <img
+                                        *ngIf="
+                                          sub?.invoice_id !=
+                                          downloading_invoice_id
+                                        "
+                                        src="assets/icons/download-profile.svg"
+                                        alt="Download"
+                                        class="down_icon"
+                                        (click)="
+                                          downloadInvoicePDF(sub?.invoice_id)
+                                        "
+                                      />
+                                    </div>
+                                  </td>
+                                </tr>
+                              </ng-container>
+
+                              <div class="pagination-controls">
+                                <a
+                                  style="cursor: pointer"
+                                  (click)="changePage2(currentPage2 - 1)"
+                                  class="buton"
+                                  [ngClass]="{ disabled: currentPage2 === 1 }"
+                                  >Previous</a
+                                >
+                                <ng-container *ngFor="let page of pages2">
+                                  <a
+                                    style="cursor: pointer"
+                                    class="counter"
+                                    [ngClass]="{
+                                      activee: currentPage2 === page
+                                    }"
+                                    (click)="changePage2(page)"
+                                    >{{ page }}</a
+                                  >
+                                </ng-container>
+                                <a
+                                  style="cursor: pointer"
+                                  (click)="changePage2(currentPage2 + 1)"
+                                  class="buton"
+                                  [ngClass]="{
+                                    disabled: currentPage2 === totalPages2()
+                                  }"
+                                  >Next</a
+                                >
+                              </div>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- section 4 -->
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <div class="row boundryClass pt-4 pb-4">
+                <div class="col-md-12">
+                  <div class="d-flex22">
+                    <div class="pl-4 div-centerr-text text-left">
+                      <div class="page-heading-title mb-3">
+                        Current Billing Cycle
+                      </div>
+                      <div>
+                        {{
+                          this.profile_tragget_data?.cycle_started_date
+                            ? this.profile_tragget_data?.cycle_started_date
+                            : ""
+                        }}
+                        {{
+                          this.profile_tragget_data?.cycle_renewal_date
+                            ? " - " +
+                              this.profile_tragget_data?.cycle_renewal_date
+                            : ""
+                        }}
+                      </div>
+                    </div>
+                    <div class="">
+                      <div class="text-center">
+                        <div class="position-relative modal-div">
+                          <button
+                            type="button"
+                            class="title-14 styled-button openOptionModal d-flex"
+                            (click)="showOptions()"
+                            *ngIf="!is_loading_cancel"
+                          >
+                            <img
+                              src="assets/images/stop-icon.svg"
+                              class="leftsidebtn"
+                            />
+                            <div>
+                              Cancel <br />
+                              Subscription
+                            </div>
+                          </button>
+                          <button
+                            type="button"
+                            disabled
+                            class="title-14 styled-button openOptionModal"
+                            *ngIf="is_loading_cancel"
+                          >
+                            Processing...
+                          </button>
+
+                          <div class="option-modal">
+                            <div class="title-2 mb-10 text-center">
+                              Are you sure you want to cancel the subscription
+                              plan?
+                            </div>
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <button
+                                class="mybtn3 bg-blue2 btnaction"
+                                (click)="handleCancel()"
+                              >
+                                Yes
+                              </button>
+                              <button
+                                class="mybtn3 mybtn-default ml-18"
+                                (click)="closeCancelOption()"
+                              >
+                                No
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

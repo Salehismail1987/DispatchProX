@@ -1,0 +1,1008 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="project-profile-header-container">
+        <div class="profile_heading_div1">
+          <div
+            class="project-profile-header-left d-flex align-items-center ml-0"
+          >
+            <img
+              src="./assets/icons/subscription-icon.svg"
+              alt="project-profile-file-icon"
+            />
+            <div class="heading-1-400 text-color-black">
+              Subscription and tickets
+            </div>
+          </div>
+        </div>
+        <div class="d-flex-center">
+          <button
+            class="mybtn bg-blue text-dark active btn-nav"
+            [routerLink]="'/cust-tragget-tickets'"
+          >
+            Subscriptions and tickets
+          </button>
+          <button
+            class="mybtn mybtn-default text-blue btn-nav ml-2"
+            [routerLink]="'/cust-tragget-plans'"
+          >
+            DispatchProX plans
+          </button>
+        </div>
+      </div>
+
+      <div class="main-project-setting-container inner_main_shadow">
+        <div class="heading-1-400 text-color-black mb-65px">
+          Manage your monthly subscription size
+        </div>
+
+        <div class="row mb-45">
+          <div class="col-md-6 p-rl-40">
+            <div class="tragget-subs-div">
+              <div
+                class="d-md-flex d-lg-flex align-items-center d-flex-between mb-25"
+              >
+                <div align="center" class="mb-sm-20">
+                  <div
+                    [class]="
+                      this.tragget_tickets?.tickets_per_month > 0
+                        ? 'da-number-div da-number-div-box-shadow subs_border_color'
+                        : 'da-number-div da-number-div-box-shadow da-number-div-border-shade-grey'
+                    "
+                  >
+                    <div class="da-number4">
+                      {{ this.tragget_tickets?.tickets_per_month }}
+                    </div>
+                  </div>
+                </div>
+                <div class="mr-5" align="center">
+                  <div class="title-8-3 mb-12">Your monthly Subscription</div>
+                  <div
+                    class="desc-31 text-color-grey-shade mb-7"
+                    *ngIf="this.tragget_tickets?.usage?.total_subs > 0"
+                  >
+                    Subscription Renewal Date :
+                    {{ this.tragget_tickets?.renewal_date_day }}
+                  </div>
+                  <div
+                    class="desc-31 text-color-grey-shade mb-7"
+                    *ngIf="this.tragget_tickets?.usage?.total_subs < 1"
+                  >
+                    No valid subscriptions
+                  </div>
+
+                  <button
+                    class="mybtn2 bg-blue2 text-dark"
+                    *ngIf="this.tragget_tickets?.usage?.total_subs < 1"
+                    [routerLink]="'/tc-tragget-plans'"
+                  >
+                    Manage subscription
+                  </button>
+                  <button
+                    class="mybtn2 bg-blue2 text-dark"
+                    *ngIf="this.tragget_tickets?.usage?.total_subs > 0"
+                    (click)="this.handleSubsDefault()"
+                    data-toggle="modal"
+                    data-target="#increaseSubscription"
+                  >
+                    Manage subscription
+                  </button>
+                </div>
+              </div>
+              <div
+                class="d-md-flex d-lg-flex align-items-center d-flex-between mb-25"
+              >
+                <div
+                  align="center"
+                  class="mb-sm-20"
+                  *ngIf="
+                    this.tragget_tickets?.subscription_upgrade &&
+                    this.tragget_tickets?.subscription_upgrade?.quantity <
+                      this.tragget_tickets?.tickets_per_month
+                  "
+                >
+                  <div
+                    [class]="
+                      this.tragget_tickets?.tickets_per_month > 0
+                        ? 'da-number-div2 da-number-div-box-shadow subs_border_color'
+                        : 'da-number-div2 da-number-div-box-shadow da-number-div-border-shade-grey'
+                    "
+                  >
+                    <div class="da-number4 da-number44">
+                      {{
+                        this.tragget_tickets?.subscription_upgrade
+                          ? this.tragget_tickets?.subscription_upgrade?.quantity
+                          : this.tragget_tickets?.tickets_per_month
+                      }}
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="desc-3 text-color-grey-shade ml-14"
+                  *ngIf="
+                    this.tragget_tickets?.usage?.total_subs > 0 &&
+                    this.tragget_tickets?.subscription_upgrade &&
+                    this.tragget_tickets?.subscription_upgrade?.quantity <
+                      this.tragget_tickets?.usage?.total_subs &&
+                    this.tragget_tickets?.is_cancelled == 'NO'
+                  "
+                >
+                  Each month on {{ this.tragget_tickets?.renewal_date_day }} you
+                  will get new set of
+                  {{
+                    this.tragget_tickets?.subscription_upgrade
+                      ? this.tragget_tickets?.subscription_upgrade?.quantity
+                      : this.tragget_tickets?.usage?.total_subs
+                  }}
+                  tickets.
+                </div>
+                <div
+                  class="desc-3 text-color-grey-shade ml-14"
+                  *ngIf="
+                    this.tragget_tickets?.usage?.total_subs > 0 &&
+                    this.tragget_tickets?.subscription_upgrade?.quantity >=
+                      this.tragget_tickets?.usage?.total_subs &&
+                    this.tragget_tickets?.is_cancelled == 'NO'
+                  "
+                >
+                  Each month on your renewal date, you receive a fresh batch of
+                  subscription tickets. Unused tickets do not carry over to the
+                  next period.
+                </div>
+
+                <!-- If subsc is cancelled but have tickets -->
+                <div
+                  align="center"
+                  class="mb-sm-20"
+                  *ngIf="
+                    this.tragget_tickets?.usage?.total_subs > 0 &&
+                    this.tragget_tickets?.is_cancelled == 'YES'
+                  "
+                >
+                  <div
+                    class="da-number-div2 da-number-div-box-shadow da-number-div-border-shade-grey"
+                  >
+                    <div class="da-number4 da-number44">0</div>
+                  </div>
+                </div>
+                <div
+                  class="desc-3 text-color-grey-shade mr-5"
+                  *ngIf="
+                    this.tragget_tickets?.usage?.total_subs > 0 &&
+                    this.tragget_tickets?.is_cancelled == 'YES'
+                  "
+                >
+                  Your subscription ends on
+                  {{ this.tragget_tickets?.renewal_date_day }}.
+                </div>
+
+                <!-- if dont have any tickets or subs at all -->
+                <div
+                  class="desc-3 text-color-grey-shade ml-14"
+                  *ngIf="this.tragget_tickets?.usage?.total_subs < 1"
+                >
+                  You don’t have a monthly subscription
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 p-lr-40">
+            <div class="tragget-subs-div">
+              <div
+                class="d-md-flex d-lg-flex align-items-center mb-25 d-flex-between"
+              >
+                <div align="center" class="mb-sm-20">
+                  <div
+                    class="{{
+                      this.tragget_tickets?.individual_tickets > 0
+                        ? 'da-number-div da-number-div-box-shadow single_border_color'
+                        : 'da-number-div da-number-div-box-shadow da-number-div-border-shade-grey'
+                    }}"
+                  >
+                    <div class="da-number4">
+                      {{ this.tragget_tickets?.individual_tickets }}
+                    </div>
+                  </div>
+                </div>
+                <div class="mr-5" align="center">
+                  <div class="title-8-3 mb-12">Single Tickets</div>
+                  <div class="desc-31 text-color-grey-shade mb-7">
+                    Remaining
+                  </div>
+
+                  <button
+                    data-toggle="modal"
+                    data-target="#selectpackage2"
+                    class="mybtn2 bg-blue2 text-dark min-w-150"
+                    (click)="setTab('10-pack')"
+                  >
+                    Buy tickets
+                  </button>
+                </div>
+              </div>
+
+              <div class="title-11 text-color-brown mb-40">
+                These tickets won’t expire, they are used when Subscription is
+                used up or not available.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-60">
+          <div class="col-md-6 p-rl-45">
+            <div class="title-8-4 text-center mb-25">
+              DispatchProX ticket use and forecast
+            </div>
+
+            <div
+              class="progress br-3 mb-13"
+              *ngIf="this.tragget_tickets?.is_subscribed"
+            >
+              <div
+                class="progress-bar bg-sky-blue br-0"
+                role="progressbar"
+                *ngIf="this.tragget_tickets?.use_perc > 0"
+                [style]="'width:' + this.tragget_tickets?.use_perc + '%'"
+              >
+                {{ this.tragget_tickets?.usage?.used }}
+              </div>
+              <div
+                class="progress-bar bg-subs br-0"
+                role="progressbar"
+                [style]="
+                  'width:' +
+                  (this.tragget_tickets?.subscription
+                    ? this.tragget_tickets?.left_perc_sub
+                    : this.tragget_tickets?.left_perc) +
+                  '%'
+                "
+              >
+                {{ this.tragget_tickets?.usage?.left_subs }}
+              </div>
+              <div
+                *ngIf="this.tragget_tickets?.usage?.left_ten"
+                class="progress-bar bg-dark-orange br-0"
+                role="progressbar"
+                [style]="'width:' + this.tragget_tickets?.left_perc_ten + '%'"
+              >
+                {{ this.tragget_tickets?.usage?.left_ten }}
+              </div>
+
+              <div
+                *ngIf="this.tragget_tickets?.without_tragget_tickets > 0"
+                class="progress-bar bg-dark-grey br-0"
+                role="progressbar"
+                [style]="
+                  'width:' +
+                  (this.tragget_tickets?.usage?.used
+                    ? (this.tragget_tickets?.without_tragget_tickets /
+                        (this.tragget_tickets?.usage?.used +
+                          this.tragget_tickets?.without_tragget_tickets)) *
+                      100
+                    : 100) +
+                  '%'
+                "
+              >
+                {{ this.tragget_tickets?.without_tragget_tickets }}
+              </div>
+            </div>
+            <div
+              class="progress br-3 mb-13 sa_bg"
+              *ngIf="!this.tragget_tickets?.is_subscribed"
+            >
+              <div
+                class="progress-bar bg-sky-blue br-0"
+                role="progressbar"
+                *ngIf="
+                  this.tragget_tickets?.no_usage_perc > 0 &&
+                  this.tragget_tickets?.last_30_days_ticket > 0
+                "
+                [style]="'width:' + this.tragget_tickets?.no_usage_perc + '%'"
+              >
+                {{ this.tragget_tickets?.closed_tickets }}
+              </div>
+
+              <div
+                class="progress-bar bg-dark-grey br-0"
+                style="width: 100% !important"
+                *ngIf="
+                  !this.tragget_tickets?.subscription &&
+                  this.tragget_tickets?.individual_tickets < 1 &&
+                  this.tragget_tickets?.without_tragget_tickets < 1
+                "
+              >
+                {{ this.tragget_tickets?.without_tragget_tickets }}
+              </div>
+
+              <div
+                *ngIf="this.tragget_tickets?.no_left_perc > 0"
+                [class]="
+                  this.tragget_tickets?.without_tragget_tickets > 0 &&
+                  this.tragget_tickets?.individual_tickets < 1
+                    ? 'progress-bar bg-dark-grey br-0'
+                    : 'progress-bar bg-dark-orange br-0'
+                "
+                role="progressbar"
+                [style]="'width:' + this.tragget_tickets?.no_left_perc + '%'"
+              >
+                {{
+                  this.tragget_tickets?.without_tragget_tickets > 0 &&
+                  this.tragget_tickets?.individual_tickets < 1
+                    ? this.tragget_tickets?.without_tragget_tickets
+                    : this.tragget_tickets?.individual_tickets
+                }}
+              </div>
+            </div>
+            <div class="d-flex justify-content-between mb-15 border-bottom-1px">
+              <div *ngIf="this.tragget_tickets?.is_subscribed" class="title-13">
+                <span class="title12 text-bold-14px"
+                  >{{
+                    this.tragget_tickets?.usage
+                      ?.used +( this.tragget_tickets?.usage?.used_ten )  + (this.tragget_tickets?.usage?.left<1 && this.is_subscribed==true?
+                          this.tragget_tickets?.without_tragget_tickets : 0)
+                  }}
+                  of
+                  {{
+                    this.tragget_tickets?.usage?.total_ten +
+                      this.tragget_tickets?.usage?.total
+                  }}</span
+                >
+                Tickets Used
+              </div>
+              <div
+                *ngIf="
+                  !this.tragget_tickets?.is_subscribed &&
+                  this.tragget_tickets?.usage?.used > 0
+                "
+                class="title-13"
+              >
+                <span class="title12 text-bold-14px"
+                  >{{
+                    this.tragget_tickets?.usage?.used
+                      ? this.tragget_tickets?.usage?.used
+                      : 0
+                  }}
+                  of
+                  {{
+                    this.tragget_tickets?.usage?.total
+                      ? this.tragget_tickets?.individual_tickets +
+                        this.tragget_tickets?.usage?.total
+                      : 0
+                  }}</span
+                >
+                Tickets Used
+              </div>
+              <div
+                *ngIf="
+                  !this.tragget_tickets?.is_subscribed &&
+                  this.tragget_tickets?.usage?.used < 1
+                "
+                class="title-13"
+              >
+                <span class="title12 text-bold-14px"
+                  >{{
+                    this.tragget_tickets?.closed_tickets
+                      ? this.tragget_tickets?.closed_tickets
+                      : 0
+                  }}
+                  of
+                  {{
+                    !this.tragget_tickets?.subscription &&
+                    this.tragget_tickets?.individual_tickets < 1
+                      ? 0
+                      : this.tragget_tickets?.no_total_used &&
+                        this.tragget_tickets?.last_30_days_ticket > 0
+                      ? this.tragget_tickets?.no_total_used
+                      : 0
+                  }}</span
+                >
+                Tickets Used
+              </div>
+              <div class="title-13">
+                Remaining Tickets :
+
+                <!--  Active  SUBSCRIPTION but have no tickets left -->
+                <span
+                  [class]="
+                    this.tragget_tickets?.individual_tickets > 0
+                      ? 'title-12 text-bold-14px'
+                      : 'title-12 text-red text-bold-14px'
+                  "
+                  *ngIf="
+                    this.tragget_tickets?.usage?.left < 1 &&
+                    this.tragget_tickets?.subscription
+                  "
+                >
+                  <ng-container
+                    *ngIf="
+                      this.tragget_tickets?.individual_tickets +
+                        this.tragget_tickets?.without_tragget_tickets >
+                      0
+                    "
+                  >
+                    <span
+                      *ngIf="this.tragget_tickets?.without_tragget_tickets > 0"
+                      >-</span
+                    >{{
+                      this.tragget_tickets?.without_tragget_tickets +
+                        this.tragget_tickets?.individual_tickets
+                    }}
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      this.tragget_tickets?.individual_tickets +
+                        this.tragget_tickets?.without_tragget_tickets <
+                      0
+                    "
+                  >
+                    -{{
+                      this.tragget_tickets?.without_tragget_tickets +
+                        this.tragget_tickets?.individual_tickets
+                    }}
+                  </ng-container>
+                </span>
+                <!--  Active  SUBSCRIPTION and have remaiing tickets -->
+                <span
+                  class="title-12 text-bold-14px"
+                  *ngIf="
+                    this.tragget_tickets?.usage?.left > 0 &&
+                    this.tragget_tickets?.subscription
+                  "
+                >
+                  {{
+                    this.tragget_tickets?.individual_tickets +
+                      this.tragget_tickets?.usage?.left
+                  }}
+                </span>
+
+                <!-- No SUBSCRIPTION but have either SIIGNLE or WITHOUT TRAGGET TRAGET TICKETS-->
+                <span
+                  [class]="
+                    !this.tragget_tickets?.subscription &&
+                    this.tragget_tickets?.without_tragget_tickets > 0 &&
+                    this.tragget_tickets?.individual_tickets < 1
+                      ? 'title-12 text-red text-bold-14px'
+                      : 'title-12 text-bold-14px'
+                  "
+                  *ngIf="!this.tragget_tickets?.subscription"
+                >
+                  <ng-container
+                    *ngIf="
+                      this.tragget_tickets?.without_tragget_tickets > 0 &&
+                      this.tragget_tickets?.individual_tickets < 1
+                    "
+                  >
+                    - {{ this.tragget_tickets?.without_tragget_tickets }}
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      this.tragget_tickets?.without_tragget_tickets < 1 &&
+                      this.tragget_tickets?.individual_tickets > 0
+                    "
+                  >
+                    {{ this.tragget_tickets?.individual_tickets }}
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      this.tragget_tickets?.without_tragget_tickets <= 0 &&
+                      this.tragget_tickets?.individual_tickets <= 0
+                    "
+                  >
+                    0
+                  </ng-container>
+                </span>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between mb-12 border-bottom-1px">
+              <div class="title-12 text-bold-14px">Dispatched tickets</div>
+              <div class="title-12 text-bold-14px">
+                {{
+                  this.tragget_tickets?.subscription
+                    ? this.tragget_tickets?.usage?.dispatched
+                      ? this.tragget_tickets?.usage?.dispatched
+                      : 0
+                    : this.tragget_tickets?.dispatched_tickets
+                }}
+              </div>
+            </div>
+            <!-- TM-942 removed request -->
+            <!-- <div class="d-flex justify-content-between mb-12 border-bottom-1px">
+                    <div class="title-12 text-bold-14px">Requests</div>
+                    <div class="title-12 text-bold-14px">{{this.tragget_tickets?.subscription ?
+                      (this.tragget_tickets?.usage?.requests ?
+                      this.tragget_tickets?.usage?.requests : 0 ) : this.tragget_tickets?.request_tickets }}
+                    </div>
+                  </div> -->
+            <div class="d-flex justify-content-between mb-12 border-bottom-1px">
+              <!-- *! if user have valid subscription and left_tickets(unused) are > 0 -->
+              <div
+                *ngIf="this.tragget_tickets?.subscription"
+                class="title-12 text-bold-14px"
+              >
+                Forecast:
+                {{
+                  this.tragget_tickets?.individual_tickets +
+                    this.tragget_tickets?.usage?.total
+                }}
+                - ({{
+                  this.tragget_tickets?.usage?.closed_tickets
+                    ? this.tragget_tickets?.usage?.closed_tickets
+                    +
+                    (this.tragget_tickets?.usage?.left < 1 &&
+                    this.is_subscribed == true
+                      ? this.tragget_tickets?.without_tragget_tickets
+                      : 0)
+                    : 0 +
+                      (this.tragget_tickets?.usage?.left < 1 &&
+                      this.is_subscribed == true
+                        ? this.tragget_tickets?.without_tragget_tickets
+                        : 0)
+                }}
+                +
+                {{
+                  this.tragget_tickets?.usage?.dispatched
+                    ? this.tragget_tickets?.usage?.dispatched
+                    : 0
+                }}
+                +
+                {{
+                  this.tragget_tickets?.usage?.requests
+                    ? this.tragget_tickets?.usage?.requests
+                    : 0
+                }})
+              </div>
+              <!-- *! if user dont have valid subscription or left_tickets(unused) are = 0 -->
+              <div
+                *ngIf="
+                  !this.tragget_tickets?.subscription &&
+                  this.tragget_tickets?.usage?.total > 0
+                "
+                class="title-12 text-bold-14px"
+              >
+                Forecast:
+                {{
+                  this.tragget_tickets?.individual_tickets +
+                    this.tragget_tickets?.usage?.total
+                }}
+                - ({{ this.tragget_tickets?.closed_tickets  }} +
+                {{ this.tragget_tickets?.dispatched_tickets }} )
+              </div>
+              <div
+                *ngIf="
+                  !this.tragget_tickets?.subscription &&
+                  this.tragget_tickets?.usage?.total < 1
+                "
+                class="title-12 text-bold-14px"
+              >
+                Forecast:
+                {{
+                  this.tragget_tickets?.individual_tickets +
+                    this.tragget_tickets?.closed_tickets
+                }}
+                - ({{ this.tragget_tickets?.closed_tickets }} +
+                {{ this.tragget_tickets?.dispatched_tickets }})
+              </div>
+              <div
+                class="title-12 text-red text-bold-14px"
+                *ngIf="this.getDifForcast() < 0"
+              >
+                {{ getDifForcast() }}
+              </div>
+              <div
+                class="title-12 text-bold-14px"
+                *ngIf="this.getDifForcast() > 0"
+              >
+                {{ getDifForcast() }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 p-lr-45">
+            <div class="title-8-4 text-center mb-64">
+              Number of closed tickets without DispatchProX tickets
+            </div>
+            <br />
+            <div class="d-md-flex d-lg-flex align-items-center">
+              <div class="w-180 mb-sm-20" align="center">
+                <div
+                  [class]="
+                    this.tragget_tickets?.without_tragget_tickets > 0
+                      ? 'da-number-div da-number-div-border-shade-red'
+                      : 'da-number-div no_without_tickets_border'
+                  "
+                >
+                  <div
+                    [class]="
+                      this.tragget_tickets?.without_tragget_tickets < 1
+                        ? 'da-number4   text-color-green '
+                        : 'da-number4 text-red'
+                    "
+                  >
+                    {{ this.tragget_tickets?.without_tragget_tickets }}
+                  </div>
+                </div>
+              </div>
+              <div class="ml-29 max-width-300">
+                <div class="title-11 text-color-brown">
+                  <ul>
+                    <li class="mb-12">
+                      Ticket is deducted only when the job is approved and the
+                      ticket is closed.
+                    </li>
+                    <li class="mb-12">
+                      The forecast on the left gives you indications if the
+                      subscription covers all tickets.
+                    </li>
+                    <li class="mb-12">
+                      If ticket count is greater than subscriptions count during
+                      the month, tickets are deducted from new subscription
+                      month on renewal date
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a
+        style="display: none"
+        href="javascript:void(0)"
+        data-cb-type="checkout"
+        data-cb-item-0="10-tickets-package-CAD"
+        data-cb-item-0-quantity="1"
+        >subscribe</a
+      >
+    </div>
+
+    <div
+      class="modal fade come-from-modal right show"
+      id="increaseSubscription"
+      tabindex="-1 "
+      role="dialog "
+      aria-labelledby="myModalLabel "
+    >
+      <div class="modal-dialog max-width-578" role="document ">
+        <div class="modal-content border-30px cust-padding-19">
+          <div class="modal-body p-0">
+            <div class="d-flex-close mt-60">
+              <img src="assets/icons/diamond-icon.svg" class="margin-right-2" />
+              <div>
+                <div class="main-heading-2 text-center mb-7">
+                  Manage Subscriptions
+                </div>
+                <div class="title-4 text-color-brown text-center mb-38">
+                  Make changes to your subscriptions
+                </div>
+              </div>
+            </div>
+            <div class="popup-container">
+              <div class="div-1 mb-1">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <div class="title-10 mb-8 text-13px">
+                      Current subscription size
+                    </div>
+                    <div class="title-5 package-ribon mlr-55">
+                      {{
+                        this.tragget_tickets?.usage?.total_subs
+                          ? this.tragget_tickets?.usage?.total_subs
+                          : 0
+                      }}
+                    </div>
+                  </div>
+                  <div align="right">
+                    <div class="title-10 mb-5px text-13px">
+                      Current monthly cost
+                    </div>
+                    <div class="title-5 text-bold-dark mlr-60">
+                      ${{
+                        this.tragget_tickets?.usage?.total_subs_price
+                          ? this.tragget_tickets?.usage?.total_subs_price
+                          : 0
+                      }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="div-2 mb-50">
+                <div class="myhr4 mb-1"></div>
+                <div class="border-blue-2px m-1">
+                  <div class="d-flex justify-content-between custom-padding-8">
+                    <div class="">
+                      <div class="title-10 mb-8 text-13px">
+                        New subscription size
+                      </div>
+                      <!-- <div class="title-5 package-ribon2">
+                                    <input type="hidden" class="subs-value"  value="{{this.upgrade_plan_quantity}}" >
+                                    <span class="subs-html">{{this.upgrade_plan_quantity}}</span>
+                                    <div class="newsub-arrows">
+                                        <img src="../../assets/icons/arrow-down-white.png" alt="" width="11px" class="mt-1 btndownarrow">
+                                        <img src="../../assets/icons/arrow-up-white.png" alt="" width="10px" class="btnuparrow">
+                                    </div>
+                                </div> -->
+                      <div class="number-wrapper subs-wrapper mlr-35">
+                        <input
+                          type="number"
+                          id="quantity"
+                          value="{{
+                            this.upgrade_plan_quantity
+                              ? this.upgrade_plan_quantity
+                              : this.tragget_tickets?.usage?.total_subs
+                          }}"
+                          min="25"
+                          step="25"
+                          class="myinput text-32px-bold text-white"
+                          (change)="handleSubsChange($event)"
+                        />
+                      </div>
+                    </div>
+                    <div align="right">
+                      <div class="title-10 mb-9 text-13px">
+                        New monthly cost
+                      </div>
+                      <div class="title-5 text-32px-bold text-dark mlr-35">
+                        ${{
+                          this.tragget_tickets?.usage?.total_upgrade_subs_price
+                            ? this.tragget_tickets?.usage
+                                ?.total_upgrade_subs_price
+                            : this.upgrade_plan_price
+                            ? this.upgrade_plan_price
+                            : this.tragget_tickets?.usage?.total_subs_price
+                        }}
+                      </div>
+
+                      <input
+                        type="hidden"
+                        class="subs-qty"
+                        value="{{
+                          this.tragget_tickets?.usage?.total_upgrade_subs_price
+                            ? this.tragget_tickets?.usage
+                                ?.total_upgrade_subs_price
+                            : this.upgrade_plan_price
+                            ? this.upgrade_plan_price
+                            : this.tragget_tickets?.usage?.total_subs_price
+                        }}"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="myhr4 mt-1"></div>
+                <div
+                  class="title-11 text-black-shade custom-padding-8 text-14px mb-30"
+                >
+                  <div class="text-13px mb-1">
+                    Cost optimized monthly subscription
+                  </div>
+                  <span
+                    *ngIf="
+                      this.upgrade_plan_quantity <
+                      parseF(this.tragget_tickets?.usage?.total_subs.toString())
+                    "
+                  >
+                    25 tickets per month should cover one truck use. The current
+                    {{ 300 }} subscription ends on renewal date. Your new
+                    subscription size and monthly cost will kick in from the
+                    renewal date.
+                  </span>
+
+                  <span
+                    *ngIf="
+                      this.upgrade_plan_quantity >=
+                      parseF(this.tragget_tickets?.usage?.total_subs.toString())
+                    "
+                  >
+                    25 tickets per month should cover one truck use. Added
+                    tickets [600-300 = 300] are available for you immediately.
+                    You will get charged to the end of your subscription period
+                    the difference between the new and the old cost. Your new
+                    monthly cost will kick in from the renewal date.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <br />
+            <div align="center">
+              <button
+                class="mybtn2 btn-hw bg-blue2 text-dark mb-39 text-14px-white"
+                *ngIf="!is_loading_upgrade"
+                (click)="confirmUpgrade()"
+              >
+                <span
+                  *ngIf="
+                    this.upgrade_plan_quantity <
+                    parseF(this.tragget_tickets?.usage?.total_subs.toString())
+                  "
+                >
+                  Verify new {{ this.upgrade_plan_quantity }} ticket count
+                </span>
+
+                <span
+                  *ngIf="
+                    this.upgrade_plan_quantity >=
+                    parseF(this.tragget_tickets?.usage?.total_subs.toString())
+                  "
+                >
+                  Continue to<br />Payment
+                </span>
+              </button>
+              <button
+                class="mybtn2 btn-hw bg-blue2 text-dark mb-39 text-14px-white"
+                *ngIf="is_loading_upgrade"
+                disabled
+              >
+                Processing...
+              </button>
+              <div class="position-relative modal-div">
+                <div
+                  class="title-14 text-red openOptionModal"
+                  (click)="showOptions()"
+                  *ngIf="!is_loading_cancel"
+                >
+                  <u>Cancel Subscription</u>
+                </div>
+                <div class="title-14 text-red" *ngIf="is_loading_cancel">
+                  <u>Processing...</u>
+                </div>
+                <div class="option-modal">
+                  <div class="title-2 mb-10 text-center">
+                    Are you sure you want to cancel the subscription plan?
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <button
+                      class="mybtn3 bg-blue2 btnaction"
+                      (click)="handleCancel()"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      class="mybtn3 mybtn-default ml-18"
+                      (click)="closeCancelOption()"
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade come-from-modal right show"
+      id="selectpackage2"
+      tabindex="-1 "
+      role="dialog "
+      aria-labelledby="myModalLabel "
+    >
+      <div class="modal-dialog max-width-578" role="document ">
+        <div class="modal-content border-30px cust-padding-19">
+          <div class="modal-body p-0">
+            <div class="d-flex-center text-center mt-60">
+              <img src="assets/icons/ten-pack-diamon-orange.svg" class="mr-4" />
+              <div>
+                <div class="main-heading-2 text-center mb-7">
+                  Pack of 10 Tickets
+                </div>
+                <div class="title-4 text-center">Get your single tickets</div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="nav-tabContent">
+              <form
+                class="p-1"
+                [formGroup]="tenPackForm"
+                (ngSubmit)="handleTenPack()"
+                *ngIf="this.ten_pack_plan"
+              >
+                <div class="div-grey mb-36">
+                  <div class="custom-padding-5">
+                    <div class="desc-3 text-black-shade4 mb-12">
+                      Choose the quantity
+                    </div>
+                  </div>
+                  <div class="myhr mb-16"></div>
+                  <div class="custom-padding-5 mb-9">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <div class="title-7 text-color-black-shade4 mb-4px">
+                          Quantity of Packs
+                        </div>
+                        <span class="number-wrapper wrapper-10pack">
+                          <input
+                            type="number"
+                            min="1"
+                            step="1"
+                            (change)="handleTenPackChange($event)"
+                            formControlName="quantity"
+                            class="myinput"
+                          />
+                        </span>
+                      </div>
+                      <div>
+                        <div
+                          class="title-7 text-right text-color-black-shade4 mb-4px"
+                        >
+                          number of Tickets
+                        </div>
+                        <div
+                          *ngIf="this.ten_pack_plan"
+                          class="title-9 text-right text-black-shade4"
+                        >
+                          {{ this.tenPackForm.get("tickets")?.value }} tickets
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="myhr mb-16"></div>
+                  <div class="custom-padding-5">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <div
+                          class="desc-4 text-color-black-shade4 mb-4px pr-5 mr-3"
+                        >
+                          The subscription is always used as the primary option,
+                          while single tickets serve as a convenient backup with
+                          no expiration. Simplify your trucking operations with
+                          DispatchProX tickets, ensuring a seamless and efficient
+                          experience.
+                        </div>
+                      </div>
+                      <div>
+                        <div
+                          class="title-7 text-right text-color-black-shade4 mb-4px"
+                        >
+                          Cost
+                        </div>
+                        <div
+                          class="title-9 text-right text-black-shade4"
+                          *ngIf="this.ten_pack_plan"
+                        >
+                          ${{ this.tenPackForm.get("totalPrice")?.value }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div align="center">
+                  <button
+                    type="button"
+                    class="mybtn2 btn-hw bg-blue2 text-dark mb-39 text-14px-white 10-pack-click"
+                  >
+                    Continue to Payment
+                  </button>
+                  <a
+                    style="display: none"
+                    class="mybtn mybtn-back-blue text-dark"
+                    style="color: white !important; display: none"
+                    href="javascript:void(0)"
+                    data-cb-type="checkout"
+                    data-cb-item-0="Pack---of---ten---S-USD-Monthly"
+                    attr.data-cb-item-0-quantity="{{ this.ten_pack_qty }}"
+                    >Pack of 10</a
+                  >
+                  <input
+                    type="hidden"
+                    class="10-pack-click-quantity"
+                    value="{{ this.ten_pack_qty }}"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

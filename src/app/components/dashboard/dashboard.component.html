@@ -1,0 +1,246 @@
+
+<div *ngIf="loggedinUser.account_type == 'Trucking Company' || (this.loggedinUser?.parent_user?.account_type == 'Trucking Company' && this.loggedinUser?.account_type =='User' ) || this.loggedinUser?.role?.role_name=='Bookkeeper' || (this.loggedinUser?.parent_user?.account_type == 'Trucking Company' && this.loggedinUser?.role?.role_name=='Admin' )">
+    <div class="wrapper">
+          <app-dashboard-header></app-dashboard-header>
+          <div id="content" >
+              <app-dashboard-top-header></app-dashboard-top-header>
+                <div class="body-content">
+                  <div class="setting-content-page border-div mm-15">
+
+                      <div class="row">
+                          <div class="col-md-6">
+                            <div class="main-heading-2">DispatchProX tickets</div>
+                            <div class="col-md-9 p-0" *ngIf="this.tragget_tickets?.is_subscribed">
+                                <div class="main-heading-3 ml-2">Subscription</div>
+
+                                <div class="progress br-5px mb-20 ml-2">
+                                    <div class="progress-bar bg-sky-blue br-0" role="progressbar" [style]="'width:'+this.dashboardData?.perc+'%'">
+                                        {{this.dashboardData?.usage}}
+                                    </div>
+                                    <div class="progress-bar bg-subs br-0" role="progressbar" [style]="'width:'+this.dashboardData?.perc_subs_remaining+'%'">
+                                        {{this.dashboardData?.remaining}}
+                                      </div>
+
+                                </div>
+                                <div class="d-flex justify-content-between mb-29 ml-2">
+                                    <div class="d-flex">
+                                        <div class="title-8-2 ">Used</div>
+                                        <div class="title-8-1 ml-2">{{this.dashboardData && this.dashboardData?.usage ? this.dashboardData?.usage : 0}}/{{this.dashboardData && this.dashboardData?.total ? this.dashboardData?.total : 0}}</div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="title-8-2">Remaining</div>
+                                        <div class="title-8-1 ml-2">{{this.dashboardData && this.dashboardData?.remaining ? this.dashboardData?.remaining : 0}}</div>
+                                    </div>
+                                </div>
+                             </div>
+                             <div class="col-md-9 p-0" *ngIf="!this.tragget_tickets?.is_subscribed">
+                                <div class="main-heading-3 ml-2">Subscription</div>
+
+                                <div class="progress br-5px mb-20 ml-2">
+                                    <div class="progress-bar bg-grey br-0" role="progressbar" [style]="'width:100%'">
+                                      <div class="text-white no-subs-text">{{this.tragget_tickets ? 'No active subscription':''}}</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between mb-29 ml-2">
+                                    <div class="d-flex">
+                                        <div class="title-8-2 ">Used</div>
+                                        <div class="title-8-1 ml-2">-/-</div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="title-8-2">Remaining</div>
+                                        <div class="title-8-1 ml-2">-</div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="col-md-9 p-0 d-flex justify-content-between">
+                                <div>
+                                    <div class="main-heading-3 ml-2">Single tickets</div>
+                                    <div class="d-flex justify-content-between mb-29 ml-2">
+                                       <div class="d-flex-single"> <div >
+                                           <div class="da-number-div2 {{this.dashboardData?.remaining_single>0 ? 'da-number-div2-light-grey  border-orange':'da-number-div2-light-grey'}} ">
+                                               <div class="da-number2 text-remain">
+                                                   {{this.dashboardData && this.dashboardData?.remaining_single ? this.dashboardData?.remaining_single : 0}}
+                                               </div>
+                                           </div>
+                                       </div>
+                                       <div class="title-8-2 ml-2">Remaining</div>
+                                   </div>
+
+                                </div>
+                                </div>
+
+                                <div>
+                                    <div class="main-heading-3 ml-2">Total available</div>
+                                    <div class="d-flex-single mr-1"> <div >
+                                        <div class="da-number-div2 {{this.dashboardData && this.dashboardData?.total_available >0 ?' da-number-div2-light-blue border-black':' da-number-div2-light-grey border-black'}}" >
+                                             <div class="da-number2 text-available">
+                                                {{this.dashboardData && this.dashboardData?.total_available ? this.dashboardData?.total_available : 0}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                            </div>
+                              <!-- <div class="row p-0">
+                                <div class="col-md-9 p-0">
+                                    <div class="main-heading-3 ml-2 text-center" >DispatchProX tickets</div>
+
+                                        <div class="feedback-text">
+                                            Introducing our new electronic truck ticket system, your efficient online assistant! With our seamless platform, you can easily track trucking operations and access all your data in one place.
+                                            <br>
+                                            During this feedback period, we greatly value your input as we finalize the platform. Rest assured, we are committed to continuous improvement and ensuring you stay ahead of the curve.
+                                        </div>
+                                        <div align="center">
+                                            <div class=" mb-3 ">
+                                                <button  class="mybtn bg-blue2 text-white  mt-4 mb-5  give-btn" style="padding:12px;cursor:pointer;color:white !important" (click)="showFeedBackModal()" type="button" >Give feedback</button>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="col-md-3  "  align="center">
+                                    <br/><br/> <br/>
+                                    <div class="ticket-badge">
+                                        <div class="title-6 text-white mb-1">Last 30 days</div>
+                                        <div class="title-5 text-white mb-1 text-center">{{this.last_30_days_tickets}}</div>
+                                        <div class="title-6 text-white mb-31">Tickets used</div>
+                                    </div>
+                                </div>
+                              </div> -->
+                              <div class="row p-0 mt-4">
+                                <div class="col-md-12 p-0">
+                                    <div class="main-heading-2 mb-32 text-center" >Monthly Closed Tickets</div>
+                                    <!-- <img src="assets/images/trucking-calendar.svg" class="img"> -->
+                                   <app-closed-ticket-graph></app-closed-ticket-graph>
+                                </div>
+                              </div>
+
+                          </div>
+                          <div class="col-md-1">
+                          </div>
+                          <div class="col-md-5">
+                            <div class="main-heading-2">Requests</div>
+                              <div class="col-md-11">
+                                  <div class="d-flex justify-content-center mt-3 mb-51">
+                                      <div align="center">
+                                          <div class="da-number-div" [ngClass]="{'da-number-divv': dashboardData?.total_requests}" [routerLink]="'/trucking-requests'">
+                                              <div class="da-number">{{this.dashboardData && this.dashboardData?.total_requests ? this.dashboardData?.total_requests : 0}}</div>
+                                          </div>
+                                          <div class="title-1 mt-18 ">Truck Requests Waiting For You</div>
+                                      </div>
+                                      <div align="center">
+                                          <div class="da-number-div" [ngClass]="{'da-number-divv': dashboardData?.pending_dispatches}" [routerLink]="'/tickets-to-dispatch'">
+                                              <div class="da-number">{{this.dashboardData && this.dashboardData?.pending_dispatches ? this.dashboardData?.pending_dispatches : 0}}</div>
+                                          </div>
+                                          <div class="title-1 mt-18 ">Trucks waiting for dispatch</div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-9">
+                                  <div class="main-heading-2 mb-27 text-center">Tickets Statuses</div>
+                                  <div class="status-div bg-light-grey">
+                                      <div class="d-flex justify-content-between align-items-center" (click)="moveToStatus('Pending')">
+                                          <div class="title-2">Pending</div>
+                                          <div class="title-2 status-div-white">{{this.dashboardData && this.dashboardData.counts && this.dashboardData.counts.pending? this.dashboardData.counts.pending : 0}}</div>
+                                      </div>
+                                  </div>
+                                  <div class="status-div bg-yellow">
+                                      <div class="d-flex justify-content-between align-items-center" (click)="moveToStatus('Accepted')">
+                                          <div class="title-2">Accepted</div>
+                                          <div class="title-2 status-div-white">{{this.dashboardData && this.dashboardData.counts && this.dashboardData.counts.accepted? this.dashboardData.counts.accepted : 0}}</div>
+                                      </div>
+                                  </div>
+                                  <div class="status-div bg-dark-yellow"  (click)="moveToStatus('Driving')">
+                                      <div class="d-flex justify-content-between align-items-center">
+                                          <div class="title-2 text-white">Driving</div>
+                                          <div class="title-2 status-div-white" style="color: black !important;">{{this.dashboardData && this.dashboardData.counts && this.dashboardData.counts.in_progress? this.dashboardData.counts.in_progress : 0}}</div>
+                                      </div>
+                                  </div>
+                                  <div class="status-div bg-green">
+                                      <div class="d-flex justify-content-between align-items-center" (click)="moveToStatus('Completed')">
+                                          <div class="title-2 text-white">Completed</div>
+                                          <div class="title-2 status-div-white" style="color: black !important;">{{this.dashboardData && this.dashboardData.counts && this.dashboardData.counts.completed? this.dashboardData.counts.completed : 0}}</div>
+                                      </div>
+                                  </div>
+                                  <div class="status-div"  style="background: #FF4D4D;
+                                  color:white  !important;">
+                                      <div class="d-flex justify-content-between align-items-center"  (click)="moveToStatus('Declined')">
+                                          <div class="title-2 text-white">Declined</div>
+                                          <div class="title-2 status-div-white" style="color:black !important">{{this.dashboardData && this.dashboardData.counts && this.dashboardData.counts.declined? this.dashboardData.counts.declined : 0}}</div>
+                                      </div>
+                                  </div>
+                                  <div class="status-div bg-completed">
+                                      <div class="d-flex justify-content-between align-items-center" (click)="moveToStatus('Approved')">
+                                          <div class="title-2 text-white">Approved<br>
+                                            (last 30 days)</div>
+                                          <div class="title-2 status-div-white" style="color: black !important;">{{this.last_30_days_closed_tickets ?  this.last_30_days_closed_tickets : 0}}</div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+</div>
+<div *ngIf="loggedinUser.account_type == 'Driver'">
+    <app-driver-dashboard></app-driver-dashboard>
+</div>
+
+<div *ngIf="loggedinUser.account_type == 'Customer' || this.loggedinUser?.role?.role_name=='Approver' || (this.loggedinUser?.parent_user?.account_type == 'Customer' && this.loggedinUser?.role?.role_name=='Admin' ) || (this.loggedinUser?.parent_user?.account_type == 'Customer' && this.loggedinUser?.role?.role_name=='Dispatcher' ) || (this.loggedinUser?.parent_user?.account_type == 'Customer' && this.loggedinUser?.role?.role_name=='Superintendent' )">
+    <app-customer-dashboard></app-customer-dashboard>
+</div>
+
+
+
+<div class="modal fade  come-from-modal right show" *ngIf="this.show_modal" style="display:block;padding-right: 17px;" id="addusers" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog max-width-50px" role="document">
+        <div class="modal-content border-15px ">
+            <div class="modal-body">
+                <br>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <img src="../assets/icons/tc-feedback.svg" class="img ">
+                    </div>
+                </div>
+                <br>
+
+                <form [formGroup]="feedBackForm" (ngSubmit)="onSendFeedback()">
+                    <div class="row m-0">
+                        <div class="col-md-12 ">
+                            <div class=" p-1">
+                                <div class="form-title">Give feedback</div>
+
+                            </div>
+                            <br/>
+                            <span *ngIf="feedbackError != ''" class="text-danger">{{
+                                feedbackError
+                            }}</span>
+                            <label class="field text-field required_field">
+                                <textarea class="field__input" style="height: 130px;" placeholder="Type here"   formControlName="feedback" ></textarea>
+                                <span class="field__label-wrap">
+                                <span class="field__label">Your feedback</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="row m-0">
+
+                        <div class="col-md-12">
+
+                            <div class="d-flex btns-div" >
+                                <button style="width:150px" class="btn-back goto-dashboard-setup-1"  (click)="hideFeedbackModal()" >Back</button>
+
+                                <button style="width:200px" class="mybtn bg-blue2 text-white " type="submit"  *ngIf="!is_loading">Send feedback</button>
+                                <button style="width:200px" class="mybtn bg-blue2 text-white " type="button" *ngIf="is_loading" disabled >Processing..</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

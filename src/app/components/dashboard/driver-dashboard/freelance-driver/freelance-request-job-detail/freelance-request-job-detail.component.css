@@ -1,0 +1,82 @@
+@import url("../../../../../../assets/css/driver-mobile.css");
+@import url("../../../../../../assets/css/margins.css");
+
+.bg-approved{
+    background-color: #17A1FA;
+    color: white;
+}
+
+.bg-completed{
+    background-color: #33D1A2
+    ;
+    color: white;
+}
+
+.bg-grey{
+    background:#D9D9D9;
+    color:#000000;
+}
+
+.color-lightgrey{
+    color: #88898B
+}
+
+.tab-pane{
+    padding-left: 15px;
+    padding-right:15px;
+}
+
+.bg-no-round{
+    border: 1px solid #68696D;
+    border-radius: 10px;
+    color: #68696D;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: white;
+    opacity: 1;
+}
+
+
+.text-align-right{
+    text-align: right;
+}
+
+.red-circle{
+    padding: 0px 12px 0px 5px;
+    background: #F73333;
+    border-radius: 50%;
+    margin-right: 5px;
+    
+}
+
+.vertical-alignment-helper{
+    height: 60% !important;
+}
+
+.fix-button{
+    position: fixed;
+    bottom:25px;
+   
+}
+.text-black-shade3{
+    line-break: anywhere !important;
+}
+
+.tab-pane {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.ticket-tabs li {
+    background: #FFF;
+    border: 1px solid var(--Driver-pink-tragget, #FDD7E4);
+}
+.ticket-tabs li.active:after {
+    border-bottom: none;
+    border: 1px solid var(--Driver-pink-tragget, transparent);
+    border-color: transparent; 
+}
+.ticket-tabs li.active {
+    border: 1px solid transparent;
+}  

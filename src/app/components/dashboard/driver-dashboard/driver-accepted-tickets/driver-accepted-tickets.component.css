@@ -1,0 +1,23 @@
+
+@import url('../../../../../assets/css/dashboard-style.css');
+
+.btn-border-pink {
+    border: 1px solid #F73333;
+    border-radius: 5px;
+    color: #F73333;
+    background-color: white;
+}
+
+
+.text-align-right{
+    text-align: right;
+}
+
+
+.red-circle{
+    padding: 0px 12px 0px 5px;
+    background: #F73333;
+    border-radius: 50%;
+    margin-right: 5px;
+    
+}

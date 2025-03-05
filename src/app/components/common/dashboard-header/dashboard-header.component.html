@@ -1,0 +1,6 @@
+<app-trucking-header  [active_menu]="this.active_menu" *ngIf="loggedinUser.account_type == 'Trucking Company' || (this.loggedinUser?.parent_user?.account_type == 'Trucking Company' && this.loggedinUser?.account_type =='User' ) || (loggedinUser?.role?.role_name == 'Bookkeeper' &&  loggedinUser?.parent_user?.account_type=='Trucking Company') || (loggedinUser?.role?.role_name == 'Admin' &&  loggedinUser?.parent_user?.account_type=='Trucking Company')  || (loggedinUser?.role?.role_name == 'Approver' &&  loggedinUser?.parent_user?.account_type=='Trucking Company')"></app-trucking-header>
+
+<app-driver-header  [active_menu]="this.active_menu" *ngIf="loggedinUser.account_type == 'Driver'"></app-driver-header>
+<div id="user" style="display:none">{{this.customer | json}}</div>
+
+<app-customer-header  [active_menu]="this.active_menu" *ngIf="loggedinUser.account_type == 'Customer' || (this.loggedinUser?.role?.role_name == 'Approver' &&  this.loggedinUser?.parent_user?.account_type=='Customer') || (this.loggedinUser?.role?.role_name == 'Admin' &&  this.loggedinUser?.parent_user?.account_type=='Customer') || (this.loggedinUser?.role?.role_name == 'Superintendent' &&  this.loggedinUser?.parent_user?.account_type=='Customer') || (this.loggedinUser?.role?.role_name == 'Dispatcher' &&  this.loggedinUser?.parent_user?.account_type=='Customer')" ></app-customer-header>

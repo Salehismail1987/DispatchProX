@@ -1,0 +1,897 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content p-0">
+      <div class="main-inner-body-container mt-15px">
+        <div class="main-project-setting-container inner_main_shadow">
+          <div class="main-project-setting-header">
+            <div
+              class="main-project-setting-header-left d-flex align-items-center"
+            >
+              <div class="mb-6 mr-2">
+                <img
+                  class=" "
+                  src="./assets/icons/cc-dispatched-icon.svg"
+                  alt="project-profile-file-icon"
+                />
+              </div>
+              <div class="heading-1-400 text-color-111727">Ticket status</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3 col-padding-l">
+              <div class="main-project-setting-header-left">
+                <div class="heading-2-300 text-color-111727">
+                  All dispatched tickets
+                </div>
+                <div class="text-2-300">Click the line to see details</div>
+              </div>
+            </div>
+            <div class="col-md-2 col-padding-rl">
+              <label class="field text-field">
+                <input
+                  class="field__input height-43px"
+                  placeholder=""
+                  (change)="changeDate($event)"
+                  type="date"
+                />
+                <span class="field__label-wrap">
+                  <span class="field__label field__label2">Filter by date</span>
+                </span>
+              </label>
+            </div>
+            <div class="col-md-2 col-padding-rl">
+              <div
+                class="input-div  getinputfield {{
+                  !this.trucking_company_id ? 'border-blue' : ''
+                }} cur_p "
+              >
+                <div class="title-5-new2 text-color-black-shade5 text-left">
+                  Filter by Vendor
+                </div>
+                <div
+                  class="myinput-new sa_select selected"
+                  *ngIf="!this.trucking_company_id"
+                >
+                  Select
+                </div>
+                <div
+                  class="myinput-new selected sa_selected_filter"
+                  *ngIf="trucking_company_id"
+                >
+                  {{ this.selected_company_name }}
+                </div>
+                <img
+                  src="../../assets/images/dropdown.svg"
+                  class="icon-center-right"
+                />
+                <div
+                  class="input-popup-div cust_drop companies_list"
+                  style="display: none"
+                >
+                  <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                    Vendor
+                  </div>
+                  <div class="title-18 text-right mb-2px d-none">Default</div>
+                  <div
+                    (click)="setTC('', '')"
+                    class="d-flex justify-content-between mb-5px list-item"
+                  >
+                    <div
+                      [ngClass]="
+                        !this.trucking_company_id
+                          ? 'title-5-new33 title-5-new33_active'
+                          : 'title-5-new33 text-color-black-shade7'
+                      "
+                    >
+                      All
+                    </div>
+                  </div>
+                  <ng-container
+                    *ngFor="let company of this.trucking_companies_list"
+                  >
+                    <div
+                      (click)="setTC(company?.id, company?.company_name)"
+                      class="d-flex justify-content-between mb-5px list-item"
+                      *ngIf="company?.id"
+                    >
+                      <div
+                        *ngIf="company?.id"
+                        [ngClass]="
+                          this.trucking_company_id == company.id
+                            ? 'title-5-new33 title-5-new33_active'
+                            : 'title-5-new33 text-color-black-shade7'
+                        "
+                      >
+                        {{ company?.company_name }}
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-2 col-padding-rl">
+                            <label class="field text-field">
+                                <select class="field__input icon-none height-43px" (change)="setTC($event,'')">
+                                    <option value="">All</option>
+                                    <ng-container *ngFor="let item of this.trucking_companies_list">
+                                        <option [value]="item.id">{{item?.company_name}}</option>
+                                    </ng-container>
+                                </select>
+                                <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                    <span class="field__label field__label2">Filter by Vendor</span>
+                                </span>
+                            </label>
+                        </div> -->
+
+            <div class="col-md-2 col-padding-rl">
+              <div
+                class="input-div  getinputfield2 {{
+                  !this.project_id ? 'border-blue' : ''
+                }} cur_p"
+              >
+                <div class="title-5-new2 text-color-black-shade5 text-left">
+                  Filter by project
+                </div>
+                <div
+                  class="myinput-new sa_select selected"
+                  *ngIf="!this.project_id"
+                >
+                  Select
+                </div>
+                <div
+                  class="myinput-new selected sa_selected_filter"
+                  *ngIf="project_id"
+                >
+                  {{ this.selected_proj_name }}
+                </div>
+                <img
+                  src="../../assets/images/dropdown.svg"
+                  class="icon-center-right"
+                />
+                <div
+                  class="input-popup-div2 cust_drop companies_list"
+                  style="display: none"
+                >
+                  <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                    Vendor
+                  </div>
+                  <div class="title-18 text-right mb-2px d-none">Default</div>
+                  <div
+                    (click)="setProject('', '')"
+                    class="d-flex justify-content-between mb-5px list-item"
+                  >
+                    <div
+                      [ngClass]="
+                        !this.project_id
+                          ? 'title-5-new33 title-5-new33_active '
+                          : 'title-5-new33 text-color-black-shade7'
+                      "
+                    >
+                      All
+                    </div>
+                  </div>
+                  <ng-container *ngFor="let company of this.projects_list">
+                    <div
+                      (click)="setProject(company?.id, company?.project_name)"
+                      class="d-flex justify-content-between mb-5px list-item"
+                      *ngIf="company?.id"
+                    >
+                      <div
+                        *ngIf="company?.id"
+                        [ngClass]="
+                          this.project_id == company.id
+                            ? 'title-5-new33 title-5-new33_active '
+                            : 'title-5-new33 text-color-black-shade7'
+                        "
+                      >
+                        {{ company?.project_name }}
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="col-md-2 col-padding-rl">
+                            <label class="field text-field">
+                                <select class="field__input icon-none height-43px" (change)="setProject($event, '')">
+                                    <option value="">All</option>
+                                    <ng-container *ngFor="let item of this.projects_list">
+                                        <option [value]="item.id">{{item?.project_name}}</option>
+                                    </ng-container>
+                                </select>
+                                <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                    <span class="field__label field__label2">Filter by project</span>
+                                </span>
+                            </label>
+                        </div> -->
+
+            <!-- <div class="col-md-2">
+                            <label class="field text-field">
+                                <select class="field__input icon-none height-43px" (change)="handleSortByList($event)">
+                                    <option value="project_id">Projects</option>
+                                    <option value="ticket_date">Ticket Date</option>
+                                    <option value="trucking_company_id">Trucking Company</option>
+                                    <option value="approver_id">Approver</option>
+                                </select>
+                                <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                    <span class="field__label field__label2">Filter by Vendor</span>
+                                </span>
+                            </label>
+                        </div> -->
+            <!-- <div class="col-md-2">
+                            <label class="field text-field">
+                                <select class="field__input icon-none height-43px" (change)="this.handleStatus($event)">
+                                    <option value="">Select Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Declined">Declined</option>
+                                    <option value="Accepted">Accepted</option>
+                                    <option value="Driving">Driving</option>
+                                    <option value="Completed">Completed</option>
+                                </select>
+                                <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                <span class="field__label-wrap">
+                                    <span class="field__label field__label2">Job status</span>
+                                </span>
+                            </label>
+                        </div> -->
+            <div
+              *ngIf="
+                !this.show_buttons || this.selected_ticket_list?.length < 1
+              "
+              [class]="
+                this.show_buttons
+                  ? 'col-md-3 col-padding-r'
+                  : 'col-md-3 col-padding-r'
+              "
+            >
+              <div class="position-relative">
+                <label class="field text-field">
+                  <input
+                    class="field__input height-43px"
+                    placeholder="Search"
+                    (change)="searchBy(searchby.value)"
+                    type="text"
+                    [(ngModel)]="this.search_by"
+                    #searchby
+                  />
+                  <span class="field__label-wrap">
+                    <span class="field__label field__label2"
+                      >Search tickets</span
+                    >
+                  </span>
+                </label>
+                <div class="topright2">
+                  <img
+                    src="../assets/icons/search2.svg"
+                    (click)="searchBy(searchby.value)"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              *ngIf="this.show_buttons && this.selected_ticket_list?.length > 0"
+              class="col-md-3 text-right"
+            >
+              <div
+                class="btn-danger2 pr-3 pb-1"
+                data-toggle="modal"
+                data-target="#myModal2"
+              >
+                <b
+                  >Cancel
+                  <span *ngIf="this.selected_ticket_list?.length > 0">
+                    [{{ this.selected_ticket_list?.length }}]
+                  </span></b
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="row row-2px">
+            <div class="col-md-12">
+              <div class="border-div mt-3 mb-3"></div>
+            </div>
+          </div>
+
+          <div class="row row-2px">
+            <!-- <div class="col-md-10"></div>
+                        <div *ngIf="this.show_buttons" class='col-md-2 text-right'>
+                            <div class="text-danger2 pr-3 pb-1" data-toggle="modal" data-target="#myModal2">
+                                <b>Cancel</b>
+                            </div>
+                        </div> -->
+          </div>
+
+          <div class="row row-2px">
+            <div class="col-md-12">
+              <div class="project-setting-page-table table-responsive">
+                <table class="table mytable">
+                  <thead class="table-light project-setting-table-header">
+                    <tr>
+                      <th
+                        (click)="sortBy('ticket_no')"
+                        scope="col"
+                        class="project-settings-table-header"
+                      >
+                        <div class="heading-8-400 text-color-grey">
+                          Ticket ID
+                        </div>
+                      </th>
+                      <th
+                        (click)="sortBy('trucking_company_id')"
+                        scope="col"
+                        class="project-settings-table-header"
+                      >
+                        <div class="heading-8-400 text-left text-color-grey">
+                          Vendor
+                        </div>
+                      </th>
+                      <th
+                        (click)="sortBy('project_id')"
+                        scope="col"
+                        class="project-settings-table-header"
+                      >
+                        <div class="heading-8-400 text-color-grey">Project</div>
+                      </th>
+                      <th
+                        (click)="sortBy('ticket_date')"
+                        scope="col"
+                        class="project-settings-table-header"
+                      >
+                        <div class="heading-8-400 text-color-grey">Date</div>
+                      </th>
+                      <th scope="col" class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">Time</div>
+                      </th>
+                      <th
+                        scope="col"
+                        class="project-settings-table-header text-left"
+                      >
+                        <div class="heading-8-400 text-color-grey">Driver</div>
+                      </th>
+                      <th scope="col" class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">
+                          Progress
+                        </div>
+                      </th>
+                      <th scope="col" class="project-settings-table-header">
+                        <div class="heading-8-400 text-color-grey">
+                          <input
+                            type="checkbox"
+                            (change)="checkUncheckAll($event)"
+                            [ngClass]="
+                              !this.all_checked ? 'bg-white' : 'bg-yellow'
+                            "
+                            [checked]="this.all_checked"
+                          />
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngIf="!this.is_free_trial && this.Unknown > 0"
+                      [class]="
+                        this.Unknown > 0 ? 'without-tragget-ticket-row' : ''
+                      "
+                    >
+                      <td colspan="6">
+                        <div class="d-flex">
+                          <div class="d-flex align-items-center">
+                            <div class="grey-bg-img grey-count-text">
+                              {{ this.Unknown }}
+                            </div>
+                            <div class="grey-without-text ml-2">
+                              <span class="grey-without-text-bold">
+                                over your subscription
+                              </span>
+                              - Tickets deducted next month’s subscription on
+                              your renewal date
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td colspan="2">
+                        <span class="float-right d-flex align-items-center">
+                          <span class="border-1px-grey mr-3">
+                            {{ this.Unknown }}</span
+                          >
+                          <td>
+                            <button [ngClass]="getStatusClass('Unknown')">
+                              Unknown
+                            </button>
+                          </td>
+                        </span>
+                      </td>
+                    </tr>
+
+                    <ng-container
+                      *ngIf="
+                        ticket_list && ticket_list.length > 0;
+                        else elseRow
+                      "
+                    >
+                      <tr *ngFor="let ticket of ticket_list; let index = index">
+                        <td
+                          (click)="this.setDetailTicket(ticket)"
+                          data-toggle="modal"
+                          data-target="#myModal"
+                        >
+                          <button [ngClass]="getStatusClass(ticket.status)">
+                            <!-- <app-ticket-status-dot [status]="ticket.status"></app-ticket-status-dot> -->
+                            {{ ticket.ticket_no }}
+                          </button>
+                        </td>
+
+                        <td
+                          (click)="this.setDetailTicket(ticket)"
+                          data-toggle="modal"
+                          data-target="#myModal"
+                        >
+                          {{ ticket.trucking_company?.company_name }}
+                        </td>
+
+                        <td
+                          (click)="this.setDetailTicket(ticket)"
+                          data-toggle="modal"
+                          data-target="#myModal"
+                        >
+                          {{ ticket.project?.project_name }}
+                        </td>
+                        <td
+                          (click)="this.setDetailTicket(ticket)"
+                          data-toggle="modal"
+                          data-target="#myModal"
+                        >
+                          {{
+                            this.time_conversion(ticket, 1).convertedDate
+                              ? this.time_conversion(ticket, 1).convertedDate
+                              : ticket.ticket_date
+                          }}
+                        </td>
+                        <td
+                          (click)="this.setDetailTicket(ticket)"
+                          data-toggle="modal"
+                          data-target="#myModal"
+                        >
+                          {{
+                            this.time_conversion(ticket, 1).convertedTime
+                              ? this.time_conversion(ticket, 1).convertedTime
+                              : ticket?.ticket_time
+                              ? ticket?.ticket_time
+                              : ""
+                          }}
+                        </td>
+
+                        <td
+                          (click)="this.setDetailTicket(ticket)"
+                          class="text-left"
+                          data-toggle="modal"
+                          data-target="#myModal"
+                        >
+                          {{ ticket?.driver_ticket?.driver?.full_name }}
+                        </td>
+                        <td
+                          (click)="this.setDetailTicket(ticket)"
+                          data-toggle="modal"
+                          data-target="#myModal"
+                          class=" d-flex justify-content-center"
+                        >
+
+
+                          <ng-container
+                            *ngIf="
+                              ticket?.ticket_truck_type_rounds?.length > 0;
+                              else BlockNoRounds
+                            "
+                          >
+                            <ng-container *ngIf="ticket?.status == 'Approved'">
+                              <div class="progress_rounds">
+                                <ng-container
+                                  *ngFor="
+                                    let round of ticket?.ticket_truck_type_rounds;
+                                    index as index
+                                  "
+                                >
+                                  <div
+                                    class="single_progress_rounds bg-color-33D1A2"
+                                    *ngIf="
+                                      index !=
+                                      ticket?.ticket_truck_type_rounds?.length -
+                                        1
+                                    "
+                                  ></div>
+                                  <div
+                                    class="single_progress_rounds active bg-color-17A1FA"
+                                    *ngIf="
+                                      index ==
+                                      ticket?.ticket_truck_type_rounds?.length -
+                                        1
+                                    "
+                                  >
+                                    {{ ticket?.status }}
+                                  </div>
+                                </ng-container>
+                              </div>
+                            </ng-container>
+                            <ng-container *ngIf="ticket?.status == 'Completed'">
+                              <div class="progress_rounds">
+                                <ng-container
+                                  *ngFor="
+                                    let round of ticket?.ticket_truck_type_rounds;
+                                    index as index
+                                  "
+                                >
+                                  <div
+                                    class="single_progress_rounds bg-color-33D1A2"
+                                    *ngIf="
+                                      round?.driver_start_time != null &&
+                                      round?.end_time != null &&
+                                      round?.id !=
+                                        getLastDoneRound(
+                                          ticket?.ticket_truck_type_rounds
+                                        )?.id
+                                    "
+                                  ></div>
+                                  <div
+                                    class="single_progress_rounds active bg-color-33D1A2 cursor-pointer status-btn2 {{
+                                      getStatusClass(ticket.status)
+                                    }}"
+                                    *ngIf="
+                                      round?.driver_start_time != null &&
+                                      round?.end_time != null &&
+                                      round?.id ==
+                                        getLastDoneRound(
+                                          ticket?.ticket_truck_type_rounds
+                                        )?.id
+                                    "
+                                    (click)="
+                                      getLastRound(
+                                        ticket,
+                                        'userInCompletedNewModal'
+                                      )
+                                    "
+                                  >
+                                    {{ ticket?.status }}
+                                  </div>
+                                  <div
+                                    class="single_progress_rounds"
+                                    *ngIf="
+                                      !(
+                                        round?.driver_start_time != null &&
+                                        round?.end_time != null
+                                      )
+                                    "
+                                  ></div>
+                                </ng-container>
+                              </div>
+                            </ng-container>
+                            <ng-container *ngIf="ticket?.status == 'Pending'">
+                              <div class="progress_rounds">
+                                <ng-container
+                                  *ngFor="
+                                    let round of ticket?.ticket_truck_type_rounds;
+                                    index as index
+                                  "
+                                >
+                                  <div
+                                    class="single_progress_rounds active bg-color-pending status-btn2 {{
+                                      getStatusClass(ticket.status)
+                                    }} cursor-pointer"
+                                    *ngIf="index == 0"
+                                    (click)="
+                                      getLastRound(ticket, 'userAcceptedModal')
+                                    "
+                                  >
+                                    {{ ticket?.status }}
+                                  </div>
+                                  <div
+                                    class="single_progress_rounds"
+                                    *ngIf="index != 0"
+                                  ></div>
+                                </ng-container>
+                              </div>
+                            </ng-container>
+                            <ng-container *ngIf="ticket?.status == 'Accepted'">
+                              <div class="progress_rounds">
+                                <ng-container
+                                  *ngFor="
+                                    let round of ticket?.ticket_truck_type_rounds;
+                                    index as index
+                                  "
+                                >
+                                  <div
+                                    class="single_progress_rounds active bg-color-FFF8B8 status-btn2 {{
+                                      getStatusClass(ticket.status)
+                                    }} cursor-pointer"
+                                    *ngIf="index == 0"
+                                    (click)="
+                                      getLastRound(ticket, 'userAcceptedModal')
+                                    "
+                                  >
+                                    {{ ticket?.status }}
+                                  </div>
+                                  <div
+                                    class="single_progress_rounds"
+                                    *ngIf="index != 0"
+                                  ></div>
+                                </ng-container>
+                              </div>
+                            </ng-container>
+
+                            <ng-container
+                              *ngIf="
+                                ticket?.status == 'Driving' &&
+                                getAllRoundDone(ticket)
+                              "
+                            >
+                              <div class="progress_rounds">
+                                <ng-container
+                                  *ngFor="
+                                    let round of ticket?.ticket_truck_type_rounds;
+                                    index as index
+                                  "
+                                >
+                                  <div
+                                    class="single_progress_rounds bg-color-33D1A2"
+                                    *ngIf="
+                                      index !=
+                                      ticket?.ticket_truck_type_rounds?.length -
+                                        1
+                                    "
+                                  ></div>
+                                  <div
+                                    class="single_progress_rounds active bg-color-F4BE1B  status-btn2 {{
+                                      getStatusClass(ticket.status)
+                                    }}"
+                                    *ngIf="
+                                      index ==
+                                      ticket?.ticket_truck_type_rounds?.length -
+                                        1
+                                    "
+                                  >
+                                    {{ ticket?.status }}
+                                  </div>
+                                </ng-container>
+                              </div>
+                            </ng-container>
+                            <ng-container
+                              *ngIf="
+                                ticket?.status == 'Driving' &&
+                                !getAllRoundDone(ticket)
+                              "
+                            >
+                              <div class="progress_rounds">
+                                <ng-container
+                                  *ngFor="
+                                    let round of ticket?.ticket_truck_type_rounds;
+                                    index as index
+                                  "
+                                >
+                                  <div
+                                    class="single_progress_rounds bg-color-33D1A2"
+                                    *ngIf="
+                                      round?.driver_start_time &&
+                                      round?.end_time
+                                    "
+                                  ></div>
+                                  <div
+                                    class="single_progress_rounds active status-btn2 text-white bg-color-F4BE1B"
+                                    *ngIf="
+                                      getRoundInProgress(ticket)?.id ==
+                                        round?.id;
+                                      else Block2
+                                    "
+                                  >
+                                    {{ ticket?.status }}
+                                  </div>
+
+                                  <ng-template #Block2>
+                                    <ng-container
+                                      *ngIf="
+                                        !getRoundInProgress(ticket) &&
+                                          getRoundToStart(ticket);
+                                        else Block3
+                                      "
+                                    >
+                                      <div
+                                        class="single_progress_rounds active bg-color-F4BE1B status-btn2 text-white else {{
+                                          round?.round_no
+                                        }}"
+                                        *ngIf="
+                                          getRoundToStart(ticket)?.id ==
+                                            round?.id;
+                                          else Block3
+                                        "
+                                      >
+                                        {{ ticket?.status }}
+                                      </div>
+                                    </ng-container>
+
+                                    <ng-template #Block3>
+                                      <div
+                                        class="single_progress_rounds"
+                                        *ngIf="
+                                          ((round?.driver_start_time == '' ||
+                                            !round?.driver_start_time) &&
+                                            getRoundInProgress(ticket)?.id !=
+                                              round?.id &&
+                                            getRoundToStart(ticket)?.id !=
+                                              round?.id &&
+                                            (round?.end_time == '' ||
+                                              !round?.end_time) &&
+                                            getLastRoundId(ticket) !=
+                                              round?.id) ||
+                                          (getLastRoundId(ticket) ==
+                                            round?.id &&
+                                            getRoundToStart(ticket)?.id !=
+                                              round?.id &&
+                                            getRoundInProgress(ticket)?.id !=
+                                              round?.id) ||
+                                          (getLastRoundId(ticket) !=
+                                            round?.id &&
+                                            getRoundToStart(ticket)?.id ==
+                                              round?.id &&
+                                            getRoundInProgress(ticket)?.id !=
+                                              round?.id) ||
+                                          (getLastRoundId(ticket) ==
+                                            round?.id &&
+                                            getRoundToStart(ticket)?.id ==
+                                              round?.id &&
+                                            getRoundInProgress(ticket)?.id !=
+                                              round?.id)
+                                        "
+                                      ></div>
+                                    </ng-template>
+                                  </ng-template>
+                                </ng-container>
+                              </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="ticket?.status == 'Declined'">
+                              <button
+                                [ngClass]="
+                                  getStatusClass(ticket.status) + ' status-btn2'
+                                "
+                              >
+                                {{ ticket.status }}
+                              </button></ng-container
+                            >
+                          </ng-container>
+                          <ng-template #BlockNoRounds>
+                            <button
+                              [ngClass]="
+                                getStatusClass(ticket.status) + ' status-btn2'
+                              "
+                            >
+                              {{ ticket.status }}
+                            </button>
+                          </ng-template>
+                        </td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            value="{{ ticket.id }}"
+                            [ngClass]="
+                              !ticket?.is_selected ? 'bg-white' : 'bg-yellow'
+                            "
+                            id="checkbox{{ index }}"
+                            [checked]="ticket?.is_selected"
+                            (change)="isAllSelected($event, index)"
+                            *ngIf="
+                              ticket?.status == 'Pending' ||
+                              ticket?.status == 'Accepted'
+                            "
+                          />
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <ng-template #elseRow>
+                      <tr>
+                        <td
+                          colspan="10"
+                          class="text-center"
+                          *ngIf="!is_loading && this.Unknown < 1"
+                        >
+                          <h4>No tickets to show.</h4>
+                        </td>
+                        <td colspan="10" class="text-center" *ngIf="is_loading">
+                          <h4>Loading Dispatch List.</h4>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="row">
+            <div class="col-md-2">
+              <div class="width-64">
+                <label class="field text-field">
+                  <select
+                    class="field__input icon-none bg-light-grey3 no-border height-34px custom-padding"
+                    (change)="this.handlePerPage($event)"
+                  >
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                  <i
+                    class="fa fa-caret-down input-icon-right2 text-color-lightgrey"
+                    aria-hidden="true"
+                  ></i>
+                  <span class="field__label-wrap">
+                    <span class="field__label field__label2 left-6px"
+                      >Rows</span
+                    >
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div
+                class="mypagination-div"
+                *ngIf="ticket_pagination?.total > 0"
+              >
+                <a
+                  style="cursor: pointer"
+                  (click)="changePage(ticket_pagination.current_page - 1)"
+                  [ngClass]="
+                    ticket_pagination.first_page == this.page
+                      ? 'mypagination '
+                      : 'mypagination disable'
+                  "
+                  class=""
+                  >Previous</a
+                >
+                <ng-container *ngFor="let item of ticket_pagination?.links">
+                  <a
+                    style="cursor: pointer"
+                    *ngIf="notSkip(item.label)"
+                    [ngClass]="
+                      item.active ? 'mypagination active' : 'mypagination'
+                    "
+                    (click)="changePage(parsePage(item.label.toString()))"
+                    >{{ item.label }}</a
+                  >
+                </ng-container>
+
+                <a
+                  style="cursor: pointer"
+                  (click)="changePage(ticket_pagination.current_page + 1)"
+                  [ngClass]="
+                    this.page == ticket_pagination.last_page
+                      ? 'mypagination '
+                      : 'mypagination next'
+                  "
+                  >Next</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-customer-ticket-popup
+  (listing)="this.getTicketListing()"
+  [ticketDetail]="this.ticketDetail"
+  [roundId]="0"
+>
+</app-customer-ticket-popup>
+<app-popup-cancel-ticket
+  [tickets]="this.selected_ticket_list"
+  (listing)="this.getTicketListing()"
+></app-popup-cancel-ticket>

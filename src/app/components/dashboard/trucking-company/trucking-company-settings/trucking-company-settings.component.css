@@ -1,0 +1,386 @@
+@import url('../../../../../assets/css/trucking-dashbord-style.css');
+
+.user-profile-pic{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 33%;
+    border: 3px solid white;
+}
+
+.driver-signup-file{
+    background-color: white !important;
+}
+
+.required_field:after {
+    content: "*";
+    position: absolute;
+    top: 0;
+    font-weight: bold;
+    right: -10px;
+    color: #F73333;
+}
+
+.body-content-4 {
+    padding: 15px 15px 40px 15px;
+}
+
+.border-div{
+    border: 1px solid #0000001a !important;
+}
+
+
+/* *********************** */
+
+
+.user-profile-pic{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 33%;
+    border: 3px solid white;
+}
+
+.uplodfile-icon-div {
+    background: #FFF8B8 !important;
+}
+
+.required_field:after {
+    content: "*";
+    position: absolute;
+    top: 0;
+    right: -10px;
+    color: #F73333;
+}
+
+.body-content2{
+    padding: 15px 15px 15px 15px !important;
+}
+
+.border-div{
+    border: 1px solid #0000001a !important;
+}
+
+.project-profile-header-container {
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    padding: 15px 15px 15px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    background-color: #fff;
+}
+
+.mt-15px {
+    margin-top: 15px;
+}
+.main-inner-body-container {
+    padding: 0px 15px 17px 15px;
+}
+.main-project-setting-container {
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.ptb-20px {
+    padding: 20px 0;
+}
+.main-container {
+    grid-area: main;
+    overflow-y: auto;
+    background-color: #fafafa;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 241px 1fr 1fr 1fr;
+    grid-template-rows: 0.2fr 3fr;
+    grid-template-areas:
+        "sidebar main main main"
+        "sidebar main main main";
+    height: 100vh;
+}
+
+.main-project-setting-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 95px;
+}
+
+.my-nav-tabs .nav-link.active {
+    background-color: #FFF8B8 !important;
+    border: 1px solid #FFF8B8 !important;
+    box-shadow: 0px 4px 4px 0px #00000040 inset !important;
+}
+.my-nav-tabs .nav-link{
+
+    border: 1px solid #FFF8B8 !important;
+    background-color: white;
+    background: white;
+    margin-left: 10px !important;
+    border-radius: 5px !important;
+}
+
+
+
+.bg-profile-container{
+    width: 109px;
+    height: 126px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    background:url('../../../../../assets/images/profile-pic-container.svg');
+}
+.bg-profile-container img{
+    width: 85%;
+}
+.profile-text{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.15px;
+    text-align: left;
+    color: #888b93;
+
+}
+.name-input{
+    font-family: 'Gilroy-Bold';
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.76px;
+    text-align: left;
+    color: #000000;
+}
+
+.name-input2{
+    font-family: 'Gilroy-Bold';
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.76px;
+    text-align: left;
+    color:#88898B;
+}
+
+.cust-label{
+    font-family: 'Gilroy';
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15.6px;
+    text-align: left;
+    color: #68696D;
+}
+
+.required_fieldd3:after {
+    content: "*";
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    color: #F73333;
+}
+.main3{
+    border: 1px solid #E1E1E1 !important;
+}
+
+.required-symboll{
+    color: red;
+}
+
+.div-image , .div-image .bg-profile-container{
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-evenly;
+}
+
+.required_fieldd:after{
+    content: "*";
+    position: absolute;
+    top: 2px;
+    right: 7px;
+    color: #F73333;
+}
+
+.myhr3px{
+    border: 1px solid #E1E1E1 !important;
+}
+
+.heading-5-400{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.15px;
+    text-align: left;
+
+}
+.bg-grey{
+    background: #D9D9D980;
+}
+.margin-auto{
+    margin: auto !important;
+}
+
+.page-heading-title{
+    font-family: 'Gilroy-Bold';
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24.76px;
+    text-align: left;
+    color:#000000;
+
+}
+
+.pl-6px{
+    padding-left: 6px;
+}
+
+.pr-6px{
+    padding-right: 6px;
+}
+
+.field__input3 {
+    font-family: 'Gilroy-Bold' !important;
+    font-size: 14px  !important;
+    font-weight: 400  !important;
+    line-height: 17.33px  !important;
+    text-align: left;
+
+}
+
+.text-grey{
+    color: #9c9d9f !important;
+}
+
+.project-profile-input-container {
+    border: 1px solid #e1e1e1 !important;
+    border-radius: 5px !important;
+    padding: 2px 5px 1px 5px !important;
+    gap: 1px;
+}
+
+.justify-content-space-between{
+    justify-content: space-between !important;
+}
+
+.mybtn-back-blue{
+    background: rgba(23, 161, 250, 1) !important;
+}
+
+.top-right-icon22{
+    position: absolute;
+    right: 7px;
+    top: 14px;
+}
+
+
+.field-input2 {
+    border: 1px solid #D9D9D9;
+    border-radius: 6px;
+    height: 34px;
+    padding: 9px 5px;
+    width: 100%;
+}
+
+.text-grey-shade2 {
+    color: #68696D !important;
+}
+.title-52 {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.required_field12:after{
+    content: "*";
+    position: absolute;
+    top: -14px;
+    left: 4px;
+    color: #F73333;
+    font-size: 15px;
+}
+
+.required_field11:after{
+    content: "*";
+    position: absolute;
+    top: -14px;
+    right: 4px;
+    color: #F73333;
+    font-size: 15px;
+}
+
+.top-left-icon2{
+    position: absolute;
+    left: 6px;
+    top: 6px;
+}
+.top-right-icon2{
+    position: absolute;
+    right: 6px;
+    top: 6px;
+}
+
+.address-modal input, .address-modal select, .address-modal .field-input2{
+    font-family: 'Gilroy-Bold' !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 17.33px !important;
+    text-align: left;
+    color: #000000 !important;
+}
+
+.myhr3px{
+    border: 1px solid #E1E1E1 !important;
+}
+
+.address-modal select{
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent url('../../../../../assets/images/arrow-down-grey.svg') no-repeat center right 10px;
+}
+
+.styled-button {
+    background-color: rgba(23, 161, 250, 1) !important;
+    padding: 7px 14px !important;
+    border: none;
+    cursor: pointer;
+    width: 150px;
+    height: 40px;
+}
+.text-color-F63333 {
+    color: #f63333;
+}
+.field__label-web{
+    left: 1rem;
+    top: calc(50% - .5em);
+    transition: top .2s cubic-bezier(0.9, -0.15, 0.1, 1.15), opacity .2s ease-out, font-size .2s ease-out;
+    will-change: bottom, opacity, font-size;
+    font-family: 'Gilroy';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(104, 105, 109, 1) !important;
+
+}
+
+.heading-1-400 {
+    font-family: "Gilroy-Bold" !important;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: normal !important;
+}
+
+.project-profile-header-left > img {
+    margin-right: 10px;
+}
+
+.inner_main_shadow{
+  box-shadow: 0px 4px 4px 0px #00000040 inset;
+
+}

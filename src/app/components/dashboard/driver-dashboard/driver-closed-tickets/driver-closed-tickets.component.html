@@ -1,0 +1,298 @@
+<div class="wrapper" *ngIf="screen =='desktop' || screen == 'tablet'">
+    <app-dashboard-header></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content">
+            <div class="dashboard-title">Accepted Tickets</div>
+            <br>
+            <div class="row">
+            
+                <div class="col-md-12 text-center">
+                  <h1>
+                    Coming Soon
+                  </h1>
+                  
+                </div>
+            </div>
+            <br>
+        
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="screen == 'mobile'">
+    
+    <div class="main-content"  *ngIf="!this.ticket_detail">
+        <app-dashboard-top-header [current_page]="'Closed Tickets'"></app-dashboard-top-header>
+        <br>
+        <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+        <br>
+        <br>
+     
+        <div align="center" *ngIf="!this.tickets || this.tickets?.length == 0">
+            <img src="assets/images/empty.svg" class="w-75">
+            <br>
+            <br>
+            <div class="heading-7 color-blackshade-4 ">No closed tickets available</div>
+            <br>
+            <div class="desc-3 color-blackshade-5 w-75"></div>
+            <br>
+            <br>
+            <button class="mybtn2 bg-grey"><img src="assets/images/refresh.svg" [routerLink]="'/driver-closed-tickets'" class="w-20px">Refresh page</button>
+        </div>
+        <ng-container *ngIf="this.tickets && this.tickets?.length > 0 && !this.ticket_detail">
+        <ng-container *ngFor="let driver_ticket of this.tickets">
+
+            <div (click)="setDetail(driver_ticket)" class="mb-2">
+            <div class="heading-9 mt-2 mb-2">{{driver_ticket?.created_at |  date:'longDate'}}</div>
+            
+            <div class="dashboard-body-stats">
+                <div class="dashboard-contents">
+                    <div>
+                        <div class="heading-6 color-blackshade-5 mb-1">Ticket ID</div>
+                        <div class="heading-10 color-blackshade-6 ">{{driver_ticket?.ticket?.ticket_no}}</div>
+                    </div>
+                    <div>
+                        <div class="heading-6 color-blackshade-5 mb-1 text-right">Start time</div>
+                        <div class="heading-10 color-blackshade-6  text-right">{{driver_ticket?.ticket?.ticket_truck_type_rounds && driver_ticket?.ticket?.ticket_truck_type_rounds[0].start_time}}</div>
+                    </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="dashboard-contents">
+                    <div>
+                        <div class="heading-6 color-blackshade-5 mb-1">Customer name</div>
+                        <div class="heading-10 color-blackshade-6 ">{{driver_ticket?.ticket?.user?.full_name}} </div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div>
+                        <div class="heading-6 color-blackshade-5 mb-1 text-right">Contact number</div>
+                        <div class="heading-10 color-blackshade-6  text-right">{{driver_ticket?.ticket?.user?.contact_number}}</div>
+                    </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="d-flex p-3 justify-content-between">
+                    <div class="">
+                        <div class="d-flex">
+                            <img src="assets/images/arrow-pink.svg">
+                            <div class="pl-3 pt-2">
+                                <div class="desc-3 color-blackshade-5 pb-1">Pick-up site</div>
+                                <div class="heading-9 color-blackshade-6  pb-1">{{driver_ticket?.ticket?.project?.project_location}}</div>
+                                <div class="desc-5 color-blackshade-5 pb-1"></div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <img src="assets/images/arrow-purple.svg">
+                            <div class="pl-3 pt-2">
+                                <div class="desc-3 color-blackshade-5 pb-1">Dump site</div>
+                                <div class="heading-9 color-blackshade-6 pb-1">{{driver_ticket?.ticket?.ticket_truck_type_rounds[0] && driver_ticket?.ticket?.ticket_truck_type_rounds[0].dump_site}}</div>
+                                <div class="desc-5 color-blackshade-5 pb-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="assets/images/arrow-grey.svg">
+                </div>
+                <div class="myhr"></div>
+                <div class="d-flex p-3 justify-content-between">
+                    <div>
+                        <div class="heading-6 color-blackshade-5 mb-1">Dispatched by</div>
+                        <div class="heading-10 color-blackshade-6 ">{{driver_ticket?.trucking_company?.company_name}}</div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div>
+                        <div class="heading-6 color-blackshade-5 mb-1">Approver</div>
+                        <div class="heading-10 color-blackshade-6 ">{{driver_ticket?.ticket?.approver?.full_name}} </div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div>
+                        <div class="heading-6 color-blackshade-5 mb-1 text-right">Rounds</div>
+                        <div class="heading-10 color-blackshade-6  text-right">{{driver_ticket?.ticket?.ticket_truck_type_rounds?.length}} rounds</div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        
+        </ng-container>
+        <div class="col-md-12 text-center mt-3" *ngIf="ticket_pagination?.total>this.perPage">
+            <div class="mypagination-div " *ngIf="ticket_pagination?.total>0">
+                <a  style="cursor: pointer" (click)="changePage(ticket_pagination.current_page -1 )" [ngClass]="ticket_pagination.first_page == this.page ? 'mypagination ':'mypagination disable'" class="">Previous</a>
+                                            
+                <a  style="cursor: pointer" (click)="changePage(ticket_pagination.current_page +1 )" [ngClass]="this.page == ticket_pagination.last_page ? 'mypagination ':'mypagination next'">Next</a>
+            </div>
+        </div>
+        </ng-container>
+    </div>
+    <div class="main-content" *ngIf="this.ticket_detail && this.ticket_detail?.driver_id !=''">
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <div class="back-div" (click)="backToList()">
+                    <img src="assets/images/arrow-back.svg" class="">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="heading-11 text-center pt-3">{{this.ticket_detail?.ticket?.ticket_no}}</div>
+            </div>
+        </div>
+        <br>
+        <div>
+            <ul class="request-ul">
+                <li>
+                    <div (click)="changeDetailTab('ticket_detail')" [ngClass]="this.detail_selected_tab == 'ticket_detail' ? 'request-div active': 'request-div'" >
+                        <div class="heading-8 color-blackshade-4 pr-2">Ticket details</div>
+                    </div>
+                </li>
+                <li>
+                    <div (click)="changeDetailTab('round_detail')" [ngClass]="this.detail_selected_tab == 'round_detail' ? 'request-div active': 'request-div'">
+                        <div class="heading-8 color-blackshade-4 pr-2">Round details</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <br>
+        <div *ngIf="this.detail_selected_tab == 'ticket_detail'">
+            <div class="dashboard-body-stats">
+                <div class="dashboard-contents">
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1">Customer</div>
+                        <div class="heading-9 color-blackshade-6 ">{{this.ticket_detail.ticket?.user?.full_name}} </div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1 text-right">Date & time</div>
+                        <div class="heading-9 color-blackshade-6  text-right">  {{this.ticket_detail?.ticket?.created_at |  date:'short'}} </div>
+                    </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="dashboard-contents">
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1">Job Approver</div>
+                        <div class="heading-9 color-blackshade-6 ">{{this.ticket_detail.ticket?.approver?.full_name}} </div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1 text-right">Rounds</div>
+                        <div class="heading-9 color-blackshade-6  text-right">{{this.ticket_detail?.ticket?.ticket_truck_type_rounds?.length}} rounds</div>
+                    </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="dashboard-contents">
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1">Job address</div>
+                        <div class="heading-9 color-blackshade-6 ">{{this.ticket_detail?.ticket?.project?.project_location}}</div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1 text-right">Dump site</div>
+                        <div class="heading-9 color-blackshade-6  text-right">{{this.ticket_detail?.ticket?.ticket_truck_type_rounds[0] && this.ticket_detail?.ticket?.ticket_truck_type_rounds[0].dump_site}}.</div>
+                    </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="dashboard-contents">
+                    <div class="w-100">
+                        <div class="desc-5 color-blackshade-5 mb-1">Notes by customer</div>
+                        <div class="heading-9 color-blackshade-6 "></div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="dashboard-body-stats">
+                <div class="dashboard-contents">
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1">Trucking company</div>
+                        <div class="heading-9 color-blackshade-6 ">{{this.ticket_detail?.ticket?.trucking_company?.company_name}}</div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1 text-right">Dispatcher</div>
+                        <div class="heading-9 color-blackshade-6  text-right">{{this.ticket_detail?.trucking_company?.company_name}}</div>
+                    </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="dashboard-contents">
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1">Contact #</div>
+                        <div class="heading-9 color-blackshade-6 ">{{this.ticket_detail?.trucking_company?.contact_number}}</div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1 text-right">Status</div>
+                        <div class="heading-9 color-blue text-right">Ticket {{this.ticket_detail?.ticket?.status}}</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="dashboard-body-stats">
+                <div class="dashboard-contents">
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1">Truck license plate </div>
+                        <div class="heading-9 color-blackshade-6 ">{{this.ticket_detail?.truck?.truck_license_plate}}</div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1 text-right">Truck type</div>
+                        <div class="heading-9 color-blackshade-6  text-right">{{this.ticket_detail?.truck?.truck_type}}</div>
+                    </div>
+                </div>
+                <div class="myhr"></div>
+                <div class="dashboard-contents">
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1">Round one time</div>
+                        <div class="heading-9 color-blackshade-6 ">{{this.ticket_detail?.ticket?.ticket_truck_type_rounds[0] && this.ticket_detail?.ticket?.ticket_truck_type_rounds[0].first_truck_start_at}}</div>
+                    </div>
+                    <div class="border-left"></div>
+                    <div class="w-50">
+                        <div class="desc-5 color-blackshade-5 mb-1 text-right">Job status</div>
+                        <div class="heading-9 text-right color-blue" >{{this.ticket_detail?.ticket?.status}}</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+          
+        </div>
+        <div *ngIf="this.detail_selected_tab == 'round_detail'">
+            <ng-container *ngIf="this.ticket_detail?.ticket?.ticket_truck_type_rounds">
+                <ng-container *ngFor="let round of this.ticket_detail?.ticket?.ticket_truck_type_rounds">
+                    <div class="desc-5 pb-2 pl-2">Round {{round.round_no}}</div>
+                    <div class="dashboard-body-stats">
+                        <div class="dashboard-contents">
+                            <div class="w-50">
+                                <div class="desc-5 color-blackshade-5 mb-1">Material taken out</div>
+                                <div class="heading-9 color-blackshade-6 ">{{round.material_taken_out}}</div>
+                            </div>
+                            <div class="w-50">
+                                <div class="desc-5 color-blackshade-5 mb-1 text-right">Dump site</div>
+                                <div class="heading-9 color-blackshade-6  text-right">{{round.dump_site}}</div>
+                            </div>
+                        </div>
+                        <div class="myhr"></div>
+                        <div class="dashboard-contents">
+                            <div class="w-50">
+                                <div class="desc-5 color-blackshade-5 mb-1">Round Started</div>
+                                <div class="heading-9 color-blackshade-6 ">{{round.driver_start_time | date:'shortTime'}}</div>
+                            </div>
+                            <div class="border-left"></div>
+                            <div class="w-50">
+                                <div class="desc-5 color-blackshade-5 mb-1 text-right">Round Ended</div>
+                                <div class="heading-9 color-blackshade-6  text-right">{{round.end_time | date:'shortTime'}}</div>
+                            </div>
+                        </div>
+                        <div class="myhr"></div>
+                        <div class="dashboard-contents">
+                            <div class="w-100">
+                                <div class="desc-5 color-blackshade-5 mb-1">Notes</div>
+                                <div class="heading-9 color-blackshade-6 "></div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </ng-container>
+            </ng-container>
+        
+            <br>
+        </div>
+        <br>
+    </div>
+</ng-container>
+
+
+

@@ -1,0 +1,3242 @@
+<!-- <div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content ">
+            <div class="title-12 text-color-black-shade drivertc-head">Set companies, projects, and trucks ready for easy dispatch</div>
+            <div class="setting-content-page  p-0">
+                <div class="row m-0">
+                    <div class="col-lg-4 p-0">
+                        <app-freelance-driver-settings-nav [active_link]="'freelance-create-ticket'" ></app-freelance-driver-settings-nav>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="dashboard-body-stats custom-padding9 inner_main_shadow">
+                            <div class="title-12 text-color-black-shade mb-15">Track your jobs</div>
+                            <div class="row mt-3 title-14 font-size-14">
+
+                                <div class="  col-lg-9  p-2">
+                                    Creating your digital ticket:
+                                    <br/>
+                                    <div class="mt-2">
+                                        <p>
+                                            1. You have been assigned to a job
+                                        </p>
+                                        <p>
+                                            2. Click “Create ticket”
+                                        </p>
+                                        <p>
+                                            3. Set date
+                                        </p>
+                                        <p>
+                                            4. Construction company, project
+                                        </p>
+                                        <p>
+                                            5. Job approver, description
+                                        </p>
+                                        <p>
+                                            6. Trucking company
+                                        </p>
+                                        <p>
+                                            7. Paper ticket ID (if you know it already)
+                                        </p>
+                                        <p>
+                                            8. Truck details you drive
+                                        </p>
+
+                                        <p>
+                                            9. Number of rounds
+                                        </p>
+                                        <p>
+                                            10. Dispatch
+                                        </p>
+                                    </div>
+                                    <br/>
+                                    <div class="mt-2">
+                                        The more details you put in now, the easier it is to track while driving and your ticket to the trucking company will have more relevant details.
+                                    </div>
+
+                                    <br/>
+                                    <div class="mt-2">
+                                        To make those steps easier, you want to set up all trucks, companies, people and so on and set your default values. This way dispatching tickets to yourself is quick and easy.
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-3">
+                                    <button class="mybtn2 mybtn-back-pink" (click)="getDataCreateTicket()" data-toggle="modal"  data-target="#myModalCreateTicket">Create ticket</button>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+
+                                <div class="  col-lg-12  p-2 pl-3 pr-3">
+
+                                    <div class="title-3 text-color-black-shade7 mb-21">Invite trucking companies to start dispatching tickets to you</div>
+                                    <form  [formGroup]="inviteTC" (ngSubmit)="onSaveInvite()">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <span *ngIf="inviteTC.get('contact_name')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Contact name is required.
+                                                </span>
+                                                <div class="title-5-new2 mb-2px">Trucking company contact name</div>
+                                                <div class="position-relative mb-13">
+                                                    <input type="text" class="myinput4" placeholder="John Doe" formControlName="contact_name">
+                                                    <div class="required top-right-icon2">*</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span *ngIf="inviteTC.get('contact_email')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Contact email is required.
+                                                </span>
+                                                <div class="title-5-new2 mb-2px">Contact email</div>
+                                                <div class="position-relative mb-13">
+                                                    <input type="text" class="myinput4" placeholder="john@doe.com" formControlName="contact_email">
+                                                    <div class="required top-right-icon2">*</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+
+                                                <div class="title-5-new2 mb-2px">Phone number</div>
+                                                <div class="position-relative mb-13">
+                                                    <input type="text" class="myinput4" placeholder="(---) --- ----" formControlName="contact_number"
+                                                    (input)="changeNumberInv($event)"
+                                                    >
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 pt-2" align="right">
+                                                <button class="mybtn4 mybtn-back-pink title-17 w-auto" *ngIf="this.is_loading==''">Send invite</button>
+                                                <button class="mybtn4 mybtn-back-pink title-17 w-auto" disabled type="button" *ngIf="this.is_loading=='invite_tc'">Processing...</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+      <app-dashboard-top-header></app-dashboard-top-header>
+      <div class="body-content">
+        <div class="main-inner-body-container mt-15px">
+          <div class="project-profile-header-container">
+            <div class="profile_heading_div1">
+              <div class="project-profile-header-left d-flex align-items-center">
+                <img
+                  src="./assets/images/cust-settings-icon.svg"
+                  alt="project-profile-file-icon"
+                />
+                <div class="heading-1-400 text-color-black">
+                    Companies, trucks
+                </div>
+              </div>
+            </div>
+            <app-freelance-driver-settings-nav [active_link]="'freelance-create-ticket'" ></app-freelance-driver-settings-nav>
+          </div>
+            <div class="dashboard-body-stats custom-padding9 inner_main_shadow">
+                <div class="row mb-95">
+                    <div class="col-md-7" style="display:flex; align-items:center">
+                      <div class="title-12 text-color-black-shade">Track your jobs</div>
+                    </div>
+                    <div
+                      class="col-md-5 d-flex justify-content-end"
+                      style="height: 45px !important"
+                    >
+                      <button
+                        class="title-14 styled-button openOptionModal"
+                        style="margin-right: 10px !important"
+                        (click)="getDataCreateTicket()"
+                        data-toggle="modal" data-target="#myModalCreateTicket"
+                        
+                        
+                      >
+                        <!-- <button class="title-14 styled-button openOptionModal" style="border-radius: 5px !important;" (click)="showMore()" > -->
+                        <div class="d-flex align-items-center">
+                          <div
+                            class="heading-5-400 text-color-black ml-8px col text-center"
+                          >
+                          Create a ticket
+                          </div>
+                        </div>
+                      </button>
+
+
+                    </div>
+                  </div>
+
+
+                <div class="row mt-3 title-14 font-size-14"
+                style="font-family: Gilroy-SemiBold !important;
+                font-weight: 400!important;
+                font-size: 15px !important;
+                line-height: 18.38px !important;
+                color:#88898B;
+                "
+                >
+
+                    <div class="  col-lg-9  p-2">
+                        Creating your digital ticket:
+                        <br/>
+                        <div class="mt-2">
+                            <p>
+                                1. You have been assigned to a job
+                            </p>
+                            <p>
+                                2. Click “Create ticket”
+                            </p>
+                            <p>
+                                3. Set date
+                            </p>
+                            <p>
+                                4. Construction company, project
+                            </p>
+                            <p>
+                                5. Job approver, description
+                            </p>
+                            <p>
+                                6. Trucking company
+                            </p>
+                            <p>
+                                7. Paper ticket ID (if you know it already)
+                            </p>
+                            <p>
+                                8. Truck details you drive
+                            </p>
+
+                            <p>
+                                9. Number of rounds
+                            </p>
+                            <p>
+                                10. Dispatch
+                            </p>
+                        </div>
+                        <br/>
+                        <div class="mt-2">
+                            The more details you put in now, the easier it is to track while driving and your ticket to the trucking company will have more relevant details.
+                        </div>
+
+                        <br/>
+                        <div class="mt-2">
+                            To make those steps easier, you want to set up all trucks, companies, people and so on and set your default values. This way dispatching tickets to yourself is quick and easy.
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <!-- <button class="mybtn2 mybtn-back-pink" (click)="getDataCreateTicket()" data-toggle="modal"  data-target="#myModalCreateTicket">Create ticket</button> -->
+                    </div>
+                </div>
+
+
+                <div class="row mt-3">
+                    <div class="col-md-7" style="display:flex; align-items:center">
+                        <div class="title-12 text-color-black-shade">Invite trucking companies to start dispatching tickets to you
+                    </div>
+                    </div>
+                    <div
+                      class="col-md-5 d-flex justify-content-end"
+                      style="height: 45px !important"
+                    >
+                      <button
+                        class="title-14 styled-button openOptionModal"
+                        style="margin-right: 10px !important"
+                       
+                        data-toggle="modal" data-target="#invitePeople"
+                        
+                        
+                      >
+                        <!-- <button class="title-14 styled-button openOptionModal" style="border-radius: 5px !important;" (click)="showMore()" > -->
+                        <div class="d-flex align-items-center">
+                          <div
+                            class="heading-5-400 text-color-black ml-8px col text-center"
+                          >
+                          Invite Trucking<br>company
+                          </div>
+                        </div>
+                      </button>
+
+
+                    </div>
+                  </div>
+
+
+
+
+
+
+                <!-- <div class="row mt-3">
+
+                    <div class="  col-lg-12  p-2 pl-3 pr-3">
+
+                        <div class="title-3 text-color-black-shade7 mb-21">Invite trucking companies to start dispatching tickets to you</div>
+
+                        
+
+
+
+
+                        <form  [formGroup]="inviteTC" (ngSubmit)="onSaveInvite()">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span *ngIf="inviteTC.get('contact_name')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Contact name is required.
+                                    </span>
+                                    <div class="title-5-new2 mb-2px">Trucking company contact name</div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="John Doe" formControlName="contact_name">
+                                        <div class="required top-right-icon2">*</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <span *ngIf="inviteTC.get('contact_email')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Contact email is required.
+                                    </span>
+                                    <div class="title-5-new2 mb-2px">Contact email</div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="john@doe.com" formControlName="contact_email">
+                                        <div class="required top-right-icon2">*</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="title-5-new2 mb-2px">Phone number</div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="(---) --- ----" formControlName="contact_number"
+                                        (input)="changeNumberInv($event)"
+                                        >
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pt-2" align="right">
+                                    <button class="mybtn4 mybtn-back-pink title-17 w-auto" *ngIf="this.is_loading==''">Send invite</button>
+                                    <button class="mybtn4 mybtn-back-pink title-17 w-auto" disabled type="button" *ngIf="this.is_loading=='invite_tc'">Processing...</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div> -->
+            </div>
+
+
+
+            <div class="modal fade  come-from-modal right"  id="invitePeople" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  
+                <div class="modal-dialog"  style="height: fit-content !important; margin-top: 95px !important;" role="document">
+                    <div class="modal-content" style="background: #FAFAFA">
+                    <div class="modal-body" style="padding :20px; ">
+        
+                        <div class="row align-items-center justify-content-center mb-50">
+                            <div class="" style="width: 282px; height: 187px;" >
+                                <img [src]="'assets/icons/blueinvite.png'" class="img ">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-25px">
+                            <div>
+        
+                                <div class=" justify-content-between ">
+                                    <div class="page-heading-title mb-15px">Invite trucking company / broker </div>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <form  [formGroup]="inviteTC" (ngSubmit)="onSaveInvite()">
+        
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <span *ngIf="inviteTC.get('contact_name')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Company name is required.
+                                    </span>
+                                    <label class="field text-field required_field">
+                                        <input class="field__input" placeholder="Enter" formControlName="company_name">
+                                        <span class="field__label-wrap">
+                                            <span class="field__label">Company Name</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12">
+                                    <span *ngIf="inviteTC.get('contact_name')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Contact name is required.
+                                    </span>
+                                    <label class="field text-field required_field">
+                                        <input class="field__input" placeholder="Enter" formControlName="contact_name">
+                                        <span class="field__label-wrap">
+                                            <span class="field__label">Trucking company contact name</span>
+                                        </span>
+                                    </label>
+        
+                                </div>
+                                <div class="col-md-12">
+                                    <span *ngIf="inviteTC.get('contact_email')?.invalid && (form_clicked)"
+                                    class="text-danger">
+                                        Contact email is required.
+                                    </span>
+                                    <label class="field text-field required_field">
+                                        <input class="field__input" placeholder="Enter"  formControlName="contact_email">
+                                        <span class="field__label-wrap">
+                                            <span class="field__label">Contact email</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <!-- <div class="col-md-12">
+        
+                                    <div class="title-5-new2 mb-2px">Phone number</div>
+                                    <div class="position-relative mb-13">
+                                        <input type="text" class="myinput4" placeholder="(---) --- ----" formControlName="contact_number"
+                                        (input)="changeNumber($event)"
+                                        >
+        
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="row m-0 mt-25px justify-content-center">
+                            <div class="col-md-6" style="
+                            display:flex;
+                            justify-content:center;
+                                
+                                ">
+                           <button type="button" data-bs-dismiss="modal" class="mybtn5 mybtn-default title-17 w-auto" 
+                           (click)="closeModal()"
+                           style="line-height: 18px !important;  
+                                  border-radius: 5px !important; 
+                                  padding: 14px 30px !important;
+                                  border: 1px solid #FDD7E4 !important;
+                                  background: white !important;
+                                  box-shadow: 0px 4px 4px 0px #00000040;">
+                           Back
+                       </button>
+                       
+                            </div>
+                            <div class="col-md-6">
+                                <button class="mybtn4 mybtn-back-pink title-17 w-auto" style="
+                                   line-height: 18px  !important;  
+                                   border-radius: 5px !important; 
+                                   padding: 14px 30px  !important;
+                                   box-shadow: 0px 4px 4px 0px #00000040;
+                                " *ngIf="this.is_loading==''">Send invite</button>
+                                <button class="mybtn4 mybtn-back-pink title-17 w-auto"
+                                style="
+                                   line-height: 18px  !important;  
+                                   border-radius: 5px !important; 
+                                   padding: 14px 30px  !important;"
+                                 disabled type="button" *ngIf="this.is_loading=='invite_tc'">Processing...</button>
+                            </div></div>
+        
+                        </form>
+
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+<!-- 
+<div class="modal fade  come-from-modal right" id="myModalCreateTicket"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ">
+            <div class="modal-body modal-body-padding">
+                <div class="row mb-14">
+                    <div class="col-md-4 display-table">
+                        <div class="vertical-middle">
+
+                            <div class="title-7 text-color-black-shade5">Ticket ID</div>
+                            <div class="title-12 text-color-black-shade">{{this.ticket_data?.ticket_no}} </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" align="center">
+                        <div class="input-div required_field getinputfield">
+                            <div class="title-5-new2 text-color-black-shade5 text-left">Set date</div>
+                            <div class="myinput-new text-left">{{this.ticket_date}}</div>
+                            <img src="../../assets/icons/calendar.svg" class="icon-center-right">
+                            <div class="input-popup-div calendar-2 calendar-width-300">
+                                <div id="pnlEventCalendar2" style="width:100%;" class="" (click)="getVal2()"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 display-table" align="right">
+                        <div class="vertical-middle">
+                            <button class="mybtn bg-light-grey2 width-fit-content btn-text-very-small2 m-0">Pending</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light-yellow2 mb-8 br-8">
+                    <div class="custom-padding5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="text-danger" *ngIf="this.company_error !=''">{{this.company_error}}</span>
+                                <div class="input-div required_field getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Construction company</div>
+                                    <div class="myinput-new">{{this.ticket_construction_company?.company_name? this.ticket_construction_company?.company_name:'Select'}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div cc-popup" id="cc-popup">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">Construction company</div>
+                                        <ng-container *ngIf="this.ticket_data && this.ticket_data?.construction_companies">
+
+                                            <div class="title-18 text-right mb-2px" >Default</div>
+                                            <ng-container *ngFor="let construction of this.ticket_data?.construction_companies">
+                                                <div class="d-flex justify-content-between  mb-2px">
+                                                    <div
+                                                    [ngClass]="this.ticket_construction_company && construction?.id == this.ticket_construction_company?.id ? 'title-5-new':'title-5-new text-color-black-shade7'"
+                                                    (click)="setTicketData(construction,'construction_company')">{{construction?.company_name}}</div>
+                                                    <input type="checkbox" class="mycheckbox2"  value="1" (click)="markDefault($event,'freelance_construction_company',construction?.id)" [checked]="construction?.is_default==1">
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+
+
+                                        <div class="position-relative getinputfield2" (click)="setVisible('cc')">
+                                            <div class="myinput-new myinput3 text-color-black-shade8">Add</div>
+                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                        </div>
+                                        <div class="input-popup-div2" *ngIf="is_visible=='cc'">
+                                            <form  [formGroup]="addCC" (ngSubmit)="onAddCC()">
+                                                <div class="title-3 text-center mb-19">Add Construction company</div>
+                                                <span *ngIf="addCC.get('company_name')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                               Company name is required.
+                                                </span>
+                                                <div class="position-relative mb-11 required_field2">
+                                                    <input type="text" class="myinput-new myinput3" formControlName="company_name" placeholder="Add">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <div align="center" class="mb-17">
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" *ngIf="is_loading_add =='' || is_loading_add !='cc'">Add</button>
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" type="button" *ngIf="is_loading_add !='' && is_loading_add =='cc'" disabled>Adding..</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="text-danger" *ngIf="this.project_error !=''">{{this.project_error}}</span>
+                                <div class="input-div required_field getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Project name</div>
+                                    <div class="myinput-new">{{this.ticket_project?.project_name ? this.ticket_project?.project_name:'Select'}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div" id="project-popup">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">Project name</div>
+                                        <ng-container *ngIf="this.ticket_data && this.ticket_data?.projects">
+                                            <div class="title-18 text-right mb-2px" >Default</div>
+                                            <ng-container *ngFor="let project of this.ticket_data?.projects">
+                                                <div class="d-flex justify-content-between  mb-2px">
+                                                    <div
+                                                    [ngClass]="this.ticket_project && project?.id == this.ticket_project?.id ? 'title-5-new':'title-5-new text-color-black-shade7'"
+                                                    (click)="setTicketData(project,'project')">{{project?.project_name}}</div>
+                                                    <input type="checkbox" class="mycheckbox2" value="1" (click)="markDefault($event,'freelance_projects',project?.id)" [checked]="project?.is_default==1">
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <div class="position-relative getinputfield2" (click)="setVisible('project')">
+                                            <input type="text" class="myinput-new myinput3" placeholder="Add">
+                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                        </div>
+                                        <div class="input-popup-div2" *ngIf="is_visible=='project'">
+                                            <form  [formGroup]="addProject" (ngSubmit)="onAddProject()">
+                                                <div class="title-3 text-center mb-19">Add Project</div>
+                                                <span *ngIf="addProject.get('project_name')?.invalid && (form_clicked)"
+                                                    class="text-danger">
+                                                    Project name is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Project name</div>
+                                                    <input type="text" formControlName="project_name" class="myinput-new myinput3" placeholder="Add">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addProject.get('job_number')?.invalid && (form_clicked)"
+                                                    class="text-danger">
+                                                    Job number is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Job number</div>
+                                                    <input type="text" formControlName="job_number" class="myinput-new myinput3" placeholder="Add">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addProject.get('job_address')?.invalid && (form_clicked)"
+                                                    class="text-danger">
+                                                    Job address is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Job address</div>
+                                                    <input type="text" formControlName="street" class="myinput-new myinput3" placeholder="Add">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <div class="d-flex justify-content-center align-items-center mb-19">
+                                                    <input type="checkbox" formControlName="is_default" value="1" class="mycheckbox2">
+                                                    <div class="title-7 ml-10">Set as default</div>
+                                                </div>
+                                                <div align="center" class="mb-17">
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" *ngIf="is_loading_add =='' || is_loading_add !='project'">Add</button>
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" type="button" *ngIf="is_loading_add !='' && is_loading_add =='project'" disabled>Adding..</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="custom-padding6">
+                        <div class="row">
+                            <div class="col-md-6">
+
+                                <div class="title-5-new2 text-color-black-shade5 text-left mb-4px">Job number</div>
+                                <div class="title-5-new">{{this.ticket_project?.job_number}}</div>
+                            </div>
+                            <div class="col-md-6" align="right">
+                                <div class="title-5-new2 text-color-black-shade5 mb-4px">Job address</div>
+                                <div class="title-5-new">{{this.ticket_project?.street}}, {{this.ticket_project?.city}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="custom-padding7">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="text-danger" *ngIf="this.approver_error !=''">{{this.approver_error}}</span>
+                                <div class="input-div required_field getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Job approver</div>
+                                    <div class="myinput-new">{{this.ticket_approver ? this.ticket_approver?.name :'Select'}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div" id="approver-popup">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">Job approver</div>
+                                        <ng-container *ngIf="this.ticket_data">
+                                            <div class="title-18 text-right mb-2px">Default</div>
+                                            <ng-container *ngFor="let approver of this.approvers">
+                                                <div class="d-flex justify-content-between  mb-2px">
+                                                    <div
+                                                    [ngClass]="this.ticket_approver && approver?.id == this.ticket_approver?.id ? 'title-5-new':'title-5-new text-color-black-shade7'"
+                                                    (click)="setTicketData(approver,'approver')"
+                                                    >{{approver?.name}}</div>
+                                                    <input type="checkbox" class="mycheckbox2" (click)="markDefault($event,'approver',approver?.id)" [checked]="approver?.is_default==1">
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <div class="position-relative getinputfield2" (click)="setVisible('approver')">
+                                            <input type="text" class="myinput-new myinput3" placeholder="Add">
+                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                        </div>
+                                        <div class="input-popup-div2" *ngIf="is_visible=='approver'">
+                                            <form  [formGroup]="addApprover" (ngSubmit)="onAddApprover()">
+                                                <div class="title-3 text-center mb-19">Add job approver</div>
+                                                <span *ngIf="addApprover.get('name')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Name is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Name</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="name" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addApprover.get('contact_number')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Contact number is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Contact number</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="contact_number" (input)="changeNumber3($event)" placeholder="(---) --- ----">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addApprover.get('email')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Email is required.
+                                                </span>
+                                                <div class="position-relative mb-20">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Email address</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="email" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <div align="center" class="mb-17">
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" *ngIf="is_loading_add =='' || is_loading_add !='approver'">Add</button>
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" type="button" *ngIf="is_loading_add !='' && is_loading_add =='approver'" disabled>Adding..</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 display-table" align="right">
+                                <div class="vertical-middle">
+                                    <div class="title-5-new2 text-color-black-shade5 mb-4px">Contact #</div>
+                                    <div class="title-5-new">{{this.ticket_approver? this.ticket_approver?.contact_number:''}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="custom-padding5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-div getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Description</div>
+                                    <div class="myinput-new">{{this.ticket_description? this.ticket_description:'Type here'}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">Description</div>
+                                        <div class="position-relative">
+                                            <input type="text" class="myinput-new myinput3" placeholder="Type here" id='description_input_selfticket' (input)="setTicketData($event,'description')">
+                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-all mb-8 br-8">
+                    <div class="custom-padding5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="text-danger" *ngIf="this.trucking_error !=''">{{this.trucking_error}}</span>
+                                <div class="input-div required_field getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Trucking company</div>
+                                    <div class="myinput-new">{{this.ticket_trucking_company?.company_name ? this.ticket_trucking_company?.company_name :'Select'}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div " id="tc-popup">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">Trucking company</div>
+                                        <ng-container *ngIf="this.ticket_data">
+                                            <div class="title-18 text-right mb-2px" >Default</div>
+                                            <ng-container *ngFor="let trucking_company of this.ticket_data?.trucking_companies">
+
+                                                <div class="d-flex justify-content-between  mb-2px">
+                                                    <div
+                                                    [ngClass]="this.ticket_trucking_company && trucking_company?.id == this.ticket_trucking_company?.id ? 'title-5-new':'title-5-new text-color-black-shade7'"
+                                                    (click)="setTicketData(trucking_company,'trucking_company')"
+                                                    >{{trucking_company?.company_name}}</div>
+                                                    <input type="checkbox" class="mycheckbox2" value="1" (click)="markDefault($event,'freelance_trucking_company',trucking_company?.id)" [checked]="trucking_company?.is_default==1">
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <div class="position-relative getinputfield2" (click)="setVisible('trucking')">
+                                            <input type="text" class="myinput-new myinput3" placeholder="Add">
+                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                        </div>
+
+                                        <div class="input-popup-div2" *ngIf="is_visible=='trucking'">
+                                            <form  [formGroup]="addTC" (ngSubmit)="onAddTC()">
+                                                <div class="title-3 text-center mb-19">Add trucking company</div>
+                                                <span *ngIf="addTC.get('company_name')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Company name is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Company name</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="company_name" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addTC.get('contact_name')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Contact person name is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Contact person</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="contact_name" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+
+                                                <div class="position-relative mb-15 ">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Contact phone</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="contact_phone" (input)="changeNumber2($event)" placeholder="(---) --- ----">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+
+                                                <div class="position-relative mb-15 ">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Contact email</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="contact_email" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <div align="center" class="mb-17">
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" *ngIf="is_loading_add =='' || is_loading_add !='trucking'">Add</button>
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" type="button" *ngIf="is_loading_add !='' && is_loading_add =='trucking'" disabled>Adding..</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="text-danger" *ngIf="this.paper_ticket_id_error !=''">{{this.paper_ticket_id_error}}</span>
+                                <div class="input-div  getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Paper ticket ID</div>
+                                    <div class="myinput-new">{{this.paper_ticket_id ? this.paper_ticket_id: 'Type here'}}</div>
+                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right">
+                                    <div class="input-popup-div">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">Paper ticket ID</div>
+                                        <div class="position-relative">
+                                            <input type="text" class="myinput-new myinput3" placeholder="Type here" id='paperticketid_input_selfticket'  (input)="setTicketData($event,'paper_ticket_id')">
+                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="custom-padding7">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-div  getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Dispatcher</div>
+                                    <div class="myinput-new">{{this.ticket_dispatcher ? this.ticket_dispatcher?.name :'Select'}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div" id="dispatcher-popup">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-18">Dispatcher</div>
+                                        <ng-container *ngIf="this.ticket_data">
+                                            <ng-container *ngFor="let dispatcher of this.dispatchers">
+                                                <div  [ngClass]="this.ticket_dispatcher && dispatcher?.id == this.ticket_dispatcher?.id ? 'title-5-new mb-6':'title-5-new text-color-black-shade7 mb-6'"  (click)="setTicketData(dispatcher,'dispatcher')">{{dispatcher?.name}}</div>
+                                            </ng-container>
+                                        </ng-container>
+                                        <div class="position-relative getinputfield2" (click)="setVisible('dispatcher')">
+                                            <input type="text" class="myinput-new myinput3" placeholder="Add">
+                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                        </div>
+                                        <div class="input-popup-div2" *ngIf="this.is_visible=='dispatcher'">
+                                            <div class="title-3 text-center mb-19">Add dispatcher</div>
+                                            <form  [formGroup]="addDispatcher" (ngSubmit)="onAddDispatcher()">
+                                                <span *ngIf="addDispatcher.get('name')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Name is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Name</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="name" placeholder="Nicholas Truck">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addDispatcher.get('contact_number')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Contact number is required.
+                                                </span>
+                                                <div class="position-relative mb-20 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Contact number</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="contact_number" (input)="changeNumber($event)" placeholder="(---) --- ----">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <div align="center" class="mb-17">
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" *ngIf="is_loading_add =='' || is_loading_add !='dispatcher'">Add</button>
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" type="button" *ngIf="is_loading_add !='' && is_loading_add =='dispatcher'" disabled>Adding..</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 display-table" align="right">
+                                <div class="vertical-middle">
+                                    <div class="title-5-new2 text-color-black-shade5 mb-4px">Contact number</div>
+                                    <div class="title-5-new">{{this.ticket_dispatcher? this.ticket_dispatcher?.contact_number:''}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mybtn-back-pink mb-8 br-8">
+                    <div class="custom-padding5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="text-danger" *ngIf="this.truck_error !=''">{{this.truck_error}}</span>
+                                <div class="input-div bg-white required_field getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Truck Name</div>
+                                    <div class="myinput-new">{{this.ticket_truck? this.ticket_truck?.name:'Select'}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div" id="truck-popup">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">Truck name</div>
+                                        <ng-container *ngIf="this.ticket_data">
+                                            <div class="title-18 text-right mb-2px" >Default</div>
+                                            <ng-container *ngFor="let truck of this.ticket_data?.trucks">
+                                                <div class="d-flex justify-content-between  mb-2px">
+                                                    <div
+
+                                                    [ngClass]="this.ticket_truck && truck?.id == this.ticket_truck?.id ? 'title-5-new':'title-5-new text-color-black-shade7'"
+                                                    (click)="setTicketData(truck,'truck')">{{truck?.name}}</div>
+                                                    <input type="checkbox" class="mycheckbox2" value="1" (click)="markDefault($event,'freelance_trucks',truck?.id)" [checked]="truck?.is_default==1">
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <div class="position-relative getinputfield2" (click)="setVisible('truck')">
+                                            <input type="text" class="myinput-new myinput3" placeholder="Add">
+                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                        </div>
+                                        <div class="input-popup-div2" *ngIf="this.is_visible=='truck'">
+                                            <div class="title-3 text-center mb-19">Add truck</div>
+                                            <form  [formGroup]="addTruck" (ngSubmit)="onAddTruck()">
+                                                <span *ngIf="addTruck.get('name')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Name is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Truck name</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="name" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addTruck.get('license_plate')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                Truck license plate is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Truck license plate</div>
+                                                    <input type="text" class="myinput-new myinput3"  formControlName="license_plate"  placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addTruck.get('type')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Truck type is required.
+                                                </span>
+                                                <div class="position-relative mb-20 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px" formControlName="type">Truck type</div>
+                                                    <select class="myinput-new myinput3 icon-none" formControlName="type">
+
+                                                        <option value="Single" >Single</option>
+                                                        <option value="Tandem">Tandem</option>
+                                                        <option value="Tridem">Tridem</option>
+                                                        <option value="Quad-Axle">Quad-Axle</option>
+                                                    </select>
+                                                    <img src="../../assets/icons/arrow-down.png" class="icon-bottom-right2">
+                                                </div>
+                                                <div class="position-relative mb-15">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Truck Color</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="color" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <div class="d-flex justify-content-center align-items-center mb-19">
+                                                    <input type="checkbox" class="mycheckbox2" value="1" formControlName="is_default">
+                                                    <div class="title-7 ml-10">Set as default</div>
+                                                </div>
+                                                <div align="center" class="mb-17">
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" *ngIf="is_loading_add =='' || is_loading_add !='truck'">Add</button>
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" type="button" *ngIf="is_loading_add !='' && is_loading_add =='truck'" disabled>Adding..</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-div bg-white  getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Trailer Name</div>
+                                    <div class="myinput-new">{{this.ticket_trailer? this.ticket_trailer?.name:'Select'}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div" id="trailer-popup">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">Trailer name</div>
+                                        <ng-container *ngIf="this.ticket_data?.trailers">
+                                            <div class="title-18 text-right mb-2px" >Default</div>
+                                            <ng-container *ngFor="let trailer of this.ticket_data?.trailers">
+                                                <div class="d-flex justify-content-between  mb-2px">
+                                                    <div
+                                                    [ngClass]="this.ticket_trailer && trailer?.id == this.ticket_trailer?.id ? 'title-5-new':'title-5-new text-color-black-shade7'"
+                                                    (click)="setTicketData(trailer,'trailer')">{{trailer?.name}}</div>
+                                                    <input type="checkbox" class="mycheckbox2" value="1" (click)="markDefault($event,'freelance_trucks',trailer?.id)" [checked]="trailer?.is_default==1">
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+
+                                        <div class="position-relative getinputfield2" (click)="setVisible('trailer')">
+                                            <input type="text" class="myinput-new myinput3" placeholder="Add">
+                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                        </div>
+                                        <div class="input-popup-div2" *ngIf="this.is_visible=='trailer'">
+                                            <div class="title-3 text-center mb-19">Add Trailer</div>
+                                            <form  [formGroup]="addTrailer" (ngSubmit)="onAddTrailer()">
+                                                <span *ngIf="addTrailer.get('name')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Name is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Trailer name</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="name" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addTrailer.get('license_plate')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                License plate is required.
+                                                </span>
+                                                <div class="position-relative mb-15 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Trailer license plate</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="license_plate" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <span *ngIf="addTrailer.get('name')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                    Trailer type is required.
+                                                </span>
+                                                <div class="position-relative mb-20 required_field2">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Trailer type</div>
+                                                    <select class="myinput-new myinput3 icon-none" formControlName="type">
+                                                        <option value="Pony">Pony</option>
+                                                        <option value="Tri Pony">Tri Pony</option>
+                                                        <option value="Quad (wagon)">Quad (wagon)</option>
+                                                        <option value="Transfer">Transfer</option>
+                                                    </select>
+                                                    <img src="../../assets/icons/arrow-down.png" class="icon-bottom-right2">
+                                                </div>
+                                                <div class="position-relative mb-15">
+                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Trailer Color</div>
+                                                    <input type="text" class="myinput-new myinput3" formControlName="color" placeholder="Type here">
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                </div>
+                                                <div class="d-flex justify-content-center align-items-center mb-19">
+                                                    <input type="checkbox" class="mycheckbox2" formControlName="is_default">
+                                                    <div class="title-7 ml-10">Set as default</div>
+                                                </div>
+                                                <div align="center" class="mb-17">
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" *ngIf="is_loading_add =='' || is_loading_add !='trailer'">Add</button>
+                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" type="button" *ngIf="is_loading_add !='' && is_loading_add =='trailer'" disabled>Adding..</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="myhr2"></div>
+                    <div class="custom-padding5">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <span class="text-danger" *ngIf="this.start_time_error !=''">{{this.start_time_error}}</span>
+                                <div class="input-div bg-white required_field">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Start time</div>
+                                    <input type="time" class="myinput-new" (change)="setTicketData($event,'start_time')">
+
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-5">
+                                <span class="text-danger" *ngIf="this.total_rounds_error !=''">{{this.total_rounds_error}}</span>
+                                <div class="input-div bg-white required_field getinputfield">
+                                    <div class="title-5-new2 text-color-black-shade5 text-left">Number of rounds</div>
+                                    <div class="myinput-new">{{this.rounds}}</div>
+                                    <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                    <div class="input-popup-div">
+                                        <div class="title-5-new2 text-color-black-shade5 mb-9">Number of rounds</div>
+                                        <div class="d-flex justify-content-between numbers-div">
+                                            <div (click)="setRound(1)" [ngClass]="this.rounds==1? 'active':''">1</div>
+                                            <div (click)="setRound(2)" [ngClass]="this.rounds==2? 'active':''">2</div>
+                                            <div (click)="setRound(3)" [ngClass]="this.rounds==3? 'active':''">3</div>
+                                            <div (click)="setRound(4)" [ngClass]="this.rounds==4? 'active':''">4</div>
+                                            <div (click)="setRound(5)" [ngClass]="this.rounds==5? 'active':''">5</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between numbers-div">
+                                            <div (click)="setRound(6)" [ngClass]="this.rounds==6? 'active':''">6</div>
+                                            <div (click)="setRound(7)" [ngClass]="this.rounds==7? 'active':''">7</div>
+                                            <div (click)="setRound(8)" [ngClass]="this.rounds==8? 'active':''">8</div>
+                                            <div (click)="setRound(9)" [ngClass]="this.rounds==9? 'active':''">9</div>
+                                            <div (click)="setRound(10)" [ngClass]="this.rounds==10? 'active':''">10</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form [formGroup]="ticketForm"  enctype="multipart/form-data" (ngSubmit)="dispatchTicket()">
+                    <div class="border-all mb-48 br-8">
+                        <div class="custom-padding5">
+
+
+                            <ng-container formArrayName="ticket_rounds">
+                                <ng-container *ngFor="let formItem of ticket_rounds().controls; let idx = index;let i=index">
+                                    <ng-container [formGroupName]="idx">
+                                        <div class="row mt-2" >
+                                            <div class="col-md-5">
+                                                <span *ngIf="formItem.get('material_taken_out')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                Material taken out is required.
+                                                </span>
+                                                <div class="input-div required_field getinputfield">
+                                                    <div class="title-5-new2 text-color-black-shade5 text-left">Material out</div>
+                                                    <div class="myinput-new">{{formItem.get('material_taken_out')?.value ? formItem.get('material_taken_out')?.value :'Type here'}}</div>
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right">
+                                                    <div class="input-popup-div">
+                                                        <div class="title-5-new2 text-color-black-shade5 mb-4px">Material out</div>
+                                                        <div class="position-relative">
+                                                            <input type="text" class="myinput-new myinput3" value="{{formItem.get('material_taken_out')?.value}}" formControlName="material_taken_out" placeholder="Type here" >
+                                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 pl-0 pr-0">
+                                                <div class="title-5-new2 pl-2 pr-2 pt-3 text-color-black-shade5 text-left">Round {{i+1}}
+                                                    <input type="hidden" formControlName="round_no"  value="{{i+1}}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <span *ngIf="formItem.get('dump_site')?.invalid && (form_clicked)"
+                                                class="text-danger">
+                                                Dumpsite is required.
+                                                </span>
+                                                <div class="input-div required_field getinputfield">
+                                                    <div class="title-5-new2 text-color-black-shade5 text-left">Dump site</div>
+                                                    <input type="hidden" formControlName="dump_site" value="{{formItem.get('dump_site')?.value}}">
+                                                    <input type="hidden" formControlName="dump_site_name" value="{{formItem.get('dump_site_name')?.value}}">
+                                                    <div class="myinput-new">{{formItem.get('dump_site_name')?.value ? formItem.get('dump_site_name')?.value :"Select"}}</div>
+                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right">
+                                                    <div class="input-popup-div">
+                                                        <div class="title-5-new2 text-color-black-shade5 mb-18">Dump site</div>
+                                                        <ng-container *ngIf="this.dump_sites">
+                                                            <ng-container *ngFor="let dumpsite of this.dump_sites">
+                                                                <div [ngClass]="formItem.get('dump_site')?.value == dumpsite.id ? 'title-5-new mb-6 ':'title-5-new text-color-black-shade7 mb-6'" (click)="setDumpsite(dumpsite,idx)">{{dumpsite.name}}</div>
+                                                            </ng-container>
+                                                        </ng-container>
+                                                        <div class="position-relative getinputfield2" (click)="setVisible('dumpsite')">
+                                                            <input type="text" class="myinput-new myinput3" placeholder="Add">
+                                                            <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                        </div>
+                                                        <div class="input-popup-div2" *ngIf="this.is_visible=='dumpsite'">
+                                                            <div class="title-3 text-center mb-19">Add dump site</div>
+                                                            <form  [formGroup]="addDumpSite" >
+                                                                <span *ngIf="this.dumpsite_name_error !=''"
+                                                                class="text-danger">
+                                                                    Name is required.
+                                                                </span>
+                                                                <div class="position-relative mb-15 required_field2">
+                                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Dump site name</div>
+                                                                    <input type="text" class="myinput-new myinput3" placeholder="Trash 7" formControlName="name">
+                                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                                </div>
+                                                                <span *ngIf="this.address_error !=''"
+                                                                class="text-danger">
+                                                                    Address is required.
+                                                                </span>
+                                                                <div class="position-relative mb-15 required_field2">
+                                                                    <div class="title-5-new2 text-color-black-shade5 mb-5px">Address</div>
+                                                                    <input type="text" class="myinput-new myinput3" formControlName="address" placeholder="78 Grank Road">
+                                                                    <img src="../../assets/icons/edit.png" class="icon-bottom-right2">
+                                                                </div>
+                                                                <div class="d-flex justify-content-center align-items-center mb-19">
+                                                                    <input type="checkbox" class="mycheckbox2" value="1" formControlName="is_default">
+                                                                    <div class="title-7 ml-10">Set as default</div>
+                                                                </div>
+                                                                <div align="center" class="mb-17">
+                                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" (click)="onAddDumpsite()" *ngIf="is_loading_add =='' || is_loading_add !='dumpsite'">Add</button>
+                                                                    <button class="mybtn2 mybtn-back-pink custom-padding8" type="button" *ngIf="is_loading_add !='' && is_loading_add =='dumpsite'" disabled>Adding..</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+
+                        </div>
+                    </div>
+
+                    <div class="" align="center">
+                        <button class="mybtn2 mybtn-back-pink"  *ngIf="is_loading_add =='' || is_loading_add !='freelance_ticket'">Dispatch</button>
+                        <button class="mybtn2 mybtn-back-pink" type="button" *ngIf="is_loading_add !='' && is_loading_add =='freelance_ticket'" disabled>Dispatching...</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div
+  class="modal fade come-from-modal right"
+  id="myModalCreateTicket"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body modal-body-padding">
+        <div class="row mb-14">
+          <div class="col-md-4 display-table">
+            <div class="vertical-middle">
+              <div class="title-7 text-color-black-shade5">Ticket ID</div>
+              <div class="title-12 text-color-black-shade">
+                {{ this.ticket_data?.ticket_no }}
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4" align="center">
+            <div
+              class="input-div required_field getinputfield22"
+              id="calendar-div"
+            >
+              <div class="title-5-new2 text-color-black-shade5 text-left">
+                Set date
+              </div>
+              <div class="myinput-new text-left">{{ this.ticket_date }}</div>
+              <img
+                src="../../assets/icons/calendar.svg"
+                class="icon-center-right"
+              />
+              <div class="input-popup-div22 calendar-2 calendar-width-300">
+                <div
+                  id="pnlEventCalendar2"
+                  style="width: 100%"
+                  class=""
+                  (click)="getVal2()"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 display-table" align="right">
+            <div class="vertical-middle">
+              <button
+                class="mybtn bg-light-grey2 width-fit-content btn-text-very-small2 m-0"
+              >
+                Pending
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="bg-light-yellow2 mb-8 br-8">
+          <div class="custom-padding5">
+            <div class="row">
+              <div class="col-md-6">
+                <span class="text-danger" *ngIf="this.company_error != ''">{{
+                  this.company_error
+                }}</span>
+                <div class="input-div  required_field getinputfield {{this.ticket_construction_company?.company_name ? 'border-grey bg-transparent ':'bg-yellow '}}">
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Construction company
+                  </div>
+                  <div class="myinput-new">
+                    {{
+                      this.ticket_construction_company?.company_name
+                        ? this.ticket_construction_company?.company_name
+                        : "Select"
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/icons/arrow-down-grey.svg"
+                    class="icon-center-right"
+                  />
+                  <div class="input-popup-div cc-popup" id="cc-popup">
+                    <div class="title-5-new2 text-color-black-shade5 mb-15px">
+                      Construction company
+                    </div>
+                    <ng-container
+                      *ngIf="
+                        this.ticket_data &&
+                        this.ticket_data?.construction_companies
+                      "
+                    >
+                      <!-- <div class="title-18 text-right mb-2px">Default</div> -->
+                      <ng-container
+                        *ngFor="
+                          let construction of this.ticket_data
+                            ?.construction_companies
+                        "
+                      >
+                        <div
+                        (click)="
+                              setTicketData(
+                                construction,
+                                'construction_company'
+                              )
+                            "
+                        class="d-flex justify-content-between list-item {{  this.ticket_construction_company &&
+                          construction?.id ==
+                            this.ticket_construction_company?.id
+                            ? 'active'
+                            : ''}}  ">
+                          <div
+                            [ngClass]="
+                              this.ticket_construction_company &&
+                              construction?.id ==
+                                this.ticket_construction_company?.id
+                                ? 'title-5-new'
+                                : 'title-5-new text-color-black-shade7'
+                            "
+
+                          >
+                            {{ construction?.company_name }}
+                          </div>
+                          <!-- <input
+                            type="checkbox"
+                            class="mycheckbox2 d-none"
+                            value="1"
+                            (click)="
+                              markDefault(
+                                $event,
+                                'freelance_construction_company',
+                                construction?.id
+                              )
+                            "
+                            [checked]="construction?.is_default == 1"
+                          /> -->
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                    <!-- (click)="setVisible('cc')" -->
+                    <div
+                      class="position-relative getinputfield2 d-flex align-items-center justify-content-between mb-15px cursor-pointer"
+                      (click)="this.redirectTo('/freelance-driver-cc-settings')"
+                    >
+                      <div class="myinput-new myinput3">
+                        Add
+                      </div>
+                      <img
+                        src="../../assets/icons/edit.png"
+                        class="icon-bottom-right2"
+                      />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-5px">
+                      <button type="button" class="btn-set" (click)="this.closePopup('construction_company')">
+                        Set
+                      </button>
+                    </div>
+                    <!-- <div class="input-popup-div2" *ngIf="is_visible == 'cc'">
+                      <form [formGroup]="addCC" (ngSubmit)="onAddCC()">
+                        <div class="title-3 text-center mb-19">
+                          Add Construction company
+                        </div>
+                        <span
+                          *ngIf="
+                            addCC.get('company_name')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Company name is required.
+                        </span>
+                        <div class="position-relative mb-11 required_field2">
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="company_name"
+                            placeholder="Add"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <div align="center" class="mb-17">
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            *ngIf="
+                              is_loading_add == '' || is_loading_add != 'cc'
+                            "
+                          >
+                            Add
+                          </button>
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            type="button"
+                            *ngIf="
+                              is_loading_add != '' && is_loading_add == 'cc'
+                            "
+                            disabled
+                          >
+                            Adding..
+                          </button>
+                        </div>
+                      </form>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="text-danger" *ngIf="this.project_error != ''">{{
+                  this.project_error
+                }}</span>
+                <div class="input-div  required_field getinputfield {{this.ticket_project?.project_name ? 'border-grey bg-transparent ':'bg-yellow '}}">
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Project name
+                  </div>
+                  <div class="myinput-new">
+                    {{
+                      this.ticket_project?.project_name
+                        ? this.ticket_project?.project_name
+                        : "Select"
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/icons/arrow-down-grey.svg"
+                    class="icon-center-right"
+                  />
+                  <div class="input-popup-div" id="project-popup">
+                    <div class="title-5-new2 text-color-black-shade5 mb-15px">
+                      Project name
+                    </div>
+                    <ng-container
+                      *ngIf="this.ticket_data && this.ticket_data?.projects"
+                    >
+                      <!-- <div class="title-18 text-right mb-2px">Default</div> -->
+                      <ng-container
+                        *ngFor="let project of this.ticket_data?.projects"
+                      >
+                        <div
+                        (click)="setTicketData(project, 'project')"
+                        class="d-flex justify-content-between list-item {{  this.ticket_project &&
+                          project?.id == this.ticket_project?.id
+                            ? 'active'
+                            : ''}}">
+                          <div
+                            [ngClass]="
+                              this.ticket_project &&
+                              project?.id == this.ticket_project?.id
+                                ? 'title-5-new'
+                                : 'title-5-new text-color-black-shade7'
+                            "
+
+                          >
+                            {{ project?.project_name }}
+                          </div>
+                          <!-- <input
+                            type="checkbox"
+                            class="mycheckbox2"
+                            value="1"
+                            (click)="
+                              markDefault(
+                                $event,
+                                'freelance_projects',
+                                project?.id
+                              )
+                            "
+                            [checked]="project?.is_default == 1"
+                          /> -->
+                        </div>
+                      </ng-container>
+                    </ng-container>
+
+                    <div
+                      class="position-relative getinputfield2 d-flex align-items-center justify-content-between mb-15px cursor-pointer"
+                      (click)="setVisible('project')"
+                    >
+                      <input
+                        type="text"
+                        class="myinput-new myinput3"
+                        placeholder="Add"
+                      />
+                      <img
+                        src="../../assets/icons/edit.png"
+                        class="icon-bottom-right2"
+                      />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-5px">
+                      <button type="button" class="btn-set" (click)="this.closePopup('project')">
+                        Set
+                      </button>
+                    </div>
+                    <div
+                      class="input-popup-div2"
+                      *ngIf="is_visible == 'project'"
+                    >
+                      <form
+                        [formGroup]="addProject"
+                        (ngSubmit)="onAddProject()"
+                      >
+                        <div class="title-3 text-left  text-black mb-19">Add Project</div>
+                        <span
+                          *ngIf="
+                            addProject.get('project_name')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Project name is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Project name
+                          </div>
+                          <input
+                            type="text"
+                            formControlName="project_name"
+                            class="myinput-new myinput3"
+                            placeholder="Add"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="
+                            addProject.get('job_number')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Job number is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Job number
+                          </div>
+                          <input
+                            type="text"
+                            formControlName="job_number"
+                            class="myinput-new myinput3"
+                            placeholder="Add"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="
+                            addProject.get('job_address')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Job address is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Job address
+                          </div>
+                          <input
+                            type="text"
+                            formControlName="street"
+                            class="myinput-new myinput3"
+                            placeholder="Add"
+                            (click)="toggleAddressPopup(true)"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                            (click)="toggleAddressPopup(true)"
+                          />
+                        </div>
+                        <div
+                          class="d-flex justify-content-center align-items-center mb-19"
+                        >
+                          <input
+                            type="checkbox"
+                            formControlName="is_default"
+                            value="1"
+                            class="mycheckbox2"
+                          />
+                          <div class="title-7 ml-10">Set as default</div>
+                        </div>
+                        <div align="center" class="mb-17">
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            *ngIf="
+                              is_loading_add == '' ||
+                              is_loading_add != 'project'
+                            "
+                          >
+                            Add
+                          </button>
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            type="button"
+                            *ngIf="
+                              is_loading_add != '' &&
+                              is_loading_add == 'project'
+                            "
+                            disabled
+                          >
+                            Adding..
+                          </button>
+                        </div>
+                      </form>
+
+                    </div>
+                    <div
+                      class="input-popup-div3" *ngIf="this.show_address_popup">
+                      <div class="title-3 text-center mb-19">Add/update address
+
+                        <button
+                          type="button"
+                          (click)="toggleAddressPopup(false)"
+                          id="closeBtn"
+                          class="my-modal-close border-0 bg-transparent shadow-none mr-2 float-right"
+                        >
+                          <img
+                            src="./assets/images/cross_2.svg"
+                            alt="Close"
+                            style="
+                              width: 14px;
+                              height: 14px;
+                              margin-top: -10px;
+                              margin-right: -15px;
+                            "
+                          />
+                        </button>
+                      </div>
+
+                      <div class="row plr-10px">
+                        <div class="col-6  plr-0">
+                          <div class="position-relative mb-15 required_field2">
+                            <div
+                              class="title-5-new2 text-color-black-shade5 mb-5px"
+                            >
+                              Street
+                            </div>
+
+                            <span class="text-danger error_text" *ngIf="this.street_error !=''">{{street_error}}</span>
+                            <input
+                              type="text"
+                              id="street"
+                              class="myinput-new myinput3"
+                              placeholder="Type here"
+                            />
+                            <img
+                              src="../../assets/icons/edit.png"
+                              class="icon-bottom-right2"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-6  plr-0">
+
+                          <div class="position-relative mb-15 required_field3">
+                            <div
+                              class="title-5-new2 text-color-black-shade5 mb-5px text-right"
+                            >
+                              City/Town
+                            </div>
+                            <span class="text-danger error_text" *ngIf="this.city_error !=''">{{city_error}}</span>
+                            <img
+                              src="../../assets/icons/edit.png"
+                              class="icon-bottom-left2"
+                            />
+                            <input
+                              type="text"
+                              id="city"
+                              class="myinput-new myinput3 text-right"
+                              placeholder="Type here"
+                            />
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row plr-10px">
+                        <div class="col-4  plr-0">
+                          <div class="position-relative mb-15 required_field2">
+                            <div
+                              class="title-5-new2 text-color-black-shade5 mb-5px"
+                            >
+                              Country
+                            </div>
+                            <select
+                              type="text"
+                              id="country"
+                              class="myinput-new myinput3 text-left"
+                              placeholder="Select"
+                              (change)="setCountry($event)"
+                            >
+                            <option value="">Select</option>
+                            <option value="Canada">Canada</option>
+                            <option value="USA">USA</option>
+                            </select>
+                            <img
+                              src="../../assets/icons/arrow-down-grey.svg"
+                              class="icon-bottom-right-select"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-4  plr-0">
+
+                          <div class="position-relative mb-15 required_field2">
+                            <div
+                              class="title-5-new2 text-color-black-shade5 mb-5px text-center"
+                            >
+                              Province/State
+                            </div>
+                            <span class="text-danger error_text" *ngIf="this.province_error !=''">{{province_error}}</span>
+                            <select
+                              type="text"
+                              id="province"
+                              class="myinput-new myinput3 text-left"
+                              placeholder="Select"
+                            >
+                            <option value="">Select</option>
+                            <ng-container *ngIf="set_country == 'USA'">
+                              <ng-container *ngFor="let province of this.usa_provinces">
+                                <option value='{{province}}'>{{province}}</option>
+                              </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="set_country == 'Canada'">
+                              <ng-container *ngFor="let province of this.canada_provinces">
+                                <option value='{{province}}'>{{province}}</option>
+                              </ng-container>
+                            </ng-container>
+                            </select>
+                            <img
+                              src="../../assets/icons/arrow-down-grey.svg"
+                              class="icon-bottom-right-select"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-4  plr-0">
+                          <div class="position-relative mb-15 ">
+                            <div
+                              class="title-5-new2 text-color-black-shade5 mb-5px text-right"
+                            >
+                             Postal code
+                            </div>
+                            <img
+                              src="../../assets/icons/edit.png"
+                              class="icon-bottom-left2"
+                            />
+                            <input
+                              type="text"
+                              id="postal_code"
+                              class="myinput-new myinput3 text-right"
+                              placeholder="Type here"
+                            />
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-flex align-items-center justify-content-center mb-5px">
+                        <button type="button" class="btn-set" (click)="this.saveAddress()">
+                          Update
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="custom-padding6">
+            <div class="row">
+              <div class="col-md-6">
+                <div
+                  class="title-5-new2 text-color-black-shade5 text-left mb-4px"
+                >
+                  Job number
+                </div>
+                <div class="title-5-new">
+                  {{ this.ticket_project?.job_number }}
+                </div>
+              </div>
+              <div class="col-md-6" align="right">
+                <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                  Job address
+                </div>
+                <div class="title-5-new">
+                  {{ this.ticket_project?.street }},
+                  {{ this.ticket_project?.city }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="custom-padding7">
+            <div class="row">
+              <div class="col-md-6">
+                <span class="text-danger" *ngIf="this.approver_error != ''">{{
+                  this.approver_error
+                }}</span>
+                <div class="input-div  required_field getinputfield {{this.ticket_approver ? 'border-grey bg-transparent ':'bg-yellow '}}">
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Job approver
+                  </div>
+                  <div class="myinput-new">
+                    {{
+                      this.ticket_approver
+                        ? this.ticket_approver?.name
+                        : "Select"
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/icons/arrow-down-grey.svg"
+                    class="icon-center-right"
+                  />
+                  <div class="input-popup-div" id="approver-popup">
+                    <div class="title-5-new2 text-color-black-shade5  mb-15px">
+                      Job approver
+                    </div>
+                    <ng-container *ngIf="this.ticket_data">
+                      <div class="title-18 text-right mb-2px">Default</div>
+                      <ng-container *ngFor="let approver of this.approvers">
+                        <div class="d-flex justify-content-between list-item {{ this.ticket_approver &&
+                          approver?.id == this.ticket_approver?.id
+                            ? 'active'
+                            : ''}}">
+                          <div
+                            [ngClass]="
+                              this.ticket_approver &&
+                              approver?.id == this.ticket_approver?.id
+                                ? 'title-5-new'
+                                : 'title-5-new text-color-black-shade7'
+                            "
+                            (click)="setTicketData(approver, 'approver')"
+                          >
+                            {{ approver?.name }}
+                          </div>
+                          <input
+                            type="checkbox"
+                            class="mycheckbox2"
+                            (click)="
+                              markDefault($event, 'approver', approver?.id)
+                            "
+                            [checked]="approver?.is_default == 1"
+                          />
+                        </div>
+                      </ng-container>
+                    </ng-container>
+
+                    <div
+                      class="position-relative getinputfield2 mb-10px"
+                      (click)="setVisible('approver')"
+                    >
+                      <input
+                        type="text"
+                        class="myinput-new myinput3"
+                        placeholder="Add"
+                      />
+                      <img
+                        src="../../assets/icons/edit.png"
+                        class="icon-bottom-right2"
+                      />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-5px">
+                      <button type="button" class="btn-set" (click)="this.closePopup('approver')">
+                        Set
+                      </button>
+                    </div>
+                    <div
+                      class="input-popup-div2"
+                      *ngIf="is_visible == 'approver'"
+                    >
+                      <form
+                        [formGroup]="addApprover"
+                        (ngSubmit)="onAddApprover()"
+                      >
+                        <div class="title-3 text-left text-black mb-19">
+                          Add approver
+                        </div>
+                        <span
+                          *ngIf="
+                            addApprover.get('name')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Name is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Name
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="name"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="
+                            addApprover.get('contact_number')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Contact number is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Contact number
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="contact_number"
+                            (input)="changeNumber3($event)"
+                            placeholder="(---) --- ----"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="
+                            addApprover.get('email')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Email is required.
+                        </span>
+                        <div class="position-relative mb-20">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Email address
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="email"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <div align="center" class="mb-17">
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            *ngIf="
+                              is_loading_add == '' ||
+                              is_loading_add != 'approver'
+                            "
+                          >
+                            Add
+                          </button>
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            type="button"
+                            *ngIf="
+                              is_loading_add != '' &&
+                              is_loading_add == 'approver'
+                            "
+                            disabled
+                          >
+                            Adding..
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 display-table" align="right">
+                <div class="vertical-middle">
+                  <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                    Contact #
+                  </div>
+                  <div class="title-5-new">
+                    {{
+                      this.ticket_approver
+                        ? this.ticket_approver?.contact_number
+                        : ""
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="custom-padding5">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="input-div getinputfield {{this.ticket_description ? 'border-grey bg-transparent ':'bg-yellow '}}">
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Description
+                  </div>
+                  <div class="myinput-new">
+                    {{
+                      this.ticket_description
+                        ? this.ticket_description
+                        : "Type here"
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/icons/arrow-down-grey.svg"
+                    class="icon-center-right"
+                  />
+                  <div class="input-popup-div">
+                    <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                      Description
+                    </div>
+                    <div class="position-relative">
+                      <input
+                        type="text"
+                        class="myinput-new myinput3"
+                        placeholder="Type here"
+                        id="description_input_selfticket"
+                        (input)="setTicketData($event, 'description')"
+                      />
+                      <img
+                        src="../../assets/icons/edit.png"
+                        class="icon-bottom-right2"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="border-all mb-8 br-8">
+          <div class="custom-padding5">
+            <div class="row">
+              <div class="col-md-6">
+                <span class="text-danger" *ngIf="this.trucking_error != ''">{{
+                  this.trucking_error
+                }}</span>
+                <div class="input-div required_field getinputfield  {{this.ticket_trucking_company?.company_name ? 'border-grey  ':' '}}">
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Trucking company
+                  </div>
+                  <div class="myinput-new">
+                    {{
+                      this.ticket_trucking_company?.company_name
+                        ? this.ticket_trucking_company?.company_name
+                        : "Select"
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/icons/arrow-down-grey.svg"
+                    class="icon-center-right"
+                  />
+                  <div class="input-popup-div" id="tc-popup">
+                    <div class="title-5-new2 text-color-black-shade5 text-black mb-15px">
+                      Trucking company
+                    </div>
+                    <ng-container *ngIf="this.ticket_data">
+                      <div class="title-18 text-right mb-2px">Default</div>
+                      <ng-container
+                        *ngFor="
+                          let trucking_company of this.ticket_data
+                            ?.trucking_companies
+                        "
+                      >
+                        <div class="d-flex justify-content-between list-item {{  this.ticket_trucking_company &&
+                          trucking_company?.id ==
+                            this.ticket_trucking_company?.id
+                            ? 'active'
+                            : ''}}">
+                          <div
+                            [ngClass]="
+                              this.ticket_trucking_company &&
+                              trucking_company?.id ==
+                                this.ticket_trucking_company?.id
+                                ? 'title-5-new'
+                                : 'title-5-new text-color-black-shade7'
+                            "
+                            (click)="
+                              setTicketData(
+                                trucking_company,
+                                'trucking_company'
+                              )
+                            "
+                          >
+                            {{ trucking_company?.company_name }}
+                          </div>
+                          <input
+                            type="checkbox"
+                            class="mycheckbox2"
+                            value="1"
+                            (click)="
+                              markDefault(
+                                $event,
+                                'freelance_trucking_company',
+                                trucking_company?.id
+                              )
+                            "
+                            [checked]="trucking_company?.is_default == 1"
+                          />
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                    <!-- (click)="setVisible('trucking')" -->
+                    <div
+                      class="position-relative getinputfield2 mb-10px"
+                      (click)="redirectTo('/freelance-driver-tc-settings')"
+                    >
+                      <input
+                        type="text"
+                        class="myinput-new myinput3"
+                        placeholder="Add"
+                      />
+                      <img
+                        src="../../assets/icons/edit.png"
+                        class="icon-bottom-right2"
+                      />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-5px">
+                      <button type="button" class="btn-set" (click)="this.closePopup('trucking_company')">
+                        Set
+                      </button>
+                    </div>
+                    <!-- <div
+                      class="input-popup-div2"
+                      *ngIf="is_visible == 'trucking'"
+                    >
+                      <form [formGroup]="addTC" (ngSubmit)="onAddTC()">
+                        <div class="title-3 text-center mb-19">
+                          Add trucking company
+                        </div>
+                        <span
+                          *ngIf="
+                            addTC.get('company_name')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Company name is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Company name
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="company_name"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="
+                            addTC.get('contact_name')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Contact person name is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Contact person
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="contact_name"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+
+                        <div class="position-relative mb-15">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Contact phone
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="contact_phone"
+                            (input)="changeNumber2($event)"
+                            placeholder="(---) --- ----"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+
+                        <div class="position-relative mb-15">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Contact email
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="contact_email"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <div align="center" class="mb-17">
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            *ngIf="
+                              is_loading_add == '' ||
+                              is_loading_add != 'trucking'
+                            "
+                          >
+                            Add
+                          </button>
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            type="button"
+                            *ngIf="
+                              is_loading_add != '' &&
+                              is_loading_add == 'trucking'
+                            "
+                            disabled
+                          >
+                            Adding..
+                          </button>
+                        </div>
+                      </form>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span
+                  class="text-danger"
+                  *ngIf="this.paper_ticket_id_error != ''"
+                  >{{ this.paper_ticket_id_error }}</span
+                >
+
+                <div class="input-div getinputfield {{this.paper_ticket_id ? 'border-grey  ':' '}}">
+                  <div class="d-flex dflex">
+                    <img src="../../assets/icons/driver-paperticket-icon.svg" />
+                    <div class="ml-rem">
+                      <div
+                        class="title-5-new2 text-color-black-shade5 text-left"
+                      >
+                        Paper ticket ID
+                      </div>
+                      <div class="myinput-new">
+                        {{
+                          this.paper_ticket_id
+                            ? this.paper_ticket_id
+                            : "Type here"
+                        }}
+                      </div>
+                      <img
+                        src="../../assets/icons/edit.png"
+                        class="icon-bottom-right"
+                      />
+                      <div class="input-popup-div" id="paperticketid-popup">
+                        <div
+                          class="title-5-new2 text-color-black-shade5  mb-15px"
+                        >
+                          Paper ticket ID
+                        </div>
+                        <div class="position-relative mb-15px">
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            placeholder="Type here"
+                            id="paperticketid_input_selfticket"
+                            (input)="setTicketData($event, 'paper_ticket_id')"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center mb-5px">
+                          <button type="button" class="btn-set" (click)="this.closePopup('paper_ticket_id')">
+                            Set
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="custom-padding7">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-div getinputfield {{this.ticket_dispatcher ? 'border-grey  ':' '}}">
+                  <div class="title-5-new2 text-color-black-shade5 text-left ">
+                    Dispatcher
+                  </div>
+                  <div class="myinput-new">
+                    {{
+                      this.ticket_dispatcher
+                        ? this.ticket_dispatcher?.name
+                        : "Select"
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/icons/arrow-down-grey.svg"
+                    class="icon-center-right"
+                  />
+                  <div class="input-popup-div" id="dispatcher-popup">
+                    <div class="title-5-new2 text-color-black-shade5 mb-18">
+                      Dispatcher
+                    </div>
+                    <ng-container *ngIf="this.ticket_data">
+                      <ng-container *ngFor="let dispatcher of this.dispatchers">
+                        <div class="d-flex justify-content-between list-item {{  this.ticket_dispatcher &&
+                          dispatcher?.id ==
+                            this.ticket_dispatcher?.id
+                            ? 'active'
+                            : ''}}">
+                          <div
+                            [ngClass]="
+                              this.ticket_dispatcher &&
+                              dispatcher?.id == this.ticket_dispatcher?.id
+                                ? 'title-5-new mb-6'
+                                : 'title-5-new text-color-black-shade7 mb-6'
+                            "
+                            (click)="setTicketData(dispatcher, 'dispatcher')"
+                          >
+                            {{ dispatcher?.name }}
+                          </div>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                    <div
+                      class="position-relative getinputfield2 mb-10px"
+                      (click)="setVisible('dispatcher')"
+                    >
+                      <input
+                        type="text"
+                        class="myinput-new myinput3"
+                        placeholder="Add"
+                      />
+                      <img
+                        src="../../assets/icons/edit.png"
+                        class="icon-bottom-right2"
+                      />
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-5px">
+                      <button type="button" class="btn-set" (click)="this.closePopup('dispatcher')">
+                        Set
+                      </button>
+                    </div>
+                    <div
+                      class="input-popup-div2"
+                      *ngIf="this.is_visible == 'dispatcher'"
+                    >
+                      <div class="title-3 text-left text-black mb-19">
+                        Add dispatcher
+                      </div>
+                      <form
+                        [formGroup]="addDispatcher"
+                        (ngSubmit)="onAddDispatcher()"
+                      >
+                        <span
+                          *ngIf="
+                            addDispatcher.get('name')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Name is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Name
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="name"
+                            placeholder="Nicholas Truck"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="
+                            addDispatcher.get('contact_number')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Contact number is required.
+                        </span>
+                        <div class="position-relative mb-20 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Contact number
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="contact_number"
+                            (input)="changeNumber($event)"
+                            placeholder="(---) --- ----"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <div align="center" class="mb-17">
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            *ngIf="
+                              is_loading_add == '' ||
+                              is_loading_add != 'dispatcher'
+                            "
+                          >
+                            Add
+                          </button>
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            type="button"
+                            *ngIf="
+                              is_loading_add != '' &&
+                              is_loading_add == 'dispatcher'
+                            "
+                            disabled
+                          >
+                            Adding..
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 display-table" align="right">
+                <div class="vertical-middle">
+                  <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                    Contact number
+                  </div>
+                  <div class="title-5-new">
+                    {{
+                      this.ticket_dispatcher
+                        ? this.ticket_dispatcher?.contact_number
+                        : ""
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mybtn-back-pink mb-8 br-8">
+          <div class="custom-padding5">
+            <div class="row">
+              <div class="col-md-6">
+                <span class="text-danger" *ngIf="this.truck_error != ''">{{
+                  this.truck_error
+                }}</span>
+                <div class="input-div bg-white required_field getinputfield">
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Truck Name
+                  </div>
+                  <div class="myinput-new">
+                    {{ this.ticket_truck ? this.ticket_truck?.name : "Select" }}
+                  </div>
+                  <img
+                    src="../../assets/icons/arrow-down-grey.svg"
+                    class="icon-center-right"
+                  />
+                  <div class="input-popup-div" id="truck-popup">
+                    <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                      Truck name
+                    </div>
+                    <ng-container *ngIf="this.ticket_data">
+                      <div class="title-18 text-right mb-2px">Default</div>
+                      <ng-container
+                        *ngFor="let truck of this.ticket_data?.trucks"
+                      >
+                        <div class="d-flex justify-content-between mb-2px">
+                          <div
+                            [ngClass]="
+                              this.ticket_truck &&
+                              truck?.id == this.ticket_truck?.id
+                                ? 'title-5-new'
+                                : 'title-5-new text-color-black-shade7'
+                            "
+                            (click)="setTicketData(truck, 'truck')"
+                          >
+                            {{ truck?.name }}
+                          </div>
+                          <input
+                            type="checkbox"
+                            class="mycheckbox2"
+                            value="1"
+                            (click)="
+                              markDefault($event, 'freelance_trucks', truck?.id)
+                            "
+                            [checked]="truck?.is_default == 1"
+                          />
+                        </div>
+                      </ng-container>
+                    </ng-container>
+
+                    <div
+                      class="position-relative getinputfield2"
+                      (click)="setVisible('truck')"
+                    >
+                      <input
+                        type="text"
+                        class="myinput-new myinput3"
+                        placeholder="Add"
+                      />
+                      <img
+                        src="../../assets/icons/edit.png"
+                        class="icon-bottom-right2"
+                      />
+                    </div>
+                    <div
+                      class="input-popup-div2"
+                      *ngIf="this.is_visible == 'truck'"
+                    >
+                      <div class="title-3 text-center mb-19">Add truck</div>
+                      <form [formGroup]="addTruck" (ngSubmit)="onAddTruck()">
+                        <span
+                          *ngIf="addTruck.get('name')?.invalid && form_clicked"
+                          class="text-danger"
+                        >
+                          Name is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Truck name
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="name"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="
+                            addTruck.get('license_plate')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Truck license plate is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Truck license plate
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="license_plate"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="addTruck.get('type')?.invalid && form_clicked"
+                          class="text-danger"
+                        >
+                          Truck type is required.
+                        </span>
+                        <div class="position-relative mb-20 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                            formControlName="type"
+                          >
+                            Truck type
+                          </div>
+                          <select
+                            class="myinput-new myinput3 icon-none"
+                            formControlName="type"
+                          >
+                            <option value="Single">Single</option>
+                            <option value="Tandem">Tandem</option>
+                            <option value="Tridem">Tridem</option>
+                            <option value="Quad-Axle">Quad-Axle</option>
+                          </select>
+                          <img
+                            src="../../assets/icons/arrow-down-grey.svg"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <div class="position-relative mb-15">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Truck Color
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="color"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <div
+                          class="d-flex justify-content-center align-items-center mb-19"
+                        >
+                          <input
+                            type="checkbox"
+                            class="mycheckbox2"
+                            value="1"
+                            formControlName="is_default"
+                          />
+                          <div class="title-7 ml-10">Set as default</div>
+                        </div>
+                        <div align="center" class="mb-17">
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            *ngIf="
+                              is_loading_add == '' || is_loading_add != 'truck'
+                            "
+                          >
+                            Add
+                          </button>
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            type="button"
+                            *ngIf="
+                              is_loading_add != '' && is_loading_add == 'truck'
+                            "
+                            disabled
+                          >
+                            Adding..
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="input-div bg-white getinputfield">
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Trailer Name
+                  </div>
+                  <div class="myinput-new">
+                    {{
+                      this.ticket_trailer ? this.ticket_trailer?.name : "Select"
+                    }}
+                  </div>
+                  <img
+                    src="../../assets/icons/arrow-down-grey.svg"
+                    class="icon-center-right"
+                  />
+                  <div class="input-popup-div" id="trailer-popup">
+                    <div class="title-5-new2 text-color-black-shade5 mb-4px">
+                      Trailer name
+                    </div>
+                    <ng-container *ngIf="this.ticket_data?.trailers">
+                      <div class="title-18 text-right mb-2px">Default</div>
+                      <ng-container
+                        *ngFor="let trailer of this.ticket_data?.trailers"
+                      >
+                        <div class="d-flex justify-content-between mb-2px">
+                          <div
+                            [ngClass]="
+                              this.ticket_trailer &&
+                              trailer?.id == this.ticket_trailer?.id
+                                ? 'title-5-new'
+                                : 'title-5-new text-color-black-shade7'
+                            "
+                            (click)="setTicketData(trailer, 'trailer')"
+                          >
+                            {{ trailer?.name }}
+                          </div>
+                          <input
+                            type="checkbox"
+                            class="mycheckbox2"
+                            value="1"
+                            (click)="
+                              markDefault(
+                                $event,
+                                'freelance_trucks',
+                                trailer?.id
+                              )
+                            "
+                            [checked]="trailer?.is_default == 1"
+                          />
+                        </div>
+                      </ng-container>
+                    </ng-container>
+
+                    <div
+                      class="position-relative getinputfield2"
+                      (click)="setVisible('trailer')"
+                    >
+                      <input
+                        type="text"
+                        class="myinput-new myinput3"
+                        placeholder="Add"
+                      />
+                      <img
+                        src="../../assets/icons/edit.png"
+                        class="icon-bottom-right2"
+                      />
+                    </div>
+                    <div
+                      class="input-popup-div2"
+                      *ngIf="this.is_visible == 'trailer'"
+                    >
+                      <div class="title-3 text-center mb-19">Add Trailer</div>
+                      <form
+                        [formGroup]="addTrailer"
+                        (ngSubmit)="onAddTrailer()"
+                      >
+                        <span
+                          *ngIf="
+                            addTrailer.get('name')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Name is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Trailer name
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="name"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="
+                            addTrailer.get('license_plate')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          License plate is required.
+                        </span>
+                        <div class="position-relative mb-15 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Trailer license plate
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="license_plate"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <span
+                          *ngIf="
+                            addTrailer.get('name')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Trailer type is required.
+                        </span>
+                        <div class="position-relative mb-20 required_field2">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Trailer type
+                          </div>
+                          <select
+                            class="myinput-new myinput3 icon-none"
+                            formControlName="type"
+                          >
+                            <option value="Pony">Pony</option>
+                            <option value="Tri Pony">Tri Pony</option>
+                            <option value="Quad (wagon)">Quad (wagon)</option>
+                            <option value="Transfer">Transfer</option>
+                          </select>
+                          <img
+                            src="../../assets/icons/arrow-down-grey.svg"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <div class="position-relative mb-15">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 mb-5px"
+                          >
+                            Trailer Color
+                          </div>
+                          <input
+                            type="text"
+                            class="myinput-new myinput3"
+                            formControlName="color"
+                            placeholder="Type here"
+                          />
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right2"
+                          />
+                        </div>
+                        <div
+                          class="d-flex justify-content-center align-items-center mb-19"
+                        >
+                          <input
+                            type="checkbox"
+                            class="mycheckbox2"
+                            formControlName="is_default"
+                          />
+                          <div class="title-7 ml-10">Set as default</div>
+                        </div>
+                        <div align="center" class="mb-17">
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            *ngIf="
+                              is_loading_add == '' ||
+                              is_loading_add != 'trailer'
+                            "
+                          >
+                            Add
+                          </button>
+                          <button
+                            class="mybtn2 mybtn-back-pink custom-padding8"
+                            type="button"
+                            *ngIf="
+                              is_loading_add != '' &&
+                              is_loading_add == 'trailer'
+                            "
+                            disabled
+                          >
+                            Adding..
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="myhr2"></div>
+          <div class="custom-padding5">
+            <div class="row">
+              <div class="col-md-5">
+                <span class="text-danger" *ngIf="this.start_time_error != ''">{{
+                  this.start_time_error
+                }}</span>
+                <div class="input-div bg-white required_field">
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Start time
+                  </div>
+                  <input
+                    type="time"
+                    class="myinput-new"
+                    (change)="setTicketData($event, 'start_time')"
+                  />
+                </div>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-5">
+                <span
+                  class="text-danger"
+                  *ngIf="this.total_rounds_error != ''"
+                  >{{ this.total_rounds_error }}</span
+                >
+                <div class="input-div bg-white required_field getinputfield">
+                  <div class="title-5-new2 text-color-black-shade5 text-left">
+                    Number of rounds
+                  </div>
+                  <div class="myinput-new">{{ this.rounds }}</div>
+                  <img
+                    src="../../assets/icons/arrow-down-grey.svg"
+                    class="icon-center-right"
+                  />
+                  <div class="input-popup-div">
+                    <div class="title-5-new2 text-color-black-shade5 mb-9">
+                      Number of rounds
+                    </div>
+                    <div class="d-flex justify-content-between numbers-div">
+                      <div
+                        (click)="setRound(1)"
+                        [ngClass]="this.rounds == 1 ? 'active' : ''"
+                      >
+                        1
+                      </div>
+                      <div
+                        (click)="setRound(2)"
+                        [ngClass]="this.rounds == 2 ? 'active' : ''"
+                      >
+                        2
+                      </div>
+                      <div
+                        (click)="setRound(3)"
+                        [ngClass]="this.rounds == 3 ? 'active' : ''"
+                      >
+                        3
+                      </div>
+                      <div
+                        (click)="setRound(4)"
+                        [ngClass]="this.rounds == 4 ? 'active' : ''"
+                      >
+                        4
+                      </div>
+                      <div
+                        (click)="setRound(5)"
+                        [ngClass]="this.rounds == 5 ? 'active' : ''"
+                      >
+                        5
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-between numbers-div">
+                      <div
+                        (click)="setRound(6)"
+                        [ngClass]="this.rounds == 6 ? 'active' : ''"
+                      >
+                        6
+                      </div>
+                      <div
+                        (click)="setRound(7)"
+                        [ngClass]="this.rounds == 7 ? 'active' : ''"
+                      >
+                        7
+                      </div>
+                      <div
+                        (click)="setRound(8)"
+                        [ngClass]="this.rounds == 8 ? 'active' : ''"
+                      >
+                        8
+                      </div>
+                      <div
+                        (click)="setRound(9)"
+                        [ngClass]="this.rounds == 9 ? 'active' : ''"
+                      >
+                        9
+                      </div>
+                      <div
+                        (click)="setRound(10)"
+                        [ngClass]="this.rounds == 10 ? 'active' : ''"
+                      >
+                        10
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form
+          [formGroup]="ticketForm"
+          enctype="multipart/form-data"
+          (ngSubmit)="dispatchTicket()"
+        >
+          <div class="border-all mb-48 br-8">
+            <div class="custom-padding5">
+              <ng-container formArrayName="ticket_rounds">
+                <ng-container
+                  *ngFor="
+                    let formItem of ticket_rounds().controls;
+                    let idx = index;
+                    let i = index
+                  "
+                >
+                  <ng-container [formGroupName]="idx">
+                    <div class="row mt-2">
+                      <div class="col-md-5">
+                        <span
+                          *ngIf="
+                            formItem.get('material_taken_out')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Material taken out is required.
+                        </span>
+                        <div class="input-div required_field getinputfield">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 text-left"
+                          >
+                            Material out
+                          </div>
+                          <div class="myinput-new">
+                            {{
+                              formItem.get("material_taken_out")?.value
+                                ? formItem.get("material_taken_out")?.value
+                                : "Type here"
+                            }}
+                          </div>
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right"
+                          />
+                          <div class="input-popup-div">
+                            <div
+                              class="title-5-new2 text-color-black-shade5 mb-4px"
+                            >
+                              Material out
+                            </div>
+                            <div class="position-relative">
+                              <input
+                                type="text"
+                                class="myinput-new myinput3"
+                                value="{{
+                                  formItem.get('material_taken_out')?.value
+                                }}"
+                                formControlName="material_taken_out"
+                                placeholder="Type here"
+                              />
+                              <img
+                                src="../../assets/icons/edit.png"
+                                class="icon-bottom-right2"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2 pl-0 pr-0">
+                        <div
+                          class="title-5-new2 pl-2 pr-2 pt-3 text-color-black-shade5 text-left"
+                        >
+                          Round {{ i + 1 }}
+                          <input
+                            type="hidden"
+                            formControlName="round_no"
+                            value="{{ i + 1 }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <span
+                          *ngIf="
+                            formItem.get('dump_site')?.invalid && form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Dumpsite is required.
+                        </span>
+                        <div class="input-div required_field getinputfield">
+                          <div
+                            class="title-5-new2 text-color-black-shade5 text-left"
+                          >
+                            Dump site
+                          </div>
+                          <input
+                            type="hidden"
+                            formControlName="dump_site"
+                            value="{{ formItem.get('dump_site')?.value }}"
+                          />
+                          <input
+                            type="hidden"
+                            formControlName="dump_site_name"
+                            value="{{ formItem.get('dump_site_name')?.value }}"
+                          />
+                          <div class="myinput-new">
+                            {{
+                              formItem.get("dump_site_name")?.value
+                                ? formItem.get("dump_site_name")?.value
+                                : "Select"
+                            }}
+                          </div>
+                          <img
+                            src="../../assets/icons/edit.png"
+                            class="icon-bottom-right"
+                          />
+                          <div class="input-popup-div">
+                            <div
+                              class="title-5-new2 text-color-black-shade5 mb-18"
+                            >
+                              Dump site
+                            </div>
+                            <ng-container *ngIf="this.dump_sites">
+                              <ng-container
+                                *ngFor="let dumpsite of this.dump_sites"
+                              >
+                                <div
+                                  [ngClass]="
+                                    formItem.get('dump_site')?.value ==
+                                    dumpsite.id
+                                      ? 'title-5-new mb-6 '
+                                      : 'title-5-new text-color-black-shade7 mb-6'
+                                  "
+                                  (click)="setDumpsite(dumpsite, idx)"
+                                >
+                                  {{ dumpsite.name }}
+                                </div>
+                              </ng-container>
+                            </ng-container>
+                            <div
+                              class="position-relative getinputfield2"
+                              (click)="setVisible('dumpsite')"
+                            >
+                              <input
+                                type="text"
+                                class="myinput-new myinput3"
+                                placeholder="Add"
+                              />
+                              <img
+                                src="../../assets/icons/edit.png"
+                                class="icon-bottom-right2"
+                              />
+                            </div>
+                            <div
+                              class="input-popup-div2"
+                              *ngIf="this.is_visible == 'dumpsite'"
+                            >
+                              <div class="title-3 text-center mb-19">
+                                Add dump site
+                              </div>
+                              <form [formGroup]="addDumpSite">
+                                <span
+                                  *ngIf="this.dumpsite_name_error != ''"
+                                  class="text-danger"
+                                >
+                                  Name is required.
+                                </span>
+                                <div
+                                  class="position-relative mb-15 required_field2"
+                                >
+                                  <div
+                                    class="title-5-new2 text-color-black-shade5 mb-5px"
+                                  >
+                                    Dump site name
+                                  </div>
+                                  <input
+                                    type="text"
+                                    class="myinput-new myinput3"
+                                    placeholder="Trash 7"
+                                    formControlName="name"
+                                  />
+                                  <img
+                                    src="../../assets/icons/edit.png"
+                                    class="icon-bottom-right2"
+                                  />
+                                </div>
+                                <span
+                                  *ngIf="this.address_error != ''"
+                                  class="text-danger"
+                                >
+                                  Address is required.
+                                </span>
+                                <div
+                                  class="position-relative mb-15 required_field2"
+                                >
+                                  <div
+                                    class="title-5-new2 text-color-black-shade5 mb-5px"
+                                  >
+                                    Address
+                                  </div>
+                                  <input
+                                    type="text"
+                                    class="myinput-new myinput3"
+                                    formControlName="address"
+                                    placeholder="78 Grank Road"
+                                  />
+                                  <img
+                                    src="../../assets/icons/edit.png"
+                                    class="icon-bottom-right2"
+                                  />
+                                </div>
+                                <div
+                                  class="d-flex justify-content-center align-items-center mb-19"
+                                >
+                                  <input
+                                    type="checkbox"
+                                    class="mycheckbox2"
+                                    value="1"
+                                    formControlName="is_default"
+                                  />
+                                  <div class="title-7 ml-10">
+                                    Set as default
+                                  </div>
+                                </div>
+                                <div align="center" class="mb-17">
+                                  <button
+                                    class="mybtn2 mybtn-back-pink custom-padding8"
+                                    (click)="onAddDumpsite()"
+                                    *ngIf="
+                                      is_loading_add == '' ||
+                                      is_loading_add != 'dumpsite'
+                                    "
+                                  >
+                                    Add
+                                  </button>
+                                  <button
+                                    class="mybtn2 mybtn-back-pink custom-padding8"
+                                    type="button"
+                                    *ngIf="
+                                      is_loading_add != '' &&
+                                      is_loading_add == 'dumpsite'
+                                    "
+                                    disabled
+                                  >
+                                    Adding..
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="" align="center">
+            <button
+              class="mybtn2 mybtn-back-pink"
+              *ngIf="
+                is_loading_add == '' || is_loading_add != 'freelance_ticket'
+              "
+            >
+              Dispatch
+            </button>
+            <button
+              class="mybtn2 mybtn-back-pink"
+              type="button"
+              *ngIf="
+                is_loading_add != '' && is_loading_add == 'freelance_ticket'
+              "
+              disabled
+            >
+              Dispatching...
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

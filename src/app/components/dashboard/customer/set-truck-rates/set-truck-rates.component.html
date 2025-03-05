@@ -1,0 +1,281 @@
+<div class="project-profile-trucks-container">
+    <div class="project-profile-tucks-heading heading-1-400 text-color-black">
+        Set trucks & rates
+    </div>
+    <form [formGroup]="setTruckRates" (ngSubmit)="onSetTruckRate()" enctype="multipart/form-data">
+
+        <div class="row my-row2 ml-0">
+            <div class="col-md-7 col-sm-12">
+                <div class="projects-profile-trucks-desc heading-5-400-semi text-color-grey">
+                    Tip: Set the rate for each type of Truck you are planning to use on your project. When dispatching, these costs are used each dispatch automatically.
+                </div>                                          
+                <div class="row ml-0">
+                    <div class=" col-md-12 table my-table">
+                        <div class="row mb-2 p-0">
+                            <div class="col-6 pr-1">
+                                <div class="row">
+                                    <div class="col-6 pr-1 ">
+                                        <div class="profile-trucks-col-header">
+                                            <div class="heading-5-400 text-color-black">
+                                                Truck
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6  ">
+                                        <div class="profile-trucks-col-header">
+                                            <div class="heading-5-400 text-color-black">
+                                                Rate
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 pr-1">
+                                <div class="row">
+                                    <div class="col-6 pr-1 ">
+                                        <div class="profile-trucks-col-header">
+                                            <div class="heading-5-400 text-color-black">
+                                                Trailer
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 ">
+                                        <div class="profile-trucks-col-header">
+                                            <div class="heading-5-400 text-color-black">
+                                                Rate
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="row mt-1 p-0">
+                           
+                            <div class="col-6 pr-1" formArrayName="project_trucks">
+                                <div class="row mb-1"  *ngFor="let formItem of project_trucks.controls; let idx = index">
+                                    <ng-container [formGroupName]="idx">
+                                        <div class="col-6 pr-1 ">
+                                            <div class="heading-5-400 text-color-black bg-color-D9D9D9 cp-111">{{this.trucks_data[idx].name}}</div>
+                                        </div>
+                                        <div class="col-6  ">
+                                            <div class="position-relative rate_value cp-1">
+                                                <input type="hidden" formControlName="id" [(ngModel)]="this.trucks_data[idx].id">
+                                                <input type="hidden" formControlName="name" [(ngModel)]="this.trucks_data[idx].name">
+                                                <input type="text"  class="heading-5-400 input-rates text-color-68696D" [(ngModel)]="this.trucks_data[idx].rate" formControlName="rate">
+                                                <div class="heading-5-400 text-color-black hr-div">$/hr</div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            
+                           
+                            
+                            <div class="col-6 pr-1" formArrayName="project_trailers">
+                                <div class="row mb-1"  *ngFor="let formItem of project_trailers.controls; let idx = index">
+                                    <ng-container [formGroupName]="idx">
+                                        <div class="col-6 pr-1 ">
+                                            <div class="heading-5-400 text-color-black bg-color-D9D9D9 cp-111">{{this.trailers_data[idx].name}}</div>
+                                        </div>
+                                        <div class="col-6 ">
+                                            <div class="position-relative rate_value cp-1">
+                                                <input type="hidden" formControlName="id" [(ngModel)]="this.trailers_data[idx].id">
+                                                <input type="hidden" formControlName="name" [(ngModel)]="this.trailers_data[idx].name">
+                                                <input type="text"  class="heading-5-400 input-rates text-color-68696D" [(ngModel)]="this.trailers_data[idx].rate" formControlName="rate">
+                                                <div class="heading-5-400 text-color-black hr-div">$/hr</div>
+                                            </div>
+                                        </div>
+                                    
+                                    </ng-container>
+                                </div>
+                            </div>
+                                
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="heading-12-400-normal text-color-88898B pl-8px mb-2">
+                    <span class="ff-gilory-bold">Tip:</span> Set nicknames to your Truck combinations.<br><span class="ff-gilory-bold">As</span> an example <span class="ff-gilory-bold">Tri Tri = 3-axle Truck + 3- axle Trailer</span>
+                </div>
+                <div class="table-responsive overflow-x-visible">
+                    <table class="table my-table">
+                        <tr>
+                            <th>
+                                <div class="profile-trucks-col-header">
+                                    <div class="heading-5-400 text-color-black">
+                                        Nickname
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="profile-trucks-col-header">
+                                    <div class="heading-5-400 text-color-black">
+                                        Truck
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="profile-trucks-col-header">
+                                    <div class="heading-5-400 text-color-black">
+                                        Trailer
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="profile-trucks-col-header">
+                                    <div class="heading-5-400 text-color-black">
+                                        Cost
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        <ng-container formArrayName="project_combinations">
+                            <tr *ngFor="let formItem of project_combinations.controls; let idx = index">
+                                <ng-container [formGroupName]="idx">
+                                    <td>
+                                        <div class="rate_value cp-1">
+                                            <input type="text" class="heading-5-400 text-color-68696D" formControlName="nickname" [(ngModel)]="this.project_combinations_data[idx] && this.project_combinations_data[idx].nickname">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class=" rate_value cp-1">
+                                          
+                                            <select class="heading-5-400 text-color-68696D" formControlName="project_truck_id" [(ngModel)]="this.project_combinations_data[idx] &&  this.project_combinations_data[idx].project_truck_id">
+                                                <option *ngFor="let item of this.project.project_trucks" [selected]="this.project_combinations_data[idx] && item.id === this.project_combinations_data[idx].project_truck_id" [value]="item.id" >{{item.name}}</option>
+                                            </select>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class=" rate_value cp-1">
+                                            <select class="heading-5-400 text-color-68696D" formControlName="project_trailer_id"  [(ngModel)]="this.project_combinations_data[idx] && this.project_combinations_data[idx].project_trailer_id">
+                                                <option *ngFor="let item of this.project.project_trailers" [selected]="this.project_combinations_data[idx] && item.id === this.project_combinations_data[idx].project_truck_id" [value]="item.id">{{item.name}}</option>
+                                            </select>
+                                        </div>
+                                        
+                                    </td>
+                                    <td>
+                                        <div class="position-relative rate_value cp-1">
+                                          
+                                            <input type="text"  class="heading-5-400 input-rates text-color-68696D"  formControlName="cost" [(ngModel)]="this.project_combinations_data[idx] &&  this.project_combinations_data[idx].cost">
+                                            <div class="heading-5-400 text-color-black hr-div">$/hr</div>
+                                        </div>
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </ng-container>
+                    </table>
+                </div>
+                <div class="d-flex mt-2 align-items-center pl-8px curser-pointer  mb-2" data-toggle="modal" data-target="#addCommboModal">
+                    <button type="button" class="btn project-profile-new-dump-btn">
+                        <img
+                        src="./assets/images/project-profile-add-icon.svg"
+                        alt="project-profile-add-icon"
+                        />
+                    </button>
+                    <div class="heading-13-400-bold text-color-88898B project-profile-team-add-new-text">
+                        Add new
+                    </div>
+                  
+                </div>
+                <div style="position: absolute;">
+                        
+                    <!-- Modal -->
+                    <div class="modal fade" id="addCommboModal" tabindex="-1" aria-labelledby="addCommboModal" aria-hidden="true">
+                        <div class="modal-dialog my-modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="btn-close my-modal-close" data-dismiss="modal" aria-label="Close"></button>
+                                    <div class="heading-5-400 text-color-black mb-3">Set new truck combo</div>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="row mb-2">
+                                                <div class="col-md-3">
+                                                    <div class="profile-trucks-col-header">
+                                                        <div class="heading-5-400 text-color-black">
+                                                            Nickname
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="profile-trucks-col-header">
+                                                        <div class="heading-5-400 text-color-black">
+                                                            Truck
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="profile-trucks-col-header">
+                                                        <div class="heading-5-400 text-color-black">
+                                                            Trailer
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="profile-trucks-col-header">
+                                                        <div class="heading-5-400 text-color-black">
+                                                            Cost
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="rate_value">
+                                                        <input type="text" name="new_comb_name" id="new_comb_name" class="heading-5-400 text-color-68696D w-100 no-border  cp-1" placeholder="Type name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="rate_value">
+                                                        <select name="new_comb_truck_type" id="new_comb_truck_type" class="heading-5-400 text-color-68696D no-border w-100 mySelect cp-1">
+                                                            <option *ngFor="let item of this.project?.project_trucks"  [value]="item.id" >{{item.name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="rate_value">
+                                                        <select name="new_comb_trailer_type" id="new_comb_trailer_type" class="heading-5-400 text-color-68696D no-border w-100 mySelect  cp-1">
+                                                            <option *ngFor="let item of this.project?.project_trailers"  [value]="item.id">{{item.name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="d-flex justify-content-between rate_value cp-2">
+                                                        <input type="number" min="0" id="new_comb_cost" class="heading-5-400 text-color-68696D no-border w-55px" placeholder="$235">
+                                                        <div class="heading-5-400 text-color-black">$/hr</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn add-newp-btn">
+                                                <div class="heading-15-400-bold text-color-black" (click)="addComb()">
+                                                    Add
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 align-self-center">
+                <input type="hidden" formControlName="project_id" value="{{this.project_id}}">
+                <button class="btn update-project-profile-dump-btn" *ngIf="!is_loading_rates">
+                    <div class="heading-15-400-bold text-color-black">
+                        Update
+                    </div>
+                </button>
+                <button class="btn update-project-profile-dump-btn" *ngIf="is_loading_rates" type="button" disabled>
+                    <div class="heading-15-400-bold text-color-black">
+                        Processing..
+                    </div>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+

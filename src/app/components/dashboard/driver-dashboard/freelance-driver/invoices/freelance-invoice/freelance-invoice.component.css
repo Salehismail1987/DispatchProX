@@ -1,0 +1,532 @@
+@import url("../../../../../../../assets/css/driver-dashboard-invoices-style.css");
+@import url("../../../../../../../assets/css/margins.css");
+.myinput-new {
+    border: none;
+    padding: 5px 5px;
+    width: 100% !important;
+    font-family: 'Gilroy-Bold';
+    font-size: 14px;
+    line-height: 16px;
+    color: #282D40;
+    background: transparent;
+    padding: 5px 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.myinput3 {
+    border: 1px solid #ECECEC;
+    padding: 3px 7px;
+    border-radius: 5px;
+}
+
+.myinput4 {
+    border: 1px solid #ECECEC;
+    border-radius: 5px;
+}
+
+
+select option{
+
+font-family: 'Gilroy-Bold';
+font-size: 14px;
+line-height: 16px;
+padding: 5px;
+color: #272525;
+}
+.custom-padding17 {
+    padding: 9px 9px 9px!important
+}
+
+.selectcontroldiv {
+    background: #fff;
+    padding: 0px 0px !important;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, .25);
+    border-radius: 7px;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    display: none;
+    width: auto;
+}
+
+.ui-datepicker-calendar tr th {
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #000000;
+}
+
+.ui-datepicker-calendar tr td {
+    font-family: 'Gilroy-Bold';
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    color: #88898B;
+}
+
+.ui-datepicker-calendar tr td,
+.ui-datepicker-calendar tr th {
+    padding: 5px;
+}
+
+.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all {
+    width: auto;
+}
+
+.ui-datepicker-calendar tr:has(.ui-state-active) {
+    background: #FDD7E4 !important;
+    border-radius: 10px !important;
+}
+
+
+.ui-datepicker-calendar tr:has(.ui-state-active) {
+    background: #FDD7E4 !important;
+    border-radius:  10px !important;
+}
+
+
+.cal-open .highLightDate {
+    background-color: #FDD7E4 !important;
+}
+
+
+@import url('../../../../../../../assets/calendar/jquery.calendar-highlighted.css');
+
+.calendar header .header-label {
+    letter-spacing: 1px !important;
+    width: auto !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    font-family: 'Gilroy-Bold' !important;
+    font-size: 16px !important;
+    line-height: 19px !important;
+    text-align: center !important;
+    color: #000000 !important;
+    background: #FDD7E4 !important;
+    border-radius: 4px !important;
+    padding: 5px !important;
+}
+
+.body-content {
+    padding: 21px 30px;
+}
+
+.equal-tabs > .nav-item{
+    min-width: 100px;
+    width: 100px;
+}
+
+.border-pink{
+    border: 2px solid #FDD7E4 !important;
+    border-radius: 4px;
+}
+
+.body-content {
+    padding: 15px;
+    }
+
+
+.border-div{
+    border: 1px solid #0000001a !important;
+}
+
+.inner_main_shadow{
+  box-shadow: 0px 4px 4px 0px #00000040 inset;
+
+}
+.p-15px{
+  padding:15px !important;
+}
+.nav-link{
+  width: 150px !important;
+  height: 40px !important;
+  padding: 3px 10px 3px 10px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.nav-link.active{
+  box-shadow: 0px 4px 4px 0px #00000040 inset !important;
+}
+.ml-8px{
+  margin-left: 8px !important;
+}
+.p-15px{
+  padding: 15px !important;
+}
+.border-grey{
+  border: 1px solid #E1E1E1 !important;
+}
+.h-65px{
+  height: 65px !important;
+}
+
+.title-top{
+  font-family: 'Gilroy-SemiBold';
+font-size: 13px;
+font-weight: 400;
+line-height: 15.93px;
+color: #000000;
+}
+
+.br-5px{
+  border-radius: 5px !important;
+}
+
+.title-5-new2{
+  font-family: 'Gilroy' !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 15.6px !important;
+  color: #68696D !important;
+}
+
+.w-164px{
+  width: 164px !important;
+}
+
+.ml-15px {
+  margin-left:15px !important;
+}
+
+.list-item{
+  min-width: 110px;
+  width: 100%;
+  padding-top: 2px;
+  padding-right: 5px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  border-radius: 5px;
+  background:  #FFF2F6;
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.list-item.mb-2px{
+  margin-bottom: 7px !important;
+}
+
+.input-popup-div {
+  min-width: 200px !important;
+  padding-top: 5px !important;
+  padding-right: 10px !important;
+  padding-bottom: 5px !important;
+  padding-left: 10px !important;
+  border-radius: 5px !important;
+
+}
+.bg-white{
+  background: #FFFFFF !important
+}
+
+.mycheckbox2 {
+  width: 16px !important;
+}
+
+.fs-bold-14px{
+  font-family: 'Gilroy-Bold';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17.33px;
+}
+.text-light-grey{
+  color: #D9D9D9 !important;
+}
+.no-invoices{
+  width: 150px;
+  height: 40px;
+  padding-top: 3px;
+  padding-right: 10px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  border-radius: 5px;
+  border: 1px solid #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.invoices{
+  width: 150px;
+  height: 40px;
+  padding-top: 3px;
+  padding-right: 10px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  border-radius: 5px;
+  background: #FDD7E4;
+  border: 1px solid #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-black{
+  color:#000000;
+}
+
+.my-tables thead th{
+  background:  #FFF2F6;
+
+  height: 32px !important;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+
+  border-style: solid;
+
+  border-color: #E1E1E1;
+  border-left: 0;
+  border-right: 0;
+
+}
+
+.my-tables thead td{
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+
+  border-style: solid;
+
+  border-color: #E1E1E1;
+  border-left: 0;
+  border-right: 0;
+}
+tr.bg-grey{
+
+}
+
+.fs-gilroy-13{
+  font-family: 'Gilroy';
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 15.6px;
+  color: #68696D;
+}
+
+.qty-div{
+  width: 75px;
+  height: 34px;
+  border-radius: 5px;
+  border-width: 1px;
+  padding-right: 5px;
+  padding-left: 5px;
+  border: 1px solid #E1E1E1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.border-2px td{
+  border-top: 1px solid #FDD7E4;
+  border-bottom: 2px solid #FDD7E4;
+}
+
+.fs-semibold-14{
+  font-family: 'Gilroy-SemiBold';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19.6px;
+  color: #000000;
+
+}
+.fs-bold-14{
+  font-family: 'Gilroy-Bold';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17.33px;
+  color: #000000;
+
+}
+
+.status-data{
+  width: max-content;
+  border-radius: 5px;
+  gap: 1px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  min-height: 56px;
+  border: 1px solid #E1E1E1;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.center-content{
+  display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.ml-5px{
+  margin-left: 5px;
+}
+.ml-20px{
+  margin-left: 30px ;
+}
+
+.ticket-status-div{
+  width: max-content;
+  height: 25px;
+  border-radius: 5px;
+  padding-top: 3px;
+  padding-right: 5px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  background:#17A1FA;
+  color: white;
+  font-family: 'Gilroy-SemiBold';
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 15.93px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.no-shadow{
+  box-shadow: none !important;
+}
+.no-padding{
+  padding: 0px !important;
+}
+
+.border-radius-top-bottom{
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+}
+
+.bg-modal{
+  background-color: #FAFAFA;
+}
+
+.text-68696D{
+color : #68696D !important;
+}
+
+.fs-semibold{
+  font-family: 'Gilroy-SemiBold';
+font-weight: 400;
+
+}
+
+.fs-size-14{
+font-size: 14px;
+line-height: 17.15px;
+}
+
+.invoice-date{
+  height: 45px !important;
+
+  border-radius: 5px !important;
+  padding-top: 2px !important;
+  padding-right: 10px !important;
+  padding-bottom: 2px !important ;
+  padding-left: 10px !important;
+}
+.invoicing-status{
+  width: 80px !important;
+  height: 25px !important;
+  border-radius: 5px !important;
+  padding-top: 3px !important;
+  padding-right: 5px !important;
+  padding-bottom: 3px !important;
+  padding-left: 5px !important;
+  background:#FDD7E4 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000 !important;
+}
+.invoice-date{
+  background: #FAFAFA !important;
+}
+
+.border-div2{
+  background: white !important;
+  border: 1px solid #E1E1E1 !important;
+}
+.title-7{
+  font-family: 'Gilroy-Bold';
+  font-weight: 400;
+  color: #000000 !important;
+
+}
+.mb-20px{
+  margin-bottom: 20px !important;
+}
+
+.width-320px{
+  width: 320px;
+  max-width: 100%;
+}
+
+.myhr3{
+  border-color: #68696D !important;
+}
+
+.myhr4{
+  border: 2px solid #68696D !important;
+
+
+}
+.width-132px{
+  width: 145px !important;
+}
+
+.min-width-300px{
+  width: 300px !important;
+  max-width: 100% !important;
+
+}
+
+.common-btn{
+  box-shadow: 0px 4px 4px 0px #00000040 !important;
+  border-radius: 5px !important;
+}
+
+.border-pink{
+  border: 1px solid #FDD7E4 !important;
+}
+
+.border-field{
+  min-height: 55px;
+  border-radius: 5px;
+  border: 1px solid #E1E1E1 !important;
+  background-color: #fff !important;
+
+}
+.border-field textarea{
+  border: none !important;
+  outline: none !important;
+}
+
+.pr-20px{
+  padding-right: 20px !important;
+}
+.top-right-icon{
+  top: 10px !important;
+}
+
+.h-35px{
+  height: 35px !important;
+}
+
+.pl-5px{
+  padding-left: 5px;
+}
+.pt-5px{
+  padding-top: 5px;
+}
+
+.invoiced-filter{
+  width: 178px;
+  max-width: 100%;
+  border: 1px solid #E1E1E1;
+  border-radius: 5px;
+}
+
+
+.invoiced-table tr{
+  border-bottom: 1px solid #0000001c !important;
+}

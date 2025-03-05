@@ -1,0 +1,116 @@
+@import url('../../../../../assets/css/dashboard-style-new.css');
+.dashbord-guide-icon{
+    background-color: #FFEAA7 !important;
+}
+.mytip{
+    background-color: #fff5d5 !important
+}
+
+.mybtn-back-yellow{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0em;
+
+    background: #FFF8B8;
+}
+
+.w-102px{
+    width: 102px !important;
+    
+}
+
+
+.border-div{
+    border: 1px solid #0000001a !important;
+}
+
+.mlr-40px{
+    margin-right: 40px  !important;
+    margin-left: 40px  !important;
+}
+
+.progress-bar {
+    background-color:#FFF8B8 !important;
+    height: 9px !important;
+}
+
+.progress{
+    height: 9px !important;
+}
+
+.current-title{
+    font-family: 'Gilroy-Bold';
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0em;
+    color: #000000;
+
+}
+.current-steps{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0em;
+    color: #111727;
+
+}
+
+.dashbord-guide{
+    border: 2px solid #FFF8B8 !important;
+}
+
+.dashbord-guide-icon {
+    background-color: #FFF8B8 !important;
+}
+
+.dashbord-guide.active {
+     background: inherit !important; 
+    border: 2px solid #FFF8B8 !important;
+}
+
+.tick-icon {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: -40px;
+}
+
+.dashbord-guide{
+    padding:15px;
+}
+
+.dasborad-guid-div {
+    border: 1px solid #FFF8B8;
+    border-radius: 10px;
+    padding: 16px 14px 16px 20px;
+    margin-left: -10px;
+    z-index: -1;
+    font-family: 'Gilroy';
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #68696D;
+}
+
+
+.dasborad-guid-content-div {
+    box-shadow: 0 0 10px #0000006b;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: 'Gilroy';
+    background-color: #fff;
+    width: 160px;
+}
+
+.image-guide{
+    position: relative;
+    right: -20px
+}
+
+.body-content2{
+    padding: 15px 15px 15px 15px !important;
+}

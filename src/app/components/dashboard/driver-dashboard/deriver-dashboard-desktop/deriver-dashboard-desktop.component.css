@@ -1,0 +1,10 @@
+@import url("../../../../../assets/css/driver-dashboard-style.css");
+@import url("../../../../../assets/css/margins.css");
+.bg-approved{
+    background-color: #17A1FA;
+}
+
+
+.border-div{
+    border: 1px solid #0000001a !important;
+}

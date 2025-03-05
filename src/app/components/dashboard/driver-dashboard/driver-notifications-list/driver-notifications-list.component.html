@@ -1,0 +1,106 @@
+<app-dashboard-top-header-driver [is_dashboard]="false" [header_text]="'Notifications'"></app-dashboard-top-header-driver>
+<div class="ticket-div" *ngIf="!loading && (!this.notifications || this.notifications?.length<1 )">
+    <div class="d-flex justify-content-center mb-23">
+       Not Notifications..
+    </div>
+</div>
+
+<div class="ticket-div" *ngIf="loading && (!this.notifications )">
+    <div class="d-flex justify-content-center mb-23">
+       <h4>
+        Fetching noitfications...
+       </h4>
+    </div>
+</div>
+
+  
+<ng-container *ngIf="this.notifications && this.notifications?.length>0">
+    <div class="notification-div" *ngFor="let notification of this.notifications">
+         
+        <div *ngIf="!notification?.is_self_dispatched && notification?.is_tc_ticket=='NO'" class="notification border-pink bg-white"  (click)="redirectNotification(notification, notification?.driver_ticket_id)">
+            <div></div>
+            <div>
+                <!-- <div class="title-3 text-center mb-14 text-black-shade2">Notifications</div> -->
+                <div class="title-4 text-center text-black-shade d-flex align-items-center mb-2">
+                    <img src="../assets/driver-images-mobile/Done.png" style="height: 24px;"  alt="" *ngIf="notification?.notification_icon=='double-tick'">
+                    <img src="../assets/driver-images-mobile/alarm-red.svg" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && notification?.overlaping_driver_ticket_id">
+                    <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && !notification?.overlaping_driver_ticket_id "> 
+                    <span class="ml-10">
+                        <span class="title-3 text-center mb-14 text-black-shade2">{{notification?.notification_title}}</span>
+                        <br/>
+                        {{notification?.notification_description}} 
+                        <br/>
+                        <span class="text-danger" *ngIf="notification?.overlaping_driver_ticket_id && notification?.overlapping_driver_ticket?.ticket">
+                            {{notification?.overlapping_driver_ticket && notification?.overlapping_driver_ticket.ticket? 'Overlapping '+notification?.overlapping_driver_ticket.ticket?.ticket_no :''}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div>
+                <ng-container >
+
+            
+                    <img  src="../assets/driver-images-mobile/arrow-right-white.png">
+                </ng-container>
+            </div>
+        </div>
+        <div *ngIf="notification?.is_self_dispatched && notification?.is_tc_ticket=='NO'" class="notification border-pink bg-white"  (click)="redirectNotification(notification, notification?.freelance_driver_ticket_id)">
+            <div></div>
+            <div>
+                <!-- <div class="title-3 text-center mb-14 text-black-shade2">Notifications</div> -->
+                <div class="title-4 text-center text-black-shade d-flex align-items-center mb-2">
+                    <img src="../assets/driver-images-mobile/Done.png" style="height: 24px;"  alt="" *ngIf="notification?.notification_icon=='double-tick'">
+                    <img src="../assets/driver-images-mobile/alarm-red.svg" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && notification?.freelance_overlaping_driver_ticket_id">
+                    <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && !notification?.freelance_overlaping_driver_ticket_id "> 
+                    <span class="ml-10">
+                        <span class="title-3 text-center mb-14 text-black-shade2">{{notification?.notification_title}}</span>
+                        <br/>
+                        {{notification?.notification_description}} 
+                        <br/>
+                        <span class="text-danger" *ngIf="notification?.freelance_overlaping_driver_ticket_id && notification?.freelance_overlapping_driver_ticket?.ticket_no">
+                            {{notification?.freelance_overlapping_driver_ticket && notification?.freelance_overlapping_driver_ticket?.ticket_no? 'Overlapping '+notification?.freelance_overlapping_driver_ticket?.ticket_no :''}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div>
+                <ng-container >
+
+            
+                    <img  src="../assets/driver-images-mobile/arrow-right-white.png">
+                </ng-container>
+            </div>
+        </div>
+
+        <div *ngIf="notification?.is_tc_ticket=='YES'" class="notification border-pink bg-white"  (click)="redirectTcNotification(notification, notification?.tc_driver_ticket_id)">
+            <div></div>
+            <div>
+                <!-- <div class="title-3 text-center mb-14 text-black-shade2">Notifications</div> -->
+                <div class="title-4 text-center text-black-shade d-flex align-items-center mb-2">
+                    <img src="../assets/driver-images-mobile/Done.png" style="height: 24px;"  alt="" *ngIf="notification?.notification_icon=='double-tick'">
+                    <img src="../assets/driver-images-mobile/alarm-red.svg" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && notification?.tc_overlapping_driver_ticket_id">
+                    <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='alarm' && !notification?.tc_overlapping_driver_ticket_id "> 
+                    <img src="../assets/driver-images-mobile/alarm.png" style="height: 24px;" alt="" *ngIf="notification?.notification_icon=='clock' && !notification?.tc_overlapping_driver_ticket_id "> 
+                    <span class="ml-10">
+                        <span class="title-3 text-center mb-14 text-black-shade2">{{notification?.notification_title}}</span>
+                        <br/>
+                        {{notification?.notification_description}} 
+                        <br/>
+                        <span class="text-danger" *ngIf="notification?.tc_overlapping_driver_ticket
+                        && notification?.tc_overlapping_driver_ticket?.ticket?.ticket_no">
+                            {{notification?.tc_overlapping_driver_ticket && notification?.tc_overlapping_driver_ticket?.ticket?.ticket_no? 'Overlapping '+notification?.tc_overlapping_driver_ticket?.ticket?.ticket_no :''}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div>
+                <ng-container >
+
+            
+                    <img  src="../assets/driver-images-mobile/arrow-right-white.png">
+                </ng-container>
+            </div>
+        </div>
+    </div>
+   
+</ng-container>

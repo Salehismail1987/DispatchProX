@@ -1,0 +1,2746 @@
+<!-- <div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content " style="display: none;">
+            <div class="title-12 text-color-black-shade drivertc-head">Set companies, projects, and trucks ready for easy dispatch</div>
+
+
+            <div class="setting-content-page   p-0">
+                <div class="row m-0">
+                    <div class="col-lg-4 p-0">
+                        <app-freelance-driver-settings-nav [active_link]="'construction_company'" ></app-freelance-driver-settings-nav>
+                    </div>
+                    <div class="col-lg-8">
+
+                            <div class="dashboard-body-stats custom-padding9 inner_main_shadow">
+                                <div class="title-12 text-color-black-shade mb-15">Construction companies</div>
+                                <ng-container *ngIf="this.trucking_companies && this.trucking_companies?.length>0">
+                                    <div class="dashboard-body-stats custom-padding11 mb-201">
+                                        <div class="table-responsive">
+                                            <table class="trucking-companies-table">
+                                                <thead>
+                                                    <th>Name</th>
+                                                    <th>Projects name</th>
+                                                    <th>Job approver</th>
+                                                    <th style="text-align:center"></th>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container  *ngFor="let company of this.trucking_companies;let comp_idx=index" >
+                                                        <tr>
+                                                            <td>{{company?.company_name}}</td>
+                                                            <td>
+                                                                <ng-container *ngFor="let project of company?.freelance_projects; let i=index">
+
+                                                                    <div [ngClass]="i<company?.freelance_projects.length? 'mb-17':''"  >{{project.project_name}}</div>
+                                                                </ng-container>
+                                                            </td>
+
+                                                            <td>
+                                                                <ng-container *ngFor="let project of company?.freelance_projects; let i=index">
+                                                                    <ng-container *ngFor="let approver of project?.approvers_list; let i=index">
+                                                                        <div [ngClass]="i<project?.approvers_list.length ? 'mb-17':''"  >{{approver.name}}</div>
+                                                                    </ng-container>
+                                                                </ng-container>
+
+                                                            </td>
+
+                                                            <td style="text-align:center" ><img src="../../assets/icons/pencile.svg" alt="" (click)="setDetail(company)" data-toggle="modal" data-target="#myModalEditCompany"></td>
+                                                        </tr>
+                                                        <tr *ngIf="comp_idx<trucking_companies.length">
+                                                            <td colspan="4">
+                                                                <hr>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>
+                                                            <div class="btn-plus p-6" data-toggle="modal" data-target="#myModalAddCompany">
+                                                                <img src="../../assets/icons/plus.svg" alt="" width="14px" >
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <ng-container *ngIf="!this.trucking_companies || this.trucking_companies?.length<1">
+                                    <div class="dashboard-body-stats custom-padding10 mb-201">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="title-3 text-color-black-shade7">Construction sites and projects added here will show up for <br>quick dispatch when you create tickets for yourself.</div>
+                                            <div class="btn-plus"  data-toggle="modal" data-target="#myModalAddCompany">
+                                                <img src="../../assets/icons/plus.svg" alt="" width="47px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="title-3 text-color-black-shade7 mb-21">Invite construction companies to start dispatching tickets to brokers and trucking companies</div>
+                                <form  [formGroup]="inviteCC" (ngSubmit)="onSaveInvite()">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span *ngIf="this.inviteCC.invalid && inviteCC.get('contact_name')?.invalid && (form_clicked)"
+                                            class="text-danger">
+                                                Contact name is required.
+                                            </span>
+                                            <div class="title-5-new2 mb-2px">Construction company’s contact name</div>
+                                            <div class="position-relative mb-13">
+                                                <input type="text" class="myinput4" placeholder="John Doe" formControlName="contact_name">
+                                                <div class="required top-right-icon2">*</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span *ngIf="this.inviteCC.invalid && inviteCC.get('contact_email')?.invalid && (form_clicked)"
+                                            class="text-danger">
+                                                Contact email is required.
+                                            </span>
+                                            <div class="title-5-new2 mb-2px">Contact email</div>
+                                            <div class="position-relative mb-13">
+                                                <input type="text" class="myinput4" placeholder="john@doe.com" formControlName="contact_email">
+                                                <div class="required top-right-icon2">*</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div class="title-5-new2 mb-2px">Phone number</div>
+                                            <div class="position-relative mb-13">
+                                                <input type="text" class="myinput4" placeholder="(---) --- ----" formControlName="contact_number"
+                                                (input)="changeNumber($event)"
+                                                >
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pt-2" align="right">
+                                            <button class="mybtn4 mybtn-back-pink title-17 w-auto" *ngIf="this.is_loading==''">Send invite</button>
+                                            <button class="mybtn4 mybtn-back-pink title-17 w-auto" disabled type="button" *ngIf="this.is_loading=='invite_tc'">Processing...</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+      <app-dashboard-top-header></app-dashboard-top-header>
+      <div class="body-content">
+        <div class="main-inner-body-container mt-15px">
+          <div class="project-profile-header-container">
+            <div class="profile_heading_div1">
+              <div class="project-profile-header-left d-flex align-items-center">
+                <img
+                  src="./assets/images/cust-settings-icon.svg"
+                  alt="project-profile-file-icon"
+                />
+                <div class="heading-1-400 text-color-black">
+                  Companies, trucks
+                </div>
+              </div>
+            </div>
+            <app-freelance-driver-settings-nav
+              [active_link]="'construction_company'"
+            ></app-freelance-driver-settings-nav>
+          </div>
+          <div class="dashboard-body-stats custom-padding9 inner_main_shadow">
+            <div class="row mb-95">
+              <div class="col-md-7" style="display: flex; align-items: center">
+                <div class="page-heading-title">
+                  Manage construction companies
+                </div>
+              </div>
+              <div
+                class="col-md-5 d-flex justify-content-end"
+                style="height: 45px !important"
+              >
+                <button
+                  class="title-14 styled-button openOptionModal"
+                  style="margin-right: 10px !important"
+                  data-toggle="modal"
+                  data-target="#myModalAddCompany"
+                >
+                  <!-- <button class="title-14 styled-button openOptionModal" style="border-radius: 5px !important;" (click)="showMore()" > -->
+                  <div class="d-flex align-items-center">
+                    <div
+                      class="heading-5-400 text-color-black ml-8px col text-center"
+                    >
+                      Add company
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <ng-container
+              *ngIf="
+                this.trucking_companies && this.trucking_companies?.length > 0
+              "
+            >
+              <div class="dashboard-body-stats custom-padding11 mb-201">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="table-light project-setting-table-header">
+                      <tr>
+                        <th
+                          class="project-settings-table-header usertablemain"
+                          style="width: 17%"
+                        >
+                          <div class="heading-8-400 text-color-grey text-left">
+                            Name
+                          </div>
+                        </th>
+                        <th
+                          class="project-settings-table-header usertablemain"
+                          style="width: 17%"
+                        >
+                          <div class="heading-8-400 text-color-grey text-left">
+                            Projects name
+                          </div>
+                        </th>
+                        <th
+                          class="project-settings-table-header usertablemain"
+                          style="width: 17%"
+                        >
+                          <div class="heading-8-400 text-color-grey text-left">
+                            Job approver
+                          </div>
+                        </th>
+                        <th
+                          class="project-settings-table-header usertablemain"
+                          style="width: 17%"
+                        >
+                          <div class="heading-8-400 text-color-grey text-left">
+                            Closed tickets<br />last 30 days
+                          </div>
+                        </th>
+                        <th
+                          class="project-settings-table-header usertablemain"
+                          style="width: 17%"
+                        ></th>
+                        <th
+                          class="project-settings-table-header usertablemain"
+                          style="width: 17%"
+                        ></th>
+                      </tr>
+                    </thead>
+  
+                    <tbody>
+                      <tr
+                        *ngFor="let company of this.trucking_companies"
+                        (click)="setDetail(company)"
+                        data-toggle="modal"
+                        data-target="#myModalEditCompany"
+                      >
+                        <td class="project-setting-table-body-data">
+                          <div
+                            class="heading-14-700-normal text-color-grey text-left"
+                          >
+                            {{ company?.company_name }}
+                     
+                          </div>
+                        </td>
+                        <td class="project-setting-table-body-data">
+                          <div
+                            class="heading-14-700-normal text-color-grey text-left"
+                          >
+                            <ng-container
+                              *ngFor="
+                                let project of company?.freelance_projects;
+                                let i = index
+                              "
+                            >
+                              <div
+                                [ngClass]="
+                                  i < company?.freelance_projects.length ? '' : ''
+                                "
+                              >
+                                {{ project.project_name }}
+                              </div>
+                            </ng-container>
+                          </div>
+                          <!-- <ng-template #elseBlock>
+                                              <div
+                                            class="heading-14-700-normal text-color-grey text-left"
+                                          >
+                                              {{company?.full_name}}</div>
+                                          </ng-template> -->
+                        </td>
+  
+                        <td class="project-setting-table-body-data">
+                          <div
+                            class="heading-14-700-normal text-color-grey text-left"
+                          >
+                            <ng-container
+                              *ngFor="
+                                let project of company?.freelance_projects;
+                                let i = index
+                              "
+                            >
+                              <ng-container
+                                *ngFor="
+                                  let approver of project?.approvers_list;
+                                  let i = index
+                                "
+                              >
+                                <div
+                                  [ngClass]="
+                                    i < project?.approvers_list.length ? '' : ''
+                                  "
+                                >
+                                  {{ approver.name }}
+                                </div>
+                              </ng-container>
+                            </ng-container>
+                          </div>
+                        </td>
+  
+                        <td class="project-setting-table-body-data">
+                          <div
+                            class="heading-14-700-normal text-color-grey text-left"
+                          >
+                          {{ company?.approved_freelance_ticket_count }}
+                        
+                        </div>
+                        </td>
+  
+                        <td class="project-setting-table-body-data">
+                          <div
+                            class="heading-14-700-normal text-color-grey text-left"
+                          >
+                            <!-- <img src="../../assets/icons/pencile.svg" alt=""> -->
+                          </div>
+                        </td>
+                        <td class="project-setting-table-body-data">
+                          <div
+                            class="heading-14-700-normal text-color-grey text-left"
+                          ></div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <!-- <td>
+                                          <div class="btn-plus p-8" data-toggle="modal" data-target="#myModalAddCompany">
+                                              <img src="../../assets/icons/plus.svg" alt="" width="14px" >
+                                          </div>
+                                      </td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </ng-container>
+  
+            <ng-container
+              *ngIf="
+                !this.trucking_companies || this.trucking_companies?.length < 1
+              "
+            >
+              <div class="dashboard-body-stats custom-padding10 mb-201">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="title-3 text-color-black-shade7">
+                    Construction sites and projects added here will show up for
+                    <br />quick dispatch when you create tickets for yourself.
+                  </div>
+                  <div
+                    class="btn-plus"
+                    data-toggle="modal"
+                    data-target="#myModalAddCompany"
+                  >
+                    <img src="../../assets/icons/plus.svg" alt="" width="47px" />
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div
+    class="modal fade come-from-modal right"
+    id="myModalAddCompany"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form [formGroup]="AddCC" (ngSubmit)="onAddCC()">
+          <div class="modal-body modal-body-padding">
+            <div class="title-4 mb-18">Add new Construction company</div>
+            <div class="d-flex align-items-center mb-42">
+              <div>
+                <img
+                  src="../../assets/icons/icon-construction.svg"
+                  alt=""
+                  width="41px"
+                />
+              </div>
+              <div
+                class="ml-24"
+                style="
+                  border: 2px solid #fdd7e4;
+                  padding: 3px;
+                  border-radius: 5px;
+                "
+              >
+                <div class="d-flex">
+                  <div class="title-4 text-color-black-shade7 mb-7 no-wrap">
+                    Company name
+                  </div>
+                  <div class="required ml-1">*</div>
+                </div>
+                <span
+                  *ngIf="
+                    this.AddCC.invalid &&
+                    AddCC.get('company_name')?.invalid &&
+                    form_clicked
+                  "
+                  class="text-danger"
+                >
+                  Company name is required.
+                </span>
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    style="border: 0px !important"
+                    class="myinput4"
+                    formControlName="company_name"
+                    placeholder="Company..."
+                  />
+                  <img
+                    src="../../assets/icons/pencile.svg"
+                    alt=""
+                    class="top-right-icon"
+                    width="17px"
+                  />
+                </div>
+              </div>
+              <div class="title-14 text-color-black-shade ml-24">
+                The more accurate details you can provide, better tickets we can
+                make.
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-4px">
+              <div class="title-6-new no-wrap">Add Project</div>
+              <div class="title-14">You can always edit/update date later</div>
+            </div>
+            <div class="border-div br-5 custom-padding13 mb-26">
+              <div class="custom-padding14">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Project name</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.AddCC.invalid &&
+                        AddCC.get('project_name')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Project name is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="field-input2"
+                        placeholder="..."
+                        formControlName="project_name"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Job number</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.AddCC.invalid &&
+                        AddCC.get('job_number')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Job number is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="field-input2"
+                        placeholder="..."
+                        formControlName="job_number"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-10"></div>
+              <div class="custom-padding14">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Street</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.AddCC.invalid &&
+                        AddCC.get('street')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Street is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="field-input2"
+                        placeholder="..."
+                        formControlName="street"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">City</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.AddCC.invalid &&
+                        AddCC.get('city')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      City is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="field-input2"
+                        placeholder="..."
+                        formControlName="city"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-10"></div>
+              <div class="custom-padding14">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Country</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.AddCC.invalid &&
+                        AddCC.get('country')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Country is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <select
+                        class="icon-none select-no-icon field-input2"
+                        formControlName="country"
+                        (change)="setCountry($event)"
+                        [ngModel]="this.country"
+                        [value]="
+                          this.country &&
+                          this.country !== null &&
+                          this.country != 'null'
+                            ? this.country
+                            : ''
+                        "
+                      >
+                        <option
+                          value="Canada"
+                          [selected]="this.country == 'Canada'"
+                        >
+                          Canada
+                        </option>
+                        <option value="USA" [selected]="this.country == 'USA'">
+                          USA
+                        </option>
+                      </select>
+                      <i
+                        class="fa fa-caret-down select-icon-right"
+                        aria-hidden="true"
+                      ></i>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Province/ State</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.AddCC.invalid &&
+                        AddCC.get('province')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Province is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <select
+                        type="text"
+                        class="field-input2"
+                        [ngModel]="this.province"
+                        formControlName="province"
+                      >
+                        <ng-container *ngIf="this.country == 'Canada'">
+                          <option
+                            *ngFor="let pro of this.canada_provinces"
+                            value="{{ pro }}"
+                            [selected]="pro == this.province"
+                          >
+                            {{ pro }}
+                          </option>
+                        </ng-container>
+  
+                        <ng-container *ngIf="this.country == 'USA'">
+                          <option
+                            *ngFor="let pro of this.usa_provinces"
+                            value="{{ pro }}"
+                            [selected]="pro == this.province"
+                          >
+                            {{ pro }}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Postal Code</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.AddCC.invalid &&
+                        AddCC.get('postal_code')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Postal Code is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        placeholder="V8K K0L"
+                        formControlName="postal_code"
+                        class="myinput4 field-input2 text-right"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-left-icon2"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-6">
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-14"
+                      style="
+                        border: 1px solid #e1e1e1;
+                        padding: 5px;
+                        border-radius: 5px;
+                      "
+                    >
+                    <div class="title-11 no-wrap">Set as default</div>
+                      <input
+                        type="checkbox"
+                        value="1"
+                        formControlName="approver_is_default"
+                        class="mycheckbox3 ml-18"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="title-14">
+                      Default project details are shown when you create a ticket.
+                      You can make always changes
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="title-6-new mb-18">Add job approver</div>
+            <div class="border-div br-5 custom-padding13 mb-38">
+              <div class="custom-padding15">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Name</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.AddCC.invalid &&
+                        AddCC.get('approver_name')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Name is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="approver_name"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Phone number</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.AddCC.invalid &&
+                        AddCC.get('approver_number')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Phone number is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="(---) --- ----"
+                        formControlName="approver_number"
+                        (input)="changeNumberContact($event, 'add-cc')"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="title-5-new2 mb-2px">Email</div>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="approver_email"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <!-- <div class="title-5-new2 mb-2px">Set as default</div> -->
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-14"
+                      style="
+                        border: 1px solid #e1e1e1;
+                        padding: 12px;
+                        border-radius: 5px;
+                      "
+                    >
+                      <div class="title-11 no-wrap">Set as default</div>
+                      <input
+                        type="checkbox"
+                        value="1"
+                        formControlName="is_default"
+                        class="mycheckbox3 ml-18"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-6"></div>
+              <!-- <div class="custom-padding15">
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <div class="title-5-new2 mb-2px">Email </div>
+                                      <div class="position-relative mb-13">
+                                          <input type="text" class="myinput4" placeholder="..." formControlName="approver_email">
+                                          <img src="../../assets/icons/pencile.svg" alt="" class="top-right-icon" width="17px">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> -->
+            </div>
+  
+            <div align="center">
+              <button
+                class="mybtn4 mybtn-back-pink title-17 w-auto"
+                style="
+                  line-height: 18px !important;
+                  border-radius: 5px !important;
+                  padding: 14px 30px !important;
+                  box-shadow: 0px 4px 4px 0px #00000040;
+                "
+                *ngIf="this.is_loading != 'adding_cc'"
+              >
+                Add Company
+              </button>
+  
+              <button
+                class="mybtn4 mybtn-back-pink title-17 w-auto"
+                style="
+                  line-height: 18px !important;
+                  border-radius: 5px !important;
+                  padding: 14px 30px !important;
+                  box-shadow: 0px 4px 4px 0px #00000040;
+                "
+                class="mybtn4 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                disabled
+                type="button"
+                *ngIf="this.is_loading == 'adding_cc'"
+              >
+                Processing..
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div
+    class="modal fade come-from-modal right"
+    *ngIf="this.company_detail"
+    id="myModalEditCompany"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+    
+  >
+    <div class="modal-dialog" role="document" style="margin-top:5px !important">
+      <div class="modal-content" style="background: #fafafa !important;  ">
+        <div class="modal-body modal-body-padding">
+          <div
+            class="d-flex align-items-center"
+            style="
+              font-family: Gilroy-Bold !important;
+              font-weight: 400 !important;
+              font-size: 20px !important;
+              margin-bottom: 15px;
+            "
+          >
+            Edit Construction company
+          </div>
+  
+          <div
+            class="d-flex align-items-center"
+            style="
+              box-shadow: 0px 4px 4px 0px #00000040;
+              border-radius: 5px;
+              padding: 15px;
+              margin-bottom: 20px;
+            "
+          >
+            <div>
+              <img
+                src="../../assets/icons/icon-construction.svg"
+                alt=""
+                width="41px"
+              />
+            </div>
+            <div
+              class="ml-24"
+              data-toggle="modal"
+              data-target="#myModalEditCompanyName"
+            >
+              <div class="d-flex">
+                <div class="title-4 text-color-black-shade7 mb-7 no-wrap">
+                  Company name
+                </div>
+              </div>
+              <div class="position-relative">
+                <div class="title-4 ml-11">
+                  {{ this.company_detail?.company_name }}
+                </div>
+              </div>
+            </div>
+            <div class="title-14 text-color-black-shade ml-24">
+              The more accurate details you can provide, better tickets we can
+              make.
+            </div>
+          </div>
+  
+          <div class="mb-11">
+              <div
+            class="d-flex align-items-center"
+            style="
+              font-family: Gilroy-Bold !important;
+              font-weight: 400 !important;
+              font-size: 14px !important;
+              margin-bottom: 15px;
+            "
+          >
+          Projects
+          </div>
+
+
+
+
+          <ng-container *ngIf="this.company_detail?.freelance_projects.length > 0">
+            <div class="nav nav-pills nav-fill ticket-tabs mb-20" id="nav-tab" role="tablist" style="    justify-content: flex-start; align-items: center;">
+              <ng-container *ngFor="let project of company_detail?.freelance_projects; let i = index">
+                <button
+                class="title-14 styled-button2"
+                style="margin-right: 10px !important"
+                [class.active]="selectedTabIndex === i"
+                (click)="selectTab(i)"
+                data-toggle="tab"
+                [attr.href]="'#project-' + i"
+                role="tab"
+                [attr.aria-controls]="'project-' + i"
+                aria-selected="selectedTabIndex === i"
+              >
+                {{ project?.project_name }}
+              </button>
+              
+              </ng-container>
+            </div>
+          
+            <div class="tab-content" id="nav-tabContent">
+              <ng-container *ngFor="let project of company_detail?.freelance_projects; let i = index">
+                <div
+                  class="tab-pane fade"
+                  [class.show]="selectedTabIndex === i"
+                  [class.active]="selectedTabIndex === i"
+                  [id]="'project-' + i"
+                  role="tabpanel"
+                  [attr.aria-labelledby]="'nav-home-tab-' + i"
+
+                >
+                  <div class="d-flex align-items-center mb-9">
+                    <div class="modal-content" style="
+                    border:0px !important;
+                    box-shadow: none !important;
+                    border-radius: 3px !important;
+                      
+                      
+                      ">
+                      <div class="modal-body modal-body-padding">
+                        <div class="d-flex align-items-center mb-29">
+                          <img
+                            src="../../assets/icons/icon-construction.svg"
+                            alt=""
+                            width="41px"
+                          />
+                          <div class="title-4 ml-11">
+                            {{ company_detail?.company_name }} - {{ project?.project_name }}
+                          </div>
+                        </div>
+                        <div class="title-6-new mb-9">Project</div>
+                        <div class="border-div br-5 custom-padding13 mb-22" data-toggle="modal" (click)="setEditProject(project)" data-target="#myModalEditProject2">
+                          <div class="custom-padding15">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="title-5-new2 mb-2px">Project name</div>
+                                <div class="title-7 text-color-black-shade7 mb-9">{{ project?.project_name }}</div>
+                              </div>
+                              <div class="col-md-6" align="right">
+                                <div class="title-5-new2 mb-2px">Job number</div>
+                                <div class="title-7 text-color-black-shade7 mb-9">{{ project?.job_number }}</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="myhr3 mb-6"></div>
+                          <div class="custom-padding15">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="title-5-new2 mb-2px">Street</div>
+                                <div class="title-7 text-color-black-shade7 mb-9">{{ project?.street }}</div>
+                              </div>
+                              <div class="col-md-6" align="right">
+                                <div class="title-5-new2 mb-2px">City</div>
+                                <div class="title-7 text-color-black-shade7 mb-9">{{ project?.city }}</div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="myhr3 mb-6"></div>
+                          <div class="custom-padding15">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <div class="title-5-new2 mb-2px">Province/ State</div>
+                                <div class="title-7 text-color-black-shade7 mb-9">{{ project?.province }}</div>
+                              </div>
+                              <div class="col-md-4" style="text-align: center;">
+                                <div class="title-5-new2 mb-2px">Country</div>
+                                <div class="title-7 text-color-black-shade7 mb-9">{{ project?.country }}</div>
+                              </div>
+                              <div class="col-md-4" style="text-align: end;">
+                                <div class="title-5-new2 mb-2px">Postal Code</div>
+                                <div class="title-7 text-color-black-shade7 mb-9">{{ project?.postal_code }}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div align="right" *ngIf="project">
+                          <button
+                            class="mybtn4 mybtn-back-pink title-17 w-auto"
+                            data-toggle="modal"
+                            data-target="#myModalAddProject"
+                            style="line-height: 18px !important; border-radius: 5px !important; padding: 5px 20px !important; box-shadow: 0px 4px 4px 0px #00000040;">
+                            Add<br>Project
+                          </button>
+                        </div>
+                        <div class="title-6-new mb-9">Job approver(s)</div>
+          
+                        <ng-container *ngIf="project?.approvers_list">
+                          <ng-container *ngFor="let approver of project?.approvers_list; let j = index">
+                            <div class="border-div br-5 custom-padding13 mb-15" data-toggle="modal" data-target="#myModalEditApprover" (click)="setApprover(approver)">
+                              <div class="custom-padding15">
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="title-5-new2 mb-2px">Name</div>
+                                    <div class="title-7 text-color-black-shade7 mb-9">{{ approver?.name }}</div>
+                                  </div>
+                                  <div class="col-md-6" align="right">
+                                    <div class="title-5-new2 mb-2px">Phone number</div>
+                                    <div class="title-7 text-color-black-shade7 mb-9">{{ approver?.contact_number }}</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="myhr3 mb-6"></div>
+                              <div class="custom-padding15">
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="title-5-new2 mb-2px">Email</div>
+                                    <div class="title-7 text-color-black-shade7 mb-9">{{ approver?.email }}</div>
+                                  </div>
+                                  <div class="col-md-6" align="center" style="display: flex;">
+                                    <div class="title-5-new2 text-color-black-shade2 mb-2px">Default approver</div>
+                                    <input
+                                      type="checkbox"
+                                      value="1"
+                                      class="mycheckbox3 ml-5px"
+                                      [checked]="approver?.is_default == true"
+                                      (click)="setData($event, 'approver_default', j)"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-container>
+
+                          <div align="right">
+                            <button
+                              class="mybtn4 mybtn-back-pink title-17 w-auto"
+                              data-toggle="modal"
+                              data-target="#myModalAddApprover"
+                              style="line-height: 18px !important; border-radius: 5px !important; padding: 5px 20px !important; box-shadow: 0px 4px 4px 0px #00000040;">
+                              Add<br>Approval
+                            </button>
+                          </div>
+                        </ng-container>
+          
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+          
+              
+            <ng-container
+              *ngIf="this.company_detail?.freelance_projects.length < 1"
+            >
+              <tr>
+                <td colspan="4">No projects found.</td>
+              </tr>
+            </ng-container>
+  
+            <!-- <div class="table-responsive">
+                          <table class="trucking-companies-table">
+                              <thead>
+                                  <th>Projects name</th>
+                                  <th>Default</th>
+                                  <th>Job approver</th>
+                                  <th></th>
+                              </thead>
+                              <tbody>
+                                  <ng-container *ngIf="this.company_detail?.freelance_projects.length>0">
+                                      <ng-container *ngFor="let project of this.company_detail?.freelance_projects; let i=index">
+  
+  
+  
+                                          <tr >
+                                              <td>
+  
+                                                  <div class="mb-17">{{project?.project_name}}</div>
+                                              </td>
+                                              <td>
+                                                  <input type="checkbox" value="1" [checked]="project?.is_default ==true" (change)="setData($event,'project_default',i)" class="mycheckbox3">
+                                              </td>
+                                              <td>
+                                                  <ng-container *ngFor="let approver of project?.approvers_list; let i=index">
+                                                      <div [ngClass]="i<project?.approvers_list.length ? 'mb-17':''"  >{{approver.name}}</div>
+                                                  </ng-container>
+                                              </td>
+                                              <td><img src="../../assets/icons/pencile.svg" alt="" data-toggle="modal" data-target="#myModalEditProject" (click)="setProject(project)"></td>
+                                          </tr>
+                                      </ng-container>
+                                  </ng-container>
+                                  <ng-container *ngIf="this.company_detail?.freelance_projects.length<1">
+                                      <tr >
+                                          <td colspan="4">
+                                              No projects found.
+                                          </td>
+                                      </tr>
+                                  </ng-container>
+  
+                              </tbody>
+                          </table>
+  
+  
+  
+                      </div> -->
+          </div>
+
+             
+          <!--  <div
+              class="btn-plus p-8"
+              data-toggle="modal"
+              data-target="#myModalAddProject"
+            >
+              <img src="../../assets/icons/plus.svg" alt="" width="14px" />
+            </div> 
+          </div> -->
+          <!-- <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">
+              <button
+                class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                (click)="handleUpdateCompany()"
+                *ngIf="this.is_loading != 'updating_company'"
+              >
+                Update
+              </button>
+              <button
+                class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                disabled
+                *ngIf="this.is_loading == 'updating_company'"
+              >
+                Processing...
+              </button>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3">
+              <div class="position-relative modal-div">
+                <button
+                  class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow btnremove"
+                  *ngIf="this.is_loading != 'deleting_company'"
+                >
+                  Remove
+                </button>
+                <button
+                  class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow"
+                  disabled
+                  *ngIf="this.is_loading == 'deleting_company'"
+                >
+                  Removing...
+                </button>
+                <div class="delete-modal">
+                  <div class="title-3 mb-12 text-center">
+                    Deleting company ...
+                  </div>
+                  <div class="title-5-new2 mb-17 text-center">Are you sure?</div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <button
+                      class="mybtn5 mybtn-back-pink title-17 w-auto btnaction"
+                      (click)="deleteCompany(this.company_detail?.id)"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      class="mybtn5 mybtn-default title-17 w-auto btnaction"
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade come-from-modal right" *ngIf="this.project_detail" id="myModalEditProject"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body modal-body-padding">
+          <div class="d-flex align-items-center mb-29">
+            <img
+              src="../../assets/icons/icon-construction.svg"
+              alt=""
+              width="41px"
+            />
+            <div class="title-4 ml-11">
+              {{ this.company_detail?.company_name }} -
+              {{ this.project_detail?.project_name }}
+            </div>
+          </div>
+          <div class="title-6-new mb-9">Project</div>
+          <div class="border-div br-5 custom-padding13 mb-22"    data-toggle="modal"
+          (click)="setEditProject(this.project_detail)"
+          data-target="#myModalEditProject2">
+            <div class="custom-padding15">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="title-5-new2 mb-2px">Project name</div>
+                  <div class="title-7 text-color-black-shade7 mb-9">
+                    {{ this.project_detail?.project_name }}
+                  </div>
+                </div>
+                <div class="col-md-6" align="right">
+                  <div class="title-5-new2 mb-2px">Job number</div>
+                  <div class="title-7 text-color-black-shade7 mb-9">
+                    {{ this.project_detail?.job_number }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr3 mb-6"></div>
+            <div class="custom-padding15">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="title-5-new2 mb-2px">Street</div>
+                  <div class="title-7 text-color-black-shade7 mb-9">
+                    {{ this.project_detail?.street }}
+                  </div>
+                </div>
+                <div class="col-md-6" align="right">
+                  <div class="title-5-new2 mb-2px">City</div>
+                  <div class="title-7 text-color-black-shade7 mb-9">
+                    {{ this.project_detail?.city }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="myhr3 mb-6"></div>
+            <div class="custom-padding15">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="title-5-new2 mb-2px">Province/ State</div>
+                  <div class="title-7 text-color-black-shade7 mb-9">
+                    {{ this.project_detail?.province }}
+                  </div>
+                </div>
+                <div class="col-md-4"style="text-align: center;">
+                  <div class="title-5-new2 mb-2px">Country</div>
+                  <div class="title-7 text-color-black-shade7 mb-9">
+                    {{ this.project_detail?.country }}
+                  </div>
+                </div>
+                <div class="col-md-4" style="text-align: end;">
+                  <div class="title-5-new2 mb-2px">Postal Code</div>
+                  <div class="title-7 text-color-black-shade7 mb-9">
+                    {{ this.project_detail?.postal_code }}
+                  </div>
+                </div>
+                <!-- <div class="col-md-6" align="right">
+                  <div class="title-5-new2 mb-2px">Modify</div>
+                  <img
+                    src="../../assets/icons/pencile.svg"
+                    alt=""
+                    data-toggle="modal"
+                    (click)="setEditProject(this.project_detail)"
+                    data-target="#myModalEditProject2"
+                  />
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div align="right" class=""  *ngIf="this.project_detail">
+            <button
+            class="mybtn4 mybtn-back-pink title-17 w-auto"
+            data-toggle="modal"
+            data-target="#myModalAddProject"
+            style="
+              line-height: 18px !important;
+              border-radius: 5px !important;
+              padding: 5px 20px !important;
+              box-shadow: 0px 4px 4px 0px #00000040;
+            "
+          >
+            Add<br>Project
+          </button>
+          </div>
+          <div class="title-6-new mb-9">Job approver(s)</div>
+  
+          <ng-container *ngIf="this.project_detail?.approvers_list">
+            <ng-container
+              *ngFor="
+                let approver of this.project_detail?.approvers_list;
+                let i = index
+              "
+            >
+              <div class="border-div br-5 custom-padding13 mb-15"   data-toggle="modal"
+              data-target="#myModalEditApprover"
+              (click)="setApprover(approver)">
+                <div class="custom-padding15">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="title-5-new2 mb-2px">Name</div>
+                      <div class="title-7 text-color-black-shade7 mb-9">
+                        {{ approver?.name }}
+                      </div>
+                    </div>
+                    <div class="col-md-6" align="right">
+                      <div class="title-5-new2 mb-2px">Phone number</div>
+                      <div class="title-7 text-color-black-shade7 mb-9">
+                        {{ approver?.contact_number }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="myhr3 mb-6"></div>
+                <div class="custom-padding15">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="title-5-new2 mb-2px">Email</div>
+                      <div class="title-7 text-color-black-shade7 mb-9">
+                        {{ approver?.email }}
+                      </div>
+                    </div>
+                    <div class="col-md-6" align="" style="        display: flex     ; justify-content: center;">
+                      {{ approver?.is_detault }}
+                      <div
+                        class="d-flex align-items-center justify-content-center"
+                      >
+                        <div
+                          class="title-5-new2 text-color-black-shade2 mb-2px"
+                        >
+                          Default approver
+                        </div>
+                        <input
+                          type="checkbox"
+                          value="1"
+                          class="mycheckbox3 ml-5px"
+                          [checked]="approver?.is_default == true"
+                          (click)="setData($event, 'approver_default', i)"
+                        />
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-4" align="right">
+                      <div class="title-5-new2 mb-2px">Modify</div>
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        data-toggle="modal"
+                        data-target="#myModalEditApprover"
+                        (click)="setApprover(approver)"
+                      />
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+  
+          <div align="right" class="">
+            <button
+            class="mybtn4 mybtn-back-pink title-17 w-auto"
+            data-toggle="modal"
+            data-target="#myModalAddApprover"
+            style="
+              line-height: 18px !important;
+              border-radius: 5px !important;
+              padding: 5px 20px !important;
+              box-shadow: 0px 4px 4px 0px #00000040;
+            "
+          >
+            Add<br>Approval
+          </button>
+          </div>
+          <!-- <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">
+              <button
+                class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                (click)="handleUpdateProject()"
+                *ngIf="this.is_loading != 'update_project'"
+              >
+                Update
+              </button>
+              <button
+                class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                disabled
+                *ngIf="this.is_loading == 'update_project'"
+              >
+                Processing...
+              </button>
+            </div>
+            <div class="col-1"></div>
+            <div class="col-3">
+              <div class="position-relative modal-div">
+                <button
+                  class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow btnremove"
+                  *ngIf="this.is_loading != 'deleting_project'"
+                >
+                  Remove
+                </button>
+                <button
+                  class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow"
+                  disabled
+                  *ngIf="this.is_loading == 'deleting_project'"
+                >
+                  Removing...
+                </button>
+                <div class="delete-modal">
+                  <div class="title-3 mb-12 text-center">
+                    Deleting project ...
+                  </div>
+                  <div class="title-5-new2 mb-17 text-center">Are you sure?</div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <button
+                      class="mybtn5 mybtn-back-pink title-17 w-auto btnaction"
+                      (click)="deleteProject(this.project_detail?.id)"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      class="mybtn5 mybtn-default title-17 w-auto btnaction"
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div  class="modal fade come-from-modal right"  id="myModalEditApprover"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div class="modal-dialog  modal-dialog-approver" role="document">
+      <div class="modal-content ">
+        <form [formGroup]="editApprover" (ngSubmit)="handleUpdateApprover()">
+          <div class="modal-body modal-body-padding">
+            <div class="title-6-new text-center mb-20">Edit approver</div>
+            <div class="border-div br-5 custom-padding13 mb-38">
+              <div class="custom-padding15">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Name</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.editApprover.invalid &&
+                        editApprover.get('name')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Name is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        value="Tina House"
+                        formControlName="name"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Phone number</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.editApprover.invalid &&
+                        editApprover.get('contact_number')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Phone number is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="(---) --- ----"
+                        value="(604) 854 0055"
+                        (input)="changeNumberContact($event, 'edit-appr')"
+                        formControlName="contact_number"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-6"></div>
+              <div class="custom-padding15">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="title-5-new2 mb-2px">Email</div>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        formControlName="email"
+                        placeholder="..."
+                        value="tina4@159roads.com"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-2"></div>
+              <div class="col-3">
+                <button
+                  class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                  *ngIf="this.is_loading != 'updating_approver'"
+                >
+                  Update
+                </button>
+                <button
+                  class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                  disabled
+                  type="button"
+                  *ngIf="this.is_loading == 'updating_approver'"
+                >
+                  Processing...
+                </button>
+              </div>
+              <div class="col-1"></div>
+              <div class="col-3">
+                <div class="position-relative modal-div">
+                  <button
+                    class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow btnremove"
+                    type="button"
+                    *ngIf="this.is_loading != 'deleting_approver'"
+                  >
+                    Remove
+                  </button>
+                  <button
+                    class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow"
+                    type="button"
+                    disabled
+                    *ngIf="this.is_loading == 'deleting_approver'"
+                  >
+                    Removing...
+                  </button>
+                  <div class="delete-modal">
+                    <div class="title-3 mb-12 text-center">
+                      Deleting approver ...
+                    </div>
+                    <div class="title-5-new2 mb-17 text-center">
+                      Are you sure?
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <button
+                        class="mybtn5 mybtn-back-pink title-17 w-auto btnaction"
+                        (click)="deleteApprover(this.approver_detail?.id)"
+                        type="button"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        class="mybtn5 mybtn-default title-17 w-auto btnaction"
+                        type="button"
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade come-from-modal right" id="myModalAddApprover"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div class="modal-dialog modal-dialog-approver" role="document">
+      <div class="modal-content">
+        <form [formGroup]="addApprover" (ngSubmit)="handleAddApprover()">
+          <div class="modal-body modal-body-padding">
+            <div class="title-6-new text-center mb-20">
+              Add job approver for {{ this.project_detail?.project_name }}
+            </div>
+            <div class="border-div br-5 custom-padding13 mb-38">
+              <div class="custom-padding15">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Name</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.addApprover.invalid &&
+                        addApprover.get('name')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Name is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        value="Tina House"
+                        formControlName="name"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Phone number</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.addApprover.invalid &&
+                        addApprover.get('contact_number')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Phone number is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="(---) --- ----"
+                        value="(604) 854 0055"
+                        (input)="changeNumberContact($event, 'add-appr')"
+                        formControlName="contact_number"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-6"></div>
+              <div class="custom-padding15">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="title-5-new2 mb-2px">Email</div>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        formControlName="email"
+                        placeholder="..."
+                        value="tina4@159roads.com"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4">
+                <button
+                  class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                  *ngIf="this.is_loading != 'add_approver'"
+                >
+                  Add
+                </button>
+                <button
+                  class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                  disabled
+                  type="button"
+                  *ngIf="this.is_loading == 'add_approver'"
+                >
+                  Processing...
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade come-from-modal right"  id="myModalAddProject"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div class="modal-dialog modal-dialog-project" role="document">
+      <div class="modal-content">
+        <form [formGroup]="addProject" (ngSubmit)="handleAddProject()">
+          <div class="modal-body modal-body-padding">
+            <div class="title-6-new mb-35 text-center">
+              Add project for {{ this.company_detail?.company_name }}
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-4px">
+              <div class="title-6-new no-wrap">Add Project</div>
+              <div class="title-14">You can always edit/update date later</div>
+            </div>
+            <div class="border-div br-5 custom-padding13 mb-26">
+              <div class="custom-padding14">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Project name</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.addProject.invalid &&
+                        addProject.get('project_name')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Project name is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="project_name"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Job number</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.addProject.invalid &&
+                        addProject.get('job_number')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Job number is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="job_number"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-10"></div>
+              <div class="custom-padding14">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Street</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.addProject.invalid &&
+                        addProject.get('street')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Street is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="street"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">City</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.addProject.invalid &&
+                        addProject.get('city')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      City is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="city"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-10"></div>
+              <div class="custom-padding14">
+                <div class="row">
+                  <div class="col-md-4">
+                      <div class="d-flex">
+                        <div class="title-5-new2 mb-2px">Country</div>
+                        <div class="required ml-1">*</div>
+                      </div>
+                      <span
+                        *ngIf="
+                          this.addProject.invalid &&
+                          addProject.get('country')?.invalid &&
+                          form_clicked
+                        "
+                        class="text-danger"
+                      >
+                        Country is required.
+                      </span>
+                      <div class="position-relative mb-13">
+                        <select
+                          class="icon-none select-no-icon field-input2 myinput4"
+                          formControlName="country"
+                          (change)="setCountry($event)"
+                          [ngModel]="this.country"
+                          [value]="
+                            this.country &&
+                            this.country !== null &&
+                            this.country != 'null'
+                              ? this.country
+                              : ''
+                          "
+                        >
+                          <option
+                            value="Canada"
+                            [selected]="this.country == 'Canada'"
+                          >  Canada
+                          </option>
+                          <option value="USA" [selected]="this.country == 'USA'">
+                            USA
+                          </option>
+                        </select>
+                        <i
+                          class="fa fa-caret-down select-icon-right"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                    </div>
+  
+                  <div class="col-md-4">
+                      <div class="d-flex">
+                        <div class="title-5-new2 mb-2px">Province/ State</div>
+                        <div class="required ml-1">*</div>
+                      </div>
+                      <span
+                        *ngIf="
+                          this.addProject.invalid &&
+                          addProject.get('province')?.invalid &&
+                          form_clicked
+                        "
+                        class="text-danger"
+                      >
+                        Province is required.
+                      </span>
+                      <div class="position-relative mb-13">
+                        <select
+                          type="text"
+                          class="myinput4 field-input2"
+                          formControlName="province"
+                        >
+                        <ng-container *ngIf="this.country == 'Canada'">
+                            <option
+                              *ngFor="let pro of this.canada_provinces"
+                              value="{{ pro }}"
+                            >
+                              {{ pro }}
+                            </option>
+                          </ng-container>
+                          <ng-container *ngIf="this.country == 'USA'">
+                            <option
+                              *ngFor="let pro of this.usa_provinces"
+                              value="{{ pro }}"
+                            >
+                              {{ pro }}
+                            </option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="d-flex">
+                          <div class="title-5-new2 mb-2px">Postal Code</div>
+                          <div class="required ml-1">*</div>
+                        </div>
+                        <span
+                          *ngIf="
+                            this.addProject.invalid &&
+                            addProject.get('postal_code')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Postal Code is required.
+                        </span>
+                        <div class="position-relative mb-13">
+                          <input
+                            type="text"
+                            placeholder="V8K K0L"
+                            formControlName="postal_code"
+                            class="myinput4 field-input2 text-right"
+                          />
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            class="top-left-icon2"
+                            width="17px"
+                          />
+                        </div>
+                      </div>
+  
+                  
+                </div>
+
+                <div class="row">
+                  <!-- <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Province/ State</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.addProject.invalid &&
+                        addProject.get('province')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Province is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <select
+                        type="text"
+                        class="myinput4"
+                        formControlName="province"
+                      >
+                        <ng-container>
+                          <option
+                            *ngFor="let pro of this.canada_provinces"
+                            value="{{ pro }}"
+                          >
+                            {{ pro }}
+                          </option>
+                        </ng-container>
+                        <ng-container>
+                          <option
+                            *ngFor="let pro of this.usa_provinces"
+                            value="{{ pro }}"
+                          >
+                            {{ pro }}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </div>
+                  </div> -->
+  
+                  <div class="col-md-12">
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-14"
+                    >
+                      <div class="title-11 no-wrap">Default project</div>
+                      <input
+                        type="checkbox"
+                        value="1"
+                        formControlName="is_default"
+                        class="mycheckbox3 ml-18"
+                      />
+                    </div>
+                    <div class="title-14">
+                      Default project details are shown when you create a ticket.
+                      You can make always changes
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+              </div>
+            </div>
+            <div class="title-6-new mb-18">Add job approver</div>
+            <!-- <div class="border-div br-5 custom-padding13 mb-38">
+              <div class="custom-padding15">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Name</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.addProject.invalid &&
+                        addProject.get('approver_name')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Name is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        value="Tina House"
+                        formControlName="approver_name"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Phone number</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.addProject.invalid &&
+                        addProject.get('approver_number')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Phone number is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="(---) --- ----"
+                        formControlName="approver_number"
+                        (input)="changeNumberContact($event, 'add-proj')"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-6"></div>
+              <div class="custom-padding15">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="title-5-new2 mb-2px">Email</div>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        formControlName="approver_email"
+                        class="myinput4"
+                        placeholder="..."
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <div align="center">
+              <button
+                class="mybtn4 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                *ngIf="this.is_loading != 'adding_project'"
+              >
+                Add
+              </button>
+              <button
+                class="mybtn4 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                disabled
+                type="button"
+                *ngIf="this.is_loading == 'adding_project'"
+              >
+                Processing...
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div  class="modal fade come-from-modal right"  id="myModalEditProject2"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content modal-dialog-project">
+        <form [formGroup]="editProject" (ngSubmit)="handleEditProject()">
+          <div class="modal-body modal-body-padding">
+            <!-- <div class="title-6-new text-center mb-20">Edit Project</div> -->
+            <div class="border-div br-5 custom-padding13 mb-26">
+              <div class="custom-padding14">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Project name</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.editProject.invalid &&
+                        editProject.get('project_name')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Project name is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="project_name"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Job number</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.editProject.invalid &&
+                        editProject.get('job_number')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Job number is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="job_number"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-10"></div>
+              <div class="custom-padding14">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">Street</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.editProject.invalid &&
+                        editProject.get('street')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      Street is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="street"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="d-flex">
+                      <div class="title-5-new2 mb-2px">City</div>
+                      <div class="required ml-1">*</div>
+                    </div>
+                    <span
+                      *ngIf="
+                        this.editProject.invalid &&
+                        editProject.get('city')?.invalid &&
+                        form_clicked
+                      "
+                      class="text-danger"
+                    >
+                      City is required.
+                    </span>
+                    <div class="position-relative mb-13">
+                      <input
+                        type="text"
+                        class="myinput4"
+                        placeholder="..."
+                        formControlName="city"
+                      />
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        class="top-right-icon"
+                        width="17px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="myhr3 mb-10"></div>
+              <div class="custom-padding14">
+                <div class="row">
+                  <div class="col-md-4">
+                      <div class="d-flex">
+                        <div class="title-5-new2 mb-2px">Country</div>
+                        <div class="required ml-1">*</div>
+                      </div>
+                      <span
+                        *ngIf="
+                          this.editProject.invalid &&
+                          editProject.get('country')?.invalid &&
+                          form_clicked
+                        "
+                        class="text-danger"
+                      >
+                        Country is required.
+                      </span>
+                      <div class="position-relative mb-13">
+                        <select
+                          class="icon-none select-no-icon field-input2 myinput4"
+                          formControlName="country"
+                          (change)="setCountry($event)"
+                          [ngModel]="this.country"
+                          [value]="
+                            this.country &&
+                            this.country !== null &&
+                            this.country != 'null'
+                              ? this.country
+                              : ''
+                          "
+                        >
+                          <option
+                            value="Canada"
+                            [selected]="this.country == 'Canada'"
+                          >
+                            Canada
+                          </option>
+                          <option value="USA" [selected]="this.country == 'USA'">
+                            USA
+                          </option>
+                        </select>
+                        <i
+                          class="fa fa-caret-down select-icon-right"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                    </div>
+  
+                  <div class="col-md-4">
+                      <div class="d-flex">
+                        <div class="title-5-new2 mb-2px">Province/ State</div>
+                        <div class="required ml-1">*</div>
+                      </div>
+                      <span
+                        *ngIf="
+                          this.editProject.invalid &&
+                          editProject.get('province')?.invalid &&
+                          form_clicked
+                        "
+                        class="text-danger"
+                      >
+                        Province is required.
+                      </span>
+                      <div class="position-relative mb-13">
+                        <select
+                          type="text"
+                          class="myinput4 field-input2"
+                          formControlName="province"
+                        >
+                        <ng-container *ngIf="this.country == 'Canada'">
+                            <option
+                              *ngFor="let pro of this.canada_provinces"
+                              value="{{ pro }}"
+                            >
+                              {{ pro }}
+                            </option>
+                          </ng-container>
+                          <ng-container *ngIf="this.country == 'USA'">
+                            <option
+                              *ngFor="let pro of this.usa_provinces"
+                              value="{{ pro }}"
+                            >
+                              {{ pro }}
+                            </option>
+                          </ng-container>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="d-flex">
+                          <div class="title-5-new2 mb-2px">Postal Code</div>
+                          <div class="required ml-1">*</div>
+                        </div>
+                        <span
+                          *ngIf="
+                            this.editProject.invalid &&
+                            editProject.get('postal_code')?.invalid &&
+                            form_clicked
+                          "
+                          class="text-danger"
+                        >
+                          Postal Code is required.
+                        </span>
+                        <div class="position-relative mb-13">
+                          <input
+                            type="text"
+                            placeholder="V8K K0L"
+                            formControlName="postal_code"
+                            class="myinput4 field-input2 text-right"
+                          />
+                          <img
+                            src="../../assets/icons/pencile.svg"
+                            alt=""
+                            class="top-left-icon2"
+                            width="17px"
+                          />
+                        </div>
+                      </div>
+  
+                  
+                </div>
+  
+                <div class="myhr3 mb-10"></div>
+  
+  
+                <div class="row">
+              <div class="col-md-6">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-14"
+                >
+                  <div class="title-11 no-wrap">Default project</div>
+                  <input
+                    type="checkbox"
+                    value="1"
+                    [checked]="this.project_detail?.is_default == true"
+                    formControlName="is_default"
+                    class="mycheckbox3 ml-18"
+                  />
+                </div>
+                <div class="title-14">
+                  Default project details are shown when you create a ticket.
+                  You can make always changes
+                </div>
+              </div>
+              </div>
+  
+  
+              </div>
+             
+            </div>
+            <div class="row">
+              <div class="col-2"></div>
+              <div class="col-3">
+                <button
+                  class="mybtn4 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                  *ngIf="this.is_loading != 'update_project'"
+                >
+                  Update
+                </button>
+                <button
+                  class="mybtn4 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                  disabled
+                  type="button"
+                  *ngIf="this.is_loading == 'update_project'"
+                >
+                  Processing...
+                </button>
+              </div>
+              <div class="col-1"></div>
+              <div class="col-3">
+                <div class="position-relative modal-div">
+                  <button
+                    class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow btnremove"
+                    type="button"
+                    *ngIf="this.is_loading != 'deleting_project'"
+                  >
+                    Remove
+                  </button>
+                  <button
+                    class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow"
+                    type="button"
+                    disabled
+                    *ngIf="this.is_loading == 'deleting_project'"
+                  >
+                    Removing...
+                  </button>
+                  <div class="delete-modal">
+                    <div class="title-3 mb-12 text-center">
+                      Deleting project ...
+                    </div>
+                    <div class="title-5-new2 mb-17 text-center">
+                      Are you sure?
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <button
+                        class="mybtn5 mybtn-back-pink title-17 w-auto btnaction"
+                        (click)="deleteProject(this.project_detail?.id)"
+                        type="button"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        class="mybtn5 mybtn-default title-17 w-auto btnaction"
+                        type="button"
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade come-from-modal right"id="myModalEditCompanyName"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div class="modal-dialog" role="document" style="margin-top:5px !important">
+      <div class="modal-content modal-dialog-contact">
+        <form [formGroup]="editCC" (ngSubmit)="handleUpdateCompany()">
+          <div class="modal-body modal-body-padding">
+            <div class="title-4 mb-18">
+              Edit Construction company {{ this.company_detail?.company_name }}
+            </div>
+            <div class="d-flex align-items-center mb-42">
+              <div>
+                <img
+                  src="../../assets/icons/icon-construction.svg"
+                  alt=""
+                  width="41px"
+                />
+              </div>
+              <div
+                class="ml-24"
+                style="
+                  border: 2px solid #fdd7e4;
+                  padding: 3px;
+                  border-radius: 5px;
+                "
+              >
+                <div class="d-flex">
+                  <div class="title-4 text-color-black-shade7 mb-7 no-wrap">
+                    Company name
+                  </div>
+                  <div class="required ml-1">*</div>
+                </div>
+                <span
+                  *ngIf="
+                    this.editCC.invalid &&
+                    editCC.get('company_name')?.invalid &&
+                    form_clicked
+                  "
+                  class="text-danger"
+                >
+                  Company name is required.
+                </span>
+                <div class="position-relative">
+                  <input
+                    type="text"
+                    style="border: 0px !important"
+                    class="myinput4"
+                    value="this.company_detail?.company_name"
+                    formControlName="company_name"
+                    placeholder="Company..."
+                  />
+                  <img
+                    src="../../assets/icons/pencile.svg"
+                    alt=""
+                    class="top-right-icon"
+                    width="17px"
+                  />
+                </div>
+              </div>
+              <div class="title-14 text-color-black-shade ml-24">
+                The more accurate details you can provide, better tickets we can
+                make.
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-2"></div>
+              <div class="col-3">
+                <button
+                  class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                  *ngIf="this.is_loading != 'updating_company'"
+                >
+                  Update
+                </button>
+                <button
+                  class="mybtn5 mybtn-back-pink title-17 w-auto mybtn-box-shadow"
+                  disabled
+                  *ngIf="this.is_loading == 'updating_company'"
+                >
+                  Processing...
+                </button>
+              </div>
+              <div class="col-1"></div>
+              <div class="col-3">
+                <div class="position-relative modal-div">
+                  <button
+                    class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow btnremove"
+                    *ngIf="this.is_loading != 'deleting_company'"
+                  >
+                    Remove
+                  </button>
+                  <button
+                    class="mybtn5 mybtn-default title-17 w-auto mybtn-box-shadow"
+                    disabled
+                    *ngIf="this.is_loading == 'deleting_company'"
+                  >
+                    Removing...
+                  </button>
+                  <div class="delete-modal">
+                    <div class="title-3 mb-12 text-center">
+                      Deleting company ...
+                    </div>
+                    <div class="title-5-new2 mb-17 text-center">
+                      Are you sure?
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <button
+                        class="mybtn5 mybtn-back-pink title-17 w-auto btnaction"
+                        (click)="deleteCompany(this.company_detail?.id)"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        class="mybtn5 mybtn-default title-17 w-auto btnaction"
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

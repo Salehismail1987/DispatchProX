@@ -1,0 +1,16 @@
+export const environment = {
+  production: true,
+  phpAuthUser: "dispatchprox-api-client",
+  phpAuthPassword: "dispatchprox-api-12345",
+  apiBaseUrl: 'https://api-staging.dispatchprox.com/api/',
+  apiBackendUrl: 'https://api-staging.dispatchprox.com/',
+  apiFilesDir: 'uploads/',
+  apiInvoiceURL:'https://api-staging.dispatchprox.com/download?path=invoices/',
+  apiClosedPDFURL:'https://api-staging.dispatchprox.com/download?path=closed_tickets_pdf/',
+  paperTicketImageUrl:'https://api-staging.dispatchprox.com/preview?path=paper_tickets/',
+  apiInvoiceFreelanceURL:'https://api-staging.dispatchprox.com/download?path=freelance_invoice_pdf/',
+  timeZone:'America/Los_Angeles',
+  encKey:'sdSL34A34aoDASn423S93423SKDLAS712bsa',
+  trial_period_days:5,
+  mobileDashboardURL:'https://m-staging.dispatchprox.com/',
+};

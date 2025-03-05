@@ -1,0 +1,518 @@
+<!-- Edit full name-->
+<div class="alldivs signup-div" *ngIf="(this.inv_code !=='' && this.is_edited_full_name == false) || (this.inv_code !=='' && this.is_edited_full_name == false && this.current_step == 3)">
+    <div class="row m-0 content-container" >
+        <div class="col-md-6 ">
+            <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png"></div>
+            <div class="login-form-div display-table">
+                <div class="form-div vertical-middle">
+                    <div class="welcome-back-text-33">You got an Invitation to join DispatchProX.</div>
+                    <div class="login-title-33 mb-30 mt-4">Add your details to setup your profile.</div>
+                    <form [formGroup]="editNamesForm" (ngSubmit)="onSubmitEditNames()">
+                        <div class="row m-0">
+                            <div class="col-md-6 padding-left-0">
+                                <span *ngIf="full_nameError != ''" class="text-danger">{{
+                                    full_nameError
+                                }}</span>
+                                <label class="field text-field required_field">
+                                    <input class="field__input" placeholder="Scott" [(ngModel)]="this.account_details.full_name" formControlName="full_name">
+                                    <span class="field__label-wrap">
+                                    <span class="field__label">Full name</span>
+                                    </span>
+                                </label>
+
+                            </div>
+                        </div>
+
+                        <div class="row m-0">
+                            <div class="col-md-6 padding-left-0">
+                                <button class="mybtn primary_button text-white" type="submit">Continue</button>
+                            </div>
+                        </div>
+                        <br>
+                    </form>
+                    <div class="already-account-div gotologin" [routerLink]="['/home']">
+                        <div class="already-account">
+                            <div>
+                                <div class="alredyhaveaccount">Already have an account?</div>
+                                <div class="login-sub-heading">Log In to your account</div>
+                            </div>
+                            <img src="assets/icons/arrow-right.svg">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 padding-right-0 padding-left-0">
+            <div class="truck-back">
+                <div class="welcome-div-content">
+                    <div class="welcome-div">
+                        <div class="welcome-title">
+                            Welcome to DispatchProX, the place for truck jobs
+                        </div>
+                        <div class="welcome-desc">DispatchProX empowers Trucking companies and simplifies their utilization for their customers by providing accurate data flow between the entities. </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Step 2 Verify Email -->
+<div class="row m-0" *ngIf="this.current_step == 2">
+    <div class="col-md-4">
+        <div class="sidebar">
+            <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png" width="width:147px"></div>
+            <div class="card00">
+                <div class="card1"  >
+                    <ul id="progressbar" class="text-center">
+                        <li class="active step0"></li>
+                        <li class=" step0"></li>
+                        <li class=" step0"></li>
+                        <li class="step0"></li>
+                    </ul>
+                    <h6 class="items-text active">Verify your email</h6>
+                    <h6 class="items-text">Set password</h6>
+                    <h6 class="items-text ">Set company</h6>
+                    <h6 class="items-text">All set</h6>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-lg-5 col-md-6  display-table">
+        <div class="vertical-middle">
+            <div class="welcome-back-text mb-15">Welcome onboard <strong>{{this.account_details.full_name}}
+                    </strong></div>
+            <div class="login-title mb-6">Verify email</div>
+            <div class="login-title-desc mb-37">A verification email is sent on “{{this.account_details.email}}” along
+                with a code, verify to continue</div>
+
+            <div class="row mb-31">
+                <div class="col-md-12 text-center">
+                    <span *ngIf="codeError != ''" class="text-danger">{{
+                        codeError
+                        }}</span>
+
+                        <span *ngIf="this.emailSendError != ''" class="text-danger">{{
+                            this.emailSendError
+                            }}</span>
+                    <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="{length:6}"></ng-otp-input>
+
+
+                </div>
+            </div>
+            <span *ngIf="resendCodeMessage != ''" class="text-success">{{
+                resendCodeMessage
+                }}</span>
+            <span *ngIf="is_resending_code" class="text-info">
+                <b>Resending code...</b>
+            </span>
+            <div class="title-1 text-black-shade mb-33" (click)="resendCode()" style="cursor: pointer;">
+                <b>
+                    Resend verification code
+                </b>
+            </div>
+
+            <div class="row m-0">
+               
+                <div class="col-md-6 padding-left-0">
+                    <button class="mybtn "
+                        (click)="onVerifyCode()">Continue</button>
+                </div>
+                <div class="col-md-6 padding-right-0">
+                    <button class="mybtn primary_button " (click)="backClickStep(2)">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row m-0" *ngIf="current_step == 3 && (this.inv_code == '' || (this.inv_code !='' && this.is_edited_full_name == true))">
+    <div class="col-md-4">
+        <div class="sidebar">
+            <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png" width="width:147px"></div>
+            <div class="card00">
+                <div class="card1" *ngIf="this.inv_code ==''">
+                    <ul id="progressbar" class="text-center">
+                        <li class="active-pre step0"></li>
+                        <li class="active step0"></li>
+                        <li class="step0"></li>
+                        <li class="step0"></li>
+                    </ul>
+                    <h6 class="items-text ">Verify your email</h6>
+                    <h6 class="items-text active">Set password</h6>
+                    <h6 class="items-text ">Set company</h6>
+                    <h6 class="items-text">All set</h6>
+                </div>
+                <div class="card1"  *ngIf="this.inv_code !=''">
+                    <ul id="progressbar" class="text-center">
+                        <li class="active step0"></li>
+                        <li class=" step0"></li>
+                        <li class="step0"></li>
+                    </ul>
+                    <h6 class="items-text active">Set password</h6>
+                    <h6 class="items-text ">Set company</h6>
+                    <h6 class="items-text">All set</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-lg-5 col-md-6  display-table"  style="padding-top: 30px;">
+        <div class="vertical-middle">
+            <div class="welcome-back-text mb-15">Welcome onboard <strong>{{this.account_details.full_name}}
+                    </strong></div>
+            <div class="login-title mb-38">Set password</div>
+            <br>
+            <form [formGroup]="setPasswordFrom" (ngSubmit)="setPasswordSubmit()">
+                <span *ngIf="passwordError!= ''" class="text-danger">{{
+                    passwordError
+                    }}</span>
+                <label class="field text-field">
+                    <input class="field__input" (input)="checkPassword($event)" type="password" placeholder="example"
+                        formControlName="password">
+                    <i class="fa fa-eye-slash input-icon-right btnhshowhidepass" aria-hidden="true"></i>
+                    <span class="field__label-wrap">
+                        <span class="field__label">Password</span>
+                    </span>
+                </label>
+                <br>
+                <span *ngIf="confirmPasswordError!= ''" class="text-danger">{{
+                    confirmPasswordError
+                    }}</span>
+                <label class="field text-field mb-15">
+                    <input class="field__input" type="password" placeholder="example" value=""
+                        formControlName="confirm_password">
+                    <i class="fa fa-eye-slash input-icon-right btnhshowhidepass" aria-hidden="true"></i>
+                    <span class="field__label-wrap">
+                        <span class="field__label">Confirm password</span>
+                    </span>
+                </label>
+                <br>
+                <br>
+                <div>
+                    <div class="single-instruction">
+                        <i class="fa fa-circle " [ngClass]="{'active': atleast_eight === true}"></i>
+                        <div class="instructions-text">Atleast 8 character</div>
+                    </div>
+                    <div class="single-instruction">
+                        <i class="fa fa-circle " [ngClass]="{'active': upper_lower === true}"></i>
+                        <div class="instructions-text">Atleast one uppercase and one lowercase character</div>
+                    </div>
+                    <div class="single-instruction">
+                        <i class="fa fa-circle"  [ngClass]="{'active': number_symbol_space === true}"></i>
+                        <div class="instructions-text">Atleast one number, symbol, or whitespace character</div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="row m-0">
+                    <div class="col-md-7 padding-left-0">
+                        <button class=" mybtn primary_button "  type="submit">Continue</button>
+                    </div>
+                    <div class="col-md-5 padding-right-0">
+                        <button class="mybtn"  (click)="backClickStep(2)" *ngIf="this.inv_code == ''">Back</button>
+                    </div>
+                  
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Step 2 Set Company-->
+<div class="row m-0" *ngIf="this.current_step == 5">
+    <div class="col-md-4">
+        <div class="sidebar">
+            <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png" width="width:147px"></div>
+            <div class="card00">
+                <div class="card1"  *ngIf="this.inv_code ==''">
+                    <ul id="progressbar" class="text-center">
+                        <li class="active-pre step0"></li>
+                        <li class="active-pre step0"></li>
+                        <li class="active step0"></li>
+                        <li class="step0"></li>
+                    </ul>
+                    <h6 class="items-text">Verify your email</h6>
+                    <h6 class="items-text">Set password</h6>
+
+                    <h6 class="items-text active">Set company</h6>
+                    <h6 class="items-text">All set</h6>
+
+                </div>
+                <div class="card1"  *ngIf="this.inv_code !=''">
+                    <ul id="progressbar" class="text-center">
+                        <li class="active-pre step0"></li>
+                        <li class="active step0"></li>
+                        <li class="step0"></li>
+                    </ul>
+                    <h6 class="items-text ">Set password</h6>
+                    <h6 class="items-text active">Set company</h6>
+                    <h6 class="items-text">All set</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5 display-table" style="padding-top: 30px;">
+        <div class="vertical-middle">
+            <div class="welcome-back-text mb-15">Welcome onboard <strong>{{this.account_details.full_name}}
+                    </strong></div>
+            <div class="step-title mb-14">Set company</div>
+            <br>
+            <span *ngIf="emailSendError != ''" class="text-danger">{{
+                emailSendError
+                }}</span>
+
+            <form [formGroup]="setCompanyForm" (ngSubmit)="setCompanySubmit()">
+                <span *ngIf="companyNameError != ''" class="text-danger">{{
+                    companyNameError
+                    }}</span>
+                <label class="field text-field required_field">
+                    <input class="field__input" placeholder="Type here"
+                        [(ngModel)]="this.company_details.company_name" formControlName="company_name">
+                    <span class="field__label-wrap">
+                        <span class="field__label">Company Name</span>
+                    </span>
+                </label>
+                <br>
+                <span *ngIf="websiteError != ''" class="text-danger">{{
+                    websiteError
+                    }}</span>
+
+                <label class="field text-field ">
+                    <input class="field__input" formControlName="website" [(ngModel)]="this.company_details.website"
+                        placeholder="www.example.com" value="www.example.com">
+                    <span class="field__label-wrap">
+                        <span class="field__label">Company Website</span>
+                    </span>
+                </label>
+                <div class="row m-0">
+                    <div class="col-md-6 padding-left-0">
+                        <span *ngIf="addressError != ''" class="text-danger">{{
+                            addressError
+                            }}</span>
+                        <label class="field text-field required_field">
+                            <input class="field__input" formControlName="address"
+                                [(ngModel)]="this.company_details.address" placeholder="Street 1, Block B" value="">
+                            <span class="field__label-wrap">
+                                <span class="field__label">Address</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col-md-6 padding-right-0">
+                        <span *ngIf="countryError != ''" class="text-danger">{{
+                            countryError
+                            }}</span>
+                        <label class="field text-field required_field">
+                            <select class="field__input icon-none" (change)="setCountry($event)" [(ngModel)]="this.country" formControlName="country">
+                                <option value="Canada">Canada </option>
+                                <option value="USA">USA </option>
+                            </select>
+                            <!-- <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i> -->
+                            <span class="field__label-wrap">
+                                <span class="field__label">Country</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-6 padding-left-0">
+                        <span *ngIf="provinceError != ''" class="text-danger">{{
+                            provinceError
+                            }}</span>
+                        <label class="field text-field required_field">
+                            <select class="field__input icon-none" formControlName="province"
+                                [(ngModel)]="this.company_details.province">
+                                
+                                <option value="">Select {{this.country == 'USA' ? 'state' :'province'}}</option>
+                                <ng-container *ngIf="this.country == 'Canada'">
+                                    <option value="Alberta">Alberta </option>
+                                    <option value="British Columbia">British Columbia</option>
+                                    <option value="Manitoba">Manitoba </option>
+                                    <option value="New Brunswick">New Brunswick </option>
+                                    <option value="NewFoundland and Labrador">NewFoundland and Labrador </option>
+                                    <option value="Northwest Territories">Northwest Territories </option>
+                                    <option value="Nova Scotia">Nova Scotia </option>
+                                    <option value="Nunavut">Nunavut </option>
+                                    <option value="Ontario">Ontario </option>
+                                    <option value="Prince Edward Island">Prince Edward Island </option>
+                                    <option value="Quebec">Quebec </option>
+                                    <option value="Saskatchewan">Saskatchewan </option>
+                                    <option value="Yukon">Yukon </option>
+                                </ng-container>
+                                <ng-container *ngIf="this.country == 'USA'">
+                                    <option value="Alaska AK">Alaska AK </option>
+                                    <option value=" Alabama	AL"> Alabama AL </option>
+                                    <option value="Arizona AZ">Arizona AZ </option>
+                                    <option value="Arkansas AR">Arkansas AR </option>
+                                    <option value="California CA">California CA </option>
+                                    <option value="Colorado CO">Colorado CO </option>
+                                    <option value="Connecticut CT">Connecticut CT </option>
+                                    <option value="Delaware DE">Delaware DE </option>
+                                    <option value="Florida FL">Florida FL </option>
+                                    <option value="Georgia GA">Georgia GA </option>
+                                    <option value="Hawaii HI">Hawaii HI </option>
+                                    <option value="Idaho iD">Idaho iD </option>
+                                    <option value="Illinois IL">Illinois IL </option>
+                                    <option value="Indiana IN">Indiana IN </option>
+                                    <option value="Iowa IA">Iowa IA </option>
+                                    <option value="Kansas KS">Kansas KS </option>
+                                    <option value="Kentucky KY">Kentucky KY </option>
+                                    <option value="Louisiana LA">Louisiana LA </option>
+                                    <option value="Maine ME">Maine ME </option>
+                                    <option value="Maryland MD">Maryland MD </option>
+                                    <option value="Massachusetts MA">Massachusetts MA </option>
+                                    <option value="Michigan MI">Michigan MI </option>
+                                    <option value="Minnesota MN">Minnesota MN </option>
+                                    <option value="Montana	MT">Montana	MT </option>
+                                    <option value="Nebraska NE">Nebraska NE </option>
+                                    <option value="Nevada NV">Nevada NV </option>
+                                    <option value="New Hampshire NH">New Hampshire NH </option>
+                                    <option value="New Jersey NJ">New Jersey	NJ </option>
+                                    <option value="New Mexico NM">New Mexico NM </option>
+                                    <option value="New York NY">New York NY </option>
+                                    <option value="North Carolina NC">North Carolina NC </option>
+                                    <option value="North Dakota ND">North Dakota ND </option>
+                                    <option value="Ohio OH">Ohio OH </option>
+                                    <option value="Oklahoma OK">Oklahoma OK </option>
+                                    <option value="Oregon OR">Oregon OR </option>
+                                    <option value="Pennsylvania[D] PA">Pennsylvania[D] PA </option>
+                                    <option value="Rhode Island RI">Rhode Island RI </option>
+                                    <option value="South Carolina SC">South Carolina SC </option>
+                                    <option value="South Dakota SD">South Dakota SD </option>
+                                    <option value="Tennessee TN">Tennessee TN </option>
+                                    <option value="Texas TX">Texas TX </option>
+                                    <option value="Utah UT">Utah UT </option>
+                                    <option value="Vermont VT">Vermont VT </option>
+                                    <option value="Virginia[D] VA">Virginia[D] VA </option>
+                                    <option value="Washington WA">Washington WA </option>
+                                    <option value="West Virginia WV">West Virginia WV </option>
+                                    <option value="Wisconsin WI">Wisconsin WI </option>
+                                    <option value="Wyoming WY">Wyoming WY </option>
+                                </ng-container>
+                            </select>
+                            <span class="field__label-wrap">
+                                <span class="field__label">{{this.country == 'USA'? 'State':'Province'}}</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col-md-6 padding-right-0">
+                        <span *ngIf="cityError != ''" class="text-danger">{{
+                            cityError
+                            }}</span>
+                        <label class="field text-field required_field">
+
+                            <input class="field__input" placeholder="Vancouver" value="" formControlName="city"
+                                [(ngModel)]="this.company_details.city">
+                            <span class="field__label-wrap">
+                                <span class="field__label">City</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row ml-0 mb-33">
+                    <div class="col-md-6 padding-left-0">
+                        <label class="field text-field">
+                            <input class="field__input" placeholder="___ ____ ___" value=""
+                                formControlName="work_safety_number"
+                                [(ngModel)]="this.company_details.work_safety_number">
+                            <span class="field__label-wrap">
+                                <span class="field__label">Work safety number</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="col-md-6 padding-right-0">
+                        <label class="field text-field">
+                            <input class="field__input" placeholder="___ ____ ___" value=""
+                                formControlName="business_no" [(ngModel)]="this.company_details.business_no">
+                            <span class="field__label-wrap">
+                                <span class="field__label">Business number</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <span *ngIf="totalTrucksError != ''" class="text-danger">{{
+                    totalTrucksError
+                    }}</span>
+                <div class="title-2 text-black-shade mb-14"> How many trucks your company manages?</div>
+                <div class="d-flex mb-38">
+                    <div class="{{this.company_details.total_trucks == '1' ? ' active dis-numbers':'dis-numbers'}}"
+                        (click)="setTrucks('1')">1</div>
+                    <div class="{{this.company_details.total_trucks == '2-5' ? ' active dis-numbers':'dis-numbers'}}"
+                        (click)="setTrucks('2-5')">2-5</div>
+                    <div class="{{this.company_details.total_trucks == '6-10' ? ' active dis-numbers':'dis-numbers'}}"
+                        (click)="setTrucks('6-10')">6-10</div>
+                    <div class="{{this.company_details.total_trucks == '10-25' ? ' active dis-numbers':'dis-numbers'}}"
+                        (click)="setTrucks('10-25')">10-25</div>
+                    <div class="{{this.company_details.total_trucks == '>25' ? ' active dis-numbers':'dis-numbers'}}"
+                        (click)="setTrucks('>25')">>25</div>
+                </div>
+                <input type="hidden" formControlName="total_trucks" [(ngModel)]="this.company_details.total_trucks">
+
+                <div class="row m-0">
+                   
+                    <div class="col-md-6 padding-left-0">
+                        <button class="mybtn primary_button " type="submit"
+                            *ngIf="!is_loading_verify_email">Continue</button>
+                        <button class="mybtn primary_button " type="submit"
+                            *ngIf="is_loading_verify_email" disabled>Processing..</button>
+                    </div>
+                    <div class="col-md-6 padding-right-0 ">
+                        <button class="mybtn " (click)="backClickStep(3)">Back</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row m-0" *ngIf="current_step == 6">
+    <div class="col-md-4">
+        <div class="sidebar">
+            <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="../../assets/icons/logo.png" width="147px"></div>
+            <div class="card00">
+                <div class="card1"  *ngIf="this.inv_code ==''">
+                    <ul id="progressbar" class="text-center">
+                        <li class="active-pre step0"></li>
+                        <li class="active-pre step0"></li>
+                        <li class="active-pre step0"></li>
+                        <li class="active step0"></li>
+                    </ul>
+                    <h6 class="items-text">Verify your email</h6>
+                    <h6 class="items-text">Set password</h6>
+                    <h6 class="items-text">Set company</h6>
+                    <h6 class="items-text active">All set</h6>
+                </div>
+                <div class="card1"  *ngIf="this.inv_code !=''">
+                    <ul id="progressbar" class="text-center">
+                        <li class="active-pre step0"></li>
+                        <li class="active-pre step0"></li>
+                        <li class="active step0"></li>
+                    </ul>
+                    <h6 class="items-text ">Set password</h6>
+                    <h6 class="items-text ">Set company</h6>
+                    <h6 class="items-text active">All set</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-lg-5 col-md-6  display-table">
+        <div class="vertical-middle">
+            <div class="welcome-back-text mb-15">Hey <strong></strong></div>
+            <div class="login-title mb-57">You’re all set</div>
+            <img src="../../assets/icons/truck2.svg" class="img-responsive mb-37">
+            <div class="row m-0">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6 padding-left-0">
+                    <button class="mybtn primary_button" (click)="backClick('/trucking-setup')" >Go to dashboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,496 @@
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+       
+        <div class="body-content">
+            <div class="white-div border-div">
+                <div class="title-div-flex">
+                    <div class="title-1  mb-md-15">
+                        Invoicing Status
+                    </div>
+                    <div>
+                        
+                        <button class="mybtn bg-blue text-white active" (click)="this.toLocation('/draft-tc-invoices')">Draft</button>
+                        <button class="mybtn mybtn-default text-blue ml-23" (click)="this.toLocation('/invoiced-tc-invoices')">Invoiced</button>
+                        <button class="mybtn mybtn-default text-blue ml-23" (click)="this.toLocation('/customer-tc-invoices')">Customers</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <!-- <label class="field text-field">
+                        <input class="field__input" placeholder="0921" (change)="handleDateChange($event)"  value="{{this.start_date}}" type="date">
+                        <span class="field__label-wrap">
+                        <span class="field__label">Invoicing period</span>
+                        </span>
+                    </label> -->
+
+                    <div class="position-relative">
+                        <label class="field text-field">
+                            <input class="field__input selmonthtype" [readonly]="true" placeholder="Select month" value="" type="text" (change)="setRange($event)">
+                            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                            <span class="field__label-wrap">
+                            <span class="field__label">Select month</span>
+                            </span>
+                        </label>
+                        <input type="hidden" class="select_duration_type" />
+                        <div class="selectcontroldiv selecttype">
+                            <ul class="calendarlist">
+                                <li (click)="setDuration('Monthly')">Monthly</li>
+                                <li (click)="setDuration('Semi-monthly')">Semi-monthly</li>
+                                <li (click)="setDuration('Weekly')">Weekly</li>
+                                <li (click)="setDuration('Custom')">Custom</li>
+                            </ul>
+                        </div>
+                        <div class="selectcontroldiv selectmonth">
+                            <div class="calendareyeardiv">
+                                <div>
+                                    <img src="../assets/icons/cal-arrow-left.svg" (click)="decYear()">
+                                </div>
+                                <div class="calendareyear">{{this.selected_year}}</div>
+                                <div>
+                                    <img src="../assets/icons/cal-arrow-right.svg" (click)="incYear()">
+                                </div>
+                            </div>
+                            <ul class="calendarlist">
+                                <li data-month="1" (click)="setMonth('January')">January</li>
+                                <li data-month="2" (click)="setMonth('February')">February</li>
+                                <li data-month="3" (click)="setMonth('March')">March</li>
+                                <li data-month="4" (click)="setMonth('April')">April</li>
+                                <li data-month="5" (click)="setMonth('May')">May</li>
+                                <li data-month="6" (click)="setMonth('June')">June</li>
+                                <li data-month="7" (click)="setMonth('July')">July</li>
+                                <li data-month="8" (click)="setMonth('August')">August</li>
+                                <li data-month="9" (click)="setMonth('September')">September</li>
+                                <li data-month="10" (click)="setMonth('October')">October</li>
+                                <li data-month="11" (click)="setMonth('November')">November</li>
+                                <li data-month="12" (click)="setMonth('December')">December</li>
+                            </ul>
+                        </div>
+                        <div class="selected_month" style="display:none"></div>
+                        <div class="selectcontroldiv selectsemimonth">
+                            <ul class="calendarlist">
+                                <li id="firsthalf" (click)="setSemi('firsthalf')" class="firsthalf">1st to 15th</li>
+                                <li id="nexthalf" (click)="setSemi('nexthalf')" class="nexthalf">15th to 30th</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="selectcontroldiv calenderweek"  style="width:max-content;padding:0px">
+                        <div class="week-picker"></div>
+                        
+                        <div class="weekrange" (click)="setWeekDates($event.currentTarget)"></div>
+                    </div>
+                    <div class="selectcontroldiv calenderrange">
+                        <input type="text" name="daterange" value="" class="daterange opacity-0" />
+                       
+                        <div class="daterange2"  (click)="setDateRange()"></div>
+                    </div>
+                  
+                </div>
+                <div class="col-md-3">
+                    <label class="field text-field">
+                        <select class="field__input icon-none"  (change)="handleFilterByCompany($event)" [(ngModel)]="this.selected_company">
+                            <option value="all" [selected]="true">All</option>
+                            <option *ngFor="let comp of this.companies_list"  value="{{comp.id}}">{{comp.company_name}}</option>
+                        </select>
+                        <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                        <span class="field__label-wrap">
+                        <span class="field__label">Select Company</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <ng-container *ngIf="this.draft_invoices && this.draft_invoices.length>0">
+                <ng-container *ngFor="let invoice of this.draft_invoices">
+                    <div class="white-div border-div">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4">
+                                <div class="bg-light-grey br-8 mb-md-15">
+                                    <div class="d-flex padding-5-20">
+                                    
+                                        <img class="img-invoice" src="assets/icons/user.svg"  *ngIf="invoice.projects[0] && invoice.projects[0].customer && (invoice.projects[0].customer?.profile_image ==null ||  invoice.projects[0].customer?.profile_image  == '')">
+                                         <img class="img-invoice-dyn"  [src]="this.backendAPIURL+(invoice.projects[0] && invoice.projects[0].customer && invoice.projects[0].customer?.profile_image)" *ngIf="invoice.projects[0] && invoice.projects[0].customer && invoice.projects[0].customer?.profile_image !=null &&  invoice.projects[0].customer?.profile_image  != ''">
+                                        <div class="ml-3">
+                                            <div class="title-2">
+                                                {{invoice.projects[0] && invoice.projects[0].customer && invoice.projects[0].customer?.full_name+' '+invoice.projects[0].customer?.full_name }}
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-3">
+                                <div class="bg-light-grey br-8 mb-md-15">
+                                    <div class="padding-5-20">
+                                        <div class="desc-1">Invoice Period</div>
+                                        <div class="title-2">{{invoice.to_show}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-5">
+                                <div class="bg-light-grey br-8 mb-md-15">
+                                    <div class="d-flex padding-5-20">
+                                        <img src="../assets/icons/dollar.svg">
+                                        <div class="ml-3">
+                                            <div class="desc-1">Invoice net amount</div>
+                                            <div class="title-2">$ {{invoice.net_amount | currency:"":""}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="align-items-right mb-md-15" align="center">
+                                    <!-- (click)="toDownload(invoice)" -->
+                                    <button class="mybtn bg-blue text-white mb-xs-15"  type="button" (click)="downloadPDF(invoice)" *ngIf="this.is_downloading_invoice =='' ">Download</button>
+
+                                    <button class="mybtn bg-blue text-white mb-xs-15" type="button" disabled *ngIf="this.is_downloading_invoice !='' &&  this.is_downloading_invoice == invoice.id">Processing Download..</button>
+                                    
+                                    <button class="mybtn bg-blue text-white ml-23" data-toggle="modal" data-target="#myModal" (click)="setSendInvoice(invoice)">Send invoice</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive vertical-scroll-md">
+                                    <table class="mytable">
+                                        <tr>
+                                            <td>Project</td>
+                                            <td>Ticket count</td>
+                                            <td>Total Hours</td>
+                                            <td>SubTotal</td>
+                                            <td>Tickets Ready</td>
+                                        </tr>
+                                        <ng-container *ngFor="let project of invoice.projects ">
+                                            <tr >
+                                                <td>{{project.project_name}}</td>
+                                                <td>{{project.ticket_count}}</td>
+                                                <td>{{project.project_hours  | number : '1.2-2'}}</td>
+                                                <td>$ {{project.project_subtotal | currency:"":""}}</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div [ngClass]="project.ticket_count == project.ticket_done_count ? 'ticket-ready-div bg-yellow': 'ticket-ready-div bg-pink'" class="">{{project.ticket_ready}}</div>
+                                                        <img src="../assets/icons/arrow-down-round.svg" class="ml-3 show-detail">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5" class="unset-all">
+                                                    <table class="detail-info mytable-2 hidden">
+                                                        <tr>
+                                                            <td>Ticket ID <img src="../assets/icons/swap.svg"></td>
+                                                            <td>Date <img src="../assets/icons/swap.svg"></td>
+                                                            <td>Description (driver- licence plate- round qty) </td>
+                                                            <td>Truck type <img src="../assets/icons/swap.svg"></td>
+                                                            <td>Hours</td>
+                                                            <td>Rate</td>
+                                                            <td>Subtotal</td>
+                                                            <td>Status <img src="../assets/icons/swap.svg"></td>
+                                                        </tr>
+                                                        <tr (click)="this.setDetail(ticket)" *ngFor="let ticket of project?.tickets">
+                                                            <td>{{ticket?.ticket_detail?.ticket_no}}</td>
+                                                            <td>{{ticket?.ticket_detail?.ticket_date | date:"shortDate"}}</td>
+                                                            <td>{{ticket.description}}</td>
+                                                            <td>{{ticket.truck_type}}</td>
+                                                            <td>{{ticket.hours  | number : '1.2-2'}}</td>
+                                                            <td>${{ticket.rate_per_hour}}/hr</td>
+                                                            <td>${{ticket.sub_total | currency:"":""}}</td>
+                                                            <td>
+                                                                <div [ngClass]="ticket.status == 'Approved' ? 'status-div bg-yellow align-center':'status-div bg-pink align-center'"  data-toggle="modal" data-target="#ticketstatus">{{ticket.status}}</div>
+                                                            </td>
+                                                        </tr>
+                                                   
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                   
+                                        <tr>
+                                            <td class="border-left" style="border: 1px solid #17A1FA !important;border-right: 0 !important;">Subtotal for    {{invoice.projects[0] && invoice.projects[0].customer && invoice.projects[0].customer?.full_name }}</td>
+                                            <td class="border-center" style="border-top: 1px solid #17A1FA !important; border-bottom: 1px solid #17A1FA !important;">{{invoice.inv_ticket_count}}</td>
+                                            <td class="border-center" style="border-top: 1px solid #17A1FA !important; border-bottom: 1px solid #17A1FA !important;">{{invoice.inv_hours  | number : '1.2-2'}}</td>
+                                            <td class="border-center" style="border-top: 1px solid #17A1FA !important; border-bottom: 1px solid #17A1FA !important;">$ {{invoice.inv_subtotal | currency:"":""}}</td>
+                                            <td class="border-right" style=" border: 1px solid #17A1FA !important;border-left: 0 !important;">
+                                                <span  [ngClass]="invoice.inv_ticket_done_count == invoice.inv_ticket_count ? 'ticket-ready-div bg-yellow': 'ticket-ready-div bg-pink'">{{invoice.inv_ticket_done_count}}/{{invoice.inv_ticket_count}}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            
+            </ng-container>
+
+            <ng-container *ngIf="!this.draft_invoices || this.draft_invoices.length<1">
+                <div class="white-div border-div">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>No Invoices</h3>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+
+</div>
+<div *ngIf="this.toSendInvoice && this.is_downloading_invoice == ''" class="modal fade  come-from-modal right" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form [formGroup]="sendForm" (ngSubmit)="onSendInv()" enctype="multipart/form-data">
+                    <div>
+                        <div class="d-flex justify-content-between  align-items-center mb-12">
+                            <div class="d-flex align-items-center">
+                                <img src="assets/icons/truck.svg" class="invoice-img" *ngIf="!this.loggedinUser.profile_image || this.loggedinUser.profile_image  == ''">
+                                <img  class="invoice-img" style="height: 40px !important;
+                                object-fit: contain !important;
+                                border-radius: 10px !important;" [src]="backendAPIURL+this.loggedinUser.profile_image" *ngIf="this.loggedinUser.profile_image  && this.loggedinUser.profile_image  !== null && this.loggedinUser.profile_image  != ''">
+                                <div class="ml-3">
+                                    <div class="title-3">{{this.loggedinUser.company_name}}</div>
+                                    <div class="desc-3">Trucking company</div>
+                                </div>
+                            </div>
+                            <div class="invoice-no">Invoice # {{this.toSendInvoice && this.toSendInvoice.id}}</div>
+                        </div>
+                        <div class="invoice-no text-center mb-29">Company Details</div>
+                    
+                        <div class="input-group">
+                            <label class="input-lable">Company</label>
+                            <p *ngIf="companyError != ''" class="text-danger">{{
+                                companyError
+                            }}</p>
+                            <input type="text" placeholder="Bird.co" [(ngModel)]="this.dispatcher && this.dispatcher.company_name"  class="myinput"  formControlName="company">
+                        </div>
+                    
+                        <div class="input-group">
+                            <label class="input-lable">Address</label>
+                            <p *ngIf="addressError != ''" class="text-danger">{{
+                                addressError
+                            }}</p>
+                            <input type="text"  [(ngModel)]="this.dispatcher && this.dispatcher.customer.address" placeholder="Vancouver, Canada" class="myinput" formControlName="address">
+                        </div>
+                     
+                        <div class="input-group">
+                            <label class="input-lable">Contact Person</label>
+                            <p *ngIf="contactPersonError != ''"  class="text-danger">{{
+                                contactPersonError
+                            }}</p>
+                            <input type="text" placeholder="George" [(ngModel)]="this.dispatcher && this.dispatcher.full_name" class="myinput" formControlName="contact_person">
+                        </div>
+                       
+                        <div class="input-group">
+                            <label class="input-lable">Email</label>
+                            <p *ngIf="emailError != ''"  class="text-danger">{{
+                                emailError
+                            }}</p>
+                            <input type="text" placeholder="george@gmail.com"  [(ngModel)]="this.dispatcher  && this.dispatcher.email" class="myinput" formControlName="email">
+                        </div>
+                        <div class="invoice-no text-center mb-29">Invoice Summary</div>
+                        <div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="title-4">Ticket count:</div>
+                                <div class="title-4">{{this.toSendInvoice && this.toSendInvoice.inv_ticket_count}}</div>
+                                <div></div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="title-4">Ticket Hours:</div>
+                                <div class="title-4">{{this.toSendInvoice && this.toSendInvoice.inv_hours ?  ( this.toSendInvoice.inv_hours | number  : '1.2-2') : ""}}</div>
+                                <div></div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="title-4">Subtotal:</div>
+                                <div class="title-4">$ {{this.toSendInvoice && this.toSendInvoice.inv_subtotal | currency:"":""}} </div>
+                                <div></div>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="title-4">Tax ({{this.gst?.type}}): {{this.gst?.tax}}%</div>
+                                <div class="title-4">${{this.toSendInvoice && this.toSendInvoice.inv_gst_value  | currency:"":""}}</div>
+                                <div></div>
+                            </div>
+                            <div class="myhr mb-3"></div>
+                            <div class="d-flex justify-content-between mb-5">
+                                <div class="title-5">Total:</div>
+                                <div class="title-5">${{this.toSendInvoice && this.toSendInvoice.total_with_gst  | currency:"":""}}</div>
+                                <div></div>
+                            </div>
+                            <div [align]="'center'">
+                                <input type="hidden" formControlName="invoice_id" [(ngModel)]="this.toSendInvoice && this.toSendInvoice.id">
+                                <button class="mybtn bg-blue text-white remove-backdrop" type="submit" *ngIf="!this.is_sending_loading">Send invoice</button>
+                                <button class="mybtn bg-blue text-white " disabled type="button" *ngIf="this.is_sending_loading">Sending invoice...</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade  come-from-modal right" id="ticketstatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <div>
+                    <div class="ticket-id text-center mb-9">Ticket ID</div>
+                    <div class="title-1 text-center">{{this.ticketDetail && this.ticketDetail?.ticket_detail?.ticket_no}} </div>
+                   
+                    <br>
+                    <div class="myhr"></div>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="w-100">
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">Customer</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19">{{this.ticketDetail && this.ticketDetail?.ticket_detail?.user && this.ticketDetail?.ticket_detail?.user?.full_name}}</div>
+                                </td>
+                                <td>
+                                    <div class="title-6 text-right mb-19">Date</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 text-right mb-19">{{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.ticket_date | date:'shortDate'}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">Project</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19">{{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.project?.project_name}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">Project address</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19">{{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.project?.project_location}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6">Job Approver</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3">
+                                        {{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.approver?.full_name}}
+                                      
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <br>
+                                    <div class="myhr"></div>
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">Company</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19"> {{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.trucking_company?.company_name}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">Dispatcher</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19"> {{this.ticketDetail && this.ticketDetail?.company_request?.dispatch_by?.full_name}} </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6">Contact #</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3">{{this.ticketDetail &&  this.ticketDetail?.company_request && this.ticketDetail?.company_request?.dispatch_by?.contact_number}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <br>
+                                    <div class="myhr"></div>
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">No. of rounds</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19">{{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.ticket_truck_type_rounds && this.ticketDetail?.ticket_detail?.ticket_truck_type_rounds.length}}</div>
+                                </td>
+                                <td>
+                                    <div class="title-6 text-right mb-19">Time</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 text-right mb-19">
+                                        
+                                        {{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.driver_ticket?.started_at | date:"shortTime"}}
+                                        to 
+                                        {{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.driver_ticket?.ended_at | date:"shortTime"}} </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">Truck type</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19">{{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.driver_ticket && this.ticketDetail?.ticket_detail?.driver_ticket?.truck?.truck_type}}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">Truck License</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19">{{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.driver_ticket?.truck?.truck_license_plate }}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">Truck Name</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19">{{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.driver_ticket?.truck?.truck_nickname }}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6 mb-19">Driver</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3 mb-19">{{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.ticket_detail?.driver_ticket?.driver?.full_name }} </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="title-6">Total Hours</div>
+                                </td>
+                                <td>
+                                    <div class="title-7 ml-3">{{this.ticketDetail && this.ticketDetail?.ticket_detail && this.ticketDetail?.hours }} hrs</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <br>
+                                    <div class="myhr"></div>
+                                    <br>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+@import url("../../../../../assets/css/trucking-mvp-style.css");
+.img-invoice{
+    height: 33px !important;
+    border-radius: 18px  !important;
+}
+.img-invoice-dyn{
+    height: 40px;
+    width: 40px;
+    border-radius: 21px;
+}
+
+@media only screen and (min-width: 767px) and (max-width: 999px) {
+    .field__input {
+        height: 70px !important;
+        padding: 2.25rem 1rem 0rem 1rem !important;
+    }
+}
+
+
+.border-left{
+    border: 1px solid #17A1FA !important;
+    border-right: 0 !important;
+}
+
+.border-center{
+    border-top: 1px solid #17A1FA !important;
+    border-bottom: 1px solid #17A1FA !important;
+}
+
+.border-right{
+    border-left: 0 !important;
+    border-right: 1px solid #17A1FA !important;
+}
+.border-div{
+    border: 1px solid #0000001a !important;
+}

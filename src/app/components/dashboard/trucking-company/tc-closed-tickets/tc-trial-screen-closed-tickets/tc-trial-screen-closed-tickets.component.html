@@ -1,0 +1,33 @@
+<div class="row setting-content-page mb-0 inner_main_shadow" style="border-radius: 10px 10px 0px 0px;" >
+    <div class="col-md-6">
+        <div class="setting-content-page custom-padding2">
+            <div class="title-11 text-black-shade text-center">
+                Closed tickets since {{this.trial_data?.trial_started_at}}
+            </div>
+            <app-trial-closed-graph></app-trial-closed-graph>
+            <!-- <img src="../../assets/icons/graph6.svg" class="img" width="89%"> -->
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="max-width-245 align-div-center mb-46 position-relative">
+            <img src="../../assets/icons/truck-closed-tickets.png" alt="" width="100%">
+            <div class="title-16 text-white bg-lightblue days-left-div">{{this.trial_data?.days_to_expired?this.trial_data?.days_to_expired:0}} days left</div>
+        </div>
+        <div class="desc-2 max-width-384 align-div-center">
+            <div class="mb-20">
+                <div class="ff-GSB">Closed Tickets Overview</div>
+                <div>👉 View all your completed truck jobs. </div>
+                <div>👉 Every ticket is detailed for clarity.</div>
+            </div>
+            <div class="mb-20">
+                <div class="ff-GSB">Effortless Invoicing</div>
+                <div>👉 Assemble invoices with just a click. </div>
+                <div>👉 Ensure accuracy and efficiency.</div>
+            </div>
+            <div>
+                <div class="ff-GSB">Vendor Billing</div>
+                <div>👉 Review bills from vendors to verify correctness.</div>
+            </div>
+        </div>
+    </div>
+</div>

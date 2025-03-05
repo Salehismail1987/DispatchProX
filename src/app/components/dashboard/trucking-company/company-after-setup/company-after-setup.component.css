@@ -1,0 +1,27 @@
+@import url('../../../../../assets/css/margins.css');
+@import url('../../../../../assets/css/trucking-style3.css');
+.main-content{
+    border-radius: 9px;
+    padding: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.required-field{
+color: red;
+float: right;
+line-height: 5px;
+
+}
+.myhr3px {
+    border-bottom: 3px solid #17A1FA;
+    margin-top: -10px;
+}
+
+.tc-text-color{
+    color: #17A1FA !important;
+}
+
+.progress-bar{
+    background-color:#17A1FA !important 
+}

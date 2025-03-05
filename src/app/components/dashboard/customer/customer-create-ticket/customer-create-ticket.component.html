@@ -1,0 +1,1831 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="main-inner-body-container mt-15px mb-15px">
+        <div class="project-profile-header-container mb-15px">
+          <div class="profile_heading_div1">
+            <div class="project-profile-header-left d-flex align-items-center">
+              <img
+                src="./assets/icons/create_file_big.svg"
+                alt="project-profile-file-icon"
+              />
+              <div class="heading-1-400 text-color-black">Dispatching</div>
+            </div>
+            <div class="project-profile-header-right">
+              <button
+                class="btn dispatches-btn active d-flex align-items-center justify-content-center"
+              >
+                <div class="heading-5-400">New Dispatch</div>
+              </button>
+              <button
+                class="btn dispatches-btn d-flex align-items-center justify-content-center"
+                [routerLink]="'/customer-past-dispatches'"
+              >
+                <div class="heading-5-400">Past dispatches</div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="main-project-setting-container inner_main_shadow"
+
+        >
+          <div class="row p-0 row-container"  *ngIf="is_project_loading;else Block">
+            <div class="col-lg-7 col-12">
+              <form
+                [formGroup]="ticketForm"
+                (ngSubmit)="onSaveTicket()"
+                enctype="multipart/form-data"
+              >
+                <div class="setting-content-page">
+                  <div
+                    class="dashboard-subtitle mb-4"
+                    *ngIf="!this.repeat_dispatch"
+                  >
+                    Project, when, who, what
+                  </div>
+
+                  <div
+                    class="dashboard-subtitle mb-4"
+                    *ngIf="this.repeat_dispatch"
+                  >
+                    Copy of
+                    <span class="text-color-0D76BB"
+                      >{{ this.repeat_dispatch_ticket?.ticket_date }} -
+                      {{
+                        this.repeat_dispatch_ticket?.trucking_company
+                          ?.company_name
+                      }}
+                      -
+                      {{ this.repeat_dispatch_ticket?.project?.project_name }} -
+                      {{ this.repeat_dispatch_ticket?.user?.full_name }}</span
+                    >
+                    dispatch
+                  </div>
+
+                  <div class="row row-5px">
+                    <div class="col-lg-5 col-padding-l">
+                      <span
+                        *ngIf="this.projectError != ''"
+                        class="text-danger"
+                        >{{ this.projectError }}</span
+                      >
+                      <!-- <label class="field text-field required_field">
+                                                <select class="field__input icon-none" formControlName="project_id" [(ngModel)]="this.project_id" (ngModelChange)="onProjectChange($event)">
+                                                    <option *ngFor="let item of this.projects_list" [ngValue]="item.id">{{item.project_name}}</option>
+                                                </select>
+                                                <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                                <span class="field__label-wrap">
+                                                    <span class="field__label">Select the project</span>
+                                                </span>
+                                            </label> -->
+                      <input
+                        type="hidden"
+                        formControlName="project_id"
+                        [(ngModel)]="this.project_id"
+                      />
+                      <div
+                        [class]="
+                          !selected_project
+                            ? 'getinputfield input-div p-0  required_field1'
+                            : 'getinputfield input-div required_field1'
+                        "
+                      >
+                        <div [ngClass]="{ br_blurr: !selected_project }">
+                          <div class="desc-5 text-color-grey text-left mb-5px">
+                            Select the project
+                          </div>
+                          <div class="position-relative">
+                            <div
+                              class="myinput-new cursor-pointer"
+                              *ngIf="!this.selected_project"
+                            >
+                              Select
+                            </div>
+                            <div
+                              class="myinput-new cursor-pointer"
+                              *ngIf="this.selected_project"
+                            >
+                              {{ this.selected_project?.project_name }}
+                            </div>
+                            <img
+                              src="../../assets/icons/arrow-down.png"
+                              class="icon-center-right"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="input-popup-div add-comp"
+                          *ngIf="this.selected_project"
+                        >
+                          <div class="title-19 text-color-grey mb-17">
+                            Project
+                          </div>
+                          <ng-container *ngFor="let item of this.projects_list">
+                            <div
+                              class="title-5-new mb-2 list-item"
+                              (click)="setProject(item)"
+                            >
+                              {{ item.project_name }}
+                            </div>
+                          </ng-container>
+                          <!-- <div class="d-none position-relative getinputfield2 d-flex" (click)="this.showModal('new-project')">
+                                                        <div class="myinput-new myinput3 text-color-black-shade8">Add</div>
+                                                    </div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-padding-r">
+                      <span
+                        *ngIf="this.ticketDateError != ''"
+                        class="text-danger"
+                        >{{ this.ticketDateError }}</span
+                      >
+                      <label class="field text-field required_field11">
+                        <input
+                          class="field__input"
+                          placeholder=""
+                          (change)="dateChange($event)"
+                          formControlName="ticket_date"
+                          type="date"
+                          [min]="this.todayDate"
+                        />
+                        <span class="field__label-wrap">
+                          <span class="field__label">When</span>
+                        </span>
+                      </label>
+                    </div>
+                    <div class="col-lg-3">
+                      <!-- <button class="mybtn mybtn-back-grey width-fit-content btn-text-small float-right" [ngClass]="{'bg_yellow_create': !selected_project}" type="button" (click)="this.showModal('new-project')">Create new project</button> -->
+                    </div>
+                  </div>
+
+                  <div class="inst_mainDiv" *ngIf="!this.selected_project ">
+                    <div class="row ml-2">
+                      <div class="heading1">
+                        Creating a New Dispatch in DispatchProX: A Step-by-Step Guide
+                      </div>
+                      <span class="strc">*</span>
+                    </div>
+                    <br />
+                    <div class="heading2">1. Start with a Project:</div>
+                    <div class="textt">
+                      Before dispatching trucks, you'll need a project in place.
+                      Here's how to set one up:
+                    </div>
+                    <br />
+                    <div class="heading2">2. Create a New Project:</div>
+                    <div class="mb-1 pl-2">
+                      <div class="textt">
+                        . Option 1: Look for the "Create new project" button
+                        located in the top right corner of your dashboard.
+                      </div>
+                      <div class="textt">
+                        . Option 2: Navigate to the "Projects" menu on the left
+                        side of your screen. Inside, you will find the option to
+                        "Add Project".
+                      </div>
+                    </div>
+                    <br />
+                    <div class="heading2">3. Follow the Prompts:</div>
+                    <div class="textt">
+                      After clicking to add a new project, simply follow the
+                      on-screen prompts to enter the project details. Fill in
+                      all necessary information to ensure accurate dispatching
+                      later on.
+                    </div>
+                    <br />
+                    <div class="textt pb-5">
+                      With your project created, you're now ready to move on to
+                      the dispatching process and get those trucks where they
+                      need to be!
+                    </div>
+                  </div>
+
+                  <div class="row row-5px" *ngIf="this.selected_project">
+                    <div class="col-lg-5 col-padding-l">
+                      <span
+                        *ngIf="this.companyError != ''"
+                        class="text-danger"
+                        >{{ this.companyError }}</span
+                      >
+
+                      <input
+                        type="hidden"
+                        formControlName="trucking_company_id"
+                        [value]="this.trucking_company_id"
+                      />
+                      <div
+                        [class]="
+                          !trucking_company
+                            ? 'getinputfield input-div p-0  required_field1'
+                            : 'getinputfield input-div required_field1'
+                        "
+                      >
+                        <div [ngClass]="{ br_blurr: !trucking_company }">
+                          <div class="desc-5 text-color-grey text-left mb-5px">
+                            Select trucking company / broker
+                          </div>
+                          <div class="position-relative">
+                            <div
+                              class="myinput-new cursor-pointer"
+                              *ngIf="!this.trucking_company"
+                            >
+                              Select
+                            </div>
+                            <div
+                              class="myinput-new cursor-pointer"
+                              *ngIf="this.trucking_company"
+                            >
+                              {{ this.trucking_company?.company_name }}
+                            </div>
+                            <img
+                              src="../../assets/icons/arrow-down.png"
+                              class="icon-center-right"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="input-popup-div add-comp"
+                          *ngIf="this.trucking_company"
+                        >
+                          <div class="title-19 text-color-grey mb-17">
+                            Vendor
+                          </div>
+                          <ng-container
+                            *ngFor="let item of this.trucking_companies_list"
+                          >
+                            <div
+                              class="title-5-new mb-2 list-item"
+                              (click)="setTC(item)"
+                            >
+                              {{ item.company_name }}
+                            </div>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-padding-r">
+                      <span
+                        *ngIf="this.approverError != ''"
+                        class="text-danger"
+                        >{{ this.approverError }}</span
+                      >
+
+                      <input
+                        type="hidden"
+                        formControlName="approver_id"
+                        [(ngModel)]="this.self_id"
+                      />
+
+                      <div
+                        [class]="
+                          !approver
+                            ? 'getinputfield input-div p-0  required_field1'
+                            : 'getinputfield input-div required_field1'
+                        "
+                      >
+                        <div [ngClass]="{ br_blurr: !approver }">
+                          <div class="desc-5 text-color-grey text-left mb-5px">
+                            Job approver(s)
+                          </div>
+                          <div class="position-relative">
+                            <div
+                              class="myinput-new cursor-pointer"
+                              *ngIf="!this.approver"
+                            >
+                              Select
+                            </div>
+                            <div
+                              class="myinput-new cursor-pointer"
+                              *ngIf="this.approver"
+                            >
+                              {{
+                                this.approver?.full_name
+                                  .toString()
+                                  .substr(0, 15)
+                              }}
+                            </div>
+                            <img
+                              src="../../assets/icons/arrow-down.png"
+                              class="icon-center-right"
+                            />
+                          </div>
+                        </div>
+                        <div class="input-popup-div add-comp">
+                          <div class="title-19 text-color-grey mb-17">
+                            Job approver(s)
+                          </div>
+                          <div
+                            class="title-5-new mb-2 list-item"
+                            (click)="setAppr(this.loggedinUser)"
+                          >
+                            {{ this.loggedinUser?.full_name }}
+                          </div>
+                          <ng-container
+                            *ngFor="
+                              let item of this.selected_project
+                                ?.project_approvers
+                            "
+                          >
+                            <div
+                              class="title-5-new mb-2 list-item"
+                              *ngIf="item?.user"
+                              (click)="setAppr(item?.user)"
+                            >
+                              {{
+                                item.full_name ? item?.full_name : item?.name
+                              }}
+                            </div>
+                          </ng-container>
+
+                          <div
+                            class="title-19 text-color-grey text-center mt-2 text-align-center mb-2 cursor-pointer"
+                            [routerLink]="['/project-profile', this.project_id]"
+                          >
+                            Not in the list?
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                  <div
+                    class="row row-5px mt-15px"
+                    *ngIf="this.selected_project"
+                  >
+                    <div class="col-md-12">
+                      <div class="description-div">
+                        <label class="description-label">
+                          Description of the project/ Instructions for drivers
+                        </label>
+                        <span
+                          *ngIf="this.descriptionError != ''"
+                          class="text-danger"
+                          >{{ this.descriptionError }}</span
+                        >
+                        <label class="field text-field required_field22 m-0">
+                          <textarea
+                            class="field__input h-auto"
+                            formControlName="description"
+                            placeholder=""
+                            rows="5"
+                          ></textarea>
+                          <span class="field__label-wrap">
+                            <span class="field__label">Type here</span>
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dashboard-subtitle mb-4">
+                  Truck count, type, rate, start, intervals
+                </div>
+                <div [ngClass]="{ 'bg_main_blur main2': !selected_project }">
+                  <div
+                    [ngClass]="{ bg_main_blur: !selected_project }"
+                    class="setting-content-page"
+                  >
+                    <ng-container formArrayName="ticket_truck_types">
+                      <ng-container
+                        *ngFor="
+                          let formItem of ticket_truck_types().controls;
+                          let idx = index
+                        "
+                      >
+                        <ng-container [formGroupName]="idx">
+                          <div *ngIf="this.selected_project">
+                            <div class="row row-2px">
+                              <div class="col-md-3 col-padding-l">
+                                <span
+                                  *ngIf="
+                                    formItem.get('number_of_trucks')?.invalid &&
+                                    form_clicked
+                                  "
+                                  class="text-danger"
+                                >
+                                  Number of trucks is invalid or missing.
+                                </span>
+                                <div
+                                  class="col-md-12 border px-0 pt-1 pb-1 container-myinput"
+                                >
+                                  <div
+                                    class="project-profile-input-container bdr-none"
+                                  >
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Number of trucks
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-danger h-15px mb-1"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="d-flex align-items-center justify-content-center"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey mr-1"
+                                      >
+                                        #
+                                      </div>
+                                      <input
+                                        type="text"
+                                        (change)="changeNumber($event, idx)"
+                                        formControlName="number_of_trucks"
+                                        placeholder="__"
+                                        type="text"
+                                        class="myinput project-profile-inputtt myint"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-3 col-padding-rl">
+                                <span
+                                  *ngIf="
+                                    formItem.get('project_truck_id')?.invalid &&
+                                    form_clicked
+                                  "
+                                  class="text-danger"
+                                >
+                                  Truck / Combination is required.
+                                </span>
+                                <div
+                                  class="col-md-12 border px-0 pt-1 pb-1 container-myinput"
+                                >
+                                  <div
+                                    class="project-profile-input-container bdr-none"
+                                  >
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Select truck
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-danger h-15px mb-1"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+
+                                    <select
+                                      class="field__input2 icon-none"
+                                      formControlName="project_truck_id"
+                                      (change)="onTruckChange($event, idx)"
+                                    >
+                                      <option value="">Select</option>
+                                      <option
+                                        *ngFor="let comb of combinations_list"
+                                        [ngValue]="comb.id.toString() + 'c'"
+                                      >
+                                        {{ comb.nickname }}
+                                      </option>
+                                      <option
+                                        *ngFor="let truck of trucks_list"
+                                        [ngValue]="truck.id"
+                                      >
+                                        {{ truck.name }}
+                                      </option>
+                                    </select>
+                                    <input
+                                      type="hidden"
+                                      formControlName="combination_id"
+                                    />
+                                    <i
+                                      class="fa fa-caret-down input-icon-right"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </div>
+                                </div>
+                                <!-- <span  class="nickname-link"><span style="cursor: pointer;" (click)="goToNickname()"> Create your truck nicknames </span></span> -->
+                              </div>
+                              <div class="col-md-3 col-padding-rl">
+                                <span
+                                  *ngIf="
+                                    formItem.get('project_trailer_id')
+                                      ?.invalid && form_clicked
+                                  "
+                                  class="text-danger"
+                                >
+                                  Trailer is required.
+                                </span>
+                                <div
+                                  class="col-md-12 border px-0 pt-1 pb-1 container-myinput"
+                                >
+                                  <div
+                                    class="project-profile-input-container bdr-none"
+                                  >
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Select trailer
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-danger h-15px mb-1"
+                                      ></div>
+                                    </div>
+                                    <select
+                                      class="field__input2 icon-none"
+                                      formControlName="project_trailer_id"
+                                      (change)="onTrailerChange(idx)"
+                                    >
+                                      <option value="none" selected>
+                                        None
+                                      </option>
+                                      <option
+                                        *ngFor="let trailer of trailers_list"
+                                        [ngValue]="trailer.id"
+                                      >
+                                        {{ trailer.name }}
+                                      </option>
+                                    </select>
+                                    <i
+                                      class="fa fa-caret-down input-icon-right"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row mt-15px">
+                              <div class="col-md-3 col-padding-l">
+                                <span
+                                  *ngIf="
+                                    formItem.get('first_truck_start_at')
+                                      ?.invalid && form_clicked
+                                  "
+                                  class="text-danger"
+                                >
+                                  First truck to start at is required.
+                                </span>
+
+                                <div
+                                  class="col-md-12 border px-0 pt-1 pb-1 container-myinput"
+                                >
+                                  <div
+                                    class="project-profile-input-container bdr-none"
+                                  >
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        First truck at
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-danger h-15px mb-1"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="d-flex align-items-center justify-content-center"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey mr-1"
+                                      >
+                                        <img
+                                          src="assets/images/clock-icon.svg"
+                                        />
+                                      </div>
+                                      <input
+                                        placeholder=""
+                                        formControlName="first_truck_start_at"
+                                        type="time"
+                                        class="myinput project-profile-inputtt myint width-60px"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <ng-container
+                                  *ngIf="
+                                    formItem.get('number_of_trucks')?.value > 1
+                                  "
+                                >
+                                  <span
+                                    *ngIf="
+                                      formItem.get('interval_between_truck')
+                                        ?.invalid && form_clicked
+                                    "
+                                    class="text-danger"
+                                  >
+                                    Interval between each truck is invalid or
+                                    missing.
+                                  </span>
+                                  <div
+                                    class="col-md-12 border px-0 pt-1 pb-1 container-myinput"
+                                  >
+                                    <div
+                                      class="project-profile-input-container bdr-none"
+                                    >
+                                      <div
+                                        class="project-profile-label-container"
+                                      >
+                                        <div
+                                          class="heading-8-400 text-color-grey"
+                                        >
+                                          Truck interval
+                                        </div>
+                                        <div
+                                          class="heading-4-400-semi text-danger h-15px mb-1"
+                                        >
+                                          *
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="d-flex align-items-center justify-content-center"
+                                      >
+                                        <input
+                                          placeholder="__"
+                                          min="0"
+                                          formControlName="interval_between_truck"
+                                          type="number"
+                                          class="myinput w-80px project-profile-inputtt myint"
+                                        />
+                                        <div
+                                          class="heading-8-400 text-color-grey ml-1"
+                                        >
+                                          min
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </ng-container>
+                                <ng-container
+                                  *ngIf="
+                                    formItem.get('number_of_trucks')?.value < 2
+                                  "
+                                >
+                                  <input
+                                    class="field__input"
+                                    placeholder="00 min"
+                                    value="0"
+                                    min="0"
+                                    type="hidden"
+                                    formControlName="interval_between_truck"
+                                  />
+                                </ng-container>
+                              </div>
+                            </div>
+                            <div class="row mt-15px">
+                              <div class="col-md-3 col-padding-l">
+                                <input
+                                  type="hidden"
+                                  formControlName="rate_type"
+                                />
+                                <span
+                                  *ngIf="
+                                    formItem.get('rate_type')?.invalid &&
+                                    form_clicked
+                                  "
+                                  class="text-danger"
+                                >
+                                  Rate type missing.
+                                </span>
+                                <div
+                                  class="col-md-12 border px-0 pt-1 pb-1 container-myinput"
+                                >
+                                  <div
+                                    class="project-profile-input-container bdr-none"
+                                  >
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Rate type
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-danger h-15px mb-1"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="d-flex align-items-center justify-content-center"
+                                    >
+                                      <div
+                                        class="fs-16-400-bold text-color-grey mr-1"
+                                      >
+                                        $ /
+                                      </div>
+                                      <div
+                                        class="rate-type-choice-container d-flex align-items-center"
+                                      >
+                                        <button
+                                          type="button"
+                                          class="btn rate-type-choice-btn {{
+                                            this.rate_choice == 'hour'
+                                              ? 'selected'
+                                              : this.rate_choice == 'round'
+                                              ? 'unselected'
+                                              : ''
+                                          }}"
+                                          (click)="
+                                            rateChoiceBtnHandler('hour', idx)
+                                          "
+                                        >
+                                          Hour
+                                        </button>
+                                        <button
+                                          type="button"
+                                          class="btn rate-type-choice-btn {{
+                                            this.rate_choice == 'round'
+                                              ? 'selected'
+                                              : this.rate_choice == 'hour'
+                                              ? 'unselected'
+                                              : ''
+                                          }}"
+                                          (click)="
+                                            rateChoiceBtnHandler('round', idx)
+                                          "
+                                        >
+                                          Round
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <span
+                                  *ngIf="
+                                    formItem.get('rate_per_hour')?.invalid &&
+                                    this.rate_choice == 'hour' &&
+                                    form_clicked
+                                  "
+                                  class="text-danger"
+                                >
+                                  Rate Per Hour is invalid or missing.
+                                </span>
+                                <div
+                                  class="col-md-12 px-0 pt-1 pb-1 container-myinput {{
+                                    this.rate_choice == 'hour' ? 'border' : ''
+                                  }}"
+                                >
+                                  <div
+                                    class="project-profile-input-container bdr-none"
+                                  >
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Rate per hour
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-danger h-15px mb-1"
+                                        *ngIf="this.rate_choice == 'hour'"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="d-flex align-items-center justify-content-center"
+                                    >
+                                      <div
+                                        class="fs-16-400-bold {{
+                                          this.rate_choice == 'hour'
+                                            ? 'text-color-grey'
+                                            : 'text-color-E1E1E1'
+                                        }} mr-1"
+                                      >
+                                        $ /
+                                      </div>
+                                      <ng-container
+                                        *ngIf="rate_choice == 'hour'"
+                                      >
+                                        <input
+                                          placeholder="___.__"
+                                          formControlName="rate_per_hour"
+                                          type="text"
+                                          class="myinput project-profile-inputtt myint h-32"
+                                          [readOnly]="
+                                            this.rate_choice !== 'hour'
+                                          "
+                                        />
+                                      </ng-container>
+                                      <ng-container
+                                        *ngIf="rate_choice != 'hour'"
+                                      >
+                                        <input
+                                          placeholder="___.__"
+                                          formControlName="hidden"
+                                          type="text"
+                                          class="myinput project-profile-inputtt myint h-32"
+                                          [readOnly]="
+                                            this.rate_choice !== 'hour'
+                                          "
+                                        />
+                                      </ng-container>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <span
+                                  *ngIf="
+                                    formItem.get('rate_per_hour')?.invalid &&
+                                    this.rate_choice == 'round' &&
+                                    form_clicked
+                                  "
+                                  class="text-danger"
+                                >
+                                  Rate Per round is invalid or missing.
+                                </span>
+                                <div
+                                  class="col-md-12 {{
+                                    this.rate_choice == 'round' ? 'border' : ''
+                                  }} px-0 pt-1 pb-1 container-myinput"
+                                >
+                                  <div
+                                    class="project-profile-input-container bdr-none"
+                                  >
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        Rate per round
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-danger h-15px mb-1"
+                                        *ngIf="this.rate_choice == 'round'"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="d-flex align-items-center justify-content-center"
+                                    >
+                                      <div
+                                        class="fs-16-400-bold {{
+                                          this.rate_choice == 'round'
+                                            ? 'text-color-grey'
+                                            : 'text-color-E1E1E1'
+                                        }} mr-1"
+                                      >
+                                        $ /
+                                      </div>
+                                      <ng-container
+                                        *ngIf="rate_choice == 'round'"
+                                      >
+                                        <input
+                                          placeholder="___.__"
+                                          formControlName="rate_per_hour"
+                                          type="text"
+                                          class="myinput project-profile-inputtt myint h-32"
+                                          [readOnly]="
+                                            this.rate_choice !== 'round'
+                                          "
+                                        />
+                                      </ng-container>
+                                      <ng-container
+                                        *ngIf="rate_choice != 'round'"
+                                      >
+                                        <input
+                                          placeholder="___.__"
+                                          formControlName="hidden"
+                                          type="text"
+                                          class="myinput project-profile-inputtt myint h-32"
+                                          [readOnly]="
+                                            this.rate_choice !== 'round'
+                                          "
+                                        />
+                                      </ng-container>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div
+                                  class="col-md-12 border px-0 pt-1 pb-1 container-myinput"
+                                >
+                                  <div
+                                    class="project-profile-input-container bdr-none"
+                                  >
+                                    <div
+                                      class="project-profile-label-container"
+                                    >
+                                      <div
+                                        class="heading-8-400 text-color-grey"
+                                      >
+                                        What is rate type
+                                      </div>
+                                      <div
+                                        class="heading-4-400-semi text-color-grey h-15px mb-1"
+                                      >
+                                        *
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="d-flex align-items-center justify-content-center"
+                                    >
+                                      <div
+                                        class="fs-12-400-normal text-color-grey mr-1"
+                                      >
+                                        It is paying either based on hours
+                                        driven or rounds made.
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <br />
+                          <div class="dashboard-subtitle mb-4">
+                            Set rounds <img src="assets/icons/restart.svg" />
+                          </div>
+
+                          <div
+                            class="project-setting-page-table table-responsive"
+                          >
+                            <table class="table">
+                              <thead
+                                class="table-light project-setting-table-header"
+                              >
+                                <tr>
+                                  <th
+                                    scope="col"
+                                    class="project-settings-table-header"
+                                  >
+                                    <div
+                                      class="heading-8-400 text-color-grey round-label"
+                                    >
+                                      <b>Round</b>
+                                    </div>
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    class="project-settings-table-header"
+                                  >
+                                    <div
+                                      class="heading-8-400 text-color-grey text-left"
+                                    >
+                                      Material out
+                                    </div>
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    class="project-settings-table-header"
+                                  >
+                                    <div
+                                      class="heading-8-400 text-color-grey text-left"
+                                    >
+                                      Dump site
+                                    </div>
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    class="project-settings-table-header"
+                                  >
+                                    <div class="heading-8-400 text-color-grey">
+                                      Action
+                                    </div>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <ng-container
+                                  formArrayName="ticket_truck_types_rounds"
+                                  *ngFor="
+                                    let fields of ticket_truck_types_rounds(idx)
+                                      .controls;
+                                    let roundIdx = index
+                                  "
+                                >
+                                  <ng-container [formGroupName]="roundIdx">
+                                    <tr class="cursor-pointer" tabindex="0">
+                                      <td
+                                        class="project-setting-table-body-data"
+                                      >
+                                        <div
+                                          class="heading-14-700-normal text-color-grey round-label"
+                                        >
+                                          <b>{{ roundIdx + 1 }}</b>
+                                        </div>
+                                      </td>
+                                      <td
+                                        class="project-setting-table-body-data"
+                                      >
+                                        <div
+                                          class="col-md-12 px-0 pt-1 pb-1 container-myinput"
+                                        >
+                                          <span
+                                            *ngIf="
+                                              fields.get('material_taken_out')
+                                                ?.invalid && form_clicked
+                                            "
+                                            class="text-danger"
+                                          >
+                                            Material taken out is required.
+                                          </span>
+                                          <div
+                                            class="project-profile-input-container bdr-none"
+                                          >
+                                            <div
+                                              class="project-profile-label-container"
+                                            >
+                                              <div
+                                                class="heading-8-400 text-color-grey"
+                                              >
+                                                Material out
+                                              </div>
+                                              <div
+                                                class="heading-4-400-semi text-danger h-15px mb-1"
+                                              ></div>
+                                            </div>
+                                            <div
+                                              class="d-flex align-items-center justify-content-center"
+                                            >
+                                              <input
+                                                placeholder="Write ..."
+                                                formControlName="material_taken_out"
+                                                type="text"
+                                                class="w-100 project-profile-inputtt2 form-control"
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td
+                                        class="project-setting-table-body-data"
+                                      >
+                                        <div
+                                          class="col-md-12 px-0 pt-1 pb-1 container-myinput"
+                                        >
+                                          <span
+                                            *ngIf="
+                                              fields.get('dump_site')
+                                                ?.invalid && form_clicked
+                                            "
+                                            class="text-danger"
+                                          >
+                                            Dump site is required.
+                                          </span>
+                                          <div
+                                            class="project-profile-input-container bdr-none"
+                                          >
+                                            <div
+                                              class="project-profile-label-container"
+                                            >
+                                              <div
+                                                class="heading-8-400 text-color-grey"
+                                              >
+                                                Dump site
+                                              </div>
+                                              <div
+                                                class="heading-4-400-semi text-danger h-15px mb-1"
+                                              ></div>
+                                            </div>
+                                            <div class="">
+                                              <select
+                                                class="project-profile-inputtt2 form-control"
+                                                formControlName="dump_site"
+                                              >
+                                                <option value="">Select</option>
+                                                <option
+                                                  *ngFor="
+                                                    let item of this.dump_sites
+                                                  "
+                                                  [ngValue]="item.dump_site"
+                                                >
+                                                  {{ item.dump_site }}
+                                                </option>
+                                              </select>
+                                            </div>
+
+                                            <i
+                                              class="fa fa-caret-down input-icon-right"
+                                              aria-hidden="true"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                      <td
+                                        class="project-setting-table-body-data"
+                                      >
+                                        <button
+                                          class="mybtn mybtn-back-grey btn-new-round btn-text-small height-34px"
+                                          type="button"
+                                          *ngIf="
+                                            (roundIdx <
+                                              ticket_truck_types_rounds(idx)
+                                                .controls.length &&
+                                              ticket_truck_types_rounds(idx).at(
+                                                roundIdx + 1
+                                              ) &&
+                                              (ticket_truck_types_rounds(idx)
+                                                .at(roundIdx + 1)
+                                                ?.get('material_taken_out')
+                                                ?.value ||
+                                                ticket_truck_types_rounds(idx)
+                                                  .at(roundIdx + 1)
+                                                  ?.get('dumpsite')?.value)) ||
+                                            (roundIdx ==
+                                              ticket_truck_types_rounds(idx)
+                                                .controls.length -
+                                                1 &&
+                                              !ticket_truck_types_rounds(
+                                                idx
+                                              ).at(roundIdx + 1) &&
+                                              !fields.get('dump_site')?.value &&
+                                              !fields.get('material_taken_out')
+                                                ?.value &&
+                                              !(
+                                                (roundIdx ==
+                                                  ticket_truck_types_rounds(idx)
+                                                    .controls.length -
+                                                    1 &&
+                                                  !ticket_truck_types_rounds(
+                                                    idx
+                                                  ).at(roundIdx + 1)) ||
+                                                (ticket_truck_types_rounds(
+                                                  idx
+                                                ).at(roundIdx + 1) &&
+                                                  !ticket_truck_types_rounds(
+                                                    idx
+                                                  )
+                                                    .at(roundIdx + 1)
+                                                    ?.get('material_taken_out')
+                                                    ?.value &&
+                                                  !ticket_truck_types_rounds(
+                                                    idx
+                                                  )
+                                                    .at(roundIdx + 1)
+                                                    ?.get('dumpsite')?.value)
+                                              ))
+                                          "
+                                          (click)="removeRound(roundIdx, idx)"
+                                        >
+                                          Remove
+                                        </button>
+                                        <button
+                                          class="mybtn mybtn-back-grey btn-new-round btn-text-small"
+                                          type="button"
+                                          *ngIf="
+                                            (roundIdx ==
+                                              ticket_truck_types_rounds(idx)
+                                                .controls.length -
+                                                1 &&
+                                              !ticket_truck_types_rounds(
+                                                idx
+                                              ).at(roundIdx + 1)) ||
+                                            (ticket_truck_types_rounds(idx).at(
+                                              roundIdx + 1
+                                            ) &&
+                                              !ticket_truck_types_rounds(idx)
+                                                .at(roundIdx + 1)
+                                                ?.get('material_taken_out')
+                                                ?.value &&
+                                              !ticket_truck_types_rounds(idx)
+                                                .at(roundIdx + 1)
+                                                ?.get('dumpsite')?.value)
+                                          "
+                                          (click)="copyNextRound(roundIdx, idx)"
+                                        >
+                                          Copy to <br />
+                                          next round
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  </ng-container>
+                                </ng-container>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4">
+                              <button
+                                class="mybtn mybtn-back-grey btn-new-round btn-text-small"
+                                type="button"
+                                (click)="newRound(idx)"
+                                [disabled]="!selected_project"
+                              >
+                                Add new <br />
+                                round
+                              </button>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                    <div class="row d-none">
+                      <div class="col-md-4">
+                        <button
+                          class="mybtn mybtn-back-grey width-fit-content btn-text-small"
+                          type="button"
+                          (click)="newTruckType()"
+                          [disabled]="!selected_project"
+                        >
+                          Setup another truck
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    [ngClass]="{ bg_main_blur: !selected_project }"
+                    class="setting-content-page"
+                  >
+                    <div class="dashboard-subtitle mb-4">
+                      Dispatch
+                      <span class="dispatch-text ml-2"
+                        >Require drivers to add picture of the paper ticket
+                        and/or repeat the same dispatch to multiple days</span
+                      >
+                    </div>
+                    <div class="myflex-2">
+                      <!--Paper tickets-->
+                      <div>
+                        <div
+                          class="dashboard-subtitle"
+                          *ngIf="selected_project"
+                        >
+                          <div class="d-flex myflexrow">
+                            <div>Require paper tickets</div>
+                            <input
+                              type="hidden"
+                              [(ngModel)]="this.require_paper_ticket"
+                              formControlName="required_paper_ticket_id"
+                            />
+                            <input
+                              class="mycheckbox ml-3 mt-1"
+                              type="checkbox"
+                              value=""
+                              (change)="changePT($event)"
+                              [checked]="
+                                this.require_paper_ticket == 'YES'
+                                  ? true
+                                  : false
+                              "
+                            />
+                          </div>
+                        </div>
+
+                        <div
+                          class="dashboard-subtitle"
+                          *ngIf="!selected_project"
+                        >
+                          Require paper tickets
+                          <label class="mycheckbox-label">
+                            <input
+                              class="mycheckbox ml-3 mt-1"
+                              type="checkbox"
+                              value=""
+                              formControlName="required_paper_ticket_id"
+                              [disabled]="!selected_project"
+                            />
+                          </label>
+                        </div>
+                        <br />
+                        <div class="welcome-text-2">
+                          If selected, drivers are required <br />to fill the
+                          paper ticket
+                        </div>
+                      </div>
+                      <!-- Repeat Dispatch-->
+                      <div>
+                        <input
+                          type="hidden"
+                          formControlName="is_repeating"
+                          [(ngModel)]="this.is_repeat"
+                          [checked]="this.is_repeat"
+                        />
+                        <br />
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="dashboard-subtitle">
+                              Repeat this dispatch
+                            </div>
+                            <div class="welcome-text-2">
+                              Select dates from calendar
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <label
+                              class="field text-field"
+                              *ngIf="this.selected_project"
+                            >
+                              <input
+                                class="field__input"
+                                placeholder=""
+                                id="daterange"
+                                formControlName="scheduled_date"
+                                type="text"
+                                name="daterange"
+                                autocomplete="off"
+                                bsDaterangepicker
+                                [bsConfig]="{
+                                  minDate: this.minDateDispatch,
+                                  rangeInputFormat: 'MMMM Do YYYY',
+                                  dateInputFormat: 'MMMM Do YYYY',
+                                  showWeekNumbers: false
+                                }"
+                                (bsValueChange)="dateRangeCreated($event)"
+                                [disabled]="!selected_project"
+                                [(ngModel)]="dateRange"
+                              />
+                              <span class="field__label-wrap">
+                                <span class="field__label"
+                                  >Schedule the dispatch</span
+                                >
+                              </span>
+                            </label>
+                            <!-- <label class="field text-field" *ngIf="!this.selected_project">
+                                                            <input class="field__input" placeholder="" formControlName="scheduled_date" type="text" name="daterange" autocomplete="off"
+
+                                                            (bsValueChange)="dateRangeCreated($event)" [disabled]="!selected_project" >
+                                                            <span class="field__label-wrap">
+                                                            <span class="field__label">Schedule the dispatch</span>
+                                                            </span>
+                                                        </label> -->
+                            <label class="field" *ngIf="!selected_project">
+                              <input
+                                class="field__input"
+                                placeholder=""
+                                type="text"
+                                autocomplete="off"
+                                [readonly]="!selected_project"
+                              />
+                              <span class="field__label-wrap">
+                                <span class="field__label"
+                                  >Schedule the dispatch</span
+                                >
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input
+                    type="hidden"
+                    formControlName="range_start"
+                    (ngModel)="(this.schedule_date_from)"
+                  />
+                  <input
+                    type="hidden"
+                    formControlName="range_end"
+                    (ngModel)="(this.schedule_date_to)"
+                  />
+                  <input
+                    type="hidden"
+                    formControlName="user_id"
+                    [(ngModel)]="this.loggedinUser.id"
+                  />
+                  <div class="row mt-2">
+                    <div
+                      class="col-md-12 text-center text-align-center d-flex justify-content-center align-items-center"
+                    >
+                      <button
+                        class="mybtn mybtn-back-transparent mybtn-back2"
+                        [disabled]="!selected_project"
+                      >
+                        Back
+                      </button>
+                      <button
+                        class="mybtn mybtn-back-yellow2 ml-3"
+                        *ngIf="!is_saving"
+                        [disabled]="!selected_project"
+                      >
+                        Dispatch
+                        {{
+                          this.to_dispatch_total &&
+                          to_dispatch_total !== null &&
+                          to_dispatch_total !== undefined
+                            ? "[" + to_dispatch_total + "]"
+                            : ""
+                        }}
+                      </button>
+
+                      <button
+                        class="mybtn mybtn-back-yellow2 ml-3"
+                        [disabled]="is_saving"
+                        *ngIf="is_saving"
+                      >
+                        Saving...
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <ng-template #Block>
+          <div class="row p-0 row-container">
+            <div class="col-lg-7">
+              <div class="skeleton-form">
+                <div class="skeleton-box skeleton-dropdown"></div>
+                <div class="skeleton-box skeleton-datepicker"></div>
+                <div class="skeleton-box skeleton-dropdown"></div>
+                <div class="skeleton-box skeleton-dropdown"></div>
+                <div class="skeleton-box skeleton-textarea"></div>
+
+                <div class="skeleton-heading"></div>
+                <div class="skeleton-box skeleton-input"></div>
+                <div class="skeleton-box skeleton-dropdown"></div>
+                <div class="skeleton-box skeleton-dropdown"></div>
+                <div class="skeleton-box skeleton-timepicker"></div>
+                <div class="skeleton-box skeleton-rate-type"></div>
+                <div class="skeleton-box skeleton-input"></div>
+                <div class="skeleton-box skeleton-input"></div>
+              </div>
+            </div>
+
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="wrapper" style="display:none">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content2">
+            <div class="setting-content-page border-div" *ngIf="is_project_loading">
+
+                <form [formGroup]="ticketForm"  (ngSubmit)="onSaveTicket()"  enctype="multipart/form-data">
+                    <div class="dashboard-title newdispatch mb-0">New dispatch</div>
+                    <br>
+                    <div class="setting-content-page  ">
+                        <div class="dashboard-subtitle mb-4">Project, when, who, what</div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <span *ngIf="this.projectError!= ''" class="text-danger">{{
+                                    this.projectError
+                                    }}</span>
+
+                                <input type="hidden" formControlName="project_id" [(ngModel)]="this.project_id">
+                                <div [class]="!selected_project ? 'getinputfield input-div p-0  required_field':'getinputfield input-div required_field'">
+                                    <div [ngClass]="{'br_blurr': !selected_project}">
+                                        <div class="desc-5 text-color-grey text-left mb-5px ">Select the project</div>
+                                        <div class="position-relative ">
+                                            <div class="myinput-new" *ngIf="!this.selected_project">Select</div>
+                                            <div class="myinput-new" *ngIf="this.selected_project"> {{this.selected_project?.project_name}}</div>
+                                            <img src="../../assets/icons/arrow-down.png" class="icon-center-right">
+                                        </div>
+
+                                    </div>
+                                    <div class="input-popup-div add-comp" *ngIf="this.selected_project">
+                                        <div class="title-19 text-color-grey mb-17">Project</div>
+                                        <ng-container *ngFor="let item of  this.projects_list">
+                                            <div class="title-5-new mb-11" (click)="setProject(item)">{{item.project_name}}</div>
+                                        </ng-container>
+                                        <div class="position-relative getinputfield2 d-flex" (click)="this.showModal('new-project')">
+                                            <div class="myinput-new myinput3 text-color-black-shade8">Add</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-4">
+                                <button class="mybtn mybtn-back-grey width-fit-content btn-text-small float-right" [ngClass]="{'bg_yellow_create': !selected_project}" type="button" (click)="this.showModal('new-project')">Create new project</button>
+                            </div>
+                        </div>
+
+                        <div class=" inst_mainDiv" *ngIf="!this.selected_project" >
+                            <div class="row ml-0 ">
+                                <div class="heading1" >Creating a New Dispatch in DispatchProX: A Step-by-Step Guide</div><span class="strc">*</span>
+                            </div> <br>
+                            <div class="heading2"> 1. Start with a Project:</div>
+                            <div class="textt " >Before dispatching trucks, you'll need a project in place. Here's how to set one up:</div>  <br>
+                            <div class="heading2"> 2. Create a New Project:</div>
+                            <div class="mb-1 pl-2">
+                                <div class="textt " >. Option 1: Look for the "Create new project" button located in the top right corner of your dashboard.</div>
+                                <div class="textt " >. Option 2: Navigate to the "Projects" menu on the left side of your screen. Inside, you will find the option to "Add Project".</div>
+                            </div>  <br>
+                            <div class="heading2"> 3. Follow the Prompts:</div>
+                            <div class="textt "  >After clicking to add a new project, simply follow the on-screen prompts to enter the project details. Fill in all necessary information to ensure accurate dispatching later on.</div> <br>
+                            <div class="textt pb-5" >With your project created, you're now ready to move on to the dispatching process and get those trucks where they need to be! </div>
+
+
+                        </div>
+
+
+
+
+
+                        <div class="row" *ngIf="this.selected_project">
+                            <div class="col-lg-4">
+                                <span *ngIf="this.ticketDateError!= ''" class="text-danger">{{
+                                    this.ticketDateError
+                                    }}</span>
+                                <label class="field text-field required_field">
+                                    <input class="field__input" placeholder="" (change)="dateChange($event)" formControlName="ticket_date" type="date" [min]=" this.todayDate" >
+                                    <span class="field__label-wrap">
+                                    <span class="field__label">When</span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-lg-5">
+                                <span *ngIf="this.companyError!= ''" class="text-danger">{{
+                                    this.companyError
+                                    }}</span>
+                                <label class="field text-field required_field">
+                                    <select class="field__input icon-none"  formControlName="trucking_company_id">
+                                        <option *ngFor="let item of this.trucking_companies_list" [ngValue]="item.id">{{item.company_name}}</option>
+                                    </select>
+                                    <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                    <span class="field__label-wrap">
+                                        <span class="field__label">Select trucking company for dispatch</span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="col-lg-3">
+                                <span *ngIf="this.approverError!= ''" class="text-danger">{{
+                                    this.approverError
+                                    }}</span>
+                                <label class="field text-field required_field">
+                                    <select class="field__input icon-none" formControlName="approver_id" [(ngModel)]="this.self_id">
+                                        <option [value]="this.self_id" [selected]="true">{{this.loggedinUser?.full_name}} </option>
+                                        <option *ngFor="let item of this.approver_list" [ngValue]="item.id">{{item.full_name}} </option>
+                                    </select>
+                                    <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                    <span class="field__label-wrap">
+                                        <span class="field__label">Job approver</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row" *ngIf="this.selected_project">
+                            <div class="col-md-12">
+                                <span *ngIf="this.descriptionError!= ''" class="text-danger">{{
+                                    this.descriptionError
+                                    }}</span>
+                                <label class="field text-field required_field m-0">
+                                    <textarea class="field__input h-auto" formControlName="description" placeholder="" rows="5"></textarea>
+                                    <span class="field__label-wrap">
+                                    <span class="field__label">Description</span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div [ngClass]="{'bg_main_blur main2': !selected_project}">
+
+                        <div [ngClass]="{'bg_main_blur': !selected_project}" class="setting-content-page  " >
+
+                            <ng-container formArrayName="ticket_truck_types">
+                                <ng-container *ngFor="let formItem of ticket_truck_types().controls; let idx = index">
+                                    <ng-container [formGroupName]="idx">
+                                        <div *ngIf="this.selected_project">
+                                            <div class="dashboard-subtitle">Truck type</div>
+                                            <div class="row" >
+                                                <div class="col-md-3">
+                                                    <span *ngIf="formItem.get('number_of_trucks')?.invalid && (form_clicked)"
+                                                        class="text-danger">
+                                                    Number of trucks is invalid or missing.
+                                                    </span>
+                                                    <label class="field text-field required_field">
+                                                        <input class="field__input" placeholder=""  (change)="changeNumber($event,idx)" formControlName="number_of_trucks" type="text">
+                                                        <span class="field__label-wrap">
+                                                        <span class="field__label">Number of trucks</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <span *ngIf="formItem.get('project_truck_id')?.invalid && (form_clicked)"
+                                                        class="text-danger">
+                                                    Truck / Combination is required.
+                                                    </span>
+                                                    <label class="field text-field required_field" style="margin-bottom: 4px;">
+                                                        <select class="field__input icon-none"  formControlName="project_truck_id" (change)="onTruckChange($event,idx)" >
+                                                            <option value="">Select</option>
+                                                            <option *ngFor="let comb of combinations_list"  [ngValue]="comb.id.toString()+'c'">{{comb.nickname}}</option>
+                                                            <option *ngFor="let truck of trucks_list" [ngValue]="truck.id">{{truck.name}}</option>
+                                                        </select>
+                                                        <input type="hidden" formControlName="combination_id" />
+                                                        <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                                        <span class="field__label-wrap">
+                                                            <span class="field__label">Select truck </span>
+                                                        </span>
+                                                    </label>
+                                                    <span  class="nickname-link"><span style="cursor: pointer;" (click)="goToNickname()"> Create your truck nicknames </span></span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <span *ngIf="formItem.get('project_trailer_id')?.invalid && (form_clicked)"
+                                                    class="text-danger">
+                                                    Trailer is required.
+                                                    </span>
+                                                    <label class="field text-field">
+                                                        <select class="field__input icon-none"  formControlName="project_trailer_id" (change)="onTrailerChange(idx)">
+                                                            <option value="none" selected>None</option>
+                                                            <option *ngFor="let trailer of trailers_list" [ngValue]="trailer.id">{{trailer.name}}</option>
+                                                        </select>
+                                                        <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                                                        <span class="field__label-wrap">
+                                                            <span class="field__label">Select trailer </span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <span *ngIf="formItem.get('rate_per_hour')?.invalid && (form_clicked)"
+                                                    class="text-danger">
+                                                    Rate Per Hour is invalid or missing.
+                                                    </span>
+                                                    <label class="field text-field required_field">
+                                                        <input class="field__input" placeholder="" formControlName="rate_per_hour" type="text">
+                                                        <span class="field__label-wrap">
+                                                        <span class="field__label">Rate per hour</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row" >
+                                                <div class="col-md-6">
+                                                    <span *ngIf="formItem.get('first_truck_start_at')?.invalid && (form_clicked)"
+                                                    class="text-danger">
+                                                    First truck to start at is required.
+                                                    </span>
+                                                    <label class="field text-field required_field">
+                                                        <input class="field__input" placeholder=""  type="time" formControlName="first_truck_start_at">
+                                                        <span class="field__label-wrap">
+                                                        <span class="field__label">First truck to start at</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6" >
+                                                    <ng-container *ngIf="formItem.get('number_of_trucks')?.value >1">
+                                                        <span *ngIf="formItem.get('interval_between_truck')?.invalid && (form_clicked)"
+                                                        class="text-danger">
+                                                        Interval between each truck is invalid or missing.
+                                                        </span>
+                                                        <label class="field text-field">
+                                                            <input class="field__input" placeholder="00 min" min="0" type="number" formControlName="interval_between_truck">
+                                                            <span class="field__label-wrap">
+                                                            <span class="field__label">Interval between each truck (minutes)</span>
+                                                            </span>
+                                                        </label>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="formItem.get('number_of_trucks')?.value <2">
+                                                        <input class="field__input" placeholder="00 min" value="0" min="0" type="hidden" formControlName="interval_between_truck">
+                                                    </ng-container>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="border-b-dash mb-3" *ngIf="this.selected_project"></div>
+
+                                        <ng-container formArrayName="ticket_truck_types_rounds" *ngFor="let fields of ticket_truck_types_rounds(idx).controls; let roundIdx = index;">
+                                            <ng-container [formGroupName]="roundIdx" class="bg_main_blur">
+                                                <div class="dashboard-subtitle mb-4">Setup round {{roundIdx+1}}
+
+                                                    <span *ngIf="roundIdx+1 == ticket_truck_types_rounds(idx).controls.length && roundIdx>0" class="copy-round" style="cursor: pointer;" (click)="copyRound(roundIdx,idx)">Copy previous</span>
+                                                </div>
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <span *ngIf="fields.get('material_taken_out')?.invalid && (form_clicked)"
+                                                        class="text-danger">
+                                                        Material taken out is required.
+                                                        </span>
+                                                        <label class="field text-field">
+                                                            <input class="field__input" placeholder="Write ..." formControlName="material_taken_out" type="text">
+                                                            <span class="field__label-wrap">
+                                                            <span class="field__label">Material out</span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <span *ngIf="fields.get('dump_site')?.invalid && (form_clicked)"
+                                                        class="text-danger">
+                                                        Dump site is required.
+                                                        </span>
+                                                        <label class="field text-field">
+                                                        <select class="field__input" formControlName="dump_site" >
+                                                                <option value="">Select</option>
+                                                                <option *ngFor="let item of this.dump_sites" [ngValue]="item.dump_site">{{item.dump_site}}</option>
+                                                            </select>
+                                                            <span class="field__label-wrap">
+                                                            <span class="field__label">Dump site</span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            </ng-container>
+                                        </ng-container>
+                                        <div class="border-b-dash mb-3"></div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <button class="mybtn mybtn-back-grey width-fit-content btn-text-small" type="button" (click)="newRound(idx)"  [disabled]="!selected_project">Set another round</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="myhr mb-3"></div>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button class="mybtn mybtn-back-grey width-fit-content btn-text-small" type="button" (click)="newTruckType()" [disabled]="!selected_project">Setup another truck</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div [ngClass]="{'bg_main_blur': !selected_project}" class="setting-content-page">
+                            <div class="dashboard-subtitle">Repeat this dispatch</div>
+                            <div class="welcome-text">Select the dates you want to repeat the same dispatch</div>
+                            <div class="topright">
+                            </div>
+                            <input type="hidden" formControlName="is_repeating" [(ngModel)]="this.is_repeat" [checked]="this.is_repeat" />
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <label class="field text-field" *ngIf="this.selected_project">
+                                        <input class="field__input" placeholder="" formControlName="scheduled_date" type="text" name="daterange" autocomplete="off"
+                                        bsDaterangepicker  [bsConfig]="{minDate:this.minDateDispatch, rangeInputFormat : 'MMMM Do YYYY', dateInputFormat: 'MMMM Do YYYY', showWeekNumbers: false }"
+                                        (bsValueChange)="dateRangeCreated($event)" [disabled]="!selected_project" >
+                                        <span class="field__label-wrap">
+                                        <span class="field__label">Schedule the dispatch</span>
+                                        </span>
+                                    </label>
+
+                                    <label class="field" *ngIf="!selected_project">
+                                        <input
+                                          class="field__input"
+                                          placeholder=""
+                                          type="text"
+                                          autocomplete="off"
+                                          [readonly]="!selected_project"
+                                        >
+                                        <span class="field__label-wrap">
+                                          <span class="field__label">Schedule the dispatch</span>
+                                        </span>
+                                      </label>
+                                </div>
+                            </div>
+
+                            <div class="myhr mb-3"></div>
+                            <div class="dashboard-subtitle" *ngIf="selected_project" >Require paper tickets <input class="mycheckbox ml-3 mt-1" type="checkbox" value="" formControlName="required_paper_ticket_id" ></div>
+
+                            <div class="dashboard-subtitle" *ngIf="!selected_project">
+                                Require paper tickets
+                                <label class="mycheckbox-label">
+                                  <input
+                                    class="mycheckbox ml-3 mt-1"
+                                    type="checkbox"
+                                    value=""
+                                    formControlName="required_paper_ticket_id"
+                                    [disabled]="!selected_project"
+                                  />
+                                </label>
+                            </div>
+                        <div class="welcome-text">If you need the yellow paper ticket for your records, select above</div>
+                        </div>
+                        <input type="hidden" formControlName="range_start" [(ngModel)]="this.schedule_date_from">
+                        <input type="hidden" formControlName="range_end" [(ngModel)]="this.schedule_date_to">
+                        <input type="hidden" formControlName="user_id" [(ngModel)]="this.loggedinUser.id">
+                        <button class="mybtn mybtn-back-transparent width-fit-content" [disabled]="!selected_project">Back</button>
+                        <button class="mybtn mybtn-back-yellow width-fit-content ml-2" *ngIf="!is_saving" [disabled]="!selected_project">Dispatch {{this.to_dispatch_total && to_dispatch_total!==null && to_dispatch_total !==undefined ? "["+to_dispatch_total+"]":''}}</button>
+
+                        <button class="mybtn mybtn-back-yellow width-fit-content ml-2" [disabled]="is_saving" *ngIf="is_saving">Saving...</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<app-new-project-form
+  *ngIf="current_modal == 'new-project'"
+  [current_modal]="current_modal"
+  (showModl)="showModal($event)"
+  (setAct)="setActive($event)"
+  (refreshParent)="onRefreshParent()"
+></app-new-project-form>

@@ -1,0 +1,111 @@
+<div class="wrapper">
+  <app-dashboard-header></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="setting-content-page border-div inner_main_shadow" >
+        <div class="row">
+          <div class="col-md-6 col-lg-5">
+            <div class="w-354px mb-150px  justify-content-center">
+              <div class="title-1 mb-29">Requests</div>
+              <div class="d-flex align-items-center justify-content-center mt-20px " >
+                  <div class="div-circle d-flex align-items-center justify-content-center cursor-pointer"  (click)="goToStatus('Pending')">
+                    <div class="title-1">
+                      {{ this.dashboard_data?.total_pending? this.dashboard_data?.total_pending:'0'}}
+                    </div>
+                  </div>
+
+              </div>
+              <div class="sub-text text-center">
+                Job requests <br>waiting for you
+              </div>
+            </div>
+
+
+
+            <div class="title-1 mb-20">Dispatched Tickets</div>
+            <div class="row ">
+              <div class=" col-md-12 col-lg-10 ">
+                  <div class="row margin-10px">
+                    <div class="col-6 ">
+
+                      <div class="ticket-div w-100 mb-3 bg-grey  text-black  cursor-pointer"    (click)="goToStatus('Pending')">
+                        <div class="d-flex align-items-center justify-content-center">
+                          Pending
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                          <div class="ticket-container">
+                            {{ this.dashboard_data?.total_pending }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6 ">
+
+                      <div class=" ticket-div w-100 mb-3 bg-yellow   text-black  cursor-pointer"   (click)="goToStatus('Accepted')">
+                        <div class="d-flex align-items-center justify-content-center">
+                          Accepted
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                          <div class="ticket-container">
+                            {{ this.dashboard_data?.total_accepted}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+
+                      <div class="  ticket-div w-100 mb-3 bg-orange  text-white  cursor-pointer"  (click)="goToStatus('Driving')">
+                        <div class="d-flex align-items-center justify-content-center">
+                          Driving
+                        </div>
+                        <div class="d-flex aling-items-center justify-content-center">
+                          <div class="ticket-container">
+                            {{ this.dashboard_data?.total_in_progress }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class=" col-6">
+
+                      <div class=" ticket-div w-100 mb-3 bg-green  text-white  cursor-pointer" (click)="goToStatus('Completed')">
+                        <div class="d-flex align-items-center justify-content-center">
+                          Completed
+                        </div>
+                        <div class="d-flex aling-items-center justify-content-center">
+                          <div class="ticket-container">
+                            {{ this.dashboard_data?.total_completed }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 ">
+                      <div class=" ticket-div w-100 mb-3 bg-blue  text-white cursor-pointer"  (click)="goToStatus('Approved')">
+                        <div class="d-flex align-items-center justify-content-center">
+                          Approved (last 30)
+                        </div>
+                        <div class="d-flex aling-items-center justify-content-center">
+                          <div class="ticket-container">
+                            {{ this.dashboard_data?.total_approved }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-7">
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-12">
+                <img src="../../../../../assets/driver-images-mobile/driver-dashboard.svg" class="max-width-100">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

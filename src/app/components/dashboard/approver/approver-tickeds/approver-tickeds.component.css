@@ -1,0 +1,9 @@
+@import url('../../../../../assets/css/construction-style-3.css');
+.title{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+
+    color: #68696D;
+}

@@ -1,0 +1,310 @@
+@import url('../../../../../../assets/css/dashboard-style-new.css');
+.required_field:after {
+    content: "*";
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    color: #F73333;
+}
+
+.come-from-modal.left .modal-body, .come-from-modal.right .modal-body {
+    padding:    15px 40px 15px 40px;
+}
+
+
+
+.modal-backdrop{
+    display: none !important;
+}
+
+.img-invoice{
+    height: 33px !important;
+    border-radius: 18px  !important;
+}
+
+.mybtn{
+    padding: 0;
+}
+.btn-back{
+    border: 1px solid var(--tragget-yellow, #FFF8B8);
+}
+.mybtnn2{
+    padding: 16px 32px;
+}
+.invoice-img{
+    height: 45px !important;
+    border-radius: 8px  !important;
+}
+.img-invoice-dyn{
+    height: 40px;
+    width: 40px;
+    border-radius: 21px;
+}
+
+.date-title{
+    font-family: 'Gilroy-Bold';
+    font-size: 12px;
+    line-height: 14px;
+
+    color: #FFFFFF;
+
+}
+
+.popup-inv-div{
+    width: 282px;
+    height: 187px;
+}
+.popup-in-div > .img{
+    width: 176px;
+    height: 95px;
+
+}
+img {
+
+    border-radius: 5px;
+}
+ .img-logo{
+    width: 147px;
+    height: 59px;
+
+}
+
+.img-top-popup{
+    width: 176px;
+    height: 95px;
+}
+
+.mt-25px{
+    margin-top:25px;
+}
+.mt-15px{
+    margin-top:15px;
+}
+.ml-15px{
+    margin-left:15px;
+}
+
+.m-25px{
+    margin:25px;
+}
+.title-0{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 20px;
+    line-height: 23px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.mt-25px{
+    margin-top:25px;
+}
+
+.come-from-modal.left .modal-dialog, .come-from-modal.right .modal-dialog {
+ height: max-content !important;
+}
+
+
+.come-from-modal  .field__input{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #68696D;
+
+}
+
+.come-from-modal  .field__label{
+    font-family: 'Gilroy';
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #68696D;
+}
+
+.come-from-modal  button{
+    box-shadow: 0px 4px 4px 0px #00000040;
+
+}
+.mb-50{
+    margin-bottom: 50px;
+}
+.field{
+    margin-bottom: 15px;
+}
+
+.form-group3 {
+    width: 196px;
+    height: 55px;
+    padding: 2px 10px 2px 10px;
+    gap: 1px;
+    border-radius: 5px 0px 0px 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    border: 1px solid rgba(0, 0, 0, .25);
+    border-radius: 5px;
+    margin-top: 17px;
+}
+
+
+.input-field3 {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+
+
+
+.modal-dialog-right {
+    position: fixed;        /* Use fixed to position relative to viewport */
+    width: 40%;
+    min-width: 450px;
+    right: 0;               /* Align to the right edge of the viewport */
+    transform: translateY(-50%); /* Offset the top position */
+    margin: 0;              /* Remove default margins to prevent center alignment */
+}
+
+.modal-dialog2 {
+    margin-right: auto;
+    margin-left: auto;
+    right: 0;
+}
+
+.modal-dialog-centered2 {
+    min-height: calc(100% - (1.75rem * 2));
+}
+
+.modal.fade.show2 {
+    display: block;        /* Needed to override default flex display */
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.field__labell {
+    display: block; /* Ensure it behaves as a block element */
+    margin-bottom: 10px; /* Add margin to the bottom */
+    margin-top: -83px !important;
+    padding-left: 14px;
+}
+
+.select-icon-right {
+    bottom: -13px !important;
+}
+.mybtn-back-blue2 {
+    background: #17A1FA !important;
+}
+
+.btn-back_tc {
+    border: 1px solid var(--tragget-yellow, rgba(23, 161, 250, 1));
+}
+
+
+/* multi-select-dropdown.component.css */
+.dropdown-menu3 {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #17A1FA ;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 50%;
+    z-index: 1000;
+    display: block;
+    padding: 8px;
+    min-width: 160px !important;
+    border-radius: 10px;
+}
+
+.fake-checkbox {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.fake-checkbox.checked {
+    background-color: #17A1FA ;
+    border-color: #aaa;
+}
+
+.fake-checkbox:not(.checked) {
+    background-color: white;
+}
+
+.fakeOk {
+    border: 1px solid #ccc;
+    Width: 75px;
+    Height: 30px;
+    Top: 5px;
+    Left: 37px;
+    border-radius: 4px;
+    Padding: 6.5px, 10px, 6.5px, 10px
+}
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding-bottom: 5px;
+
+}
+
+
+.p-25px{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.btn-back{
+    width: 150px !important;
+    border: 1px solid #FFF8B8 !important;
+    background: white;
+    border-radius: 5px !important;
+    padding: 10px 4px;
+    height: 40px !important;
+    font-family: 'Gilroy-Bold';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.33px;
+    text-align: center;
+    color: #000 !important;
+
+}
+
+.mybtnn2{
+    background: #FFF8B8;
+    border-radius: 5px;
+    height: 40px;
+    width: 150px;
+    padding: 10px 4px;
+    font-family: 'Gilroy-Bold';
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17.33px;
+    text-align: center;
+    color: #000 !important;
+}
+
+.float-right{
+    float: right !important;
+}
+
+.float-left{
+    float: left !important;
+}
+.tc-backbutton{
+  border: 1px solid #17A1FA !important;
+}
+.text-white{
+  color: white !important;
+}

@@ -1,0 +1,254 @@
+<div class="alldivs signup-step-4">
+    <!-- <div class="row m-0 content-container" *ngIf="current_step !==1">
+
+        <div class="col-md-6 ">
+            <div class="header-logo"><img class="logo-shadow" src="assets/images/logo.png"></div>
+            <div class="login-form-div display-table">
+
+                <div class="form-div vertical-middle" *ngIf="is_loading == false && current_step == 2">
+                    <div class="welcome-back-text">Welcome onboard</div>
+                    <div class="login-title">“{{this.full_name}}”</div>
+                    <div class="welcome-back-sub-text">Set Password</div>
+                    <form [formGroup]="setPasswordFrom" (ngSubmit)="setPasswordSubmit()">
+                        <span *ngIf="passwordError!= ''" class="text-danger">{{
+                            passwordError
+                        }}</span>
+                        <label class="field text-field">
+                            <input class="field__input" (input)="checkPassword($event)" type="password" placeholder="example"  formControlName="password">
+                            <i class="fa fa-eye-slash input-icon-right btnhshowhidepass" aria-hidden="true"></i>
+                            <span class="field__label-wrap">
+                            <span class="field__label">Password</span>
+                            </span>
+                        </label>
+                        <br>
+                        <span *ngIf="confirmPasswordError!= ''" class="text-danger">{{
+                            confirmPasswordError
+                        }}</span>
+                        <label class="field text-field">
+                            <input class="field__input" type="password" placeholder="example" value="" formControlName="confirm_password">
+                            <i class="fa fa-eye-slash input-icon-right btnhshowhidepass" aria-hidden="true"></i>
+                            <span class="field__label-wrap">
+                            <span class="field__label">Confirm password</span>
+                            </span>
+                        </label>
+                        <br>
+                        <br>
+                        <div>
+                            <div class="single-instruction">
+                                <i class="fa fa-circle" [ngClass]="{'active': atleast_eight === true}"></i>
+                                <div class="instructions-text">Atleast 8 character</div>
+                            </div>
+                            <div class="single-instruction">
+                                <i class="fa fa-circle " [ngClass]="{'active': upper_lower === true}"></i>
+                                <div class="instructions-text">Atleast one uppercase and one lowercase character</div>
+                            </div>
+                            <div class="single-instruction">
+                                <i class="fa fa-circle "  [ngClass]="{'active': number_symbol_space === true}"></i>
+                                <div class="instructions-text">Atleast one number, symbol, or whitespace character</div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row m-0">
+
+                            <div class="col-md-12 padding-right-0">
+                                <button class="mybtn mybtn-back-pink gotostep6" type="submit">Continue</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-div vertical-middle" *ngIf="is_loading  == true && current_step == 0">
+                    <div class="welcome-back-text">
+                        <h2>
+                            Verifying Invitation....
+                        </h2>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6 truck-back">
+            <div class="">
+                <div class="welcome-div-content">
+                    <div class="welcome-div">
+                        <div class="welcome-title">
+                            Welcome to DispatchProX, the place for truck jobs
+                        </div>
+                        <div class="welcome-desc">DispatchProX empowers Trucking companies and simplifies their utilization for their customers by providing accurate data flow between the entities. </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="row m-0" *ngIf="current_step ==2 ">
+        <div class="col-md-4">
+            <div class="sidebar">
+                <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png"></div>
+                <div class="card00">
+                    <div class="card1">
+
+                        <ul id="progressbar" class="text-center">
+                            <li class="active step0"></li>
+                            <li class="step0"></li>
+                        </ul>
+                        <h6 class="items-text active">Set Password</h6>
+                        <h6 class="items-text">All set</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-lg-5 col-md-6  display-table">
+            <div class="vertical-middle">
+                <div class="welcome-back-text">Welcome onboard <strong>{{this.account_details.full_name}}</strong></div>
+                <div class="login-title">Set Password</div>
+                <br>
+                <form [formGroup]="setPasswordFrom" (ngSubmit)="setPasswordSubmit()">
+                    <span *ngIf="passwordError!= ''" class="text-danger">{{
+                        passwordError
+                    }}</span>
+                    <label class="field text-field">
+                        <input class="field__input" (input)="checkPassword($event)" type="password" placeholder="example"  formControlName="password">
+                        <i class="fa fa-eye-slash input-icon-right btnhshowhidepass" aria-hidden="true"></i>
+                        <span class="field__label-wrap">
+                        <span class="field__label">Password</span>
+                        </span>
+                    </label>
+                    <br>
+                    <span *ngIf="confirmPasswordError!= ''" class="text-danger">{{
+                        confirmPasswordError
+                    }}</span>
+                    <label class="field text-field">
+                        <input class="field__input" type="password" placeholder="example" value="" formControlName="confirm_password">
+                        <i class="fa fa-eye-slash input-icon-right btnhshowhidepass" aria-hidden="true"></i>
+                        <span class="field__label-wrap">
+                        <span class="field__label">Confirm password</span>
+                        </span>
+                    </label>
+                    <br>
+                    <br>
+                    <div>
+                        <div class="single-instruction">
+                            <i class="fa fa-circle" [ngClass]="{'active': atleast_eight === true}"></i>
+                            <div class="instructions-text">Atleast 8 character</div>
+                        </div>
+                        <div class="single-instruction">
+                            <i class="fa fa-circle " [ngClass]="{'active': upper_lower === true}"></i>
+                            <div class="instructions-text">Atleast one uppercase and one lowercase character</div>
+                        </div>
+                        <div class="single-instruction">
+                            <i class="fa fa-circle "  [ngClass]="{'active': number_symbol_space === true}"></i>
+                            <div class="instructions-text">Atleast one number, symbol, or whitespace character</div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row m-0">
+                      
+                        <div class="col-md-6 padding-left-0">
+                            <button class="mybtn primary_button text-white" type="submit">Continue</button>
+                        </div>
+                        <div class="col-md-6 padding-right-0">
+                            <button class="mybtn gotostep4" (click)="backClickStep(1)">Back</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row m-0 content-container" *ngIf="current_step==1" >
+        <div class="col-md-6 ">
+            <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png"></div>
+            <div class="login-form-div display-table">
+                <div class="form-div vertical-middle">
+                    <div class="welcome-back-text">Create free</div>
+                    <div class="login-title mb-30">tragget account</div>
+                    <form [formGroup]="editNamesForm" (ngSubmit)="onSubmitEditNames()">
+                        <div class="row m-0">
+                            <div class="col-md-6 padding-left-0">
+                                <span *ngIf="full_nameError != ''" class="text-danger">{{
+                                    full_nameError
+                                }}</span>
+                                <label class="field text-field required_field">
+                                    <input class="field__input" placeholder="Scott" [(ngModel)]="this.account_details.full_name" formControlName="full_name">
+                                    <span class="field__label-wrap">
+                                    <span class="field__label">Full name</span>
+                                    </span>
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row m-0">
+                           
+                            <div class="col-md-12 " >
+                                <button class="mybtn primary_button" type="submit">Continue</button>
+                            </div>
+                        </div>
+                        <br>
+                    </form>
+                    <div class="already-account-div gotologin" [routerLink]="['/home']">
+                        <div class="already-account">
+                            <div>
+                                <div class="alredyhaveaccount">Already have an account?</div>
+                                <div class="login-sub-heading">Log In to your account</div>
+                            </div>
+                            <img src="assets/icons/arrow-right.svg">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 padding-right-0 padding-left-0">
+            <div class="truck-back">
+                <div class="welcome-div-content">
+                    <div class="welcome-div">
+                        <div class="welcome-title">
+                            Welcome to DispatchProX, the place for truck jobs
+                        </div>
+                        <div class="welcome-desc">DispatchProX empowers Trucking companies and simplifies their utilization for their customers by providing accurate data flow between the entities. </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row m-0" *ngIf="current_step == 3">
+        <div class="col-md-4">
+            <div class="sidebar">
+                <div class="header-logo"><img class="logo-shadow cursor-pointer" [routerLink]="'/home'" src="assets/images/logo.png"></div>
+                <div class="card00"> 
+                    <div class="card1">
+                        <ul id="progressbar" class="text-center">
+                            <li class="active-pre step0"></li>
+                            <li class="active step0"></li>
+                        </ul>
+                        <h6 class="items-text ">Set Password</h6>
+                        <h6 class="items-text active">All set</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-lg-5 col-md-6  display-table">
+            <div class="vertical-middle">
+                <div class="welcome-back-text">Hey <strong>{{this.account_details?.full_name}}
+                </strong></div>
+
+                <div class="login-title mb-57">You’re all set</div>
+                <img src="../../assets/icons/truck2.svg" class="img-responsive mb-37">
+                <div class="row m-0">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6 padding-left-0">
+                        <button class="mybtn primary_button" (click)="backClick('/trucking-setup')" >Go to dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+@import url('../../../../assets/css/margins.css');
+
+@import url('../../../../assets/css/style.css');
+@import url('../../../../assets/css/trucking-style2.css');
+.mybtn{
+    width: 100% !important;
+}
+.cursor-pointer
+{
+    cursor: pointer;
+}
+.welcome-back-text{
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 39px;
+}
+.welcome-back-text-33{
+    font-family: 'Gilroy-SemiBold';
+    font-size: 32px;
+    line-height: 38px;
+
+    color: #111727;
+}
+
+.login-title-33 {
+    
+    font-family: 'Gilroy-SemiBold';
+    font-size: 20px;
+    line-height: 23px;
+
+    color: #111727;
+
+    opacity: 0.5;
+}
+.display-table  .welcome-back-text{
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px !important;
+    line-height: 25px !important;
+}
+
+.welcome-back-text > strong{
+    font-weight: 700;
+}
+.header-logo{
+    padding-left: 70px;
+}
+
+.step-title{
+    font-family: 'Gilroy';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 44px;
+    
+    color: #111727;
+}
+
+.dis-numbers.active{
+    background-color: #43ABDB;
+    color: white;
+}
+
+.login-title-desc {
+    font-family: 'Gilroy';
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    color: rgba(17, 23, 39, 0.5);
+}
+
+.sidebar {
+height: 100vh;
+}
+
+.truck-back{
+    height: 100vh;
+}

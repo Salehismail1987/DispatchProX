@@ -1,0 +1,42 @@
+@import url('../../../../../assets/css/driver-dashboard-style.css');
+
+.cursor-pointer{
+    cursor:pointer
+}
+
+#sidebar ul li a {
+    margin-bottom: 0px !important;
+    margin-left: 10px !important;
+    padding-left: 10px !important;
+    max-width: 220px !important;
+    padding-top: 7.5px !important;
+    padding-bottom: 7.5px !important;
+}
+
+.border-menu {
+    border-bottom: 1px solid #d8d8d8 !important;
+    padding-bottom: 15px !important;
+    margin-bottom: 10px !important;
+}
+
+.bg-white{
+    background: #FFFFFF !important;
+}
+
+.mb-10px{
+  margin-bottom: 10px !important;
+
+}
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: .255em;
+  vertical-align: .255em;
+  content: "";
+  border-top: .45em solid;
+  border-right: .45em solid transparent;
+  border-bottom: 0;
+  border-left: .45em solid transparent;
+}
+.dropdown-toggle::after {
+  color: #000000 !important;
+}

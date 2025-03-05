@@ -1,0 +1,68 @@
+@import url("../../../../../assets/css/trucking-mvp-style.css");
+.img-invoice{
+    height: 33px !important;
+    border-radius: 18px  !important;
+}
+
+
+.invoice-img{
+    height: 45px !important;
+    border-radius: 8px  !important;
+}
+.img-invoice-dyn{
+    height: 40px;
+    width: 40px;
+    border-radius: 21px;
+}
+
+.curser-pointer{
+    cursor: pointer !important;
+}
+
+.padding-5-20-2{
+    padding: 11px 20px;
+}
+
+
+.background-customer{
+
+    background: #fff;
+    padding: 5px 20px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, .25);
+    border-radius: 7px;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+
+.btn-nav{
+    
+    width: 150px !important;
+    height: 40px !important;
+}
+.body-content {
+    padding: 0px 20px;
+}
+
+.mybtn.active:after {
+    content: "";
+    position: absolute;
+    border-bottom: 0px solid #17A1FA !important;
+    bottom: 0px;
+    width: 0;
+    left: 0px;
+}
+
+.line-break-any{
+    line-break: anywhere !important;
+}
+.body-content {
+    padding: 15px;
+    }
+
+    .border-div{
+        border: 1px solid #0000001a !important;
+    }
+    

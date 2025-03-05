@@ -1,0 +1,497 @@
+<div class="wrapper">
+    <app-dashboard-header  [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header ></app-dashboard-top-header>
+        <div class="body-content2">
+            <!-- No Free Trial Started -->
+            <ng-container *ngIf="this.is_free_trial=='NO' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                <div class="setting-content-page border-div custom-padding-74" >
+                
+                    <div class="dashboard-title mb-6" *ngIf="this.is_free_trial=='NO' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                        <img src="assets/icons/tragget-ticket-page-icon.svg"> 
+                        <span class="ml-1 ">
+                            DispatchProX tickets - fuel to trucking business
+                        </span>
+                    </div>
+                    
+                    <div class="mt-50 mb-40" *ngIf="this.is_free_trial=='NO' && this.is_expired!='YES' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                        <div class="row mb-34">
+                            <div class="col-md-4">
+                                <img class="mt-2" src="assets/images/cust-trial-period-image-left.svg" style="max-width: -webkit-fill-available;">
+                            </div>
+                            <div class="col-md-8">
+                                <img class="float-right " src="assets/images/cust-trial-period-image.svg" style="max-width: -webkit-fill-available;">
+                            </div>
+                        
+                        </div>       
+                        <!-- <div class="row mb-34">
+                            <div class="col-md-12">
+                                <div class="button-container text-center">
+                                    <div class="d-flex">
+                                        <div class="title-tt ml-2">
+                                        Truck job
+                                        </div>
+                                        <div class=" ml-3 btn-status text-dark status-pending">
+                                            Pending
+                                        </div>
+                                        <div class=" ml-2 btn-status text-dark status-accepted">
+                                            Accepted
+                                        </div>
+                                        <div class=" ml-2 btn-status text-white status-progress">
+                                            Driving
+                                        </div>
+                                        <div class=" ml-2 btn-status text-white status-completed">
+                                            Completed
+                                        </div>
+                                        <div class=" ml-2 btn-status text-white status-approved">
+                                            Approved
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </div>             
+                        <div class="row mb-34">
+                            <div class="col-md-12">
+                                <div class="float-right ">
+                                    <div class="d-flex text-center">
+                                        <div class=" ml-2">
+                                        <img src="assets/images/trial-ticket-big-orange.svg" width="84" height="84">
+                                        </div>
+                                        <div class="ml-4 text-left grey-container">
+                                            
+                                            Get more out of your trucking business: with DispatchProX account receive jobs, assign drivers, and dispatch to other companies.
+                                        </div>
+                                        <div class="ml-2 white-container">
+                                            <div class="d-flex">
+                                                <div class="p-1  text-left pr-2" >
+                                                    DispatchProX is your online assistant, track tickets, invoicing and billing
+                                                </div>
+                                                <div class="p-2 pr-4">
+                                                    <img src="../../../../../assets/icons/t-orange.png">
+                                                
+                                                    <img class="mt-1" src="../../../../../assets/icons/t-blue.svg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>      -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <table class="table subs-table mb-38">
+                                <thead>
+                                    <tr>
+                                        <th class="bg-head-blue width-76-perc">
+                                           <div class="title-sub-head text-left">
+                                            What you will miss if you don’t have valid subscription or ticket 
+                                           </div> 
+                                        </th>
+                                        <th class=" width-12-perc title-small-head bg-head-blue">DispatchProX ticket Subscription</th>
+                                        <th class=" width-12-perc title-small-head bg-head-blue">Free account only</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="width-76-perc">
+                                            <b>Advanced Vendor Management</b>  - Simplify and enhance collaboration with your vendors for optimal outcomes.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class=" width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Efficient Dispatching </b>– Streamlined tools ensure seamless dispatching to projects, maximizing operational efficiency.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <b>Clear Driver Communication</b> – Provide drivers with detailed job instructions, ensuring clarity and minimizing potential errors, remote and safe job approval.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Real-Time Job Progress</b> - Monitor project advancements with live updates on truck arrivals and individual job progression.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Adaptive Project Oversight </b>– Gain insights at the project level, identify success metrics, and make informed adjustments for optimal outcomes.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Precise & Timely Billing</b> – Ensure accurate invoicing and eliminate unexpected charges, promoting transparency and trust.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           <b> Streamlined Operations</b> – Utilize modern tools to efficiently manage dump truck requirements, saving both time and money.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                          </div>
+                      </div>
+                      
+                    <div class="title-footer text-center">
+                        DispatchProX offers plans to all-size companies, from one-truck companies to brokers who manage thousands of trucks.
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- Free Trial Started -->
+            <ng-container  *ngIf="this.is_free_trial=='YES' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                <div class="setting-content-page border-div custom-padding-74 mb-15px" >
+                    <div class="row     align-items-center" >
+                        <div class="col-md-6">
+                            <div class="dashboard-title mb-6 d-flex justify-content-start align-items-center" *ngIf="this.is_free_trial=='YES' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                        
+                                <img src="assets/icons/tragget-ticket-page-icon.svg"> 
+                                <div class="ml-2 ">
+                                    Free Trial
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="float-right d-flex">
+                        
+                                <button class='mybtn bg-blue text-black active btn-nav btn-customer'  [routerLink]="'/cust-tragget-trial'" >Free Trial</button>
+                                <button class='mybtn mybtn-default text-black btn-nav ml-2 btn-customer' [routerLink]="'/cust-tragget-plans'" >DispatchProX Plans</button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="setting-content-page border-div custom-padding-74 mt-10px " >                    
+                    <div *ngIf="this.is_free_trial=='YES' && (this.is_subscribed=='NO' || !this.is_subscribed)"> 
+                      
+                    
+                        <div class="row mb-34 custom-padding-721">
+                            <div class="col-md-3">
+                                <img src="assets/images/truck-background.svg">
+                                <div class=" btn-left ">
+                                    {{this.days_left}} days left
+                                </div>
+                                    
+                            </div>
+                            <div class="col-md-6">
+                                <div class="custom-padding">
+                                    <div class="title-3 text-center mb-6 title-head-trial"><span class="text-dark text-blue font-weight-bold " style="font-family:'Gilroy-bold'">{{this.days_left}} Days</span> left for Free-Trial to end.</div>
+                                    <div class="title-4 text-center text-color-brown title-text-trial">During the trial period, you get to use all features DispatchProX offers.</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3" align="right">
+                                <div class="ticket-badge bg-subs">
+                                    <div class="title-6 text-white mb-2">Last 30 days</div>
+                                    <div class="title-5 text-white mb-2">{{this.last_30_days_closed_tickets}}</div>
+                                    <div class="title-6 text-white mb-35">Tickets used</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <table class="table subs-table mb-38">
+                                <thead>
+                                    <tr>
+                                        <th class="bg-head-blue width-76-perc">
+                                           <div class="title-sub-head text-left">
+                                            What you will miss if you don’t have valid subscription or ticket 
+                                           </div> 
+                                        </th>
+                                        <th class=" width-12-perc title-small-head bg-head-blue">DispatchProX ticket Subscription</th>
+                                        <th class=" width-12-perc title-small-head bg-head-blue">Free account only</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="width-76-perc">
+                                            <b>Advanced Vendor Management</b>  - Simplify and enhance collaboration with your vendors for optimal outcomes.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class=" width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Efficient Dispatching </b>– Streamlined tools ensure seamless dispatching to projects, maximizing operational efficiency.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <b>Clear Driver Communication</b> – Provide drivers with detailed job instructions, ensuring clarity and minimizing potential errors, remote and safe job approval.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Real-Time Job Progress</b> - Monitor project advancements with live updates on truck arrivals and individual job progression.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Adaptive Project Oversight </b>– Gain insights at the project level, identify success metrics, and make informed adjustments for optimal outcomes.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Precise & Timely Billing</b> – Ensure accurate invoicing and eliminate unexpected charges, promoting transparency and trust.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           <b> Streamlined Operations</b> – Utilize modern tools to efficiently manage dump truck requirements, saving both time and money.
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/blue-tick-2.svg">
+                                        </td>
+                                        <td class="width-12-perc">
+                                            <img src="../assets/images/grey-cross-2.svg">
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                          </div>
+                      </div>
+                      
+                    <div class="title-footer text-center">
+                        DispatchProX offers plans to all-size companies, from one-truck companies to brokers who manage thousands of trucks.
+                    </div>
+                </div>
+                
+            </ng-container>
+
+            
+            <!-- <div class="setting-content-page border-div custom-padding-74 d-none" >
+            
+
+                <div class="dashboard-title mb-6" *ngIf="(!this.is_free_trial || this.is_free_trial=='NO') && this.is_subscribed =='YES'">DispatchProX ticket vs Free account</div>
+               
+
+                <div class="mb-50" *ngIf="this.is_free_trial=='NO' && this.is_expired!='YES' && (this.is_subscribed=='NO' || !this.is_subscribed)">
+                    <div class="row mb-34">
+                        <div class="col-md-4">
+                            <img class="mt-2" src="assets/images/cust-trial-period-image-left.svg" style="max-width: -webkit-fill-available;">
+                        </div>
+                        <div class="col-md-8">
+                            <img class="float-right " src="assets/images/cust-trial-period-image.svg" style="max-width: -webkit-fill-available;">
+                        </div>
+                       
+                    </div>       
+                  
+                </div>
+                <div *ngIf="(!this.is_free_trial || this.is_free_trial=='NO') && (this.is_expired== 'YES' || this.is_subscribed =='YES')"> 
+                    <div class="row mb-34" >
+                        <div class="col-md-12">
+                            <div class="float-right d-flex">
+                        
+                                <button class='mybtn mybtn-default text-black btn-nav btn-customer'  [routerLink]="'/cust-tragget-tickets'" >Subscriptions and tickets</button>
+                                <button class='mybtn mybtn-default text-black  btn-nav ml-2  btn-customer' [routerLink]="'/cust-tragget-plans'" >DispatchProX plans</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-15" >
+                        <div class="col-md-3">
+                            <div class="col-md-3" align="center">
+                                <div class="ticket-badge bg-subs">
+                                    <div class="title-6 text-white mb-1">Last 30 days</div>
+                                    <div class="title-5 text-white mb-3">{{this.last_30_days_closed_tickets}}</div>
+                                    <div class="title-6 text-white mb-31">Tickets used</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="title-free-1">
+                                DispatchProX tickets helps you to run your business smoothly
+                            </div>
+                            <br>
+                            <div class="title-free-2">
+                                Just having an account helps you to run your business, but paying DispatchProX tickets allows you to focus on growing your business.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="is_free_trial=='NO' && (this.is_subscribed=='NO' || !this.is_subscribed)"><br><br>
+                </ng-container>
+                <div class="title-1 text-black mb-31">What you will miss if you don’t have valid subscriptions 
+                </div>
+                <table class="table subs-table mb-38">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="table-h">DispatchProX ticket Subscription</th>
+                            <th class="table-h">Free account only</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>Advanced Vendor Management</b> - Simplify and enhance collaboration with your vendors for optimal outcomes.
+                            </td>
+                            <td>
+                                <img class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Efficient Dispatching </b> – Streamlined tools ensure seamless dispatching to projects, maximizing operational efficiency.
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Clear Driver Communication</b> – Provide drivers with detailed job instructions, ensuring clarity and minimizing potential errors, remote and safe job approval.
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Real-Time Job Progress</b> - Monitor project advancements with live updates on truck arrivals and individual job progression.
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/grey-cross.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Adaptive Project Oversight </b> – Gain insights at the project level, identify success metrics, and make informed adjustments for optimal outcomes.
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/grey-cross.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Precise & Timely Billing </b> - Ensure accurate invoicing and eliminate unexpected charges, promoting transparency and trust.
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/grey-cross.svg">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Streamlined Operations</b> – Utilize modern tools to efficiently manage dump truck requirements, saving both time and money.
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/blue-tick.svg">
+                            </td>
+                            <td>
+                                <img  class="width-24" src="../assets/icons/grey-cross.svg">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="title-1 text-black text-center mb-23"  *ngIf="is_free_trial=='YES'">After {{this.days_left}}-Days, Buy any of these plans to make the most out of DispatchProX.</div>
+                
+            </div> -->
+                
+        
+    </div>
+</div>
+

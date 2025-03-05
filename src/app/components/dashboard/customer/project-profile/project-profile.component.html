@@ -1,0 +1,464 @@
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+        <div class="body-content" >
+            <div class="main-content main-content-margins p-0">
+                <div class="welcome-text">Projects</div>
+                <div *ngIf="project && project.project_name; else elseBlock">
+                
+                    <div class="dashboard-title">{{this.project.project_name}}</div>
+                    <div class="row">
+                        <div class="col-md-5 col-lg-4">
+                            <div class="sub-menu border-div">
+                                <div class="sub-menu-profile-div">
+                                    <div class="sub-menu-icon-div">
+                                        <img src="../../assets/icons/user-icon.svg">
+                                    </div>
+                                    <div class="display-table">
+                                        <div class="vertical-middle">
+                                            <div class="sub-menu-content">
+                                                {{this.project.project_name}}
+                                            </div>
+                                            <div class="submenu-subheading">{{this.project.project_location}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="myhr"></div>
+                                <br>
+                            <app-project-profile-nav [project_id]="this.project_id" [current_nav]="'project-profile'"></app-project-profile-nav>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-lg-8">
+                            <div class="setting-content-page  border-div">
+                                <div class="dashboard-title">Project profile</div>
+                                <br>
+                             
+                                <form [formGroup]="updateProjForm" (ngSubmit)="onUpdateProject()" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            
+                                            <label class="field text-field mb-15 required_field">
+                                                <input class="field__input" placeholder="Hospital A construction" formControlName="project_name" [(ngModel)]="this.project.project_name" type="text">
+                                                <span class="field__label-wrap">
+                                                <span class="field__label">Project name</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-1">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <span *ngIf="updateProjJobNumberError!= ''" class="text-danger">{{
+                                                updateProjJobNumberError
+                                                }}</span>
+                                            <label class="field text-field mb-15 required_field">
+                                                <input class="field__input" placeholder="0921" type="text" formControlName="job_number" [(ngModel)]="this.project.job_number">
+                                                <span class="field__label-wrap">
+                                                <span class="field__label">Job Number</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-1">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <span *ngIf="updateProjStartDateError!= ''" class="text-danger">{{
+                                                updateProjStartDateError
+                                                }}</span>
+                                            <label class="field text-field mb-15">
+                                                <input class="field__input" placeholder="" formControlName="start_date" type="date"  [(ngModel)]="this.project.start_date">
+                                                <span class="field__label-wrap">
+                                                <span class="field__label">Start date</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-1">
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <span *ngIf="updateProjEndDateError ''" class="text-danger">{{
+                                                updateProjEndDateError
+                                                }}</span>
+                                            <label class="field text-field mb-15">
+                                                <input class="field__input" placeholder="" value="bnb builders" type="date" [(ngModel)]="this.project.planned_enddate" formControlName="planned_enddate">
+                                                <span class="field__label-wrap">
+                                                <span class="field__label">Planned end date</span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-1">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <span *ngIf="updateProjLocationError!= ''" class="text-danger">{{
+                                                updateProjLocationError
+                                                }}</span>
+                                            <div class="position-relative">
+                                                <label class="field text-field mb-28 required_field">
+                                                    <input class="field__input" placeholder="Add address" [(ngModel)]="this.project.project_location" formControlName="project_location" type="text">
+                                                    <span class="field__label-wrap">
+                                                    <span class="field__label">Project location</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="position-relative">
+                                                <label class="field text-field mb-28">
+                                                    <input class="field__input" placeholder="Enter" value="Enter" formControlName="default_rounds"
+                                                    [(ngModel)]="this.project.default_rounds" type="text">
+                                                    <span class="field__label-wrap">
+                                                    <span class="field__label">Default number of rounds</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="row" formArrayName="dump_sites">
+                                        <div class="col-md-12">
+                                            <div class="title-6-2 mb-13">Dump site</div>
+                                        </div>
+                                        <span *ngIf="updateProjDumpSiteError!= ''" class="text-danger">{{
+                                            updateProjDumpSiteError
+                                            }}</span>
+                                        
+                                        <div class="col-md-12" *ngFor="let site of dump_sites.controls; index as idx">
+                                         
+                                            <div class="row" [formGroupName]="idx">
+                                                <div class="col-md-5">
+                                                    <div class="position-relative">
+                                                        <label class="field text-field mb-27 required_field">
+                                                            <input class="field__input" formControlName="name"  placeholder="" [(ngModel)]="this.project.dump_sites[idx] && this.project.dump_sites[idx].dump_site" type="text" />
+                                                            <span class="field__label-wrap">
+                                                            <span class="field__label">Name</span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="position-relative">
+                                                        <label class="field text-field mb-27">
+                                                            <input class="field__input" formControlName="location" placeholder="" [(ngModel)]="this.project.dump_sites[idx] && this.project.dump_sites[idx].location" type="text">
+                                                            <span class="field__label-wrap">
+                                                            <span class="field__label">Location</span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div class="mb-1"></div>
+                                                    <img (click)="addDumpSite()" *ngIf="idx == this.dump_sites.length-1" src="../../assets/icons/btn-pluse-yellow.svg" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="myhr mb-15"></div>
+                                    <table class="w-100 table-project-settings">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="title-12 text-color-black-shade">Team</div>
+                                                </th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone number</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="title-13 text-color-black-shade">Superintendent</div>
+                                                </td>
+                                                <td>
+                                                 
+                                                    <!-- <div class="position-reletive">
+                                                        <select   class="form-control" [(ngModel)]="this.project_supr_name" (change)="setSupridentent($event)">
+                                                            <option value="">Select</option>
+                                                            <option *ngFor="let sup of this.supridendents_list" value="{{sup.id}}">{{sup.full_name}} </option>
+                                                        </select>
+                                                        <i class="fa fa-caret-down select-icon-right text-color-black-shade3" aria-hidden="true"></i>
+                                                    </div> -->
+                                                    <input type='hidden' [(ngModel)]="this.project_supr_id" formControlName="supridendent_id" >
+
+                                                    <div class='position-relative'>
+                                                                
+                                                        <input class="form-control selectcustomerfield curser-pointer" placeholder="Select Suprindendent" [(ngModel)]="this.project_supr_name" value="{{project_supr_name}}"
+                                                        readonly
+                                                         type="text" (click)="showSupList()">
+                                                        
+                                                        <i class="fa curser-pointer fa-caret-down input-icon-right" (click)="showSupList()" aria-hidden="true"></i>
+                                                    
+                                                    <span class='selected_customer' style="display:none"></span>
+
+
+                                                    <div class="background-customer " [style]="this.show_list_sup ? 'display:block !important':'display:none !important'">
+                                                        <div class="position-relative">
+
+                                                            <input class="mt-1 form-control"  placeholder="Search" value="" type="text" (input)="searchSupComp($event)">
+                                                           
+
+                                                            <div class="topright-small">
+                                                                <img src="../assets/icons/search-icon2.svg" width="18px">
+                                                            </div>
+                                                        </div>
+                                                        <ul class="calendarlist mt-2">
+                                                            
+                                                            <li class="curser-pointer" *ngFor="let sup of this.supridendents_list" id="{{sup.id}}" (click)="setSupridentent(sup)">{{sup.full_name}} </li>
+                                                        </ul>
+
+                                                        <div class="myhr mt-3 mb-3"></div>
+                                                        <div class="mb-3" style="text-align:left">
+                                                            <span>Not in the list?</span>
+                                                            <span class="ml-1 text-danger font-weight-bold curser-pointer" (click)="showModalUser()"><u>Add to company</u></span>
+                                                        </div>
+
+                                                    </div>
+                                                    </div>
+                                                </td>
+                                                <td>{{this.project_supr_email}}</td>
+                                                <td>{{this.project_supr_no}}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5">
+                                                    <div class="myhr"></div>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="this.updateProjApproverError !=''">
+                                                <td colspan="5">
+                                                    <span class="text-danger">
+                                                        {{this.updateProjApproverError}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <ng-container >
+                                                
+                                                <ng-container *ngIf="this.self_user">
+                                                    <tr>
+                                                        <td>
+                                                            <div  class="title-13 text-color-black-shade">Approvers</div>
+                                                        </td>
+                                                        <td class="form-label-1">
+                                                            {{this.self_user?.full_name}} 
+                                                        </td>
+                                                        <td class="form-label-2">
+                                                            {{this.self_user.email}}
+                                                           </td>
+                                                        <td class="form-label-2">{{this.self_user.contact_number}}</td>
+                                                        <td>
+                                                           
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                                <ng-container formArrayName="approvers">
+                                                    <tr  *ngFor="let  appr of approvers.controls; index as idx">
+                                                        <ng-container [formGroupName]="idx">
+                                                            <td>
+                                                                <div *ngIf="idx == 0 && !this.self_user" class="title-13 text-color-black-shade">Approvers</div>
+                                                            </td>
+                                                            <td>
+                                                                <div [ngClass]=" idx==0? 'position-relative required_field2':'position-relative'">
+                                                                    
+                                                                        <input class="form-control selectcustomerfield curser-pointer" 
+                                                                        readonly
+                                                                        placeholder="Select Approver" (ngModel)="this.approvers  && this.approvers.at(idx).get('name')?.value && this.approvers.at(idx).get('name')?.value !=undefined ? this.approvers.at(idx).get('name')?.value : ''" 
+                                                                        [value]="this.approvers  && this.approvers.at(idx).get('name')?.value && this.approvers.at(idx).get('name')?.value !=undefined ? this.approvers.at(idx).get('name')?.value : ''" type="text"(click)="showAppList(idx)">
+                                                                        
+                                                                        <i class="fa fa-caret-down curser-pointer input-icon-right" (click)="showAppList(idx)" aria-hidden="true"></i>
+                                                                    
+                                                                    <span class='selected_customer' style="display:none"></span>
+                                                                    <div class="background-customer " [style]="this.show_list_app && this.show_list_app_id==idx ? 'display:block !important':'display:none !important'">
+                                                                    
+                                                                        <div class="position-relative">
+
+                                                                            <input class="mt-1 form-control " id="search-approver{{idx}}" placeholder="Search" value="" type="text" (input)="searchAppComp($event)">
+                                                                        
+        
+                                                                            <div class="topright-small">
+                                                                                <img src="../assets/icons/search-icon2.svg" width="18px">
+                                                                            </div>
+                                                                        </div>
+                                                                        <ul class="calendarlist mt-2">
+                                                                            
+                                                                            <li class="curser-pointer" *ngFor="let appr of this.approver_list" id="{{appr.id}}" (click)="setApprover(idx,appr)">{{appr.full_name}}</li>
+                                                                        </ul>
+                                                                        
+                                                                        <div class="myhr mt-3 mb-3"></div>
+                                                                        <div class="mb-3" style="text-align:left">
+                                                                            <span>Not in the list?</span>
+                                                                            <span class="ml-1 text-danger font-weight-bold curser-pointer" (click)="showModalUser()"><u>Add to company</u></span>
+                                                                        </div>
+                                                                        <div class="mb-3 " style="text-align:left">
+                                                                        <span>Not in the company?</span>
+                                                                        <span class="ml-1 text-danger font-weight-bold curser-pointer" (click)="showModalUserRole()"><u>Invite as approver</u></span>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="hidden" formControlName="approver_id" [value]="this.approvers  && this.approvers.at(idx).get('approver_id')?.value" />
+                                                            </td>
+                                                            <td>
+                                                                {{this.approvers.at(idx).get('email')?.value}}
+                                                            </td>
+                                                            <td>{{this.approvers.at(idx).get('no')?.value}}</td>
+                                                            <td>
+                                                                <img *ngIf="idx>0"  (click)="setUser(idx,'Approver',this.approvers.at(idx).get('name')?.value)" src="../../assets/icons/minus-round.svg" alt="">
+                                                            </td>
+                                                        </ng-container>
+                                                    
+                                                    </tr>
+                                                </ng-container>
+                                            </ng-container>
+                                            <tr>
+                                                <td colspan="5" class="text-left">
+                                                    <img (click)="addApprover([])" src="../../assets/icons/btn-pluse-yellow.svg" alt="">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5">
+                                                    <div class="myhr"></div>
+                                                </td>
+                                            </tr>
+                                            <ng-container formArrayName="dispatchers">
+                                                <tr  *ngFor="let  disp of dispatchers.controls; index as idx">
+                                                    <ng-container [formGroupName]="idx">
+                                                        <td>
+                                                            <div *ngIf="idx == 0" class="title-13 text-color-black-shade">Dispatchers</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class='position-relative'>
+                                                                
+                                                                <input class="form-control selectcustomerfield curser-pointer" placeholder="Select Dispatcher" (ngModel)="this.dispatchers  && this.dispatchers.at(idx).get('name')?.value && this.dispatchers.at(idx).get('name')?.value !==undefined? this.dispatchers.at(idx).get('name')?.value :''" 
+                                                                readonly
+                                                                [value]="this.dispatchers  && this.dispatchers.at(idx).get('name')?.value && this.dispatchers.at(idx).get('name')?.value !==undefined? this.dispatchers.at(idx).get('name')?.value :''" type="text" (click)="showDispList(idx)">
+                                                                
+                                                                <i class="fa curser-pointer fa-caret-down input-icon-right" (click)="showDispList(idx)" aria-hidden="true"></i>
+                                                             <input type="hidden" formControlName="dispatcher_id" [value]="this.dispatchers  && this.dispatchers.at(idx).get('dispatcher_id')?.value" />
+                                                            <span class='selected_customer' style="display:none"></span>
+
+
+                                                            <div class="background-customer " [style]="this.show_list_disp && this.show_list_disp_id==idx ? 'display:block !important':'display:none !important'">
+                                                                <div class="position-relative">
+
+                                                                    <input class="mt-1 form-control" id="search-dispatcher{{idx}}" placeholder="Search" value="" type="text" (input)="searchDispComp($event)">
+                                                                   
+
+                                                                    <div class="topright-small">
+                                                                        <img src="../assets/icons/search-icon2.svg" width="18px">
+                                                                    </div>
+                                                                </div>
+                                                                <ul class="calendarlist mt-2">
+                                                                    
+                                                                    <li class="curser-pointer" *ngFor="let disp of this.dispatchers_list" id="{{disp.id}}" (click)="setDispatcher(idx,disp)">{{disp.full_name}}</li>
+                                                                </ul>
+
+                                                                <div class="myhr mt-3 mb-3"></div>
+                                                                <div class="mb-3 " style="text-align:left">
+                                                                    <span>Not in the list?</span>
+                                                                    <span class="ml-1 text-danger font-weight-bold curser-pointer" (click)="showModalUser()"><u>Add to company</u></span>
+                                                                </div>
+                                                              
+
+                                                            </div>
+                                                            </div>
+                                                          
+                                                        </td>
+                                                        <td>{{this.dispatchers.at(idx).get('email')?.value}}</td>
+                                                        <td>{{this.dispatchers.at(idx).get('no')?.value}}</td>
+                                                        <td>
+                                                            <img  (click)="setUser(idx,'Dispatcher',this.dispatchers.at(idx).get('name')?.value)" src="../../assets/icons/minus-round.svg" alt="">
+                                                        </td>
+                                                    </ng-container>
+                                                   
+                                                </tr>
+                                            </ng-container>
+                                         
+                                            <tr>
+                                                <td colspan="5" class="text-left">
+                                                    <img (click)="addDispatcher([])" src="../../assets/icons/btn-pluse-yellow.svg" alt="">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div align="center">
+                                        <input type="hidden" formControlName="project_id" [(ngModel)]="this.project_id">
+                                        <button class="mybtn2 mybtn-back-yellow width-fit-content" type="submit" *ngIf="!is_loading">Update</button> 
+                                        <button class="mybtn2 mybtn-back-yellow width-fit-content" type="button" *ngIf="is_loading">Processing... </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <ng-template #elseBlock>
+                    <div class="row">
+                        <div class="col-md-10 col-lg-8">
+                            <div class="setting-content-page" >
+                                <h3 *ngIf="!is_loading; else elseLoading">
+                                    Project not found.<br/> 
+                                    <a style="color:rgb(69, 69, 190) !important;font-size:13px" routerLink="/project-listing">Back to Projects</a>
+                                </h3>
+                            
+                                <ng-template #elseLoading>
+                                    <h3>
+                                        Getting Project Details...
+                                    </h3>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade " *ngIf="this.remove_idx!='' && this.remove_idx !=null" style="display: block;padding-top: 34px;background: #0000005c;"  id="removeUserModal" tabindex="-1" role="dialog" aria-labelledby="companyeditLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                              
+                    <div class="row mb-14 mt-2" >               
+                       
+                        <div class="col-md-12" align="center">
+                            <div class="pop-text">
+                                Are you sure that you want to remove {{this.remove_user_name}} from the list?
+                            </div>
+                        </div>
+                    </div>
+              
+                
+                <div class="row " align="center">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-6" style="display:flex">
+                        <div >
+                            <button data-dismissle="modal" class="mybtn2  width-fit-content mybtn-padding" (click)="removeUser(this.remove_idx)" >Yes</button>
+                        </div>
+                    
+                        <div >
+                            <button data-dismissle="modal" class=" ml-2 mybtn2 btn-border-black   width-fit-content mybtn-padding" (click)="cancelRemoveUser()" >No</button>
+                        </div>
+                    </div>
+                
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-add-user-form  *ngIf="this.current_modal=='add-users'" [project_id]="this.selected_project_id" [current_modal]="this.current_modal"  (showModl)="showModal($event)" (setAct)="setActive($event)"></app-add-user-form>
+    

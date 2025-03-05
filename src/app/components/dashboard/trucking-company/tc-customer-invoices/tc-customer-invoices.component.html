@@ -1,0 +1,524 @@
+
+<div class="wrapper">
+    <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+    <div id="content">
+        <app-dashboard-top-header></app-dashboard-top-header>
+
+        <div class="body-content">
+            <div class="white-div border-div">
+                <div class="title-div-flex">
+                    <div class="title-1  mb-md-15">
+                        Customers
+                    </div>
+                    <div>
+                        <button class="mybtn mybtn-default btn-nav text-blue" (click)="this.toLocation('/draft-tc-invoices')">Draft</button>
+                        <button class="mybtn mybtn-default  btn-nav text-blue ml-2" (click)="this.toLocation('/draft-tc-invoices')">Invoiced</button>
+                        <button class="mybtn bg-blue text-white  btn-nav active ml-2" (click)="this.toLocation('/customer-tc-invoices')">Customers</button>
+                  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- <div class="position-relative">
+                        <label class="field text-field">
+                            <select class="field__input"  (change)="this.setCompany($event)" [(ngModel)]="this.selected_company">
+                                <option value="all" [selected]="true">All</option>
+                                <option *ngFor="let comp of this.companies_list"  value="{{comp.id}}">{{comp.company_name}}</option>
+                            </select>
+                            <span class="field__label-wrap">
+                            <span class="field__label">Select customer</span>
+                            </span>
+                        </label>
+                        
+                    </div> -->
+                    <div class="position-relative">
+                        <label class="field text-field"> 
+                            <input class="field__input selectcustomerfield" placeholder="Select customer" [(ngModel)]="this.selected_comp_name" value="{{this.selected_comp_name}}" type="text"(click)="showCustList()">
+                            
+                            <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                            <span class="field__label-wrap">
+                            <span class="field__label">Select customer</span>
+                            </span>
+                        </label>
+                        <span class='selected_customer' style="display:none"></span>
+                        <div class="background-customer " [style]="this.show_drop ? 'display:block !important':'display:none !important'">
+                            <div class="position-relative">
+                                <label class="field text-field">
+                                <input class="field__input field__input-small" placeholder="Search" value="" type="text" (input)="searchComp($event)">
+                                <span class="field__label-wrap">
+                                <span class="field__label field__label-small">Search</span>
+                                </span>
+                            </label>
+                                <div class="topright-small">
+                                    <img src="../assets/icons/search-icon2.svg" width="18px">
+                                </div>
+                            </div>
+                            <ul class="calendarlist">
+                                <li (click)="setCompanyVal('all')">All</li>
+                                <li *ngFor="let comp of this.companies_list" id="{{comp.id}}" (click)="setCompanyVal(comp)">{{comp.company_name}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="field text-field">
+                        <select class="field__input icon-none" (change)="this.setStatus($event)" [(ngModel)]="this.selected_status">
+                            <option value="Invoiced"  [selected]="this.selected_status == 'Invoiced'">Invoice tickets</option>                            
+                            <option value="Draft" [selected]="this.selected_status == 'Draft'">Uninvoice tickets</option>
+                        </select>
+                        <i class="fa fa-caret-down input-icon-right" aria-hidden="true"></i>
+                        <span class="field__label-wrap">
+                        <span class="field__label">Filter by</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <ng-container *ngIf="this.customer_invoices && this.customer_invoices.length>0">
+                <ng-container *ngFor="let invoice of this.customer_invoices">                   
+                    <div class="white-div border-div">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4">
+                                <div class="info-div br-8 mb-md-15">
+                                    <div class="d-flex padding-5-20 align-items-center justify-content-between" data-toggle="modal" data-target="#companyedit">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <img class="img-invoice"  src="assets/icons/user.svg"  *ngIf="invoice.customer && (invoice.customer?.profile_image ==null ||  invoice.customer?.profile_image  == '')">
+                                            <img class="img-invoice-dyn"    [src]="this.backendAPIURL+(invoice.customer  && invoice.customer?.profile_image)" *ngIf="invoice.customer && invoice.customer?.profile_image !=null &&  invoice.customer?.profile_image  != ''">
+                                            <div class="ml-3">
+                                                <div class="title-2">{{invoice.customer.company_name}}</div>
+                                            </div>
+                                        </div>
+                                        <img src="../assets/icons/pencile.svg" (click)="setCustomerInvoice(invoice)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3">
+                                <div class="info-div br-8 mb-md-15" *ngIf="invoice?.other_status_tickets_count>0">
+                                    <div class="d-flex padding-5-20-2 align-items-center justify-content-center">
+                                        <div class="title-2">Uninvoiced tickets: [{{invoice?.other_status_tickets_count}}]</div>
+                                        <div class="ml-7">
+        
+                                            <div class="viewdiv curser-pointer"  (click)="this.toLocation('/draft-tc-invoices',invoice.customer.id)">View</div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive vertical-scroll-md"  *ngIf="invoice?.monthly_data && invoice?.monthly_data.length>0">
+                                    <table class="mytable unset-last-tr mytable-33">
+                                        <tr>
+                                            <td>Month</td>
+                                            <td>Tickets</td>
+                                            <td>Subtotal</td>
+                                        </tr>
+                                                                             
+                                        <ng-container *ngFor="let month of invoice?.monthly_data">
+                                           
+                                            <tr>
+                                                <td>{{month?.month}}</td>
+                                                <td>Ticket count [{{month?.monthly_ticket_count}}]</td>
+                                                <td>
+                                                    <div class="tabledropdowndiv">
+                                                        <div class="">$ {{month?.monthly_total_amount | currency:"":""}}</div>
+                                                        <img src="../assets/icons/arrow-down-round.svg" class="ml-3 show-detail">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td colspan="5" class="unset-all">
+                                                    <table class="detail-info mytable-2 hidden mytable-33">
+                                                        <tr>
+                                                        </tr>
+                                                        <tr *ngFor="let item of month?.invoices">
+                                                            <td>Invoice {{item?.invoice_no}}</td>
+                                                            <td>{{item?.invoice_ticket_counts}}</td>
+                                                            <td>$ {{item?.invoice_total_amount | currency:"":""}}</td>
+                                                        </tr>
+                                                    
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </table>
+                                </div>
+                                 
+                                <div class="table-responsive vertical-scroll-md" *ngIf="invoice?.monthly_data.length<1 ">
+                                    <h4 class="mt-2">No invoices found.</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="modal fade  come-from-modal right" *ngIf="this.customerInvoice" id="companyedit" tabindex="-1" role="dialog" aria-labelledby="companyeditLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <div class="title-9 mb-15">Customer details</div>
+                    <div class="d-flex align-items-center mb-24" style="margin-left:0px !important;">
+                     
+                        <img src="assets/icons/user.svg" class="img-invoice" *ngIf="!this.customerInvoice.customer.profile_image || this.customerInvoice.customer.profile_image  == ''">
+                        
+                        <img  class="img-invoice-dyn" [src]="backendAPIURL+this.customerInvoice.customer.profile_image" *ngIf="this.customerInvoice.customer.profile_image  && this.customerInvoice.customer.profile_image  !== null && this.customerInvoice.customer.profile_image  != ''">
+                        <div class="ml-3">
+                            <div class="title-2">{{ this.customerInvoice.customer.company_name}} </div>
+                        </div>
+                    </div>
+                    <nav class="d-flex justify-content-between mb-15">
+                        <div class="nav nav-pills nav-fill width-fit-content" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link text-left active" id="nav-home-tab" data-toggle="tab" href="#company-detail" role="tab" aria-controls="nav-home" aria-selected="true">Company</a>
+                            <a class="nav-item nav-link text-left ml-12" id="nav-profile-tab" data-toggle="tab" href="#contacts-detail" role="tab" aria-controls="nav-profile" aria-selected="false">Contacts</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="company-detail" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <div class="title-10 mb-9">Address</div>
+                            <div class="ticket-detail-div mb-29">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="desc-1 mb-8">Street</div>
+                                            <div class="desc-2">{{ this.customerInvoice?.customer?.customer &&  this.customerInvoice?.customer?.customer?.address}}</div>
+                                        </div>
+                                        <div class="col-6" align="right">
+                                            <div class="desc-1 text-right mb-8">City</div>
+                                            <div class="desc-2 text-right">{{this.customerInvoice?.customer?.customer &&  this.customerInvoice?.customer?.customer?.city}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="desc-1 mb-8">Province</div>
+                                            <div class="desc-2">{{this.customerInvoice?.customer?.customer &&  this.customerInvoice?.customer?.customer?.province}}</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="desc-1 text-right mb-8">Postal code</div>
+                                            <div class="desc-2 text-right"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="title-10 mb-9">Payment term</div>
+                            <div class="ticket-detail-div">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="d-flex">
+                                                <div class="desc-2">30</div>
+                                                <div class="desc-1 ml-10">Days</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="title-10 mb-9">Invoicing</div>
+                            <div class="ticket-detail-div mb-29">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="desc-1 mb-8">Last invoice sent</div>
+                                            <div class="desc-2">{{this.customerInvoice?.last_sent_invoice}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="contacts-detail" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="d-flex justify-content-between mb-6">
+                                <div class="title-10 mb-9">Primary</div>
+                                <img src="../assets/icons/btn-pluse.svg" width="24px" data-toggle="modal" data-target="#contactadd">
+                            </div>
+                            <div class="ticket-detail-div">
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="desc-1 mb-8">Name</div>
+                                            <div class="desc-2">{{this.customerInvoice?.customer?.full_name}}</div>
+                                        </div>
+                                        <div class="col-4" align="center">
+                                            <div class="desc-1 text-center mb-8">Phone number</div>
+                                            <div class="desc-2 text-center">{{this.customerInvoice?.customer?.contact_number}}</div>
+                                        </div>
+                                        <div class="col-4" align="right">
+                                            <div class="desc-1 text-right mb-8">Email</div>
+                                            <div class="desc-2 text-right line-break-any">{{this.customerInvoice?.customer?.email}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myhr"></div>
+                                <div class="p-10px">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="desc-1 mb-8">Role</div>
+                                            <div class="desc-2"></div>
+                                        </div>
+                                        <div class="col-4" align="center">
+                                           
+                                        </div>
+                                        <div class="col-4" align="right">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="this.customerContacts && this.customerContacts.length">
+                                <ng-container *ngFor="let contact of this.customerContacts">
+                                    <div class="ticket-detail-div">
+                                        <div class="p-10px">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="desc-1 mb-8">Name</div>
+                                                    <div class="desc-2">{{contact.name}}</div>
+                                                </div>
+                                                <div class="col-4" align="center">
+                                                    <div class="desc-1 text-center mb-8">Phone number</div>
+                                                    <div class="desc-2 text-center">{{contact.phone}}</div>
+                                                </div>
+                                                <div class="col-4" align="right">
+                                                    <div class="desc-1 text-right mb-8">Email</div>
+                                                    <div class="desc-2 text-right">{{contact.email}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="myhr"></div>
+                                        <div class="p-10px">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="desc-1 mb-8">Role</div>
+                                                    <div class="desc-2">{{contact.role}}</div>
+                                                </div>
+                                                <div class="col-4" align="center">
+                                                    <div class="desc-1 text-center mb-5px">Send invoice to</div>
+                                                    <input type="checkbox" class="" value="1"  (change)="setToEnable(contact.id, $event)" [checked]="contact.is_send_invoice == 1 ? true :false">
+                                                </div>
+                                                <div class="col-4" align="right">
+                                                    <div class="desc-1 text-right mb-2px">Modify</div>
+                                                    <img src="../assets/icons/pencile.svg" (click)="this.setEditContact(contact)" width="16px" data-toggle="modal" data-target="#contactedit">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        
+                            <div align="center">
+                                <button class="mybtn mybtn2 bg-blue2 text-white" data-dissmisle="modal" (click)="handleDone()">Done</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="contactadd" tabindex="-1" role="dialog" aria-labelledby="companyeditLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form [formGroup]="addContactForm" (ngSubmit)="handleAddContact()" enctype="multipart/form-data">
+                    <div class="desc-4 mb-7">Add Contact</div>
+                    <div class="row mb-14">
+                        <div class="col-md-4 display-table">
+                           
+                            <div class="vertical-middle">
+                                <div class="desc-5 text-black-shade">Name</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="text-danger" *ngIf="errorName !=''">
+                                {{errorName}}
+                            </span>
+                            <label class="w-100 required_field m-0">
+                                <input type="text" class="form-control myinputs m-0" formControlName="name" required>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row mb-14">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label class="w-100 position-relative m-0">
+                                        <select class="form-control myinput icon-none  m-0 hideicon" formControlName="contact_type">
+                                            <option value="Primary">Primary</option>
+                                        </select>
+                                        <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-7">
+                                    <label class="w-100  position-relative m-0">
+                                        <select class="form-control myinput icon-none  m-0 hideicon" formControlName="role">
+                                            <option value="Approver">Approver</option>
+                                            <option value="Bookkeeper">Bookkeeper</option>
+                                        </select>
+                                        <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-14">
+                        <div class="col-md-4 display-table">
+                            <div class="vertical-middle">
+                                <div class="desc-5 text-black-shade">Phone number</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="w-100 m-0">
+                                <input type="text" class="form-control myinput  m-0" formControlName="phone">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row mb-14">
+                        <div class="col-md-4 display-table">
+                          
+                            <div class="vertical-middle">
+                                <div class="desc-5 text-black-shade">Email</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="text-danger" *ngIf="errorEmail !=''">
+                                {{errorEmail}}
+                            </span>
+                            <label class="w-100 required_field m-0">
+                                <input type="text" class="form-control myinput m-0" formControlName="email" required>
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" formControlName="company_id" [value]="this.company_id" >
+                    <input type="hidden" formControlName="user_id" [(ngModel)]="this.user_id">
+                    <div class="row mb-14">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-8">
+                            <div align="center">
+                                <button class="mybtn mybtn2 bg-blue2 text-white" type="submit" *ngIf="!this.is_loading_add_contact">Done</button>
+                                <button class="mybtn mybtn2 bg-blue2 text-white" type="button" *ngIf="this.is_loading_add_contact" disabled>Processing..</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="contactedit" tabindex="-1" role="dialog" aria-labelledby="companyeditLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form [formGroup]="editContactForm" (ngSubmit)="handleEditContact()" enctype="multipart/form-data">
+                    <div class="desc-4 mb-7">Update Contact</div>
+                    <div class="row mb-14">
+                        <div class="col-md-4 display-table">
+                          
+                            <div class="vertical-middle">
+                                <div class="desc-5 text-black-shade" >Name</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="text-danger" *ngIf="errorName !=''">
+                                {{errorName}}
+                            </span>
+                            <label class="w-100 required_field m-0">
+                                <input type="text" class="form-control myinputs m-0" formControlName="name" required>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row mb-14">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label class="w-100 position-relative m-0">
+                                        <select class="form-control myinput icon-none  m-0 hideicon" formControlName="contact_type">
+                                            <option value="Primary">Primary</option>
+                                        </select>
+                                        <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-7">
+                                    <label class="w-100  position-relative m-0">
+                                        <select class="form-control myinput icon-none m-0 hideicon" formControlName="role">
+                                            <option>Role</option>
+                                            <option value="Approver">Approver</option>
+                                            <option value="Bookkeeper">Bookkeeper</option>
+                                        </select>
+                                        <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-14">
+                        <div class="col-md-4 display-table">
+                            <div class="vertical-middle">
+                                <div class="desc-5 text-black-shade">Phone number</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="w-100 m-0">
+                                <input type="text" class="form-control myinput  m-0" formControlName="phone">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row mb-28">
+                        <div class="col-md-4 display-table">
+                          
+                            <div class="vertical-middle">
+                                <div class="desc-5 text-black-shade">Email</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="text-danger" *ngIf="errorEmail !=''">
+                                {{errorEmail}}
+                            </span>
+                            <label class="w-100 required_field m-0">
+                                <input type="text" class="form-control myinput m-0" formControlName="email" required>
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" formControlName="update_id" [(ngModel)]="this.editContact && this.editContact.id" >
+                    <input type="hidden" formControlName="user_id"  [(ngModel)]="this.user_id"  >
+                    <div class="row mb-28">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-8">
+                            <div align="center">
+                                <button class="mybtn mybtn2 bg-blue2 text-white" *ngIf="!this.is_loading_edit_contact">Update</button>
+                                <button class="mybtn mybtn2 bg-blue2 text-white" type="button" *ngIf="this.is_loading_edit_contact" disabled>Processing..</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-14">
+                        <div class="col-md-4 display-table">
+                            <div class="vertical-middle"> 
+                                <div class="desc-5 text-black-shade">Remove contact?</div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div align="center">
+                                <button class="mybtn mybtn-default mybtn3 text-blue" (click)="handleRemoveContact(this.editContact.id)" *ngIf="!this.removing_contact_loading">Remove</button>
+                                <button class="mybtn mybtn-default mybtn3 text-blue" type="button" disabled *ngIf="this.removing_contact_loading">Processing...</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

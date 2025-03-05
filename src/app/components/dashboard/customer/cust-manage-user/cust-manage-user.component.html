@@ -1,0 +1,1217 @@
+<div class="wrapper">
+  <app-dashboard-header [active_menu]="this.active_menu"></app-dashboard-header>
+  <div id="content">
+    <app-dashboard-top-header></app-dashboard-top-header>
+    <div class="body-content">
+      <div class="main-inner-body-container mt-15px">
+        <div class="project-profile-header-container">
+          <div class="profile_heading_div1">
+            <div class="project-profile-header-left d-flex align-items-center">
+              <img
+                src="./assets/images/cc-icon.svg"
+                alt="project-profile-file-icon"
+              />
+              <div class="heading-1-400 text-color-black">
+                {{ this.loggedinUser?.company_name }}
+              </div>
+            </div>
+          </div>
+          <app-customer-profile-nav
+            [current_nav]="'manage_users'"
+          ></app-customer-profile-nav>
+        </div>
+
+        <div class="main-project-setting-container inner_main_shadow">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="page-heading-title mb-5">Manage users</div>
+            </div>
+            <div
+              class="col-md-5 d-flex justify-content-end"
+              style="height: 40px !important"
+            >
+              <button
+                class="title-14 styled-button openOptionModal"
+                style="border-radius: 5px !important"
+                (click)="showModal('add_userr')"
+              >
+                <!-- <button class="title-14 styled-button openOptionModal" style="border-radius: 5px !important;" (click)="showMore()" > -->
+                <div class="d-flex align-items-cente">
+                  <img
+                    src="./assets/images/cust-manage-users-icon.svg"
+                    width="20px"
+                    alt="project-profile-tracker-icon"
+                  />
+                  <div
+                    class="heading-5-400 text-color-black ml-8px col text-center"
+                  >
+                    Add user
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <app-invite-people-form
+            *ngIf="this.current_modal == 'add_userr'"
+            [current_modal]="this.current_modal"
+            (showModl)="showModal($event)"
+            (setAct)="setActive($event)"
+            (onInviteSuccess)="handleInviteSuccess($event)"
+          ></app-invite-people-form>
+
+          <div class="modal-backdrop" style="display: none">
+            <form [formGroup]="updateUserForm" (ngSubmit)="confirmUpdateUser()">
+              <div class="more-modal bg-fafafa">
+                <span
+                  class="float-right close-icon cursor-pointer"
+                  title="Click to close"
+                  (click)="closeMore()"
+                  ><i class="fa fa-close"></i
+                ></span>
+                <div class="row pb-3">
+                  <div class="col-md-6">
+                    <div
+                      class="page-heading-title1"
+                      *ngIf="this.user_selected?.user_roles?.length > 0"
+                    >
+                      {{ this.user_selected?.user_roles[0]?.role?.role_name }}
+                    </div>
+                    <div class="page-heading-title">
+                      {{ user_selected.full_name }}
+                    </div>
+                  </div>
+
+                  <div
+                    class="col-md-6 d-flex justify-content-end"
+                    style="height: 40px !important"
+                  >
+                    <button
+                      type="button"
+                      class="title-14 mr-4 styled-button openOptionModal"
+                      style="border-radius: 5px !important"
+                    >
+                      <div
+                        class="heading-5-400 text-color-black ml-8px col text-center"
+                      >
+                        Since {{ formatDate(user_selected.created_at) }}
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="row mt-1 mb-3 sect_2">
+                  <div class="col-6">
+                    <span
+                      *ngIf="UpdateuserContactNumberError != ''"
+                      class="text-danger"
+                      >{{ UpdateuserContactNumberError }}</span
+                    >
+                    <div class="title-52 text-grey-shade2">Phone number</div>
+                    <div class="position-relative required_field11">
+                      <img
+                        src="../../assets/icons/pencile.svg"
+                        alt=""
+                        width="17px"
+                        class="top-right-icon2"
+                      />
+                      <input
+                        type="text"
+                        formControlName="contact_number"
+                        class="field-input2"
+                        [ngModel]="
+                          this.user_selected &&
+                          this.user_selected.contact_number &&
+                          this.user_selected.contact_number !== null &&
+                          this.user_selected.contact_number != 'null'
+                            ? this.user_selected.contact_number
+                            : ''
+                        "
+                        placeholder="Type here"
+                        (input)="changeNumber2($event)"
+                        placeholder="+1"
+                        value="+1"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <!-- <span *ngIf="cityError!= ''" class="text-danger">{{
+                                            cityError
+                                            }}</span>  -->
+                    <div class="title-52 text-grey-shade2 text-right">
+                      Email address
+                    </div>
+                    <div class="position-relative required_field12">
+                      <input
+                        type="text"
+                        formControlName="email"
+                        class="field-input2 text-right"
+                        [ngModel]="
+                          this.user_selected && this.user_selected.email
+                        "
+                        placeholder="Type here"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="col-4 pl-0">
+                    <!-- <span *ngIf="addressError!= ''" class="text-danger">{{
+                                            addressError
+                                            }}</span>  -->
+                    <div class="position-relative img_div1">
+                      <div class="img_div" (click)="logoFileInput.click()">
+                        <!--  <img  src="../../assets/images/sample_img.png"  alt="" height="100px" width="79px" class="user_img"> -->
+                        <img
+                          [src]="
+                            imageSrc || '../../assets/images/sample_img.png'
+                          "
+                          alt=""
+                          height="100px"
+                          width="79px"
+                          class="user_img"
+                        />
+                      </div>
+                      <input
+                        id="logo-file-input"
+                        hidden
+                        type="file"
+                        [multiple]="false"
+                        [accept]="'image/jpeg, image/png'"
+                        (change)="uploadimage($event)"
+                        #logoFileInput
+                        formControlName="profileImage"
+                        class="field-input2"
+                        [ngModel]="
+                          this.user_selected && this.user_selected.image
+                        "
+                      />
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <span
+                      *ngIf="UpdateuserRoleIDError != ''"
+                      class="text-danger"
+                      >{{ UpdateuserRoleIDError }}</span
+                    >
+                    <div
+                      class="title-52 text-grey-shade2 text-left mt-2"
+                      style="width: 300px"
+                    >
+                      User can have multiple roles. And between projects, users
+                      can be assigned to diiferent roles
+                    </div>
+
+                    <!-- multi-select-dropdown.component.html -->
+                    <div class="form-group form-group3">
+                      <label
+                        class="field text-field mb-0"
+                        (click)="toggleDropdown()"
+                        >Role(s)</label
+                      >
+                      <div
+                        class="input-field input-field3"
+                        (click)="toggleDropdown()"
+                      >
+                        <!-- {{ selectedRoles.join(', ') }} -->
+                        <ng-container
+                          *ngFor="let role of selectedRoles; let i = index"
+                        >
+                          <span *ngIf="i < 2"
+                            >{{ role
+                            }}{{
+                              i < selectedRoles.length - 1 && i < 1 ? ", " : ""
+                            }}</span
+                          >
+                        </ng-container>
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                      </div>
+
+                      <!-- <div *ngIf="showDropdown" class="dropdown-menu3">
+                                                <div class="heading-5-400 color_blur ml-8px  ">User role</div>
+
+                                              <div *ngFor="let role of roles">
+                                                <label>
+                                                  <input type="checkbox" [checked]="role.selected"  (change)="updateSelectedRoles(role.id)" [ngClass]="{'checked-checkbox': role.selected, 'unchecked-checkbox': !role.selected}"
+                                                  style="background-color: rgb(250 232 70) !important; color: yellow !important;">
+                                                  {{ role.name }}
+                                                </label>
+                                              </div>
+                                              <div>
+                                                  <button class="  mybtn-back-yellow " (click)="closeDropdown()">OK</button>
+
+                                              </div>
+                                            </div> -->
+                      <div *ngIf="showDropdown" class="dropdown-menu3">
+                        <div class="heading-5-400 color_blur mb-2">
+                          User role
+                        </div>
+                        <div
+                          *ngFor="let role of roles"
+                          class="checkbox-container"
+                        >
+                          <div
+                            class="fake-checkbox"
+                            [ngClass]="{ checked: role.selected }"
+                            (click)="updateSelectedRoles(role.id)"
+                          >
+                            {{ role.selected ? "✓" : "" }}
+                          </div>
+                          <div
+                            style="color: rgba(136, 137, 139, 1)"
+                            (click)="updateSelectedRoles(role.id)"
+                          >
+                            {{ role.name }}
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                          <!-- Added margin-top for some spacing -->
+                          <button
+                            class="mybtn-back-yellow fakeOk"
+                            (click)="closeDropdown()"
+                          >
+                            OK
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="heading-5-400 color_blur ml-8px">
+                  Current projects
+                </div>
+
+                <div class="row" style="margin-right: -70px; margin-left: 23px">
+                  <div class="col-md-10">
+                    <!-- Add a wrapping div with a class to control the overflow -->
+                    <div class="table-responsive">
+                      <table
+                        class="table vendorTable"
+                        border="0"
+                        style="border: 0; margin: 23px 0px"
+                      >
+                        <tbody>
+                          <tr style="border: 0">
+                            <td
+                              class="project-settings-table-header"
+                              style="width: 60%"
+                            >
+                              <div class="profile-table-head text-left">
+                                Project
+                              </div>
+                            </td>
+                            <td
+                              class="project-settings-table-header pr-3"
+                              style="width: 40%"
+                            >
+                              <div class="profile-table-head text-center">
+                                Role
+                              </div>
+                            </td>
+                          </tr>
+
+                          <ng-container
+                            *ngFor="
+                              let sub of users_project_list;
+                              let idx = index
+                            "
+                          >
+                            <!-- <tr  > -->
+                            <tr
+                              *ngIf="
+                                this.user_selected?.id == sub?.user_id ||
+                                this.user_selected?.id == sub?.invitation_id
+                              "
+                            >
+                              <td>
+                                <div class="profile-table-value text-left">
+                                  {{ sub?.project_name }}
+                                </div>
+                              </td>
+                              <td>
+                                <div
+                                  class="text-center profile-table-value"
+                                  *ngFor="
+                                    let role of sub?.roles;
+                                    let last = last
+                                  "
+                                >
+                                  {{ role }}
+                                  <span *ngIf="sub?.roles.length > 1 && !last"
+                                    >,</span
+                                  >
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="row mt-25px justify-content-center"
+                  style="margin-top: 50px !important"
+                  *ngIf="user_selected.id != this.user_id"
+                >
+                  <div class="col-md-5 px-0 pr-2">
+                    <button
+                      class="mybtn mybtn-back-yellow mybtnn2 float-right"
+                      type="submit"
+                      *ngIf="!is_loading"
+                    >
+                      Update
+                    </button>
+                    <button
+                      class="mybtn mybtn-back-yellow mybtnn2 float-right"
+                      type="button"
+                      *ngIf="is_loading"
+                      disabled
+                    >
+                      Processing..
+                    </button>
+                  </div>
+                  <div class="col-md-5 px-0 pl-2">
+                    <button
+                      class="btn-back"
+                      type="button"
+                      (click)="showRemove()"
+                    >
+                      Remove
+                    </button>
+                    <!-- <button class="btn-back " type="button" (click)="removeUser(user_selected)">Remove</button> -->
+                  </div>
+                  <div class="delete-modal2 input-popup-div">
+                    <div class="title-3-delete mb-12 text-center heading_txt">
+                      Confirmation
+                    </div>
+                    <div
+                      class="title-5-new2 remove-title mb-17 text-center text_txt"
+                    >
+                      Remove {{ this.user_selected?.full_name }} from the list?
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <button
+                        class="mybtn mybtn-back-yellow mybtnn2 float-right"
+                        type="button"
+                        (click)="removeUser(this.user_selected)"
+                      >
+                        Yes
+                      </button>
+                      <button
+                        class="btn-back"
+                        (click)="hideNo(true)"
+                        type="button"
+                      >
+                        No
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="row mt-25px justify-content-center " style="margin-top: 50px !important;" *ngIf="user_selected.id ==  this.user_id" >
+                                    <div class="col-md-12 px-0 pr-2">
+                                        <button class="mybtn  mybtn-back-yellow mybtnn2 " type="submit" *ngIf="!is_loading">Update</button>
+                                        <button class="mybtn mybtn-back-yellow mybtnn2 float-center" type="button" *ngIf="is_loading" disabled >Processing..</button>
+                                    </div>
+
+                                </div> -->
+
+                <div
+                  class="col-md-12 center_item"
+                  *ngIf="user_selected.id == this.user_id"
+                >
+                  <button
+                    class="mybtn mybtn-back-yellow mybtnn2"
+                    type="submit"
+                    *ngIf="!is_loading"
+                  >
+                    Update
+                  </button>
+                  <button
+                    class="mybtn mybtn-back-yellow mybtnn2"
+                    type="button"
+                    *ngIf="is_loading"
+                    disabled
+                  >
+                    Processing...
+                  </button>
+                </div>
+
+                <!-- <div class="container-fluid"> Ensure it's wrapped inside a container -->
+                <!-- <div class="row justify-content-center mt-5"> Added mt-5 for top margin, remove inline style -->
+                <!-- </div> -->
+                <!-- </div> -->
+              </div>
+            </form>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="project-setting-page-table table-responsive">
+                <table class="table">
+                  <thead class="table-light project-setting-table-header">
+                    <tr>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 17%"
+                      >
+                        <div class="heading-8-400 text-color-grey text-left">
+                          Name
+                        </div>
+                      </th>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 17%"
+                      >
+                        <div class="heading-8-400 text-color-grey text-center">
+                          Email
+                        </div>
+                      </th>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 17%"
+                      >
+                        <div class="heading-8-400 text-color-grey text-center">
+                          Phone number
+                        </div>
+                      </th>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 17%"
+                      >
+                        <div class="heading-8-400 text-color-grey text-center">
+                          Role
+                        </div>
+                      </th>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 32%"
+                      >
+                        <div
+                          class="heading-8-400 text-color-grey text-center"
+                        ></div>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <ng-container *ngIf="this.users_list; else elseBlock">
+                      <ng-container
+                        *ngFor="let user of this.users_list; let idx = index"
+                      >
+                        <!-- <tr *ngIf="idx<2"  > -->
+                        <tr class="cursor-pointer" (click)="showMore(user)">
+                          <td class="project-setting-table-body-data">
+                            <div
+                              class="heading-14-700-normal text-color-grey text-left"
+                            >
+                              {{ user.full_name }}
+                            </div>
+                          </td>
+                          <td class="project-setting-table-body-data">
+                            <div
+                              class="heading-14-700-normal text-color-grey text-right"
+                            >
+                              {{ user.email }}
+                            </div>
+                          </td>
+                          <td class="project-setting-table-body-data">
+                            <div
+                              class="text-center heading-14-700-normal text-color-grey"
+                            >
+                              {{ user.contact_number }}
+                            </div>
+                          </td>
+                          <td class="project-setting-table-body-data">
+                            <div class="text-color-grey heading-14-700-normal">
+                              <span
+                                *ngFor="
+                                  let user_role of user.user_roles;
+                                  index as i
+                                "
+                              >
+                                <span *ngIf="i > 0">
+                                  , {{ user_role?.role?.role_name }}
+                                </span>
+                                <span *ngIf="i == 0">
+                                  {{ user_role?.role?.role_name }}
+                                </span>
+                              </span>
+                            </div>
+                          </td>
+
+                          <td class="project-setting-table-body-data">
+                            <div class="text-center cursor-pointer"></div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                    <ng-template #elseBlock>
+                      <ng-container *ngIf="!this.users_list">
+                        <tr>
+                          <td colspan="5">
+                            <h4>
+                              <b *ngIf="!loading">No Users Found.</b>
+                              <b *ngIf="loading">Updating Users List..</b>
+                            </h4>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-template>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!--External Approvers-->
+
+          <div class="row mt-100px">
+            <div class="col-md-7">
+              <div class="title-16px mb-5">External approvers</div>
+            </div>
+            <div
+              class="col-md-5 d-flex justify-content-end"
+              style="height: 40px !important"
+            >
+              <button
+                class="title-14 styled-button openOptionModal button-my"
+                style="border-radius: 5px !important"
+                (click)="showModal('add_external_userr')"
+              >
+                <!-- <button class="title-14 styled-button openOptionModal" style="border-radius: 5px !important;" (click)="showMore()" > -->
+                <div class="d-flex align-items-cente">
+                  <img
+                    src="./assets/images/cust-manage-users-icon.svg"
+                    width="20px"
+                    alt="project-profile-tracker-icon"
+                  />
+                  <div
+                    class="heading-5-400 text-color-black ml-8px text-center"
+                  >
+                    Add approver
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="project-setting-page-table table-responsive">
+                <table class="table">
+                  <thead class="table-light project-setting-table-header">
+                    <tr>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 17%"
+                      >
+                        <div class="heading-8-400 text-color-grey text-left">
+                          Name
+                        </div>
+                      </th>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 17%"
+                      >
+                        <div class="heading-8-400 text-color-grey text-center">
+                          Email
+                        </div>
+                      </th>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 17%"
+                      >
+                        <div class="heading-8-400 text-color-grey text-center">
+                          Phone number
+                        </div>
+                      </th>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 17%"
+                      >
+                        <div class="heading-8-400 text-color-grey text-center">
+                          Active Projects
+                        </div>
+                      </th>
+                      <th
+                        class="project-settings-table-header usertablemain"
+                        style="width: 32%"
+                      >
+                        <div
+                          class="heading-8-400 text-color-grey text-center"
+                        ></div>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <ng-container
+                      *ngIf="this.external_approvers; else elseBlock2"
+                    >
+                      <ng-container
+                        *ngFor="
+                          let user of this.external_approvers;
+                          let idx = index
+                        "
+                      >
+                        <!-- <tr *ngIf="idx<2"  > -->
+                        <tr class="cursor-pointer" (click)="showMore2(user)">
+                          <td class="project-setting-table-body-data">
+                            <div
+                              class="heading-14-700-normal text-color-grey text-left"
+                            >
+                              {{
+                                user.user?.full_name
+                                  ? user.user?.full_name
+                                  : user.invitation?.full_name
+                              }}
+                            </div>
+                          </td>
+                          <td class="project-setting-table-body-data">
+                            <div
+                              class="heading-14-700-normal text-color-grey text-right"
+                            >
+                              {{
+                                user.user?.email
+                                  ? user.user?.email
+                                  : user.invitation?.email
+                              }}
+                            </div>
+                          </td>
+                          <td class="project-setting-table-body-data">
+                            <div
+                              class="text-center heading-14-700-normal text-color-grey"
+                            >
+                              {{
+                                user.user?.contact_number
+                                  ? user.user?.contact_number
+                                  : user.invitation?.contact_number
+                              }}
+                            </div>
+                          </td>
+                          <td class="project-setting-table-body-data">
+                            <div class="text-color-grey heading-14-700-normal">
+                              <span
+                                *ngFor="
+                                  let project of user?.projects;
+                                  index as i
+                                "
+                              >
+                                <span *ngIf="i > 0">
+                                  , {{ project?.project_name }}
+                                </span>
+                                <span *ngIf="i == 0">
+                                  {{ project?.project_name }}
+                                </span>
+                              </span>
+                            </div>
+                          </td>
+
+                          <td class="project-setting-table-body-data">
+                            <div class="text-center cursor-pointer"></div>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                    <ng-template #elseBlock2>
+                      <ng-container *ngIf="!this.external_approvers">
+                        <tr>
+                          <td colspan="5">
+                            <h4>
+                              <b *ngIf="!loading_approvers"
+                                >No External Approvers Found.</b
+                              >
+                              <b *ngIf="loading_approvers"
+                                >Updating External Approvers List..</b
+                              >
+                            </h4>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </ng-template>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-backdrop-approver" style="display: none">
+          <form
+            [formGroup]="updateApproverForm"
+            (ngSubmit)="confirmUpdateApprover()"
+          >
+            <div class="more-modal bg-fafafa">
+              <span
+                class="float-right close-icon cursor-pointer"
+                title="Click to close"
+                (click)="closeMore2()"
+                ><i class="fa fa-close"></i
+              ></span>
+              <div class="row pb-3">
+                <div class="col-md-6">
+                  <div class="page-heading-title1">External approver</div>
+                  <div class="page-heading-title">
+                    {{ approver_selected?.user?.full_name }}
+                  </div>
+                </div>
+
+                <div
+                  class="col-md-6 d-flex justify-content-end"
+                  style="height: 40px !important"
+                >
+                  <button
+                    type="button"
+                    class="title-14 mr-4 cust-padding-10 styled-button openOptionModal"
+                    style="border-radius: 5px !important"
+                  >
+                    <div
+                      class="heading-5-400 text-color-black ml-8px col text-center"
+                    >
+                      Since {{ formatDate(approver_selected?.created_at) }}
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="row mt-1 mb-3 sect_2">
+                <div class="col-6">
+                  <span
+                    *ngIf="UpdateuserContactNumberError != ''"
+                    class="text-danger"
+                    >{{ UpdateuserContactNumberError }}</span
+                  >
+                  <div class="title-52 text-grey-shade2">Phone number</div>
+                  <div class="position-relative required_field11">
+                    <img
+                      src="../../assets/icons/pencile.svg"
+                      alt=""
+                      width="17px"
+                      class="top-right-icon2"
+                    />
+                    <input
+                      type="text"
+                      formControlName="contact_number"
+                      class="field-input2"
+                      [ngModel]="
+                        this.approver_selected &&
+                        this.approver_selected?.contact_number &&
+                        this.approver_selected?.contact_number !== null &&
+                        this.approver_selected?.contact_number != 'null'
+                          ? this.approver_selected?.contact_number
+                          : ''
+                      "
+                      placeholder="Type here"
+                      (input)="changeNumber3($event)"
+                      placeholder="+1"
+                      value="+1"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="title-52 text-grey-shade2 text-right">
+                    Email address
+                  </div>
+                  <div class="position-relative required_field12">
+                    <input
+                      type="text"
+                      formControlName="email"
+                      class="field-input2 text-right"
+                      [ngModel]="
+                        this.approver_selected && this.approver_selected?.email
+                      "
+                      placeholder="Type here"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-4 pl-0">
+                  <div class="position-relative img_div1">
+                    <div class="img_div" (click)="logoFileInput.click()">
+                      <img
+                        [src]="
+                          imageSrc ||
+                          '../../assets/images/external-approver.svg'
+                        "
+                        alt=""
+                        height="100px"
+                        width="79px"
+                        class="user_img"
+                      />
+                    </div>
+                    <input
+                      id="logo-file-input"
+                      hidden
+                      type="file"
+                      [multiple]="false"
+                      [accept]="'image/jpeg, image/png'"
+                      (change)="uploadimage($event)"
+                      #logoFileInput
+                      formControlName="profileImage"
+                      class="field-input2"
+                      [ngModel]="
+                        this.approver_selected && this.approver_selected?.image
+                      "
+                    />
+                  </div>
+                </div>
+                <div class="col-8">
+                  <span
+                    *ngIf="UpdateuserRoleIDError != ''"
+                    class="text-danger"
+                    >{{ UpdateuserRoleIDError }}</span
+                  >
+                  <div
+                    class="title-52 text-grey-shade2 text-left mt-5"
+                    style="width: 300px"
+                  >
+                    User can work on multiple projects.
+                  </div>
+                </div>
+              </div>
+              <div class="heading-5-400 color_blur ml-8px">
+                Current projects
+              </div>
+
+              <div class="row" style="margin-right: -70px; margin-left: 23px">
+                <div class="col-md-10">
+                  <!-- Add a wrapping div with a class to control the overflow -->
+                  <div class="table-responsive">
+                    <table
+                      class="table vendorTable"
+                      border="0"
+                      style="border: 0; margin: 23px 0px"
+                    >
+                      <tbody>
+                        <tr style="border: 0">
+                          <th
+                            class="project-settings-table-header"
+                            style="width: 60%"
+                          >
+                            <div class="profile-table-head text-left">
+                              Project
+                            </div>
+                          </th>
+                          <th
+                            class="project-settings-table-header pr-3"
+                            style="width: 40%"
+                          >
+                            <div class="profile-table-head text-center">
+                              Last ticket approved
+                            </div>
+                          </th>
+                        </tr>
+                        <ng-container
+                          *ngFor="
+                            let sub of approver_selected?.projects;
+                            let idx = index
+                          "
+                        >
+                          <!-- <tr  > -->
+                          <tr>
+                            <td>
+                              <div class="profile-table-value text-left">
+                                {{ sub?.project_name }}
+                              </div>
+                            </td>
+                            <td>
+                              <div class="text-left profile-table-value">
+                                {{
+                                  sub?.last_ticket_approved?.approved_at
+                                    | date : "mediumDate"
+                                }}
+                              </div>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="row mt-25px justify-content-center"
+                style="margin-top: 50px !important"
+                *ngIf="user_selected.id != this.user_id"
+              >
+                <div class="col-md-5 px-0 pr-2">
+                  <button
+                    class="mybtn mybtn-back-yellow mybtnn2 float-right"
+                    type="submit"
+                    *ngIf="!is_loading"
+                  >
+                    Update
+                  </button>
+                  <button
+                    class="mybtn mybtn-back-yellow mybtnn2 float-right width-auto"
+                    type="button"
+                    *ngIf="is_loading"
+                    disabled
+                  >
+                    Processing..
+                  </button>
+                </div>
+                <div class="col-md-5 px-0 pl-2">
+                  <button class="btn-back" type="button" (click)="showRemove()">
+                    Remove
+                  </button>
+                </div>
+                <div class="delete-modal2 input-popup-div">
+                  <div class="title-3-delete mb-12 text-center heading_txt">
+                    Confirmation
+                  </div>
+                  <div
+                    class="title-5-new2 remove-title mb-17 text-center text_txt"
+                  >
+                    Remove {{ this.user_selected?.full_name }} from the list?
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <button
+                      class="mybtn mybtn-back-yellow mybtnn2 float-right"
+                      type="button"
+                      (click)="removeUser(this.user_selected)"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      class="btn-back"
+                      (click)="hideNo(true)"
+                      type="button"
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="col-md-12 center_item"
+                *ngIf="user_selected.id == this.user_id"
+              >
+                <button
+                  class="mybtn mybtn-back-yellow mybtnn2"
+                  type="submit"
+                  *ngIf="!is_loading"
+                >
+                  Update
+                </button>
+                <button
+                  class="mybtn mybtn-back-yellow mybtnn2"
+                  type="button"
+                  *ngIf="is_loading"
+                  disabled
+                >
+                  Processing...
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- <div class="main-content p-0">
+                    <div class="welcome-text">Dashboard</div>
+                    <div class="dashboard-title mb-16">Settings</div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-5 col-lg-4">
+                            <app-customer-profile-nav [current_nav]="'add-users'"></app-customer-profile-nav>
+                        </div>
+                        <div class="col-md-7 col-lg-8">
+                            <div class="setting-content-page border-div">
+                                <form [formGroup]="addUserForm" (ngSubmit)="onSaveUser()">
+                                    <div class="dashboard-title mb-36">Manage users</div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span *ngIf="userfull_nameError != ''" class="text-danger">{{
+                                                "Name is required"
+                                            }}</span>
+                                            <div class="form-group">
+                                                <label class="dashboard-title mb-17">Name</label>
+                                                <input type="text" formControlName="full_name" class="form-control mb-33 myinput2">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span *ngIf="userEmailError!= ''" class="text-danger">{{
+                                                userEmailError
+                                            }}</span>
+                                            <div class="form-group">
+                                                <label class="dashboard-title mb-17">Email</label>
+                                                <input type="email" formControlName="email" class="form-control mb-33 myinput2">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span *ngIf="userContactNumberError!= ''" class="text-danger">{{
+                                                userContactNumberError
+                                            }}</span>
+
+                                            <div class="form-group">
+                                                <label class="dashboard-title mb-17">Contact number</label>
+                                                <input type="text" formControlName="contact_number" (input)="changeNumber($event)" placeholder="+1" value="+1" class="form-control mb-33 myinput2">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span *ngIf="userRoleIDError''" class="text-danger">{{
+                                                userRoleIDError
+                                            }}</span>
+                                            <div class="form-group position-relative">
+
+                                                <label class="dashboard-title mb-17">Select role </label>
+                                                <select class="form-control icon-none mb-33 myinput2 icon-none select-no-icon" formControlName="role_id">
+                                                    <option value="3">Admin</option>
+                                                    <option value="2">Approver</option>
+                                                    <option value="4">Dispatcher</option>
+                                                    <option value="5">Superintendent</option>
+                                                </select>
+                                                <i class="fa fa-caret-down select-icon-right" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div align="center">
+                                        <button *ngIf="!is_user_loading" type="submit" class="mybtn mybtn-back-yellow width-fit-content mybtn-padding">Add user</button>
+                                        <button *ngIf="is_user_loading" type="button" disabled class="mybtn mybtn-back-yellow width-fit-content mybtn-padding">Saving...</button>
+                                    </div>
+                                </form>
+                                  <div class="dashbord-inner-div2">
+                                    <table class="table user-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Contact number</th>
+                                                <th>role</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          <ng-container *ngIf="this.users_list && this.users_list.length>0 ">
+                                                <tr *ngFor="let user of this.users_list">
+                                                    <td>{{user.full_name}}</td>
+                                                    <td style="line-break: anywhere !important;">{{user.email}}</td>
+                                                    <td>{{user.contact_number}}</td>
+                                                    <td><span *ngFor="let user_role of user.user_roles; index as i">
+
+                                                        <span *ngIf="i>0">
+                                                            , {{user_role?.role?.role_name}}
+                                                          </span>
+                                                          <span *ngIf="i==0">
+                                                             {{user_role?.role?.role_name}}
+                                                          </span>
+                                                    </span></td>
+                                                    <td >
+                                                         <img (click)="confirmDelete(user.id)" src="../../assets/icons/delete.svg"> <br/>
+                                                         <img data-toggle="modal" data-target="#contactedit" (click)="setUpdateRoleId(user)" src="../../assets/icons/edit-icon.svg"></td>
+                                                </tr>
+                                            </ng-container>
+
+                                                <ng-container *ngIf="!this.users_list ">
+                                                    <tr>
+                                                        <td colspan="5" >
+                                                            <h4><b *ngIf="!loading">No Users Found.</b>
+                                                            <b *ngIf="loading">Updating Users List..</b></h4>
+                                                        </td>
+                                                    </tr>
+                                            </ng-container>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  -->
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="contactedit"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="companyeditLabel"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="dashboard-title mb-14">Change Role</div>
+          <form [formGroup]="updateRoleForm" (ngSubmit)="confirmUpdateRole()">
+            <input type="hidden" formControlName="user_id" />
+            <div class="row mb-14">
+              <div class="col-md-12 mb-14">
+                <div class="row">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-8">
+                    <span
+                      *ngIf="errorUpdate; &quot;&quot;"
+                      class="text-danger"
+                      >{{ errorUpdate }}</span
+                    >
+                    <label class="w-100 position-relative m-0">
+                      <ng-multiselect-dropdown
+                        [settings]="dropdownSettings"
+                        [data]="dropdownList"
+                        formControlName="new_role_id"
+                      >
+                      </ng-multiselect-dropdown>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12" align="center">
+                <button
+                  data-dismissle="modal"
+                  class="mybtn mybtn-back-yellow width-fit-content mybtn-padding"
+                  type="submit"
+                  *ngIf="!this.update_loading"
+                >
+                  Update
+                </button>
+                <button
+                  class="mybtn mybtn-back-yellow width-fit-content mybtn-padding"
+                  type="button"
+                  disabled
+                  *ngIf="this.update_loading"
+                >
+                  Processing...
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="row" align="center">
+            <div class="col-md-12" *ngIf="this.user_id != update_role?.id">
+              <div>
+                <button
+                  class="mybtn mybtn-yellow-border width-fit-content mybtn-padding"
+                  (click)="confirmDelete(update_role?.id, update_role)"
+                  *ngIf="!this.removing_loading"
+                >
+                  Remove
+                </button>
+                <button
+                  class="mybtn mybtn-yellow-border width-fit-content mybtn-padding"
+                  type="button"
+                  disabled
+                  *ngIf="this.removing_loading"
+                >
+                  Processing...
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-add-external-approver
+    *ngIf="this.current_modal == 'add_external_userr'"
+    [current_modal]="this.current_modal"
+    (showModl)="showModal($event)"
+    (setAct)="setActive($event)"
+    (onInviteSuccess)="handleInviteSuccess($event)"
+  ></app-add-external-approver>
+</div>
